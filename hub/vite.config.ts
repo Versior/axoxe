@@ -51,10 +51,10 @@ export default defineConfig({
       ],
       manifest: {
         id: '/',
-        name: 'Ech0 Hub',
-        short_name: 'Ech0 Hub',
+        name: 'AXOXE Hub',
+        short_name: 'AXOXE Hub',
         description:
-          'Discover and connect with resonating voices from public Ech0 instances — one feed, many sites.',
+          'Discover and connect with resonating voices from public AXOXE instances — one feed, many sites.',
         start_url: '/',
         scope: '/',
         display: 'standalone',

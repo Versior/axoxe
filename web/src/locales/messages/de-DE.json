@@ -294,7 +294,7 @@
     "initDone": "Initialisierung abgeschlossen",
     "alreadyInitializedRedirect": "System bereits initialisiert, Weiterleitung zur Anmeldung",
     "initFailed": "Initialisierung fehlgeschlagen",
-    "introHeading": "Mit Ech0 loslegen",
+    "introHeading": "Mit AXOXE loslegen",
     "introDescription": "Erstelle das Owner-Konto, schließe die Grundeinrichtung der Seite ab und eröffne deinen persönlichen Aufzeichnungsraum.",
     "siteTitlePlaceholder": "Seitenname (optional)",
     "autoLoginFailed": "Owner erstellt. Bitte anmelden."
@@ -318,7 +318,7 @@
   },
   "hub": {
     "emptyList": "Hub-Liste ist leer. Füge zuerst Connect-Einträge in den Einstellungen hinzu.",
-    "emptyListGuest": "Noch keine Ech0-Instanz verbunden – hier gibt es gerade nichts zu entdecken.",
+    "emptyListGuest": "Noch keine AXOXE-Instanz verbunden – hier gibt es gerade nichts zu entdecken.",
     "noAvailableInstance": "Derzeit keine erreichbaren Hub-Instanzen verfügbar.",
     "connectedCount": "Mit {count} Instanz(en) verbunden, Echos werden geladen…",
     "loading": "Wird geladen…",
@@ -454,7 +454,7 @@
     "tags": "Tags"
   },
   "homeBio": {
-    "tagline": "Willkommen"
+    "tagline": "Where moments stay."
   },
   "homeFooter": {},
   "homeFeed": {
@@ -493,8 +493,8 @@
   "echoDetail": {
     "share": "Teilen",
     "copied": "Link in die Zwischenablage kopiert!",
-    "shareSuffix": "Geteilt über Ech0",
-    "sharePanelTitle": "Dieses Ech0 teilen",
+    "shareSuffix": "Geteilt über AXOXE",
+    "sharePanelTitle": "Dieses AXOXE teilen",
     "shareSystem": "Systemfreigabe",
     "shareCopyMarkdown": "Als Markdown kopieren",
     "shareCopyLink": "Link kopieren",
@@ -800,7 +800,7 @@
     "guideHeaderEventId": "Eindeutige Event-ID, empfohlen für Idempotenz",
     "guideHeaderTimestamp": "Unix-Zeitstempel in UTC, empfohlen zum Replay-Schutz",
     "guideHeaderSignature": "Optionaler Signatur-Header im Format sha256=<hex>",
-    "guideHeaderUserAgent": "Fester Wert: Ech0-Webhook-Client",
+    "guideHeaderUserAgent": "Fester Wert: AXOXE-Webhook-Client",
     "guideBodyTitle": "Request-Body",
     "guideBodyTopic": "Event-Topic",
     "guideBodyEventName": "Event-Typ (Name der Backend-Event-Struktur)",
@@ -914,7 +914,7 @@
   },
   "migrationSetting": {
     "title": "Datenimport",
-    "description": "Import aus Ech0 v4, Memos sowie Ech0-Kapseln wird unterstützt.",
+    "description": "Import aus AXOXE v4, Memos sowie AXOXE-Kapseln wird unterstützt.",
     "inDevelopment": "In Entwicklung",
     "sourceZip": "Quell-ZIP-Datei",
     "pickZip": "ZIP-Datei wählen",
@@ -953,10 +953,10 @@
     "cancelled": "Migration abgebrochen",
     "cleanupFailed": "Aufräumen fehlgeschlagen",
     "cleaned": "Migrationseinträge aufgeräumt",
-    "sourceEch0": "Unterstützt Import aus Ech0",
+    "sourceEch0": "Unterstützt Import aus AXOXE",
     "sourceMemos": "Unterstützt Memos (in Entwicklung)",
-    "sourceCapsuleTitle": "Ech0-Kapsel",
-    "sourceCapsule": "Unterstützt Import aus Ech0-Kapseln",
+    "sourceCapsuleTitle": "AXOXE-Kapsel",
+    "sourceCapsule": "Unterstützt Import aus AXOXE-Kapseln",
     "capsuleNote": "Ergänzt Inhalte, per ID dedupliziert, überschreibt nichts",
     "capsuleIncludePrivate": "Private Inhalte einschließen",
     "statusIdle": "Bereit",
@@ -967,7 +967,7 @@
     "statusCancelled": "Abgebrochen"
   },
   "connectSetting": {
-    "description": "Mit anderen Ech0-Knoten verbinden (Federation).",
+    "description": "Mit anderen AXOXE-Knoten verbinden (Federation).",
     "addConnect": "Erstellen",
     "urlPlaceholder": "Connect-URL eingeben (mit https/http)",
     "connectHint": "Nur http-/https-URLs werden unterstützt.",
@@ -1066,11 +1066,12 @@
     "back": "Zurück"
   },
   "about": {
-    "linkAriaLabel": "Über diese Ech0-Instanz",
+    "linkAriaLabel": "Über diese AXOXE-Instanz",
     "fieldSource": "Quellcode",
     "viewSource": "Quellcode auf GitHub ansehen",
     "viewSourceAtCommit": "Quellcode {'@'} {commit} auf GitHub ansehen",
-    "poweredBy": "Powered by Ech0"
+    "poweredBy": "Powered by AXOXE",
+    "upstreamAttribution": "Based on Ech0 by L1nSn0w and contributors"
   },
   "echoPage": {
     "loadingDetail": "Echo-Details werden geladen…"
@@ -1131,10 +1132,10 @@
     "invalidMessage": "Ungültige WebSocket-Nachricht empfangen"
   },
   "copilotSetting": {
-    "title": "Ech0 Copilot"
+    "title": "AXOXE Copilot"
   },
   "mcpSetting": {
-    "description": "Verbinde Ech0 mit einem MCP-fähigen KI-Client. OAuth 2.1 Discovery wird unterstützt; Access-Tokens bleiben verfügbar.",
+    "description": "Verbinde AXOXE mit einem MCP-fähigen KI-Client. OAuth 2.1 Discovery wird unterstützt; Access-Tokens bleiben verfügbar.",
     "createToken": "Access-Token erstellen",
     "endpointTitle": "MCP Endpoint",
     "endpointHint": "Trage diese Adresse in deinem MCP-Client ein. OAuth-fähige Clients öffnen die Zustimmungsseite automatisch; andere Clients nutzen ein Bearer-Token.",
@@ -1156,7 +1157,7 @@
     "tokenPolicy": "Token-Richtlinie",
     "tokenPolicyValue": "Nur Access-Token · kein Refresh-Token",
     "oauthServer": "Autorisierungsserver",
-    "refreshHint": "Ech0 stellt keine Refresh-Tokens aus. Wenn dein Client standardmäßig den refresh_token-Grant anfragt, deaktiviere ihn vor dem Verbinden.",
+    "refreshHint": "AXOXE stellt keine Refresh-Tokens aus. Wenn dein Client standardmäßig den refresh_token-Grant anfragt, deaktiviere ihn vor dem Verbinden.",
     "capabilitiesTitle": "Capabilities",
     "dangerLegend": "Rot markierte Operationen sind destruktiv. Clients mit elicitation-Unterstützung erhalten eine Bestätigung; andere verlassen sich auf die destruktive Annotation des Hosts. Klicke auf einen Namen für Scope und vollständige Beschreibung.",
     "groupEcho": "Inhalte",
@@ -1273,7 +1274,7 @@
   },
   "oauthConsent": {
     "title": "Anwendung autorisieren",
-    "subtitle": "Eine Anwendung möchte auf deine Ech0-Instanz zugreifen.",
+    "subtitle": "Eine Anwendung möchte auf deine AXOXE-Instanz zugreifen.",
     "client": "Client",
     "resource": "Ressource",
     "approve": "Erlauben",

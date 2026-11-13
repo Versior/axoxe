@@ -15,7 +15,7 @@ func (a *Adapter) registerConnectTools(reg *Registry) {
 	reg.RegisterTool(ToolDefinition{
 		Name:        "list_connects",
 		Title:       "List Connects",
-		Description: "List all saved peer connections (id and URL). These are the remote Ech0 instances the current instance is tracking.",
+		Description: "List all saved peer connections (id and URL). These are the remote AXOXE instances the current instance is tracking.",
 		InputSchema: map[string]any{
 			"type":       "object",
 			"properties": map[string]any{},
@@ -37,7 +37,7 @@ func (a *Adapter) registerConnectTools(reg *Registry) {
 	reg.RegisterTool(ToolDefinition{
 		Name:        "add_connect",
 		Title:       "Add Connect",
-		Description: "Add a remote Ech0 instance as a peer connection. The connect_url must point to the /connect endpoint of the remote instance (e.g. https://example.com/api/connect). Returns {id, message}.",
+		Description: "Add a remote AXOXE instance as a peer connection. The connect_url must point to the /connect endpoint of the remote instance (e.g. https://example.com/api/connect). Returns {id, message}.",
 		InputSchema: map[string]any{
 			"type":     "object",
 			"required": []string{"connect_url"},
@@ -68,7 +68,7 @@ func (a *Adapter) registerConnectResources(reg *Registry) {
 		URI:         "ech0://connect/self",
 		Name:        "connect_self",
 		Title:       "Current Instance Info",
-		Description: "Public card of this Ech0 instance: server name, URL, logo, today/total post counts, owner username, and version.",
+		Description: "Public card of this AXOXE instance: server name, URL, logo, today/total post counts, owner username, and version.",
 		MimeType:    "application/json",
 		Cache:       privateCache(liveTTLMs),
 	}, a.resourceConnectSelf, authz.ScopeConnectRead)

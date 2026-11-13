@@ -1,5 +1,5 @@
 name: 🐛 Bug Report
-description: Report a reproducible problem in Ech0 (backend, frontend, or deployment).
+description: Report a reproducible problem in AXOXE (backend, frontend, or deployment).
 title: "🐛 [Bug] "
 labels:
   - bug
@@ -53,7 +53,7 @@ body:
   - type: input
     id: version
     attributes:
-      label: Ech0 version
+      label: AXOXE version
       description: Output of `ech0 version`, the Docker image tag, or commit SHA.
       placeholder: v4.4.0 / docker:latest / commit abcdef0
     validations:

@@ -3,17 +3,17 @@ title: Federation & aggregation
 description: Connect federation and multi-instance timelines with the Hub
 ---
 
-Ech0 can link **multiple instances** together: first register the other side's address in **Connect**, then merge the content of connected instances into a single timeline at **`/hub`**.
+AXOXE can link **multiple instances** together: first register the other side's address in **Connect**, then merge the content of connected instances into a single timeline at **`/hub`**.
 
 ---
 
 ## Connect: instance federation
 
-In **System settings → Connect**, enter **the root address of the other Ech0 instance** (for example `https://friend.example.com`) and save to add it.
+In **System settings → Connect**, enter **the root address of the other AXOXE instance** (for example `https://friend.example.com`) and save to add it.
 
 **Make sure** to fill in the full URL of **your own site** under **System settings → Service address** (it must include `http://` or `https://`). Otherwise other instances may not see your avatar or site name when fetching your public information.
 
-The “Connected Ech0” section in the home sidebar lists the instances you have added; an address that has been unreachable for a long time may not appear there (the backend only shows instances whose information was fetched successfully).
+The “Connected AXOXE” section in the home sidebar lists the instances you have added; an address that has been unreachable for a long time may not appear there (the backend only shows instances whose information was fetched successfully).
 
 ---
 

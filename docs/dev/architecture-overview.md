@@ -1,4 +1,4 @@
-# Ech0 架构全景图
+# AXOXE 架构全景图
 
 > 本文是交付给新接手者的**架构全景**：从一个进程如何启动讲起，逐层展开后端分层、业务领域、两大能力层（Agent / MCP）、事件驱动子系统、基础设施组件、`pkg/` 自研库，最后到前端与端到端数据流。读完应能回答："某个功能从请求进来到落库/落盘，经过了哪些模块、谁依赖谁。"
 >
@@ -8,7 +8,7 @@
 
 ## 1. 一句话总览
 
-Ech0 是一个**自托管的轻量个人微博（时间线）平台**，以**单个 Go 二进制**同时提供 REST API 与内嵌的 SPA 前端。
+AXOXE 是一个**自托管的轻量个人微博（时间线）平台**，以**单个 Go 二进制**同时提供 REST API 与内嵌的 SPA 前端。
 
 | 维度 | 选型 |
 | --- | --- |
@@ -16,7 +16,7 @@ Ech0 是一个**自托管的轻量个人微博（时间线）平台**，以**单
 | Web 框架 | Gin |
 | 依赖注入 | Google Wire（编译期生成，`internal/di/wire_gen.go`） |
 | ORM / 存储 | GORM + SQLite（`gorm.io/driver/sqlite` + `mattn/go-sqlite3`），向量检索用 `sqlite-vec` |
-| CLI | Cobra（`ech0 serve` / `ech0 tui` / `ech0 version` / `ech0 hello`） |
+| CLI | Cobra（`axoxe serve` / `axoxe tui` / `axoxe version` / `axoxe hello`） |
 | 缓存 | Ristretto（进程内） |
 | 定时任务 | gocron v2 |
 | 对象存储 | AWS SDK v2（S3 兼容），经自研 `pkg/virefs` 抽象 |
@@ -83,13 +83,13 @@ Ech0 是一个**自托管的轻量个人微博（时间线）平台**，以**单
 cmd/ech0/main.go
   └─ bootstrap.Bootstrap()          // ① 加载 config 单例 ② 初始化 zap logger ③ 设置 host env 默认值
   └─ cmd.Execute()  (Cobra 分发)
-       ├─ ech0 serve   → cli.DoServeWithBlock()
+       ├─ axoxe serve   → cli.DoServeWithBlock()
        │     ├─ 端口可用性检查
        │     ├─ di.BuildApp()       // ④ Wire 装配整张依赖图，返回 *app.App
        │     └─ app.Run()           // ⑤ 启动所有 Component，阻塞至信号
-       ├─ ech0 (裸) / ech0 tui → cli.DoTui()
-       ├─ ech0 version → cli.DoVersion()
-       └─ ech0 hello   → cli.DoHello()
+       ├─ ech0 (裸) / axoxe tui → cli.DoTui()
+       ├─ axoxe version → cli.DoVersion()
+       └─ axoxe hello   → cli.DoHello()
 ```
 
 `internal/bootstrap` 在 Cobra 分发**之前**跑，保证 config / logger 在任何子命令里都已就绪。`internal/cli` 是各 CLI 动词的实现层。快照导入导出**没有** CLI 动词，只在 Web 管理面板「数据管理」里。
@@ -106,7 +106,7 @@ type Component interface {
 // 可选 Namer 接口提供友好名字用于日志/错误
 ```
 
-`app.App` 由 `internal/di` 的 `ProvideApp` 注册三个 `Component` + 若干生命周期 Hook（Ech0 专属装配留在 `internal`，`pkg/app` 本身不依赖任何业务包）：
+`app.App` 由 `internal/di` 的 `ProvideApp` 注册三个 `Component` + 若干生命周期 Hook（AXOXE 专属装配留在 `internal`，`pkg/app` 本身不依赖任何业务包）：
 
 | 阶段 | 动作 |
 | --- | --- |
@@ -205,7 +205,7 @@ Wire 默认会为每个 Build 各生成一份实例，对**有状态**基础设�
 | **echo** | 核心时间线条目（微博 post）：内容、媒体、布局（瀑布/网格/轮播）、公开/私密、音乐/视频/网站/位置扩展、标签 | 被 comment/file/embedding/copilot/migrator 引用；emit `Echo{Created,Updated,Deleted}` |
 | **comment** | 访客评论：审核流（待审/通过/拒绝）、反垃圾（蜜罐/captcha/form-token）、公开投影脱敏 | 关联 echo；emit `Comment{Created,StatusUpdated,Deleted}` |
 | **file** | 媒体资产：多后端存储（本地/S3）、临时文件生命周期、元数据、EchoFile 关联排序 | 经 storage.Manager 落盘；emit `ResourceUploaded` |
-| **connect** | 实例互联（联邦）：发现远端 Ech0、健康检查、聚合时间线 | 独立子系统 |
+| **connect** | 实例互联（联邦）：发现远端 AXOXE、健康检查、聚合时间线 | 独立子系统 |
 
 ### 6.2 身份与配置
 
@@ -242,9 +242,9 @@ Wire 默认会为每个 Build 各生成一份实例，对**有状态**基础设�
 
 ## 7. Agent 能力层（internal/agent）
 
-> **一句话**：`internal/agent` 是 Ech0 的 LLM 核心，把多家协议（OpenAI Chat Completions / OpenAI Responses / Anthropic）的生成能力收口为统一的 **Provider 抽象**，并提供一个 **ReAct 工具循环**，让模型在一轮对话内自主决定是否检索、检索几次。**领域零依赖**——它不 import `echo`/`embedding`，工具由上层（copilot service）注入。
+> **一句话**：`internal/agent` 是 AXOXE 的 LLM 核心，把多家协议（OpenAI Chat Completions / OpenAI Responses / Anthropic）的生成能力收口为统一的 **Provider 抽象**，并提供一个 **ReAct 工具循环**，让模型在一轮对话内自主决定是否检索、检索几次。**领域零依赖**——它不 import `echo`/`embedding`，工具由上层（copilot service）注入。
 >
-> 方向是**出站（outbound）**：Ech0 作为 LLM 宿主，主动调用自己的领域工具。与之镜像的是 MCP 的入站（§8）。
+> 方向是**出站（outbound）**：AXOXE 作为 LLM 宿主，主动调用自己的领域工具。与之镜像的是 MCP 的入站（§8）。
 
 ### 7.1 分层与数据流
 
@@ -317,9 +317,9 @@ Wire 默认会为每个 Build 各生成一份实例，对**有状态**基础设�
 
 ## 8. MCP 能力层（internal/mcp）
 
-> **一句话**：`internal/mcp` 是 Ech0 内置的 **Model Context Protocol 服务端**，把领域能力以标准 **tools/resources** 暴露给外部 LLM（如 Claude Desktop / IDE）。挂在 `/mcp` 路由组（`RequireAuth`），走 **JSON-RPC 2.0**，每个 tool/resource 声明所需 **scope**，用 access token 的 scope 集合做细粒度授权。
+> **一句话**：`internal/mcp` 是 AXOXE 内置的 **Model Context Protocol 服务端**，把领域能力以标准 **tools/resources** 暴露给外部 LLM（如 Claude Desktop / IDE）。挂在 `/mcp` 路由组（`RequireAuth`），走 **JSON-RPC 2.0**，每个 tool/resource 声明所需 **scope**，用 access token 的 scope 集合做细粒度授权。
 >
-> 方向是**入站（inbound）**：外部 LLM 把 Ech0 当成工具集来调用。与 Agent 的出站（§7）正好镜像——两者都是 function calling，但方向相反。
+> 方向是**入站（inbound）**：外部 LLM 把 AXOXE 当成工具集来调用。与 Agent 的出站（§7）正好镜像——两者都是 function calling，但方向相反。
 
 ### 8.1 请求处理链
 
@@ -394,17 +394,17 @@ mcp_request 审计日志（method/tool/resource、era、client、token jti、lat
 
 | 维度 | Agent（§7，出站） | MCP（§8，入站） |
 | --- | --- | --- |
-| 谁是 LLM 宿主 | Ech0 内部（copilot） | 外部（Claude 等） |
+| 谁是 LLM 宿主 | AXOXE 内部（copilot） | 外部（Claude 等） |
 | 谁定义工具 | copilot service 注入领域闭包 | Adapter 把领域 service 注册进 Registry |
 | 协议 | OpenAI Chat Completions / OpenAI Responses / Anthropic SDK | JSON-RPC 2.0（MCP 规范） |
 | 鉴权 | 站内会话用户 | access token 的 scope 集合 |
-| 典型场景 | 站内 Chat 问答 / 总结 | 把 Ech0 接进外部 AI 客户端读写 |
+| 典型场景 | 站内 Chat 问答 / 总结 | 把 AXOXE 接进外部 AI 客户端读写 |
 
 ---
 
 ## 9. 事件驱动子系统（异步 side effects）
 
-这是 Ech0 解耦"领域写"与"副作用"的关键，建立在自研 `pkg/busen` 之上。一条规则：**依赖向内指向纯词汇包**。
+这是 AXOXE 解耦"领域写"与"副作用"的关键，建立在自研 `pkg/busen` 之上。一条规则：**依赖向内指向纯词汇包**。
 
 ```
    ┌─────────────── internal/event (纯词汇，只 import 领域 model) ──────────────┐

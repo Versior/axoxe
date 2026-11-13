@@ -3,7 +3,7 @@ title: Data control
 description: Snapshots, migration, backup schedules, and recovery
 ---
 
-Ech0's data consists mainly of the **database (including business metadata)** and **attachment files** (a local directory or object storage). Day-to-day operations revolve around **export, migration, backup, and recovery**.
+AXOXE's data consists mainly of the **database (including business metadata)** and **attachment files** (a local directory or object storage). Day-to-day operations revolve around **export, migration, backup, and recovery**.
 
 ---
 
@@ -23,7 +23,7 @@ Export file naming and storage paths follow what the interface tells you; if a �
 If you installed from a **binary**, you can run this on the server:
 
 ```bash
-ech0 tui
+axoxe tui
 ```
 
 Then perform backup-related operations from the menu (the exact items follow the TUI).
@@ -31,15 +31,15 @@ Then perform backup-related operations from the menu (the exact items follow the
 You can also use the command line directly, which suits scheduled packaging via **cron** or CI:
 
 ```bash
-ech0 export snapshot -o ./snapshot.zip     # full database snapshot
-ech0 import snapshot ./snapshot.zip --yes  # destructive restore, explicit confirmation required
+axoxe export snapshot -o ./snapshot.zip     # full database snapshot
+axoxe import snapshot ./snapshot.zip --yes  # destructive restore, explicit confirmation required
 ```
 
 If what you want is a **readable, portable, long-term** content backup rather than a whole-database image, see
-[Capsules & static sites](/docs/guide/capsule) — `ech0 export capsule` produces a
+[Capsules & static sites](/docs/guide/capsule) — `axoxe export capsule` produces a
 Markdown directory tree that can also be compiled into a static archive site with a single command.
 
-Refer to `ech0 --help` for the complete set of subcommands.
+Refer to `axoxe --help` for the complete set of subcommands.
 
 ---
 
@@ -47,8 +47,8 @@ Refer to `ech0 --help` for the complete set of subcommands.
 
 | Source                   | Notes                                                       |
 | ------------------------ | ----------------------------------------------------------- |
-| Another Ech0 v4 instance | Upload or select a package through the migration wizard     |
-| Ech0 v3                  | **Export a snapshot** in v3 first, then run migration in v4 |
+| Another AXOXE v4 instance | Upload or select a package through the migration wizard     |
+| AXOXE v3                  | **Export a snapshot** in v3 first, then run migration in v4 |
 | Memos and others         | Import in the formats supported by the wizard               |
 
 Migration usually **blocks concurrent writes** (a write lock) to prevent data corruption; when it finishes you can choose whether to merge some system settings (depending on the wizard).
@@ -80,7 +80,7 @@ You can review execution results in the logs or the panel; it is advisable to **
 
 Only do this when you understand the consequences:
 
-1. **Stop** the Ech0 service or container.
+1. **Stop** the AXOXE service or container.
 2. **Back up the current data directory** (copy the whole thing).
 3. **Extract** a trusted snapshot ZIP and use its files to **overwrite** the database and files in the data directory (the paths must match the official directory structure).
 4. Start the service and verify.

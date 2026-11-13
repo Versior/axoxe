@@ -42,7 +42,7 @@ func registerDashboard(api huma.API, h *handler.Bundle, revoker authService.Toke
 		OperationID: "dashboard-check-update",
 		Method:      http.MethodGet,
 		Path:        "/system/check-update",
-		Summary:     "检查 Ech0 版本更新",
+		Summary:     "检查 AXOXE 版本更新",
 		Tags:        []string{"Dashboard"},
 	}, h.DashboardHandler.CheckUpdate)
 

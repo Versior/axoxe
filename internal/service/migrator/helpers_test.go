@@ -27,7 +27,7 @@ func TestValidateSourceType(t *testing.T) {
 		{"unknown source", "notion", true},
 		{"empty", "", true},
 		{"whitespace only", "   ", true},
-		{"case mismatch", "Ech0", true},
+		{"case mismatch", "AXOXE", true},
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {

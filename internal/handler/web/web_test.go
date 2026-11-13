@@ -189,7 +189,7 @@ func TestTemplates_UnknownRouteIsNotFound(t *testing.T) {
 	if got := rec.Header().Get("X-Robots-Tag"); got != robotsNoIndex {
 		t.Fatalf("expected X-Robots-Tag %q, got %q", robotsNoIndex, got)
 	}
-	if !strings.Contains(rec.Body.String(), `<title>404 | Ech0</title>`) {
+	if !strings.Contains(rec.Body.String(), `<title>404 | AXOXE</title>`) {
 		t.Fatalf("expected the not-found head so the client router can render its 404 view")
 	}
 }
@@ -253,7 +253,7 @@ func TestTemplates_PrivateRouteGetsNoIndexHeader(t *testing.T) {
 	if got := rec.Header().Get("X-Robots-Tag"); got != robotsNoIndex {
 		t.Fatalf("expected X-Robots-Tag %q, got %q", robotsNoIndex, got)
 	}
-	if !strings.Contains(rec.Body.String(), `<title>Panel | Ech0</title>`) {
+	if !strings.Contains(rec.Body.String(), `<title>Panel | AXOXE</title>`) {
 		t.Fatalf("expected panel title, body:\n%s", rec.Body.String())
 	}
 }

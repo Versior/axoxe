@@ -6,7 +6,7 @@
       <h1
         class="text-6xl italic font-bold text-center text-[var(--color-text-muted)] mb-4 font-serif"
       >
-        Ech0
+        AXOXE
       </h1>
       <div v-if="AuthMode === 'login'">
         <div class="flex items-center justify-between gap-3 mb-3">

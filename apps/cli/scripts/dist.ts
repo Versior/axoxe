@@ -4,7 +4,7 @@
 
 /**
  * Build the distributable CLI: standalone binaries (for GitHub Releases) and
- * the npm packages (`@useech0/cli` + one `@useech0/cli-<os>-<arch>` per platform).
+ * the npm packages (`@axoxe/cli` + one `@axoxe/cli-<os>-<arch>` per platform).
  *
  *   bun run scripts/dist.ts --version 0.1.0 [--out dist/release] [--targets darwin-arm64,linux-x64]
  *
@@ -13,10 +13,10 @@
  * checkout stays clean (see src/version-info.ts).
  *
  * Output:
- *   <out>/bin/ech0-<os>-<arch>              raw binaries
- *   <out>/ech0-cli-<os>-<arch>.tar.gz       release assets (`ech0` + LICENSE)
+ *   <out>/bin/axoxe-<os>-<arch>              raw binaries
+ *   <out>/axoxe-cli-<os>-<arch>.tar.gz       release assets (`axoxe` + LICENSE)
  *   <out>/SHA256SUMS                        checksums of the tarballs
- *   <out>/npm/cli                           publishable @useech0/cli (launcher + optionalDeps)
+ *   <out>/npm/cli                           publishable @axoxe/cli (launcher + optionalDeps)
  *   <out>/npm/cli-<os>-<arch>               publishable platform packages
  */
 
@@ -90,12 +90,12 @@ function label(target: Target): string {
 }
 
 function packageName(target: Target): string {
-  return `@useech0/cli-${label(target)}`;
+  return `@axoxe/cli-${label(target)}`;
 }
 
 // Trusted publishing matches `repository.url` against the GitHub repository, so
 // the fallback keeps the real casing (GITHUB_REPOSITORY in CI).
-const repository = process.env.GITHUB_REPOSITORY ?? "lin-snow/Ech0";
+const repository = process.env.GITHUB_REPOSITORY ?? "Versior/Ech0";
 
 function repositoryField(): Record<string, string> {
   return {
@@ -112,7 +112,7 @@ mkdirSync(npmDir, { recursive: true });
 const tarballs: Array<{ file: string; name: string }> = [];
 
 for (const target of targets) {
-  const name = `ech0-${label(target)}`;
+  const name = `axoxe-${label(target)}`;
   const binary = join(binDir, name);
 
   console.log(`\n==> compiling ${label(target)}`);
@@ -133,33 +133,33 @@ for (const target of targets) {
   );
   chmodSync(binary, 0o755);
 
-  // Release tarball: `ech0` + LICENSE, unpackable straight into a PATH dir.
+  // Release tarball: `axoxe` + LICENSE, unpackable straight into a PATH dir.
   const stage = join(outDir, ".stage", label(target));
   mkdirSync(stage, { recursive: true });
-  copyFileSync(binary, join(stage, "ech0"));
-  chmodSync(join(stage, "ech0"), 0o755);
+  copyFileSync(binary, join(stage, "axoxe"));
+  chmodSync(join(stage, "axoxe"), 0o755);
   copyFileSync(LICENSE, join(stage, "LICENSE"));
-  const tarball = join(outDir, `ech0-cli-${label(target)}.tar.gz`);
-  run(["tar", "-czf", tarball, "-C", stage, "ech0", "LICENSE"], outDir);
-  tarballs.push({ file: tarball, name: `ech0-cli-${label(target)}.tar.gz` });
+  const tarball = join(outDir, `axoxe-cli-${label(target)}.tar.gz`);
+  run(["tar", "-czf", tarball, "-C", stage, "axoxe", "LICENSE"], outDir);
+  tarballs.push({ file: tarball, name: `axoxe-cli-${label(target)}.tar.gz` });
 
   // Platform npm package: the compiled binary only.
   const dir = join(npmDir, `cli-${label(target)}`);
   mkdirSync(join(dir, "bin"), { recursive: true });
-  copyFileSync(binary, join(dir, "bin", "ech0"));
-  chmodSync(join(dir, "bin", "ech0"), 0o755);
+  copyFileSync(binary, join(dir, "bin", "axoxe"));
+  chmodSync(join(dir, "bin", "axoxe"), 0o755);
   copyFileSync(LICENSE, join(dir, "LICENSE"));
   writeJSON(join(dir, "package.json"), {
     name: packageName(target),
     version,
-    description: `Ech0 CLI binary for ${label(target)}`,
+    description: `AXOXE CLI binary for ${label(target)}`,
     license: "AGPL-3.0-or-later",
     homepage: `https://github.com/${repository}/tree/main/apps/cli`,
     repository: repositoryField(),
     bugs: { url: `https://github.com/${repository}/issues` },
     os: [target.os],
     cpu: [target.cpu],
-    files: ["bin/ech0", "LICENSE"],
+    files: ["bin/axoxe", "LICENSE"],
     exports: { "./package.json": "./package.json" },
   });
 }
@@ -170,21 +170,21 @@ rmSync(join(outDir, ".stage"), { recursive: true, force: true });
 // others are excluded by their os/cpu fields.
 const metaDir = join(npmDir, "cli");
 mkdirSync(join(metaDir, "bin"), { recursive: true });
-copyFileSync(join(CLI_DIR, "npm", "ech0.cjs"), join(metaDir, "bin", "ech0.cjs"));
-chmodSync(join(metaDir, "bin", "ech0.cjs"), 0o755);
+copyFileSync(join(CLI_DIR, "npm", "axoxe.cjs"), join(metaDir, "bin", "axoxe.cjs"));
+chmodSync(join(metaDir, "bin", "axoxe.cjs"), 0o755);
 copyFileSync(join(CLI_DIR, "npm", "README.md"), join(metaDir, "README.md"));
 copyFileSync(LICENSE, join(metaDir, "LICENSE"));
 writeJSON(join(metaDir, "package.json"), {
-  name: "@useech0/cli",
+  name: "@axoxe/cli",
   version,
-  description: "Ech0 command line — talks to a running Ech0 instance over its REST API",
+  description: "AXOXE command line — talks to a running AXOXE instance over its REST API",
   license: "AGPL-3.0-or-later",
   homepage: `https://github.com/${repository}/tree/main/apps/cli`,
   repository: repositoryField(),
   bugs: { url: `https://github.com/${repository}/issues` },
-  keywords: ["ech0", "cli", "microblog", "timeline", "self-hosted"],
-  bin: { ech0: "bin/ech0.cjs" },
-  files: ["bin/ech0.cjs", "README.md", "LICENSE"],
+  keywords: ["axoxe", "cli", "microblog", "timeline", "self-hosted"],
+  bin: { axoxe: "bin/axoxe.cjs", ech0: "bin/axoxe.cjs" },
+  files: ["bin/axoxe.cjs", "README.md", "LICENSE"],
   engines: { node: ">=18" },
   optionalDependencies: Object.fromEntries(targets.map((target) => [packageName(target), version])),
   publishConfig: { access: "public" },

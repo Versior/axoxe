@@ -73,7 +73,7 @@ jobs:
 
             if (!m1 || !m2) {
               await failComment(
-                '无法从正文中解析 **Instance ID** 或 **Instance URL**。请使用模板「登记到 Ech0 Hub」填写，且不要删除 `###` 标题行。'
+                '无法从正文中解析 **Instance ID** 或 **Instance URL**。请使用模板「登记到 AXOXE Hub」填写，且不要删除 `###` 标题行。'
               );
               core.setFailed('parse');
               return;

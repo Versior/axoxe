@@ -11,7 +11,7 @@ import (
 )
 
 // setupOAuthServerRoutes mounts the MCP authorization server. Protocol
-// endpoints live at their spec-mandated root paths and bypass Ech0's result
+// endpoints live at their spec-mandated root paths and bypass AXOXE's result
 // envelope; the consent endpoints stay under /api/consent so the SPA can
 // authenticate them with the normal browser session.
 func setupOAuthServerRoutes(r *gin.Engine, groups *AppRouterGroup, h *handler.Bundle) {

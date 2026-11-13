@@ -1,6 +1,6 @@
-# Ech0 Web (Frontend)
+# AXOXE Web (Frontend)
 
-The Vue 3 SPA for [Ech0](../README.md) — a self-hosted personal microblog / timeline platform.
+The Vue 3 SPA for [AXOXE](../README.md) — a self-hosted personal microblog / timeline platform.
 This package is built with Vite, type-checked with `vue-tsc`, and its production output is emitted to
 [`../template/dist`](../template/dist), where the Go binary embeds and serves it from the same process
 that exposes the REST API.
@@ -190,7 +190,7 @@ constructs WebSocket URLs (auto HTTP→WS, HTTPS→WSS).
 
 [`api/`](src/service/api/) hosts one module per backend domain (`auth`, `user`, `echo`, `file`,
 `comment`, `setting`, `agent`, `dashboard`, …). All responses are typed against
-`App.Api.Response<T>` declared in [`typings/app.d.ts`](src/typings/app.d.ts).
+`App.Api.Response<T>` declared in [`typings/api-base.d.ts`](src/typings/api-base.d.ts).
 
 ### Internationalization
 

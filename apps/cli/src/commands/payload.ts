@@ -55,7 +55,7 @@ export async function readPayload(source: string): Promise<Record<string, unknow
  */
 export async function editPayload(): Promise<Record<string, unknown>> {
   const editor = process.env.VISUAL || process.env.EDITOR || "vi";
-  const dir = mkdtempSync(join(tmpdir(), "ech0-echo-"));
+  const dir = mkdtempSync(join(tmpdir(), "axoxe-echo-"));
   const file = join(dir, "echo.json");
   writeFileSync(file, payloadTemplate(), { mode: 0o600 });
 

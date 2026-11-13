@@ -83,7 +83,7 @@ func TestHelloEch0(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, commonModel.DEFAULT_SUCCESS_CODE, out.Code)
 	assert.Equal(t, commonModel.GET_HELLO_SUCCESS, out.Message)
-	assert.Equal(t, "Hello, Ech0! 👋", out.Data.Hello)
+	assert.Equal(t, "Hello, AXOXE! 👋", out.Data.Hello)
 	assert.Equal(t, versionPkg.Copyright(), out.Data.Copyright)
 	assert.Equal(t, versionPkg.Version, out.Data.Version)
 	assert.Equal(t, versionPkg.RepoURL, out.Data.RepoURL)
@@ -155,15 +155,15 @@ func TestGetRobotsTxt(t *testing.T) {
 			name:        "forwarded-proto-and-host",
 			host:        "internal:6277",
 			fwdProto:    "https",
-			fwdHost:     "ech0.app",
-			wantSitemap: "Sitemap: https://ech0.app/sitemap.xml",
+			fwdHost:     "www.axoxe.com",
+			wantSitemap: "Sitemap: https://www.axoxe.com/sitemap.xml",
 		},
 		{
 			name:        "forwarded-multi-value-takes-first",
 			host:        "internal",
 			fwdProto:    "https, http",
-			fwdHost:     "ech0.app, proxy.local",
-			wantSitemap: "Sitemap: https://ech0.app/sitemap.xml",
+			fwdHost:     "www.axoxe.com, proxy.local",
+			wantSitemap: "Sitemap: https://www.axoxe.com/sitemap.xml",
 		},
 	}
 	for _, tc := range cases {

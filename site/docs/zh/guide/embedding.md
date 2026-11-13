@@ -39,11 +39,11 @@ Dimension mismatch ... Expected 1024 dimensions but received 2048
 
 它的意思是：索引表按 `1024` 维建，但模型这次给了 `2048` 维。怎么填对：
 
-- **支持自定义维度的模型**（OpenAI `text-embedding-3` 系、Qwen `text-embedding-v4` 等）：`Dim` 可在模型支持的档位里任选（如 `1024`、`1536`），Ech0 会请求该维度。
+- **支持自定义维度的模型**（OpenAI `text-embedding-3` 系、Qwen `text-embedding-v4` 等）：`Dim` 可在模型支持的档位里任选（如 `1024`、`1536`），AXOXE 会请求该维度。
 - **不支持自定义维度的模型**：`Dim` **必须填模型的原生维度**（查厂商文档，如 `1536`）。
 
 ::: tip 改了模型或维度怎么办
-更换 **Embedding 模型** 或 **Dim** 后，旧索引即失效。Ech0 会提示「重建向量索引」——按提示**重建一次**，用新模型/维度给全部历史 Echo 重新生成向量即可。
+更换 **Embedding 模型** 或 **Dim** 后，旧索引即失效。AXOXE 会提示「重建向量索引」——按提示**重建一次**，用新模型/维度给全部历史 Echo 重新生成向量即可。
 :::
 
 ---

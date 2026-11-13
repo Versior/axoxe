@@ -94,7 +94,7 @@ type askEvent struct {
 
 // askRegistry is where a parked run and the request carrying its answer meet.
 //
-// One process, one map. Ech0 is a single binary and a run dies with the request
+// One process, one map. AXOXE is a single binary and a run dies with the request
 // that started it, so the rendezvous never has to outlive either — there is no
 // second replica to reach and no stream left to resume on. A durable slot would
 // buy nothing and would have to be swept by something.

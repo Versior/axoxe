@@ -58,7 +58,7 @@ func (a *Adapter) registerFileTools(reg *Registry) {
 	reg.RegisterTool(ToolDefinition{
 		Name:  "create_external_file",
 		Title: "Create External File",
-		Description: "Register an external URL as an Ech0 file record (no upload needed). " +
+		Description: "Register an external URL as an AXOXE file record (no upload needed). " +
 			"Returns the created file metadata including id, which can be used as echo_files[].file_id in create_post/update_post.",
 		InputSchema: map[string]any{
 			"type":     "object",
@@ -94,7 +94,7 @@ func (a *Adapter) resourceFileUploadGuide(ctx context.Context, _ string) (*Resou
 		baseURL = "http://localhost:6277"
 	}
 
-	guide := "# Ech0 File Upload Guide\n\n" +
+	guide := "# AXOXE File Upload Guide\n\n" +
 		"File upload is handled via the REST API (not MCP) because it requires multipart/form-data binary transfer.\n\n" +
 		"## Your Credentials\n\n" +
 		"- **Base URL**: `" + baseURL + "`\n" +

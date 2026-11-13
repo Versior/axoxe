@@ -35,7 +35,7 @@ const (
 var DefaultScopes = []string{authz.ScopeEchoRead}
 
 // Error is an RFC 6749 error response. Status is the HTTP status the endpoint
-// should return; the OAuth layer never uses Ech0's result envelope.
+// should return; the OAuth layer never uses AXOXE's result envelope.
 type Error struct {
 	Code        string
 	Description string

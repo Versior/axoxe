@@ -2,9 +2,9 @@
 replicaCount: 1
 
 image:
-  repository: sn0wl1n/ech0
+  repository: axoxe
   pullPolicy: IfNotPresent
-  tag: ""
+  tag: "local"
 
 imagePullSecrets: []
 nameOverride: ""

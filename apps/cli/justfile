@@ -1,4 +1,4 @@
-# Ech0 CLI (Bun + TypeScript, talks to a running instance over the REST API)
+# AXOXE CLI (Bun + TypeScript, talks to a running instance over the REST API)
 
 default:
     @just --list

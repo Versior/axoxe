@@ -6,7 +6,7 @@ stored profile; override either per call with `--server` / `--token`.
 ## Interactive login (browser)
 
 ```bash
-ech0 auth login --server https://ech0.example.com --device
+axoxe auth login --server https://ech0.example.com --device
 ```
 
 The CLI prints a link and a device code, then waits until the browser approves.
@@ -16,8 +16,8 @@ run this in a non-interactive context.
 ## Access token (no browser)
 
 ```bash
-ech0 auth login --server https://ech0.example.com --token <token>
-echo "$TOKEN" | ech0 auth login --server https://ech0.example.com --token -
+axoxe auth login --server https://ech0.example.com --token <token>
+echo "$TOKEN" | axoxe auth login --server https://ech0.example.com --token -
 ```
 
 `--token -` reads stdin, which keeps the secret out of shell history. The CLI
@@ -27,8 +27,8 @@ entirely with `ECH0_TOKEN`.
 ## Password
 
 ```bash
-ech0 auth login --server https://ech0.example.com -u admin
-ech0 auth login --server https://ech0.example.com -u admin --password-stdin < password.txt
+axoxe auth login --server https://ech0.example.com -u admin
+axoxe auth login --server https://ech0.example.com -u admin --password-stdin < password.txt
 ```
 
 Without `--password-stdin` the password comes from a hidden prompt. Admin
@@ -48,10 +48,10 @@ their own scopes.
 ## Profiles
 
 ```bash
-ech0 config list            # all profiles, active one marked
-ech0 config use <name>      # switch the default
-ech0 config unset <name>    # remove the profile and its token
-ech0 config path            # where config and credentials live
+axoxe config list            # all profiles, active one marked
+axoxe config use <name>      # switch the default
+axoxe config unset <name>    # remove the profile and its token
+axoxe config path            # where config and credentials live
 ```
 
 Which profile, server and token a command uses:
@@ -67,7 +67,7 @@ Which profile, server and token a command uses:
 ```bash
 export ECH0_SERVER=https://ech0.example.com
 export ECH0_TOKEN=<token>
-ech0 echo list --page 1 --json
+axoxe echo list --page 1 --json
 ```
 
 Set `ECH0_NO_KEYCHAIN=1` to keep credentials in a file instead of the system
@@ -76,16 +76,16 @@ keychain (headless machines, locked keyrings).
 ## Checking and clearing
 
 ```bash
-ech0 info                   # instance site/version/counts, token state, catalog
-ech0 auth status            # profile, server, token source (no network)
-ech0 auth status --verify   # also verifies the token with the server
-ech0 auth logout            # delete the token for the current profile
-ech0 auth logout --purge    # delete the token and the profile
+axoxe info                   # instance site/version/counts, token state, catalog
+axoxe auth status            # profile, server, token source (no network)
+axoxe auth status --verify   # also verifies the token with the server
+axoxe auth logout            # delete the token for the current profile
+axoxe auth logout --purge    # delete the token and the profile
 ```
 
 ## Errors
 
-- `401` — token missing, invalid or expired: `ech0 auth status --verify`, then
+- `401` — token missing, invalid or expired: `axoxe auth status --verify`, then
   log in again.
 - `403` — the token lacks a required scope, or the account is not an admin.
 - No profile or server — the CLI exits 2 and names the missing piece.

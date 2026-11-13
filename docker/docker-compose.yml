@@ -1,11 +1,17 @@
-version: "3"
 services:
-  ech0:
-    image: sn0wl1n/ech0:latest
-    container_name: ech0
+  axoxe:
+    image: axoxe:local
+    build:
+      context: ..
+      dockerfile: docker/build.Dockerfile
+      args:
+        TARGETOS: linux
+        TARGETARCH: ${AXOXE_TARGETARCH:-amd64}
+    container_name: axoxe
+    restart: unless-stopped
     ports:
       - "6277:6277"
     volumes:
-      - ./ech0/data:/app/data
+      - ./data:/app/data
     environment:
-      - JWT_SECRET="Hello Echos"
+      JWT_SECRET: ${JWT_SECRET:?Set a persistent JWT_SECRET before starting AXOXE}

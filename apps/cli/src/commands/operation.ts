@@ -55,7 +55,7 @@ export function buildRequest(op: CatalogOp, values: FieldValues): RequestSpec {
       if (value !== undefined) query[field] = queryValue(value);
     } else if (location === "body") {
       // Huma marks a struct body required even when every field is optional;
-      // send `{}` so `ech0 echo list` without flags is a valid request.
+      // send `{}` so `axoxe echo list` without flags is a valid request.
       hasBody = true;
       if (value !== undefined) body[field] = value;
     }
@@ -150,7 +150,7 @@ export interface InvokeOptions {
   payload?: Record<string, unknown>;
   /** `--tag`, repeated. */
   tags?: string[];
-  /** `--file-id`, repeated: attachments uploaded by `ech0 file upload`. */
+  /** `--file-id`, repeated: attachments uploaded by `axoxe file upload`. */
   fileIds?: string[];
   /** `--file-name`: multipart filename, so stdin uploads keep an extension. */
   uploadFileName?: string;

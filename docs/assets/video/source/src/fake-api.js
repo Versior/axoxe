@@ -35,7 +35,7 @@ function chatStreamResponse() {
     close() { if (!this.closed) { this.closed = true; ctrl.close(); } }};
   return new Response(body, {status: 200, headers: {'Content-Type': 'text/event-stream'}});
 }
-// Ech0 honours prefers-reduced-motion (AnimatedMarkdown, ChatActivity, theme view transitions):
+// AXOXE honours prefers-reduced-motion (AnimatedMarkdown, ChatActivity, theme view transitions):
 // report it so wall-clock reveal loops step aside and the film clock paces everything.
 const realMatchMedia = window.matchMedia.bind(window);
 window.matchMedia = q => (/prefers-reduced-motion:\s*reduce/.test(q)

@@ -1,5 +1,5 @@
-/* Ech0 film — frame design system (DIRECTION.md §5). Colours are Ech0's own light tokens
-   (web/src/themes/tokens/semantic.light.scss); type is Ech0's display serif + system sans. */
+/* AXOXE film — frame design system (DIRECTION.md §5). Colours are AXOXE's own light tokens
+   (web/src/themes/tokens/semantic.light.scss); type is AXOXE's display serif + system sans. */
 #film {
   --paper: #f4f1ec; --ink: #33251d; --ink-2: #5b4f46; --ink-3: #8e847d; --rule: #ddd5cd;
   --accent: #b84200; --logo-dot: #f54a00;
@@ -44,7 +44,7 @@ html,body { margin:0; background:#000; }
 .entry-title .u { opacity:0; }
 .entry-sub { margin:34px 0 0; width:560px; font:400 32px/1.38 var(--sans); color:var(--ink-2); }
 
-/* ——— real Ech0 home layer ——— */
+/* ——— real AXOXE home layer ——— */
 #home-layer { position:absolute; inset:0; z-index:10; opacity:0; }
 #home-layer .home-cam { position:absolute; left:0; top:0; width:1920px; height:1080px; will-change:transform; }
 #home-layer .home-host { width:1920px; height:1080px; }
@@ -65,7 +65,7 @@ html,body { margin:0; background:#000; }
 #detail-layer .detail-chip i { width:9px; height:9px; border-radius:50%; background:var(--accent); }
 #detail-cursor { position:absolute; inset:0; z-index:13; pointer-events:none; }
 
-/* ——— real Ech0 admin panel layer ——— */
+/* ——— real AXOXE admin panel layer ——— */
 #panel-layer { position:absolute; inset:0; z-index:12; opacity:0; --mt:-60; --ml:-60;
   -webkit-mask-image: linear-gradient(to bottom, transparent calc(var(--mt) * 1px), #000 calc(var(--mt) * 1px + 40px)), linear-gradient(to right, transparent calc(var(--ml) * 1px), #000 calc(var(--ml) * 1px + 40px));
   -webkit-mask-composite: source-in; mask-composite: intersect; }
@@ -88,9 +88,8 @@ html,body { margin:0; background:#000; }
 
 /* ——— close ——— */
 .close-stage { position:absolute; inset:0; }
-.close-stage .logo { position:absolute; left:560px; top:370px; overflow:visible; opacity:0; }
-.close-copy { position:absolute; left:960px; top:388px; }
-.close-word { font:400 150px/1 var(--serif); letter-spacing:-0.02em; color:var(--ink); height:150px; }
-.close-line { margin-top:26px; font:400 46px/1.2 var(--serif); color:var(--ink); }
+.close-stage .logo { position:absolute; left:540px; top:350px; width:840px; height:232px; opacity:0; }
+.close-copy { position:absolute; left:0; top:620px; width:1920px; text-align:center; }
+.close-line { font:400 46px/1.2 var(--serif); color:var(--ink); }
 .close-line .u { opacity:0; }
 .close-meta { margin-top:28px; font:500 24px/1 var(--mono); letter-spacing:.06em; color:var(--ink-3); opacity:0; }

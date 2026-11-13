@@ -37,7 +37,7 @@
 ## 2. URL 规则
 
 - canonical 与 `og:url` 一律 `绝对 URL`，origin 取**本次请求**的 origin（`internal/util/reqinfo`，支持 `X-Forwarded-Proto/Host`）。
-- **不使用** `server_url` 设置：它出厂默认是 `https://ech0.example.com` 占位值，会把新实例的所有分享卡片指向错误域名；RSS、sitemap、discovery 也都不读它。
+- canonical、分享卡片、RSS、sitemap 和 discovery 均使用本次请求的 origin；不读取 `server_url`，避免用户配置改变内容的实际访问域名。
 - canonical 只取 path，不带 query。
 
 ## 3. 索引与状态码
@@ -74,32 +74,27 @@ sitemap 通过 `CommonService.ListSitemapEntries` 只查询 `id, created_at`，�
 
 ## 6. 品牌视觉与封面
 
-分享卡片共用一套固定语言，避免每张图各画各的：
+AXOXE 的 [品牌规范](../brand/README.md) 和 SVG 源文件是视觉的统一来源。
 
 | 元素 | 值 |
 | --- | --- |
-| 纸底 | `#FFFFFF → #FFFBF4` 轻暖白，左上微亮 |
-| 墨色 | `#141210`（标题）/ `#6f6154`（说明）/ `#a3947f`（页脚） |
-| 强调 | `#f54a00`（唯一品牌色，用于句点与标记圆点） |
-| 冷调点 | `#9db2ff`（只在球体右上做一层极淡的腮红，避免橙色发闷） |
-| 字体 | 标题 Avenir Next / SF Pro Display Bold，负字距；信息行同族 Regular |
-| 图形母题 | 柔边渐变「球体」+ 两枚白色胶囊眼睛：把品牌标记的脸做成可复用的社交形象 |
+| 纸底 | `#f4f1ec` |
+| 墨色 | `#29231e` |
+| 点缀 | `#b84200` 暖铜色 |
+| 图形 | 四条对角笔画、开放圆环与一个铜色圆点 |
+| 字标 | 路径绘制的 `AXOXE`，不依赖字体 |
+| 标语 | `Where moments stay.` |
 
-- `web/public/og-cover.jpg`：1200×630（1.91:1），JPEG q≈88，约 73 KB（低于 WhatsApp 建议的 300 KB）。
-- 版式：左侧 `Ech0` 字标 + 两行主张 + 说明 + 域名；右侧球体出血到右下角，视觉重心偏右。
-- 生成器与源文件：`docs/assets/og-cover/{generate.mjs,og-cover.svg}`（纯 Bun、无依赖、确定性输出）。
-- 提供 `og:image:width/height/type/alt`；echo 使用自有图片时移除尺寸声明（未知）。
-- `Ech0.png` 仍作为 JSON-LD 的 publisher logo；`Ech0.svg` 供 RSS 使用。
-- `docs/assets/social-preview/` 是 GitHub 仓库预览（1280×640），用途不同，勿混用。
+`web/public/og-cover.jpg` 为 1200×630 的分享封面；同版 PNG 存在于 `web/public/og-cover.png`。`axoxe.png` 用于 publisher logo，`axoxe.svg` 用于 RSS。旧资产地址作为兼容别名返回同一套 AXOXE 图案。
 
-重新生成：
+生成 SVG、PNG 与 ICO：
 
 ```bash
-bun docs/assets/og-cover/generate.mjs
-sips -s format png docs/assets/og-cover/og-cover.svg --out /tmp/og@2x.png
-sips -z 630 1200 /tmp/og@2x.png --out /tmp/og.png
-sips -s format jpeg -s formatOptions 88 /tmp/og.png --out web/public/og-cover.jpg
+npm install --prefix /tmp/axoxe-brand-tools @resvg/resvg-js
+AXOXE_BRAND_TOOLS=/tmp/axoxe-brand-tools node scripts/generate-brand-assets.mjs
 ```
+
+JPEG 分享图可由生成的 PNG 导出。保留 `og:image:width/height/type/alt`；当条目使用自有图片时，不填未知尺寸。
 
 ## 7. 验证
 

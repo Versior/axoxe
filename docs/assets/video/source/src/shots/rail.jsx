@@ -1,5 +1,5 @@
 // The film's own timeline: one orange dot + a rail, with each chapter caption laid out like an
-// Ech0 timeline entry (dot · accent label · content). The dot is the same dot from the opening.
+// AXOXE timeline entry (dot · accent label · content). The dot is the same dot from the opening.
 import React from 'react';
 import {Split, reveal} from '../kit/text.jsx';
 import {shot, shots} from '../engine.js';

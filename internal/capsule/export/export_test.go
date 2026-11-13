@@ -36,7 +36,7 @@ const (
 )
 
 var testSite = settingModel.SystemSetting{
-	SiteTitle:     "Ech0 测试站",
+	SiteTitle:     "AXOXE 测试站",
 	ServerLogo:    "https://example.com/logo.png",
 	ServerName:    "linsnow",
 	ServerURL:     "https://example.com",

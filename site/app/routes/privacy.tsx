@@ -19,15 +19,15 @@ import privacyZh from "../../content/privacy/zh.md?raw";
 export function meta({ loaderData, location }: Route.MetaArgs) {
   const locale = loaderData?.locale ?? localeFromPathname(location.pathname);
   if (!loaderData) {
-    return [{ title: "Privacy — Ech0" }];
+    return [{ title: "Privacy — AXOXE" }];
   }
   return [
-    { title: `${loaderData.title} — Ech0` },
+    { title: `${loaderData.title} — AXOXE` },
     {
       name: "description",
       content: loaderData.description || loaderData.title,
     },
-    { property: "og:title", content: `${loaderData.title} — Ech0` },
+    { property: "og:title", content: `${loaderData.title} — AXOXE` },
     {
       property: "og:url",
       content: absoluteUrl(alternateLocalePath("/privacy", locale)),

@@ -1,6 +1,6 @@
 # Release Process
 
-This document describes how to cut a new release of Ech0.
+This document describes how to cut a new release of AXOXE.
 
 ## TL;DR
 
@@ -19,7 +19,7 @@ The rest of this document explains *why* each step exists and how to handle edge
 
 ## Versioning
 
-Ech0 follows [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html):
+AXOXE follows [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html):
 
 - **MAJOR** (`X.Y.Z` → `(X+1).0.0`) — breaking changes to the API, auth model, storage layout, config keys, or anything else self-hosted operators rely on. Requires migration notes in CHANGELOG.
 - **MINOR** (`X.Y.Z` → `X.(Y+1).0`) — backwards-compatible new features.
@@ -38,7 +38,7 @@ const (
 )
 ```
 
-Everywhere else (`/hello`, `/healthz`, the About page, `ech0 version`, MCP server identification, connect federation) reads from this single const. Build-time metadata (`Commit`, `BuildTime`) is injected via `-ldflags -X` from the justfile / Dockerfile / release workflow.
+Everywhere else (`/hello`, `/healthz`, the About page, `axoxe version`, MCP server identification, connect federation) reads from this single const. Build-time metadata (`Commit`, `BuildTime`) is injected via `-ldflags -X` from the justfile / Dockerfile / release workflow.
 
 **Never edit the version string in any other file.** If you find a hardcoded version anywhere, that is a bug to fix, not a place to also bump.
 
@@ -92,8 +92,8 @@ Every release commit updates [`CHANGELOG.md`](../../CHANGELOG.md) atomically wit
 2. Open a new empty `## [Unreleased]` section above it (with empty `### Added`, `### Changed`, `### Deprecated`, `### Removed`, `### Fixed`, `### Security` sub-headings as you need them — don't include empty sections in the published version, but keep the template at the top for the next dev cycle).
 3. Update the link references at the bottom:
    ```
-   [Unreleased]: https://github.com/lin-snow/Ech0/compare/v4.6.5...HEAD
-   [4.6.5]: https://github.com/lin-snow/Ech0/compare/v4.6.4...v4.6.5
+   [Unreleased]: https://github.com/Versior/Ech0/compare/v4.6.5...HEAD
+   [4.6.5]: https://github.com/Versior/Ech0/compare/v4.6.4...v4.6.5
    ```
 
 CHANGELOG entries should be written for **users / operators**, not developers. Prefer:
@@ -153,7 +153,7 @@ After the workflow completes:
 
 ## CLI release (independent)
 
-The `ech0` CLI (`apps/cli`) is versioned independently from the server, starting at `0.1.0`.
+The `axoxe` CLI (`apps/cli`) is versioned independently from the server, starting at `0.1.0`.
 [`apps/cli/package.json`](../../apps/cli/package.json) is the source of truth; server releases do
 not build or publish the CLI.
 
@@ -180,8 +180,8 @@ The tag pushes [`release-cli.yml`](../../.github/workflows/release-cli.yml), whi
 - Verifies `cli-vX.Y.Z` matches `apps/cli/package.json`, then compiles
   `darwin/{arm64,x64}` and `linux/{arm64,x64}` with `bun build --compile`.
 - Creates the `cli-vX.Y.Z` GitHub Release when it does not exist and uploads
-  `ech0-cli-<os>-<arch>.tar.gz` plus `SHA256SUMS`.
-- Publishes `@useech0/cli` and one `@useech0/cli-<os>-<arch>` package per platform to npm. Prerelease
+  `axoxe-cli-<os>-<arch>.tar.gz` plus `SHA256SUMS`.
+- Publishes `@axoxe/cli` and one `@axoxe/cli-<os>-<arch>` package per platform to npm. Prerelease
   versions publish to npm's `next` dist-tag, stable ones to `latest`; already-published versions
   are skipped.
 - Does not touch the repo-wide "Latest" release pointer (`gh release create --latest=false`): the
@@ -192,17 +192,17 @@ The tag pushes [`release-cli.yml`](../../.github/workflows/release-cli.yml), whi
 npm publishing uses **trusted publishing (OIDC)**, not a token — there is no `NPM_TOKEN` secret.
 Tokens that bypass 2FA are being retired for publishing, and a 2FA-guarded one fails the publish
 step with `EOTP`, which is why the workflow no longer reads a token. For each of the five packages
-(`@useech0/cli`, `@useech0/cli-darwin-arm64`, `@useech0/cli-darwin-x64`, `@useech0/cli-linux-arm64`,
-`@useech0/cli-linux-x64`) add a trusted publisher on npmjs.com → package → Settings → Trusted
+(`@axoxe/cli`, `@axoxe/cli-darwin-arm64`, `@axoxe/cli-darwin-x64`, `@axoxe/cli-linux-arm64`,
+`@axoxe/cli-linux-x64`) add a trusted publisher on npmjs.com → package → Settings → Trusted
 publishing, or from the CLI (npm ≥ 11.15.0, account 2FA on, package already published):
 
 ```bash
-npm trust github @useech0/cli --repo lin-snow/Ech0 --file release-cli.yml --allow-publish
+npm trust github @axoxe/cli --repo Versior/Ech0 --file release-cli.yml --allow-publish
 # ...one call per platform package; `--allow-publish` is required — configurations created after
 # 2026-09-03 default to staged publishing only.
 ```
 
-The workflow's `release-cli.yml` name, the `lin-snow/Ech0` repository and the `id-token: write`
+The workflow's `release-cli.yml` name, the `Versior/Ech0` repository and the `id-token: write`
 permission must all match. A new trust configuration expires after 2 days unless the first publish
 succeeds, and provenance is then generated automatically.
 
@@ -229,9 +229,9 @@ re-run.
 Verify after it finishes:
 
 ```bash
-gh release view cli-vX.Y.Z                 # ech0-cli-*.tar.gz + SHA256SUMS present
-npm view @useech0/cli@X.Y.Z version           # package on npm
-npx -y @useech0/cli --version                 # matches X.Y.Z
+gh release view cli-vX.Y.Z                 # axoxe-cli-*.tar.gz + SHA256SUMS present
+npm view @axoxe/cli@X.Y.Z version           # package on npm
+npx -y @axoxe/cli --version                 # matches X.Y.Z
 ```
 
 To reproduce locally, run `just cli dist X.Y.Z` (outputs binaries, tarballs and publishable npm

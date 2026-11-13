@@ -1,17 +1,17 @@
 # 存储迁移指南：更换 S3 服务商与本地 ⇄ 对象存储互迁
 
-本文说明在 Ech0 中两类常见运维场景的可行做法与注意事项：
+本文说明在 AXOXE 中两类常见运维场景的可行做法与注意事项：
 
 1. **更换 S3 兼容存储**（换服务商、换桶、换 Endpoint/CDN 等，仍使用对象存储）。
 2. **本地文件存储**与**对象存储（S3）**之间的**双向迁移**。
 
 > **重要**：当前版本**没有**提供「一键迁移」或图形化迁移向导；下列流程需在理解数据格式的前提下，由管理员自行使用对象存储工具、脚本与数据库操作完成。操作前请**完整备份**数据库与文件。
 
-> **视频等大文件建议放对象存储（S3）**：Ech0 支持上传图片、音频、视频（视频默认单文件上限 64 MiB，可用 `ECH0_UPLOAD_VIDEO_MAX_SIZE` 调整）。视频体积远大于图片，且**快照导出会把整个 `data/` 目录打包成 zip**——本地存放大量视频会同时撑大磁盘占用与每次备份的体积。若计划频繁上传视频，建议将存储切换到对象存储（S3），本地仅保留数据库快照。
+> **视频等大文件建议放对象存储（S3）**：AXOXE 支持上传图片、音频、视频（视频默认单文件上限 64 MiB，可用 `ECH0_UPLOAD_VIDEO_MAX_SIZE` 调整）。视频体积远大于图片，且**快照导出会把整个 `data/` 目录打包成 zip**——本地存放大量视频会同时撑大磁盘占用与每次备份的体积。若计划频繁上传视频，建议将存储切换到对象存储（S3），本地仅保留数据库快照。
 
 ---
 
-## 1. 必读：Ech0 如何表示与定位文件
+## 1. 必读：AXOXE 如何表示与定位文件
 
 ### 1.1 `files` 表中的关键字段
 
@@ -45,8 +45,8 @@
 
 **假设：**
 
-- 管理员上传文件 `screenshot.png`，服务端生成的扁平 **`key`**（入库）为：  
-  `a1b2c3d4_1735689600_deadbeef.png`  
+- 管理员上传文件 `screenshot.png`，服务端生成的扁平 **`key`**（入库）为：\
+  `a1b2c3d4_1735689600_deadbeef.png`\
   （格式大致为：用户 ID 缩略 + Unix 时间戳 + 随机后缀 + 扩展名，见 `internal/storage/keygen.go`。）
 - **`PathPrefix`**（管理后台 S3 设置或 `ECH0_S3_PATH_PREFIX`）配置为：`prod/ech0`（无首尾斜杠，合并时会规范化）。
 - **对象存储**：桶名为 `my-ech0-bucket`，Endpoint 为 `s3.example.com`，**未**配置 CDN（`CDNURL` 为空）。
@@ -113,7 +113,7 @@ data/files/images/a1b2c3d4_1735689600_deadbeef.png
 | 访问方式 | 典型 URL 形态 | 服务端实现要点 | 当前前端主要用途 |
 |----------|----------------|----------------|------------------|
 | **本地静态文件** | `/api/files/images/…`（相对路径，再拼站点 base） | `Engine.Static("api/files", DataRoot)`，URL 路径直接映射磁盘（`internal/router/modules.go`） | **Echo 时间线、画廊、编辑器**等：通过 `getFileUrl` 使用入库的 `url`，本地多为本表第一行 |
-| **对象存储直链** | `https://` 桶域名或 **CDN** + 路径 | **无 Ech0 读盘**：浏览器直连 S3/CDN | 同上；`getFileUrl` 见绝对 URL 则原样使用（`web/src/utils/other.ts`） |
+| **对象存储直链** | `https://` 桶域名或 **CDN** + 路径 | **无 AXOXE 读盘**：浏览器直连 S3/CDN | 同上；`getFileUrl` 见绝对 URL 则原样使用（`web/src/utils/other.ts`） |
 | **按文件 ID 取流** | `GET /api/file/:id/stream` | `StreamFileByID`：用 **`key` + 当前存储配置** `Get`，**不用** `url`（`internal/service/file/file.go`） | **仅管理端**：`TheStorageFileList.vue` 中「下载」调用 `fetchDownloadFileById`（`web/src/service/api/file.ts`） |
 | **按存储路径取流** | `GET /api/file/stream?storage_type=…&path=…` | `StreamFileByPath`：管理员按路径读 | **仅管理端**：同上文件树，无 `file_id` 时 `fetchDownloadFileByPath` 兜底 |
 | **外链重定向** | 同上 ID 流式路由但 `storage_type=external` | **302** 到 `File.url` | 外链文件场景 |
@@ -127,28 +127,28 @@ data/files/images/a1b2c3d4_1735689600_deadbeef.png
 
 上传或创建文件时，接口返回并持久化 **`File.url`**。前端统一通过 **`getFileUrl` / `getImageUrl`**（`web/src/utils/other.ts`）解析：
 
-1. **`url` 为 `http(s)://` 绝对地址**（对象存储入库时常见）  
-   - 浏览器**直接请求该 URL**，即**按入库时的直链快照**访问桶或 CDN。  
+1. **`url` 为 `http(s)://` 绝对地址**（对象存储入库时常见）\
+   - 浏览器**直接请求该 URL**，即**按入库时的直链快照**访问桶或 CDN。\
    - **换 S3、换 CDN、换自定义域名**后，若库中 **`url` 未更新**，容易出现裂图或旧域名。
 
-2. **`url` 为相对路径**（本地常见：`/api/files/...`）  
-   - 与 **`VITE_SERVICE_BASE_URL`** 拼接后请求本站。  
+2. **`url` 为相对路径**（本地常见：`/api/files/...`）\
+   - 与 **`VITE_SERVICE_BASE_URL`** 拼接后请求本站。\
    - 对应 **§1.3.1** 表格第一行：由 **Gin Static** 直接读 **`DataRoot`** 下文件，**不经过** `StreamFileByID`。
 
 因此：**时间线/卡片上的图、音频封面等，默认不是「stream API」**；**对象**以 **HTTPS 直链**为主，**本地**以 **`/api/files/...` 静态**为主。
 
 #### 1.3.3 本地静态映射（与 stream 的区分）
 
-- 注册方式：`ctx.Engine.Static("api/files", root)`，`root` 为配置中的 **`DataRoot`**（默认 `data/files`）。  
-- 浏览器请求 `GET /api/files/images/xxx.png` 时，等价于读磁盘 `data/files/images/xxx.png`（路径与 `schema.Resolve(key)` 一致）。  
+- 注册方式：`ctx.Engine.Static("api/files", root)`，`root` 为配置中的 **`DataRoot`**（默认 `data/files`）。\
+- 浏览器请求 `GET /api/files/images/xxx.png` 时，等价于读磁盘 `data/files/images/xxx.png`（路径与 `schema.Resolve(key)` 一致）。\
 - **这是前台本地媒体的主路径**；除非产品改为全部走代理，否则**不必**用 `/api/file/:id/stream` 展示本地图。
 
 #### 1.3.4 `stream` API：服务端行为与前端调用面
 
 **按 ID：`GET /api/file/:id/stream`**
 
-- 处理函数：`StreamFileByID`（`internal/service/file/file.go`）。  
-- 对 **`local` / `object`**：使用**当前**合并配置 + 记录中的 **`key`** 调用 `Get`；**不使用** `url` 读字节；**不使用**行内 **`provider` / `bucket`** 选择连接（换桶后对象路径正确时，代理仍可能成功）。  
+- 处理函数：`StreamFileByID`（`internal/service/file/file.go`）。\
+- 对 **`local` / `object`**：使用**当前**合并配置 + 记录中的 **`key`** 调用 `Get`；**不使用** `url` 读字节；**不使用**行内 **`provider` / `bucket`** 选择连接（换桶后对象路径正确时，代理仍可能成功）。\
 - 对 **`external`**：**302** 到 `File.url`。
 
 **按路径：`GET /api/file/stream?storage_type=…&path=…&name=…`**
@@ -186,7 +186,7 @@ data/files/images/a1b2c3d4_1735689600_deadbeef.png
 
 ### 2.2 核心原则
 
-1. **对象字节**：在新桶中的 **Object Key** 必须与**新配置**下的  
+1. **对象字节**：在新桶中的 **Object Key** 必须与**新配置**下的\
    `PathPrefix + schema.Resolve(key)` **一致**（与旧环境对比时，注意旧环境的 `PathPrefix` 是否不同）。
 2. **应用配置**：在管理后台或环境变量中更新 Endpoint、密钥、桶名、`PathPrefix`、`CDNURL`、`UseSSL` 等，并保证 **`ECH0` 进程重载或重启**后使用新配置（`StorageManager` 会从 DB/环境合并配置）。
 3. **数据库**：
@@ -216,7 +216,7 @@ data/files/images/a1b2c3d4_1735689600_deadbeef.png
 | **忽略 `url`** | 界面仍显示旧 CDN 链接或 403；需更新 `url` 或改为使用本站代理 URL。 |
 | **迁移期间双写** | 切换窗口内应避免同一 `key` 在旧桶与新桶被不同版本覆盖；建议维护窗口内只读或停写。 |
 | **`other` 类服务连不上（寻址方式）** | provider 选 `aws` / `minio` / `r2` 时寻址方式由预设决定（minio/r2 为 path-style）；选 **`other`** 默认 virtual-hosted，若目标服务（Ceph、Garage、SeaweedFS 等自建 S3 兼容服务）只支持 path-style，在管理后台打开「Path-Style 访问」开关（或设 `ECH0_S3_USE_PATH_STYLE=true`）。 |
-| **上传成功但图片打不开（COS/OSS 直链形状）** | 腾讯 COS、阿里 OSS 等**只接受 virtual-hosted 直链**（`bucket.endpoint/key`）。无 CDN 域名时，Ech0 生成的公开直链会**跟随 SDK 寻址方式**：`other` 默认按 virtual-hosted 拼 `https://bucket.endpoint/key`，开了 Path-Style 开关或 minio/r2 则拼 `endpoint/bucket/key`。因此这类服务保持 `other`、**不要**开 Path-Style 开关即可；Endpoint 填**地域域名**（如 `cos.<region>.myqcloud.com`，不含 bucket）。注意 `File.url` 是**写入时快照**，改配置只影响此后的新上传，存量记录需重刷 `url` 或改填 CDN 域名。 |
+| **上传成功但图片打不开（COS/OSS 直链形状）** | 腾讯 COS、阿里 OSS 等**只接受 virtual-hosted 直链**（`bucket.endpoint/key`）。无 CDN 域名时，AXOXE 生成的公开直链会**跟随 SDK 寻址方式**：`other` 默认按 virtual-hosted 拼 `https://bucket.endpoint/key`，开了 Path-Style 开关或 minio/r2 则拼 `endpoint/bucket/key`。因此这类服务保持 `other`、**不要**开 Path-Style 开关即可；Endpoint 填**地域域名**（如 `cos.<region>.myqcloud.com`，不含 bucket）。注意 `File.url` 是**写入时快照**，改配置只影响此后的新上传，存量记录需重刷 `url` 或改填 CDN 域名。 |
 
 ---
 
@@ -231,12 +231,12 @@ data/files/images/a1b2c3d4_1735689600_deadbeef.png
 
 设扁平文件名为数据库中的 `key`，则：
 
-- **本地绝对路径（概念）**  
-  `本地根目录 = 配置中的 DataRoot（默认 `data/files`）`  
-  `相对路径 = schema.Resolve(key)`  
+- **本地绝对路径（概念）**\
+  `本地根目录 = 配置中的 DataRoot（默认 `data/files`）`\
+  `相对路径 = schema.Resolve(key)`\
   **完整路径 ≈ `filepath.Join(DataRoot, Resolve 结果)`**（注意操作系统路径分隔符）。
 
-- **对象存储 Object Key（概念）**  
+- **对象存储 Object Key（概念）**\
   **`trim(PathPrefix) + "/" + schema.Resolve(key)`**（与 VireFS `WithPrefix` + `WithObjectKeyFunc(schema.Resolve)` 一致；具体拼接以 VireFS 实现为准，迁移前应用**少量样本**在测试桶验证）。
 
 迁移脚本应对每条 `files` 记录读取 `key`、`storage_type`，仅处理需要从一种后端迁到另一种的行。
@@ -249,10 +249,10 @@ data/files/images/a1b2c3d4_1735689600_deadbeef.png
 2. 启用并正确配置 S3（管理后台或 `ECH0_S3_*` 等环境变量），确认 `PathPrefix` 与计划上传路径一致。
 3. 对每条需迁移的记录：从本地读出文件，上传到目标桶的 **目标 Object Key**（按上一节规则计算）。
 4. 校验对象大小与 Content-Type（可选）。
-5. 在事务或分批中更新 SQLite：  
-   - `storage_type = 'object'`  
-   - 填写新的 `provider`、`bucket`  
-   - 按当前配置重算或写入 **`url`**  
+5. 在事务或分批中更新 SQLite：\
+   - `storage_type = 'object'`\
+   - 填写新的 `provider`、`bucket`\
+   - 按当前配置重算或写入 **`url`**\
 6. 确认应用读取正常后，**再删除**本地对应文件（或先改名目录做回滚备份）。
 
 ### 3.4 对象存储 → 本地
@@ -260,12 +260,12 @@ data/files/images/a1b2c3d4_1735689600_deadbeef.png
 **目标**：文件只保留在本地磁盘，记录改为 `local`。
 
 1. 备份数据库；确保磁盘空间与 `DataRoot` 权限足够。
-2. 对每条需迁移的记录：从桶中按 **Object Key** 下载到  
-   `DataRoot + "/" + schema.Resolve(key)`  
+2. 对每条需迁移的记录：从桶中按 **Object Key** 下载到\
+   `DataRoot + "/" + schema.Resolve(key)`\
    （需创建子目录，与本地 FS 布局一致）。
-3. 更新 SQLite：  
-   - `storage_type = 'local'`  
-   - `provider` / `bucket` 可置空或与项目约定一致（注意唯一索引是否允许空字符串，需与现有数据约束一致）  
+3. 更新 SQLite：\
+   - `storage_type = 'local'`\
+   - `provider` / `bucket` 可置空或与项目约定一致（注意唯一索引是否允许空字符串，需与现有数据约束一致）\
    - 更新 **`url`** 为本地访问方式（例如本站 `/api/files/...` 类路径，以当前部署为准）
 4. 验证代理访问后，再从桶中删除对象（或生命周期策略延后删除）。
 

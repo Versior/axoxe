@@ -180,7 +180,7 @@ const getPopoverPanelClass = (tagId: string) => {
   return 'absolute left-1/2 z-[60] mt-1 -translate-x-1/2 transform'
 }
 
-const handleFilterByTag = (tag: App.Api.Ech0.Tag) => {
+const handleFilterByTag = (tag: App.Api.AXOXE.Tag) => {
   if (!tag) return
 
   echoStore.filteredTag = tag

@@ -10,7 +10,7 @@ type StaticAdapter = typeof StaticAdapterModule
 
 const SECOND = 1_770_000_000
 
-const echo = (id: string, createdAt: number): App.Api.Ech0.Echo => ({
+const echo = (id: string, createdAt: number): App.Api.AXOXE.Echo => ({
   id,
   content: `content ${id}`,
   username: 'owner',
@@ -28,7 +28,7 @@ const baseDataset = {
   generated_at: SECOND,
   base_url: '/blog/',
   init_status: { initialized: true, owner_exists: true },
-  settings: { site_title: 'Ech0' },
+  settings: { site_title: 'AXOXE' },
   hello: { hello: 'hi' },
   agent: { enable: false },
   tags: [],
@@ -36,12 +36,12 @@ const baseDataset = {
   comments: [],
   comment_form: { enable_comment: false },
   connects: [],
-  connect: { server_name: 'Ech0' },
+  connect: { server_name: 'AXOXE' },
 }
 
 // Every case needs its own module instance because the dataset is memoized per
 // module; a static import cannot be re-evaluated, so the test reloads it.
-async function loadAdapter(echos: App.Api.Ech0.Echo[]): Promise<StaticAdapter> {
+async function loadAdapter(echos: App.Api.AXOXE.Echo[]): Promise<StaticAdapter> {
   vi.resetModules()
   const payload = { ...baseDataset, echos } as unknown as StaticDataset
   vi.stubGlobal(
@@ -53,9 +53,9 @@ async function loadAdapter(echos: App.Api.Ech0.Echo[]): Promise<StaticAdapter> {
 
 const query = async (
   adapter: StaticAdapter,
-  body: Partial<App.Api.Ech0.EchoQueryParams>,
-): Promise<App.Api.Ech0.PaginationResult> => {
-  const res = await adapter.handleStaticRequest<App.Api.Ech0.PaginationResult>(
+  body: Partial<App.Api.AXOXE.EchoQueryParams>,
+): Promise<App.Api.AXOXE.PaginationResult> => {
+  const res = await adapter.handleStaticRequest<App.Api.AXOXE.PaginationResult>(
     '/api/echo/query',
     'POST',
     body,
@@ -64,7 +64,7 @@ const query = async (
   return res.data
 }
 
-const ids = (page: App.Api.Ech0.PaginationResult): string[] => page.items.map((item) => item.id)
+const ids = (page: App.Api.AXOXE.PaginationResult): string[] => page.items.map((item) => item.id)
 
 beforeAll(() => {
   window.__ECH0_STATIC_BASE__ = '/blog/'
@@ -147,7 +147,7 @@ describe('static adapter keyset ordering', () => {
 
   it('cursor 与 reactions 排序组合返回错误而不是空页', async () => {
     const adapter = await loadAdapter([echo('e-a', SECOND)])
-    const res = await adapter.handleStaticRequest<App.Api.Ech0.PaginationResult>(
+    const res = await adapter.handleStaticRequest<App.Api.AXOXE.PaginationResult>(
       '/api/echo/query',
       'POST',
       { pageSize: 2, cursor: '', sortBy: 'reactions' },
@@ -161,7 +161,7 @@ describe('static adapter keyset ordering', () => {
 
   it('非法 cursor 返回错误而不是空页', async () => {
     const adapter = await loadAdapter([echo('e-a', SECOND)])
-    const res = await adapter.handleStaticRequest<App.Api.Ech0.PaginationResult>(
+    const res = await adapter.handleStaticRequest<App.Api.AXOXE.PaginationResult>(
       '/api/echo/query',
       'POST',
       { pageSize: 2, cursor: 'not-a-cursor' },

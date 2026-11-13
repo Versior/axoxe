@@ -22,7 +22,7 @@ const TheImageGallery = defineAsyncComponent(() => import('./image/TheImageGalle
 
 const props = withDefaults(
   defineProps<{
-    echo: App.Api.Ech0.Echo | App.Api.Hub.Echo
+    echo: App.Api.AXOXE.Echo | App.Api.Hub.Echo
     layout?: string
     baseUrl?: string
     priority?: boolean

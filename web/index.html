@@ -9,54 +9,54 @@
     <!--ECH0_SEO_START-->
     <meta
       name="description"
-      content="Ech0 is a next-generation open-source self-hosted platform built for individuals. It is lightweight and low-cost, making it easy to publish and share your ideas, writing, and links."
+      content="AXOXE is a next-generation open-source self-hosted platform built for individuals. It is lightweight and low-cost, making it easy to publish and share your ideas, writing, and links."
     />
     <meta name="robots" content="index,follow,max-image-preview:large" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Ech0" />
-    <meta property="og:title" content="Ech0" />
+    <meta property="og:site_name" content="AXOXE" />
+    <meta property="og:title" content="AXOXE" />
     <meta
       property="og:description"
-      content="Ech0 is a next-generation open-source self-hosted platform built for individuals. It is lightweight and low-cost, making it easy to publish and share your ideas, writing, and links."
+      content="AXOXE is a next-generation open-source self-hosted platform built for individuals. It is lightweight and low-cost, making it easy to publish and share your ideas, writing, and links."
     />
     <meta property="og:url" content="/" />
     <meta property="og:image" content="/og-cover.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Ech0" />
+    <meta property="og:image:alt" content="AXOXE" />
     <meta property="og:locale" content="zh_CN" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Ech0" />
+    <meta name="twitter:title" content="AXOXE" />
     <meta
       name="twitter:description"
-      content="Ech0 is a next-generation open-source self-hosted platform built for individuals. It is lightweight and low-cost, making it easy to publish and share your ideas, writing, and links."
+      content="AXOXE is a next-generation open-source self-hosted platform built for individuals. It is lightweight and low-cost, making it easy to publish and share your ideas, writing, and links."
     />
     <meta name="twitter:image" content="/og-cover.jpg" />
-    <meta name="twitter:image:alt" content="Ech0" />
+    <meta name="twitter:image:alt" content="AXOXE" />
 
-    <title>Ech0</title>
+    <title>AXOXE</title>
 
     <script id="website-jsonld" type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Ech0",
-        "description": "Ech0 is a next-generation open-source self-hosted platform built for individuals. It is lightweight and low-cost, making it easy to publish and share your ideas, writing, and links.",
+        "name": "AXOXE",
+        "description": "AXOXE is a next-generation open-source self-hosted platform built for individuals. It is lightweight and low-cost, making it easy to publish and share your ideas, writing, and links.",
         "url": "/",
         "publisher": {
           "@type": "Organization",
-          "name": "Ech0 Team",
-          "logo": "/Ech0.png"
+          "name": "AXOXE Team",
+          "logo": "/axoxe.png"
         },
-        "sameAs": ["https://github.com/lin-snow/Ech0"]
+        "sameAs": ["https://github.com/Versior/Ech0"]
       }
     </script>
     <!--ECH0_SEO_END-->
 
-    <link rel="alternate" type="application/atom+xml" title="Ech0 Atom Feed" href="/rss" />
+    <link rel="alternate" type="application/atom+xml" title="AXOXE Atom Feed" href="/rss" />
 
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
@@ -66,7 +66,7 @@
 
     <link rel="manifest" href="/app.webmanifest" />
     <meta name="theme-color" content="#f4f1ec" />
-    <meta name="author" content="Ech0 Team" />
+    <meta name="author" content="AXOXE Team" />
     <script>
       // The app theme is a user choice, not the OS preference. Resolve it before the first
       // paint so no browser surface (PWA title bar / status bar, UA canvas behind transparent
@@ -86,7 +86,7 @@
         document.querySelector('meta[name="theme-color"]')?.setAttribute('content', fallback[theme])
       })()
     </script>
-    <meta name="generator" content="Ech0" />
+    <meta name="generator" content="AXOXE" />
 
     <style>
       html.app-loading,
@@ -138,40 +138,12 @@
         margin: 0;
         display: flex;
         justify-content: center;
-        text-align: center;
-        font-family: 'Iowan Old Style', 'Palatino Linotype', 'Noto Serif SC', ui-serif, Georgia, serif;
-        font-size: 42px;
-        line-height: 1;
-        letter-spacing: 0.06em;
-        color: #7a5436;
-        text-shadow: 0 6px 24px rgba(139, 99, 58, 0.2);
         animation: brand-fade-up 0.7s ease-out both;
       }
 
-      #app-loader .loader-brand span {
-        display: inline-block;
-        transform-origin: 50% 100%;
-        animation: letter-hop 2s ease-in-out infinite;
-      }
-
-      #app-loader .loader-brand span:nth-child(odd) {
-        --tilt: -4deg;
-      }
-
-      #app-loader .loader-brand span:nth-child(even) {
-        --tilt: 4deg;
-      }
-
-      #app-loader .loader-brand span:nth-child(2) {
-        animation-delay: 0.09s;
-      }
-
-      #app-loader .loader-brand span:nth-child(3) {
-        animation-delay: 0.18s;
-      }
-
-      #app-loader .loader-brand span:nth-child(4) {
-        animation-delay: 0.27s;
+      #app-loader .loader-brand img {
+        width: 224px;
+        height: 62px;
       }
 
       #app-loader p {
@@ -201,23 +173,6 @@
         visibility: hidden;
       }
 
-      @keyframes letter-hop {
-        0%,
-        40%,
-        100% {
-          transform: translateY(0) scale(1) rotate(0deg);
-        }
-        10% {
-          transform: translateY(0.04em) scale(1.08, 0.92) rotate(0deg);
-        }
-        22% {
-          transform: translateY(-0.3em) scale(0.96, 1.05) rotate(var(--tilt, 0deg));
-        }
-        32% {
-          transform: translateY(0) scale(1.06, 0.94) rotate(0deg);
-        }
-      }
-
       @keyframes brand-fade-up {
         from {
           opacity: 0;
@@ -240,7 +195,6 @@
 
       @media (prefers-reduced-motion: reduce) {
         #app-loader .loader-brand,
-        #app-loader .loader-brand span,
         #app-loader p,
         #app-loader p::after {
           animation: none;
@@ -255,11 +209,8 @@
       <!--ECH0_NOSCRIPT_END-->
     </div>
     <div id="app-loader">
-      <h1 class="loader-brand" aria-label="Ech0">
-        <span aria-hidden="true">E</span>
-        <span aria-hidden="true">c</span>
-        <span aria-hidden="true">h</span>
-        <span aria-hidden="true">0</span>
+      <h1 class="loader-brand">
+        <img src="/axoxe-wordmark.svg" alt="Axoxe" width="224" height="62" />
       </h1>
       <p lang="en">A little moment, please</p>
     </div>

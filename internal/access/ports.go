@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2025-2026 lin-snow
 
-// Package access owns the lifecycle primitive for Ech0 access tokens: policy
+// Package access owns the lifecycle primitive for AXOXE access tokens: policy
 // validation, JWT minting and persistence. The settings domain keeps the admin
 // CRUD surface; the device flow and the OAuth authorization server depend on
 // this package instead of the whole settings aggregate.

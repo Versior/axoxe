@@ -5,7 +5,7 @@
     <h1
       class="text-4xl md:text-6xl italic font-bold font-serif text-center text-[var(--color-text-muted)] mb-8"
     >
-      Ech0 Widget
+      AXOXE Widget
     </h1>
 
     <div class="px-8 mb-2">

@@ -9,7 +9,7 @@
         <h1
           class="text-4xl md:text-6xl italic font-bold font-serif text-center text-[var(--color-text-muted)]"
         >
-          Ech0 Hub
+          AXOXE Hub
         </h1>
 
         <div class="w-full max-w-sm mx-auto">

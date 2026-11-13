@@ -3,7 +3,7 @@ title: Single sign-on (SSO)
 description: Configuring and troubleshooting third-party OAuth, OIDC, and Passkey (beginner-friendly)
 ---
 
-"Single sign-on" means you don't need to remember a separate password just for Ech0: you can sign in with a **GitHub / Google / QQ** account, or go passwordless with a **Passkey (fingerprint, face, or security key)**. In the admin panel, go to **System settings → SSO** to configure **OAuth2** and **Passkey** separately; both can be enabled at the same time, and users choose on the sign-in page as needed.
+"Single sign-on" means you don't need to remember a separate password just for AXOXE: you can sign in with a **GitHub / Google / QQ** account, or go passwordless with a **Passkey (fingerprint, face, or security key)**. In the admin panel, go to **System settings → SSO** to configure **OAuth2** and **Passkey** separately; both can be enabled at the same time, and users choose on the sign-in page as needed.
 
 ---
 
@@ -21,18 +21,18 @@ description: Configuring and troubleshooting third-party OAuth, OIDC, and Passke
 
 Think of the flow as "going to a bank counter for a co-branded card":
 
-1. The user clicks "Sign in with GitHub" on Ech0.
-2. The browser **jumps to GitHub**, where the user signs in and **authorizes** permissions such as "allow Ech0 to read your public profile".
-3. GitHub brings the user **back** to your Ech0 site, along with a one-time **authorization code**.
-4. The Ech0 server exchanges the authorization code with GitHub for a **token**, fetches the user's profile, **creates or matches a local account**, and finally completes the sign-in.
+1. The user clicks "Sign in with GitHub" on AXOXE.
+2. The browser **jumps to GitHub**, where the user signs in and **authorizes** permissions such as "allow AXOXE to read your public profile".
+3. GitHub brings the user **back** to your AXOXE site, along with a one-time **authorization code**.
+4. The AXOXE server exchanges the authorization code with GitHub for a **token**, fetches the user's profile, **creates or matches a local account**, and finally completes the sign-in.
 
-The **redirect URI** is "where GitHub must send the user back to" in step 3 — it must **exactly match** the address shown in Ech0 (scheme, domain, path, and trailing slash must all match), otherwise you get **Redirect URI mismatch**.
+The **redirect URI** is "where GitHub must send the user back to" in step 3 — it must **exactly match** the address shown in AXOXE (scheme, domain, path, and trailing slash must all match), otherwise you get **Redirect URI mismatch**.
 
-**OIDC** can be understood as "an upgraded OAuth": besides the access token, it also provides an **id_token** (JWT), which suits enterprise IdPs (such as Keycloak, Authentik). After enabling the OIDC-related options in Ech0, fields such as Issuer and JWKS are validated.
+**OIDC** can be understood as "an upgraded OAuth": besides the access token, it also provides an **id_token** (JWT), which suits enterprise IdPs (such as Keycloak, Authentik). After enabling the OIDC-related options in AXOXE, fields such as Issuer and JWKS are validated.
 
 ### 2. What Passkey is doing (in plain terms)
 
-A Passkey replaces the password with **biometrics or a hardware security key on your device**: the browser and Ech0 communicate using the **WebAuthn** standard.  
+A Passkey replaces the password with **biometrics or a hardware security key on your device**: the browser and AXOXE communicate using the **WebAuthn** standard.\
 There are two easily confused settings:
 
 | Setting                       | In plain terms                                                                         | Example                    |
@@ -56,21 +56,21 @@ Both must match the domain **actually used** in the browser's address bar. Chang
 
 ### What the callback address looks like
 
-Ech0 uses this path (note: **no** `/api` prefix):
+AXOXE uses this path (note: **no** `/api` prefix):
 
 ```text
 https://your-site-domain/oauth/<provider>/callback
 ```
 
-Here `<provider>` can only be **`github`**, **`google`**, **`qq`**, or **`custom`** matching the template (commonly used for custom/OIDC).  
+Here `<provider>` can only be **`github`**, **`google`**, **`qq`**, or **`custom`** matching the template (commonly used for custom/OIDC).\
 The **OAuth2** page in the admin panel shows the **auto-generated Redirect URI**; **copy it verbatim** into the third-party platform, and **do not change the path or add slashes**.
 
-### What to fill in Ech0
+### What to fill in AXOXE
 
 1. Create an OAuth application on the third-party platform and obtain the **Client ID** and **Client Secret**.
 2. Open **System settings → SSO → OAuth2**, enable the switch, and choose a template: **GitHub / Google / QQ / Custom**.
 3. Fill the **Redirect URI** shown on the page back into the third-party platform.
-4. Enter the **Client ID / Secret** into Ech0; set **Scope** to just what is needed, for example:
+4. Enter the **Client ID / Secret** into AXOXE; set **Scope** to just what is needed, for example:
    - GitHub: `read:user` (read public profile)
    - Google: commonly `openid`, `email`, `profile` (follow the current console requirements)
 5. If you use **OIDC** (a custom IdP), complete **Issuer, JWKS URL**, and so on in the interface; after saving, the server validates the **id_token**.
@@ -92,7 +92,7 @@ The **OAuth2** page in the admin panel shows the **auto-generated Redirect URI**
 **QQ**
 
 1. Create a website application at [QQ Connect](https://connect.qq.com/); after it passes review, obtain the **APP ID / APP Key**.
-2. For the **callback address**, enter: `https://your-domain/oauth/qq/callback` (matching the Ech0 admin panel).
+2. For the **callback address**, enter: `https://your-domain/oauth/qq/callback` (matching the AXOXE admin panel).
 
 **Custom / OIDC**
 
@@ -101,7 +101,7 @@ The **OAuth2** page in the admin panel shows the **auto-generated Redirect URI**
 
 ### "Authorization callback" and CORS (when changes are needed)
 
-If you access the same backend from **multiple frontend domains** (for example `https://a.com` and `https://b.com`), you may need to configure **Auth Redirect Allowed Return URLs** and **CORS Allowed Origins** in the OAuth advanced settings; otherwise the **redirect** or **cross-origin requests** after a successful sign-in will be rejected.  
+If you access the same backend from **multiple frontend domains** (for example `https://a.com` and `https://b.com`), you may need to configure **Auth Redirect Allowed Return URLs** and **CORS Allowed Origins** in the OAuth advanced settings; otherwise the **redirect** or **cross-origin requests** after a successful sign-in will be rejected.\
 For a typical **single-domain self-hosted** setup, the defaults are fine; after changing them, save and make sure they match the site address used by the reverse proxy and environment variables.
 
 ### Linking to an existing account
@@ -142,7 +142,7 @@ Both can be enabled at once: users can sign in with a third-party account, and a
 
 | Error or symptom                       | What to check                                                                                                                                    |
 | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Redirect URI mismatch**              | The callback configured on the third party must match Ech0's **character for character**; check `http`/`https`, the trailing `/`, and subdomains |
+| **Redirect URI mismatch**              | The callback configured on the third party must match AXOXE's **character for character**; check `http`/`https`, the trailing `/`, and subdomains |
 | **Invalid client**                     | Client ID/Secret copied incorrectly, or the app is not enabled or has not finished review                                                        |
 | OAuth redirects back but sign-in fails | Check whether the scope includes the permission needed to fetch user info; for OIDC, check Issuer/JWKS                                           |
 | Passkey does not respond               | Whether the browser supports it; whether the site uses HTTPS; whether RP ID/Origins match the address bar                                        |

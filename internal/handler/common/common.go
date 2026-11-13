@@ -104,7 +104,7 @@ func (commonHandler *CommonHandler) GetRss(ctx *gin.Context) {
 
 func (commonHandler *CommonHandler) HelloEch0(ctx context.Context, _ *HelloInput) (HelloOutput, error) {
 	hello := HelloResponse{
-		Hello:     "Hello, Ech0! 👋",
+		Hello:     "Hello, AXOXE! 👋",
 		Copyright: versionPkg.Copyright(),
 		Info:      versionPkg.Get(),
 	}

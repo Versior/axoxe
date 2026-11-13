@@ -81,7 +81,7 @@ type VideoMeta = { duration: number; width: number; height: number }
 
 const props = withDefaults(
   defineProps<{
-    files?: App.Api.Ech0.FileObject[]
+    files?: App.Api.AXOXE.FileObject[]
     baseUrl?: string
   }>(),
   { files: () => [] },

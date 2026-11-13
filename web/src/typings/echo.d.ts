@@ -3,7 +3,7 @@
 
 declare namespace App {
   namespace Api {
-    namespace Ech0 {
+    namespace AXOXE {
       type EchoExtensionType = 'MUSIC' | 'VIDEO' | 'GITHUBPROJ' | 'WEBSITE' | 'LOCATION' | 'TWEET'
       type EchoExtension =
         | { type: 'MUSIC'; payload: { url: string } }

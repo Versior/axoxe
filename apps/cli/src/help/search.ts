@@ -106,7 +106,7 @@ export function suggestions(ids: readonly string[], words: readonly string[]): s
     .map(({ id }) => id);
 }
 
-/** Walks dotted ids and spaced words alike: `echo.create` names `ech0 echo create`. */
+/** Walks dotted ids and spaced words alike: `echo.create` names `axoxe echo create`. */
 export function resolvePath(root: Command, words: readonly string[]): Command | undefined {
   const path = words.flatMap((word) => word.split(".")).filter((word) => word !== "");
   if (path.length === 0) return root;

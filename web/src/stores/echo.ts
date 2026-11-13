@@ -13,9 +13,9 @@ const PAGE_SIZE = TIMELINE_BASE_PAGE_SIZE
 type LoadPhase = 'first' | 'more'
 
 export const useEchoStore = defineStore('echoStore', () => {
-  const normalizeEchoId = (echo: App.Api.Ech0.Echo): string => String(echo?.id ?? '').trim()
+  const normalizeEchoId = (echo: App.Api.AXOXE.Echo): string => String(echo?.id ?? '').trim()
 
-  const echoList = ref<App.Api.Ech0.Echo[]>([])
+  const echoList = ref<App.Api.AXOXE.Echo[]>([])
   const echoIndexMap = ref(new Map<string, number>())
   const isLoading = ref<boolean>(true)
   const hasFetched = ref<boolean>(false)
@@ -42,13 +42,13 @@ export const useEchoStore = defineStore('echoStore', () => {
 
   const searchValue = ref<string>('')
   const searchingMode = computed(() => searchValue.value.length > 0)
-  const echoToUpdate = ref<App.Api.Ech0.EchoToUpdate | null>(null)
+  const echoToUpdate = ref<App.Api.AXOXE.EchoToUpdate | null>(null)
 
-  const tagList = ref<App.Api.Ech0.Tag[]>([])
+  const tagList = ref<App.Api.AXOXE.Tag[]>([])
   const tagOptions = computed<string[]>(() => tagList.value.map((tag) => tag.name))
 
   const isFilteringMode = ref<boolean>(false)
-  const filteredTag = ref<App.Api.Ech0.Tag | null>(null)
+  const filteredTag = ref<App.Api.AXOXE.Tag | null>(null)
 
   const dateFrom = ref<number | null>(null)
   const dateTo = ref<number | null>(null)
@@ -57,7 +57,7 @@ export const useEchoStore = defineStore('echoStore', () => {
   const selectedTagIds = ref<string[]>([])
   const isTagSelectionActive = computed(() => selectedTagIds.value.length > 0)
 
-  const visibilityFilter = ref<App.Api.Ech0.EchoVisibilityFilter>('all')
+  const visibilityFilter = ref<App.Api.AXOXE.EchoVisibilityFilter>('all')
   const isVisibilityFilterActive = computed(() => visibilityFilter.value !== 'all')
 
   const pageFull = computed(() => echoList.value.length >= TIMELINE_PAGE_ITEMS)
@@ -107,8 +107,8 @@ export const useEchoStore = defineStore('echoStore', () => {
     }
   })
 
-  function buildQueryParams(): App.Api.Ech0.EchoQueryParams {
-    const params: App.Api.Ech0.EchoQueryParams = {
+  function buildQueryParams(): App.Api.AXOXE.EchoQueryParams {
+    const params: App.Api.AXOXE.EchoQueryParams = {
       page: 1,
       pageSize: pageSize.value,
       search: searchValue.value || undefined,
@@ -174,7 +174,7 @@ export const useEchoStore = defineStore('echoStore', () => {
     }
   }
 
-  const normalizeItems = (items: App.Api.Ech0.Echo[] | undefined): App.Api.Ech0.Echo[] =>
+  const normalizeItems = (items: App.Api.AXOXE.Echo[] | undefined): App.Api.AXOXE.Echo[] =>
     (items ?? []).map((item) => ({ ...item, id: normalizeEchoId(item) }))
 
   const rebuildIndex = () => {
@@ -185,7 +185,7 @@ export const useEchoStore = defineStore('echoStore', () => {
     echoIndexMap.value = nextIndex
   }
 
-  const appendDeduped = (items: App.Api.Ech0.Echo[]) => {
+  const appendDeduped = (items: App.Api.AXOXE.Echo[]) => {
     const seen = new Set(echoList.value.map((item) => item.id))
     items.forEach((item) => {
       if (!item.id || seen.has(item.id)) return
@@ -396,14 +396,14 @@ export const useEchoStore = defineStore('echoStore', () => {
     hasFetched.value = false
   }
 
-  const updateEcho = (echo: App.Api.Ech0.Echo) => {
+  const updateEcho = (echo: App.Api.AXOXE.Echo) => {
     const idx = echoIndexMap.value.get(echo.id)
     if (idx !== undefined) {
       echoList.value[idx] = echo
     }
   }
 
-  const replaceEcho = (echo: App.Api.Ech0.Echo) => {
+  const replaceEcho = (echo: App.Api.AXOXE.Echo) => {
     const idx = echoIndexMap.value.get(echo.id)
     if (idx === undefined) return
     echoList.value[idx] = { ...echo, id: normalizeEchoId(echo) }
@@ -418,7 +418,7 @@ export const useEchoStore = defineStore('echoStore', () => {
     rebuildIndex()
   }
 
-  const setEchoReactions = (echoId: string, reactions: App.Api.Ech0.ReactionCount[]) => {
+  const setEchoReactions = (echoId: string, reactions: App.Api.AXOXE.ReactionCount[]) => {
     const idx = echoIndexMap.value.get(echoId)
     if (idx === undefined) return
     const targetEcho = echoList.value[idx]
@@ -426,9 +426,9 @@ export const useEchoStore = defineStore('echoStore', () => {
     echoList.value[idx] = { ...targetEcho, reactions }
   }
 
-  const pendingEchoMap = new Map<string, Promise<App.Api.Ech0.Echo | null>>()
+  const pendingEchoMap = new Map<string, Promise<App.Api.AXOXE.Echo | null>>()
 
-  const prefetchEcho = (echoId: string): Promise<App.Api.Ech0.Echo | null> => {
+  const prefetchEcho = (echoId: string): Promise<App.Api.AXOXE.Echo | null> => {
     const id = String(echoId ?? '').trim()
     if (!id) return Promise.resolve(null)
 
@@ -440,7 +440,7 @@ export const useEchoStore = defineStore('echoStore', () => {
     const existing = pendingEchoMap.get(id)
     if (existing) return existing
 
-    const promise: Promise<App.Api.Ech0.Echo | null> = fetchGetEchoById(id)
+    const promise: Promise<App.Api.AXOXE.Echo | null> = fetchGetEchoById(id)
       .then((res) => {
         if (res.code === 1 && res.data) {
           return res.data
@@ -450,7 +450,7 @@ export const useEchoStore = defineStore('echoStore', () => {
       .catch(() => null)
       .finally(() => {
         pendingEchoMap.delete(id)
-      }) as Promise<App.Api.Ech0.Echo | null>
+      }) as Promise<App.Api.AXOXE.Echo | null>
 
     pendingEchoMap.set(id, promise)
     return promise

@@ -1,11 +1,11 @@
 ---
 title: MCP integration
-description: Connect Ech0 to AI clients such as Cursor and Claude
+description: Connect AXOXE to AI clients such as Cursor and Claude
 ---
 
-Once MCP is connected, you can read and write your own Ech0 right from an AI client: browse the timeline, post, read comments, and manage webhooks without switching to the web UI.
+Once MCP is connected, you can read and write your own AXOXE right from an AI client: browse the timeline, post, read comments, and manage webhooks without switching to the web UI.
 
-Ech0 ships its own MCP server on the same address and port as the site, so there is nothing extra to deploy.
+AXOXE ships its own MCP server on the same address and port as the site, so there is nothing extra to deploy.
 
 ---
 

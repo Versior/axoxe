@@ -1,5 +1,5 @@
 <!--
-Thanks for contributing to Ech0!
+Thanks for contributing to AXOXE!
 Please keep this PR focused on a single change. For larger work, split into smaller reviewable PRs.
 -->
 

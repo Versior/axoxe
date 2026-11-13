@@ -3,6 +3,7 @@
 
 import { useEffect, useState, type ReactNode } from 'react'
 import { Icon, type IconName } from './components/Icon'
+import { Wordmark } from './components/Wordmark'
 import { Components } from './pages/Components'
 import { Foundations } from './pages/Foundations'
 import { Home } from './pages/Home'
@@ -49,7 +50,7 @@ export default function App() {
 
   useEffect(() => {
     const active = route.page === 'home' ? null : pages.find((item) => item.id === route.page)
-    document.title = active ? `Ech0 — ${active.label}` : 'Ech0 — Design Assets'
+    document.title = active ? `AXOXE — ${active.label}` : 'AXOXE — Design Assets'
 
     if (!route.anchor) {
       window.scrollTo(0, 0)
@@ -78,8 +79,7 @@ export default function App() {
       <aside className="gallery-rail">
         <div className="brand">
           <div className="brand__row">
-            <span className="brand__name">echo</span>
-            <span className="square" aria-hidden="true" />
+            <Wordmark />
           </div>
           <span className="brand__meta">
             DESIGN SYSTEM

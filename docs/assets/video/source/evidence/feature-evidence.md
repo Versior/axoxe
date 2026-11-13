@@ -1,4 +1,4 @@
-# Feature evidence (Ech0 v5.7.0, released) — every on-screen claim
+# Feature evidence (AXOXE v5.7.0, released) — every on-screen claim
 
 | feature / benefit | status / release | source | component on screen | demoState | limits |
 |---|---|---|---|---|---|
@@ -10,7 +10,7 @@
 | Timeline of notes, photos and website cards | released | TheEchoCard.vue, WebsiteCard.vue, README.md#L115 | TheEchos (real), gallery, WebsiteCard | 5 fictional Echos + 2 generated photos | Photos are original procedural images (tools/make_photos.py) |
 | RSS | released | README.md#L107, #L186; HomeHeader.vue (RSS link) | real header RSS icon | — | RSS reader not shown |
 | Comments | released | README.md#L125; TheCommentWidget.vue | Status tab Comment widget (real) | 3 fictional comments | Comment form not shown |
-| Connect other Ech0 instances | released | TheConnectWidget.vue; README FAQ #8/#10 | Status tab Connect widget (real) | 4 fictional instances, generated avatars | — |
+| Connect other AXOXE instances | released | TheConnectWidget.vue; README FAQ #8/#10 | Status tab Connect widget (real) | 4 fictional instances, generated avatars | — |
 | Copilot chat over your own posts, with retrieval + cited sources, streamed | released | README.md#L144; web/src/views/chat/modules/TheChatBox.vue; web/src/service/api/chat.ts (SSE events) | real TheChatBox; SSE frames parsed by the real client | scripted SSE (searching/sources/coverage/delta/done) released by film time | Answer text is scripted, not produced by a model |
 | Copilot Recap card (seen on Status tab) | released | README.md#L144; TheRecentCard.vue | real widget | fixture summary | — |
 | Admin dashboard: totals, 7-day activity and visitor charts | released | web/src/views/panel/modules/TheDashboard.vue | real PanelView → TheDashboard | fixture totals (486 Echos), 7-day visitor stats | numbers are demo data |

@@ -16,7 +16,7 @@ const (
 
 	Author = "L1nSn0w"
 
-	RepoURL = "https://github.com/lin-snow/Ech0"
+	RepoURL = "https://github.com/Versior/Ech0"
 
 	StartYear = 2025
 )

@@ -18,9 +18,9 @@ export function meta(_args: Route.MetaArgs) {
     {
       name: "keywords",
       content:
-        "Ech0, microblog, self-hosted, timeline, open source, blog, personal website, RSS alternative, memo",
+        "AXOXE, microblog, self-hosted, timeline, open source, blog, personal website, RSS alternative, memo",
     },
-    { name: "author", content: "Ech0" },
+    { name: "author", content: "AXOXE" },
     { name: "application-name", content: SITE_NAME },
     { name: "robots", content: "index, follow" },
     { name: "theme-color", content: "#f6f4f0" },
@@ -38,7 +38,7 @@ export function meta(_args: Route.MetaArgs) {
     { property: "og:image:height", content: String(OG_IMAGE_HEIGHT) },
     {
       property: "og:image:alt",
-      content: "Ech0 web interface showing a personal timeline feed",
+      content: "AXOXE web interface showing a personal timeline feed",
     },
     { property: "og:locale", content: "en_US" },
     { name: "twitter:card", content: "summary_large_image" },
@@ -47,7 +47,7 @@ export function meta(_args: Route.MetaArgs) {
     { name: "twitter:image", content: imageUrl },
     {
       name: "twitter:image:alt",
-      content: "Ech0 web interface showing a personal timeline feed",
+      content: "AXOXE web interface showing a personal timeline feed",
     },
   ];
 }
@@ -98,9 +98,9 @@ function buildHomeJsonLd() {
         screenshot: imageUrl,
         applicationCategory: "WebApplication",
         operatingSystem: "Linux, Docker, self-hosted",
-        license: "https://github.com/lin-snow/Ech0/blob/main/LICENSE",
-        codeRepository: "https://github.com/lin-snow/Ech0",
-        sameAs: ["https://github.com/lin-snow/Ech0"],
+        license: "https://github.com/Versior/Ech0/blob/main/LICENSE",
+        codeRepository: "https://github.com/Versior/Ech0",
+        sameAs: ["https://github.com/Versior/Ech0"],
         offers: {
           "@type": "Offer",
           price: "0",
@@ -120,17 +120,13 @@ export default function Home() {
         <a
           href="/"
           className="flex items-center gap-2.5 text-sand-12 no-underline"
+          aria-label="AXOXE"
         >
-          <img
-            src="/logo.svg"
-            alt="Ech0"
-            width={28}
-            height={28}
-            className="size-7 shrink-0 rounded-sm"
+          <span
+            aria-hidden="true"
+            className="block h-8 w-35 bg-current"
+            style={{ mask: "url(/wordmark.svg) center / contain no-repeat" }}
           />
-          <span className="text-[0.95rem] font-medium tracking-tight">
-            Ech0
-          </span>
         </a>
         <Link
           to="/docs"
@@ -145,7 +141,7 @@ export default function Home() {
         <div className="overflow-hidden rounded-xl shadow-[0_16px_40px_-12px_rgba(33,32,28,0.12)] ring-1 ring-sand-6/70">
           <img
             src="/screenshot.png"
-            alt="Ech0 interface preview"
+            alt="AXOXE interface preview"
             className="block w-full align-middle"
             width={1412}
             height={1131}
@@ -186,7 +182,7 @@ export default function Home() {
         {}
         <section className={`${dashedSection} text-left`}>
           <h2 className="font-serif text-[1.2rem] font-semibold leading-snug tracking-[-0.02em] text-sand-12">
-            Why Ech0?
+            Why AXOXE?
           </h2>
           <p className="mt-5 font-serif text-base italic leading-snug text-sand-11">
             One timeline, entirely yours.
@@ -195,7 +191,7 @@ export default function Home() {
             <p>
               If you want a corner of the web that feels like{" "}
               <em className="not-italic font-medium text-sand-12">yours</em>—not
-              someone else&rsquo;s feed, not a rented profile—Ech0 is a small,
+              someone else&rsquo;s feed, not a rented profile—AXOXE is a small,
               self-hosted microblog: one calm stream for what you publish,
               running on hardware you control.
             </p>
@@ -208,7 +204,7 @@ export default function Home() {
 
         <section className={dashedSection}>
           <h2 className="font-serif text-[1.2rem] font-semibold leading-snug tracking-[-0.02em] text-sand-12">
-            What can Ech0 do for you?
+            What can AXOXE do for you?
           </h2>
           <ol className="mt-6 list-decimal space-y-5 pl-[1.35rem] text-[0.9375rem] leading-[1.6] text-sand-11 marker:font-serif marker:text-[0.95rem] marker:text-sand-11 sm:pl-6">
             <li>
@@ -286,7 +282,7 @@ export default function Home() {
           </a>
           <span className="mx-2 text-sand-6">·</span>
           <a
-            href="https://github.com/lin-snow/Ech0"
+            href="https://github.com/Versior/Ech0"
             className="font-medium underline-offset-4 transition-colors hover:text-sand-12"
           >
             GitHub

@@ -26,10 +26,10 @@ import (
 )
 
 const (
-	defaultSiteTitle   = "Ech0"
-	defaultDescription = "Ech0 is a next-generation open-source self-hosted platform built for individuals. It is lightweight and low-cost, making it easy to publish and share your ideas, writing, and links."
+	defaultSiteTitle   = "AXOXE"
+	defaultDescription = "AXOXE is a next-generation open-source self-hosted platform built for individuals. It is lightweight and low-cost, making it easy to publish and share your ideas, writing, and links."
 	defaultCoverImage  = "/og-cover.jpg"
-	defaultLogoImage   = "/Ech0.png"
+	defaultLogoImage   = "/axoxe.png"
 	defaultLang        = "zh-CN"
 
 	coverImageWidth  = 1200
@@ -77,43 +77,43 @@ var notFoundRoute = spaRoute{
 var spaRoutes = map[string]spaRoute{
 	"/": {
 		title:       "Home",
-		description: "Ech0 home timeline for publishing and browsing thoughts, notes, and links.",
+		description: "AXOXE home timeline for publishing and browsing thoughts, notes, and links.",
 	},
 	"/publish": {
 		title:       "Home",
-		description: "Ech0 home timeline for publishing and browsing thoughts, notes, and links.",
+		description: "AXOXE home timeline for publishing and browsing thoughts, notes, and links.",
 	},
 	"/hub": {
 		title:       "Hub",
-		description: "Discover and explore curated content in Ech0 hub.",
+		description: "Discover and explore curated content in AXOXE hub.",
 	},
 	"/about": {
 		title:       "About",
-		description: "Copyright, license and author information for this Ech0 instance.",
+		description: "Copyright, license and author information for this AXOXE instance.",
 	},
 	"/auth": {
 		title:       "Sign In",
-		description: "Sign in to your Ech0 workspace.",
+		description: "Sign in to your AXOXE workspace.",
 		noindex:     true,
 	},
 	"/device": {
 		title:       "Device Authorization",
-		description: "Approve a CLI sign-in request for this Ech0 instance.",
+		description: "Approve a CLI sign-in request for this AXOXE instance.",
 		noindex:     true,
 	},
 	"/oauth/authorize": {
 		title:       "MCP Authorization",
-		description: "Approve an MCP client request for this Ech0 instance.",
+		description: "Approve an MCP client request for this AXOXE instance.",
 		noindex:     true,
 	},
 	"/widget": {
 		title:       "Widget",
-		description: "Ech0 embeddable widget.",
+		description: "AXOXE embeddable widget.",
 		noindex:     true,
 	},
 	"/init": {
 		title:       "Initialize",
-		description: "Initialize your Ech0 instance.",
+		description: "Initialize your AXOXE instance.",
 		noindex:     true,
 	},
 	"/chat": {
@@ -130,7 +130,7 @@ var spaRoutes = map[string]spaRoute{
 
 var panelRoute = spaRoute{
 	title:       "Panel",
-	description: "Ech0 management panel.",
+	description: "AXOXE management panel.",
 	noindex:     true,
 }
 
@@ -594,7 +594,7 @@ func websiteJSONLD(siteTitle, description, origin string) string {
 			"url":   origin,
 			"logo":  origin + defaultLogoImage,
 		},
-		"sameAs": []string{"https://github.com/lin-snow/Ech0"},
+		"sameAs": []string{"https://github.com/Versior/Ech0"},
 	})
 }
 

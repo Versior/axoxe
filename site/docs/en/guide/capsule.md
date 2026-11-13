@@ -20,7 +20,7 @@ Both can “back up”, but their goals are completely different.
 
 In one sentence: to back up “the whole machine”, use a snapshot; to take “what I wrote” with you, use a capsule.
 
-Neither requires a terminal anymore: exporting and importing capsules can also be clicked in the **web panel** — Panel → Data control, pick “Capsule” in the “Export” tab and “Ech0 capsule” in the “Import” tab. The CLI stays exactly as it was; both paths are equivalent, so use whichever is handier.
+Neither requires a terminal anymore: exporting and importing capsules can also be clicked in the **web panel** — Panel → Data control, pick “Capsule” in the “Export” tab and “AXOXE capsule” in the “Import” tab. The CLI stays exactly as it was; both paths are equivalent, so use whichever is handier.
 
 > **Never treat a capsule as a backup.** A capsule contains content only — no accounts, passwords, or credentials of any kind. On the day you actually need to rebuild an instance, it returns your posts and images, but not “who can sign in to this site” — users and sign-in methods exist only in snapshots. Use snapshots for regular backups; capsules are for moving and archiving.
 
@@ -49,7 +49,7 @@ tags:
 The body goes here, saved verbatim.
 ```
 
-Even if Ech0 disappears one day, these files open in any editor.
+Even if AXOXE disappears one day, these files open in any editor.
 
 ---
 
@@ -58,10 +58,10 @@ Even if Ech0 disappears one day, these files open in any editor.
 These require a **binary installation** (Docker users can `docker exec` into the container). All commands run from the instance root directory — the one containing `data/`.
 
 ```bash
-ech0 export capsule   [-o ./capsule] [--include-private] [--zip]
-ech0 import capsule   [<path>=./capsule] [--include-private] [--dry-run]
-ech0 check            [<path>=./capsule] [--fix]
-ech0 build            [<path>=./capsule] [-o ./dist] [--base-url /]
+axoxe export capsule   [-o ./capsule] [--include-private] [--zip]
+axoxe import capsule   [<path>=./capsule] [--include-private] [--dry-run]
+axoxe check            [<path>=./capsule] [--fix]
+axoxe build            [<path>=./capsule] [-o ./dist] [--base-url /]
 ```
 
 Two of them have web counterparts; the other two run only from the CLI:
@@ -69,15 +69,15 @@ Two of them have web counterparts; the other two run only from the CLI:
 | Command          | What it does                       | Web entry point                                         |
 | ---------------- | ---------------------------------- | ------------------------------------------------------- |
 | `export capsule` | Export content as a capsule        | Yes: Data control → Export → Capsule                    |
-| `import capsule` | Import a capsule into the instance | Yes: Data control → Import → Ech0 capsule               |
+| `import capsule` | Import a capsule into the instance | Yes: Data control → Import → AXOXE capsule               |
 | `check`          | Validate a capsule                 | No, CLI only (web import validates automatically first) |
 | `build`          | Compile into a static site         | No, CLI only                                            |
 
 While we're at it — snapshots now have CLI entry points too, so you can put them straight into cron:
 
 ```bash
-ech0 export snapshot  [-o ./snapshot.zip]
-ech0 import snapshot  <snapshot.zip> --yes    # destructive, explicit confirmation required
+axoxe export snapshot  [-o ./snapshot.zip]
+axoxe import snapshot  <snapshot.zip> --yes    # destructive, explicit confirmation required
 ```
 
 ---
@@ -85,7 +85,7 @@ ech0 import snapshot  <snapshot.zip> --yes    # destructive, explicit confirmati
 ## Export
 
 ```bash
-ech0 export capsule -o ./my-capsule
+axoxe export capsule -o ./my-capsule
 ```
 
 - **Private Echoes are excluded by default.** To take them along, add `--include-private` — capsules are not encrypted, so don't casually push them to a public repository.
@@ -106,8 +106,8 @@ Capsules exported from the web are zips. If you want the directory form you can 
 ## Validation
 
 ```bash
-ech0 check ./my-capsule
-ech0 check ./my-capsule --fix
+axoxe check ./my-capsule
+axoxe check ./my-capsule --fix
 ```
 
 There are two levels, **errors** and **warnings**: errors make import and build refuse to run, while warnings are only advisories. Common warnings:
@@ -122,8 +122,8 @@ There are two levels, **errors** and **warnings**: errors make import and build 
 ## Import
 
 ```bash
-ech0 import capsule ./my-capsule --dry-run   # show the manifest first, write nothing
-ech0 import capsule ./my-capsule
+axoxe import capsule ./my-capsule --dry-run   # show the manifest first, write nothing
+axoxe import capsule ./my-capsule
 ```
 
 A few key points:
@@ -135,7 +135,7 @@ A few key points:
 
 ### Importing from the web
 
-Panel → Data control → Import, choose “Ech0 capsule” as the source, and upload the zip you exported. There is the same “Include private content” toggle, off by default. Progress goes **validate → import → done**.
+Panel → Data control → Import, choose “AXOXE capsule” as the source, and upload the zip you exported. There is the same “Include private content” toggle, off by default. Progress goes **validate → import → done**.
 
 The page reassures you with two points up front, and this is where capsule import differs most from “snapshot import”:
 
@@ -150,11 +150,11 @@ For scale: an instance with 287 Echoes and 170 files exports to 114 MB and impor
 
 ```bash
 # old instance
-ech0 export capsule -o ./capsule --include-private
+axoxe export capsule -o ./capsule --include-private
 
 # copy capsule/ to the new machine, then on the new instance
-ech0 check ./capsule
-ech0 import capsule ./capsule --include-private
+axoxe check ./capsule
+axoxe import capsule ./capsule --include-private
 ```
 
 ---
@@ -162,22 +162,22 @@ ech0 import capsule ./capsule --include-private
 ## Building a static site
 
 ```bash
-ech0 build ./my-capsule -o ./dist
-ech0 build ./my-capsule -o ./dist --base-url /blog/   # deploy under a subpath
+axoxe build ./my-capsule -o ./dist
+axoxe build ./my-capsule -o ./dist --base-url /blog/   # deploy under a subpath
 ```
 
 The output is a directory you can drop straight into GitHub Pages, Cloudflare Pages, or object storage:
 
 ```text
 dist/
-  index.html  404.html  assets/…   # full Ech0 frontend, identical to your site's UI
+  index.html  404.html  assets/…   # full AXOXE frontend, identical to your site's UI
   dataset.json                     # pre-baked content data
   api/files/…                      # attachments
-  api/connect                      # Connect card, so other Ech0 instances can still reach you
+  api/connect                      # Connect card, so other AXOXE instances can still reach you
   rss.xml  sitemap.xml
 ```
 
-**No Node or pnpm needed** — the frontend is already embedded in the `ech0` binary.
+**No Node or pnpm needed** — the frontend is already embedded in the `axoxe` binary.
 
 A static site is a **frozen presentation**: like counts and comments render read-only as they were at export time, publish/reply/sign-in entry points hide themselves automatically, and liking shows a notice that this is a static archive. Interaction traces are part of the content's history; hiding them only makes an archive look “deader” than the original site.
 
@@ -193,7 +193,7 @@ A static site is a **frozen presentation**: like counts and comments render read
 
 ## Hand-written and third-party capsules
 
-The capsule format is a **public specification**: you can hand-write one, or write a converter that turns another tool's data into a capsule and import it. The minimum usable Echo needs only `id` and `created_at` — if `id` is missing, generate it with `ech0 check --fix`. Timestamps accept any valid RFC 3339 offset (`+08:00` is fine).
+The capsule format is a **public specification**: you can hand-write one, or write a converter that turns another tool's data into a capsule and import it. The minimum usable Echo needs only `id` and `created_at` — if `id` is missing, generate it with `axoxe check --fix`. Timestamps accept any valid RFC 3339 offset (`+08:00` is fine).
 
 Apart from `id` and `created_at`, missing fields are treated as empty values; the importer will not reject the capsule because of them.
 

@@ -38,7 +38,7 @@ const emit = defineEmits<{
 
 const props = withDefaults(
   defineProps<{
-    image: App.Api.Ech0.FileObject
+    image: App.Api.AXOXE.FileObject
     src: string
     alt: string
     loaded: boolean

@@ -13,13 +13,13 @@ type SeoSystemSetting = {
 }
 
 export const DEFAULT_SEO_DESCRIPTION =
-  'Ech0 is a next-generation open-source self-hosted platform built for individuals. It is lightweight and low-cost, making it easy to publish and share your ideas, writing, and links.'
+  'AXOXE is a next-generation open-source self-hosted platform built for individuals. It is lightweight and low-cost, making it easy to publish and share your ideas, writing, and links.'
 
 const DEFAULT_OG_IMAGE = '/og-cover.jpg'
 const OG_IMAGE_WIDTH = 1200
 const OG_IMAGE_HEIGHT = 630
 const WEBSITE_JSONLD_ID = 'website-jsonld'
-const PROJECT_URL = 'https://github.com/lin-snow/Ech0'
+const PROJECT_URL = 'https://github.com/Versior/Ech0'
 
 const resolvePageTitle = (siteTitle: string, routeTitle: unknown) => {
   if (typeof routeTitle !== 'string') return siteTitle
@@ -180,7 +180,7 @@ export const useSeoHead = (systemSetting: Ref<SeoSystemSetting>) => {
       '@type': 'Organization',
       name: siteTitle,
       url: baseUrl,
-      logo: new URL('/Ech0.png', `${baseUrl}/`).toString(),
+      logo: new URL('/axoxe.png', `${baseUrl}/`).toString(),
     }
 
     updateJsonLd(

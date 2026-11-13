@@ -139,7 +139,7 @@ func (a *Adapter) resourceIntegrationCommentGuide(ctx context.Context, _ string)
 		baseURL = "http://localhost:6277"
 	}
 
-	md := fmt.Sprintf(`# Ech0 Integration Comment Guide
+	md := fmt.Sprintf(`# AXOXE Integration Comment Guide
 
 Integration comments use the **same** server logic whether you call MCP tools or the REST API: trusted JWT, no captcha / form_token, `+"`source: integration`"+` on the stored comment.
 

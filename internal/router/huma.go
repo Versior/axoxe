@@ -18,7 +18,7 @@ import (
 )
 
 const (
-	humaAPITitle   = "Ech0 API 文档"
+	humaAPITitle   = "AXOXE API 文档"
 	humaAPIVersion = "1.0"
 	humaAPIBase    = "/api"
 )

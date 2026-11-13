@@ -14,18 +14,18 @@ export type StaticDataset = {
   base_url: string
   init_status: App.Api.Init.Status
   settings: App.Api.Setting.SystemSetting
-  hello: App.Api.Ech0.HelloEch0
+  hello: App.Api.AXOXE.HelloEch0
   agent: App.Api.Setting.AgentSetting
-  echos: App.Api.Ech0.Echo[]
-  tags: App.Api.Ech0.Tag[]
-  heatmap: App.Api.Ech0.HeatMap
+  echos: App.Api.AXOXE.Echo[]
+  tags: App.Api.AXOXE.Tag[]
+  heatmap: App.Api.AXOXE.HeatMap
   comments: App.Api.Comment.CommentItem[]
   comment_form: App.Api.Comment.FormMeta
   connects: App.Api.Connect.Connected[]
   connect: App.Api.Connect.Connect
 }
 
-type EchoQueryBody = Partial<App.Api.Ech0.EchoQueryParams>
+type EchoQueryBody = Partial<App.Api.AXOXE.EchoQueryParams>
 
 let datasetPromise: Promise<StaticDataset> | null = null
 
@@ -106,7 +106,7 @@ function toUnixSeconds(value: number | string | undefined): number {
   return 0
 }
 
-function publicEchos(dataset: StaticDataset): App.Api.Ech0.Echo[] {
+function publicEchos(dataset: StaticDataset): App.Api.AXOXE.Echo[] {
   return (dataset.echos ?? []).filter((echo) => echo.private !== true)
 }
 
@@ -156,11 +156,11 @@ function decodeEchoCursor(raw: string): EchoCursor | null {
  * instead of truncating the page.
  */
 function cursorBoundary(
-  sorted: App.Api.Ech0.Echo[],
+  sorted: App.Api.AXOXE.Echo[],
   cursor: EchoCursor,
   ascending: boolean,
 ): number {
-  const isAfter = (echo: App.Api.Ech0.Echo): boolean => {
+  const isAfter = (echo: App.Api.AXOXE.Echo): boolean => {
     const createdAt = toUnixSeconds(echo.created_at)
     if (createdAt !== cursor.createdAt) {
       return ascending ? createdAt > cursor.createdAt : createdAt < cursor.createdAt
@@ -195,7 +195,7 @@ function invalidQuery<T>(msg: string, messageKey: string): App.Api.Response<T> {
 function queryEchos(
   dataset: StaticDataset,
   body: EchoQueryBody,
-): App.Api.Response<App.Api.Ech0.PaginationResult> {
+): App.Api.Response<App.Api.AXOXE.PaginationResult> {
   const search = (body.search ?? '').trim().toLowerCase()
   const tagIds = (body.tagIds ?? []).filter((id) => typeof id === 'string' && id !== '')
   const { dateFrom, dateTo } = body
@@ -248,7 +248,7 @@ function queryEchos(
 
   if (cursorMode) {
     if (byReactions) {
-      return invalidQuery<App.Api.Ech0.PaginationResult>(
+      return invalidQuery<App.Api.AXOXE.PaginationResult>(
         'Cursor pagination requires sortBy=created_at',
         'echo.cursor_sort_unsupported',
       )
@@ -258,7 +258,7 @@ function queryEchos(
     if (body.cursor) {
       const cursor = decodeEchoCursor(body.cursor)
       if (!cursor) {
-        return invalidQuery<App.Api.Ech0.PaginationResult>('Invalid cursor', 'echo.invalid_cursor')
+        return invalidQuery<App.Api.AXOXE.PaginationResult>('Invalid cursor', 'echo.invalid_cursor')
       }
       start = cursorBoundary(sorted, cursor, ascending)
     }
@@ -268,7 +268,7 @@ function queryEchos(
     const probe = sorted.slice(start, start + pageSize + 1)
     const items = probe.slice(0, pageSize)
     const last = items[items.length - 1]
-    return ok<App.Api.Ech0.PaginationResult>({
+    return ok<App.Api.AXOXE.PaginationResult>({
       items,
       total: sorted.length,
       nextCursor:
@@ -282,17 +282,17 @@ function queryEchos(
   const page = Number.isFinite(rawPage) && rawPage >= 1 ? Math.trunc(rawPage) : 1
   const start = (page - 1) * pageSize
 
-  return ok<App.Api.Ech0.PaginationResult>({
+  return ok<App.Api.AXOXE.PaginationResult>({
     items: sorted.slice(start, start + pageSize),
     total: sorted.length,
   })
 }
 
-function reactionTotal(echo: App.Api.Ech0.Echo): number {
+function reactionTotal(echo: App.Api.AXOXE.Echo): number {
   return (echo.reactions ?? []).reduce((sum, reaction) => sum + reaction.count, 0)
 }
 
-function echosOnThisDay(dataset: StaticDataset, sameYear: boolean): App.Api.Ech0.Echo[] {
+function echosOnThisDay(dataset: StaticDataset, sameYear: boolean): App.Api.AXOXE.Echo[] {
   const now = new Date()
   return publicEchos(dataset).filter((echo) => {
     const date = new Date(toUnixSeconds(echo.created_at) * 1000)

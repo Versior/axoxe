@@ -12,7 +12,7 @@ export function list(ctx: CliContext): CommandOutput {
   const entries = Object.entries(ctx.config.profiles);
   if (entries.length === 0) {
     return {
-      human: "还没有任何 profile：运行 `ech0 auth login --server <url> --token <token>`",
+      human: "还没有任何 profile：运行 `axoxe auth login --server <url> --token <token>`",
       json: "[]",
     };
   }

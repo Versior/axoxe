@@ -1,5 +1,8 @@
 # 文档索引
 
+> AXOXE is based on Ech0 v5.9.8. Product branding has changed; existing configuration keys and data formats remain compatible. See [brand guide](./brand/README.md).
+
+
 `docs/` 只放**文本**：使用说明、开发约定与设计记录。二进制与产线工程在 [`assets/`](#素材assets)，索引课程见下方"收录规则"。
 
 ## 收录规则
@@ -33,7 +36,7 @@
 | 文档 | 说明 |
 |------|------|
 | [dev/architecture-overview.md](dev/architecture-overview.md) | **架构全景**：进程启动、分层后端、业务领域、Agent/MCP、事件子系统、基础设施与 `pkg/`。新人第一读 |
-| [ech0.app/arch](https://www.ech0.app/arch)（源文件 [site/public/arch/index.html](../site/public/arch/index.html)） | 交互式架构图：进程全景 + `pkg/` 内部结构，浏览器可拖拽缩放 |
+| [AXOXE architecture](../site/public/arch/index.html)（源文件 [site/public/arch/index.html](../site/public/arch/index.html)） | 交互式架构图：进程全景 + `pkg/` 内部结构，浏览器可拖拽缩放 |
 
 ### 流程
 
@@ -73,7 +76,7 @@
 
 ## 商业推演（`business/`）
 
-**假设性沙盘推演，非项目实际计划**。Ech0 当前不打算商业化，此目录只用于完整走一遍"如果要商业化"的决策过程。
+**假设性沙盘推演，非项目实际计划**。AXOXE 当前不打算商业化，此目录只用于完整走一遍"如果要商业化"的决策过程。
 
 | 文档 | 说明 |
 |------|------|
@@ -92,10 +95,10 @@
 
 | 目录 | 内容 |
 |------|------|
-| `assets/architecture/` | 架构图成品：`ech0-architecture-poster.pdf`、`Ech0 Arch.jpeg`、`Ech0 Architecture Atlas · Master System Diagram.html`；`Ech0技术架构图.excalidraw` 为可编辑源码及其 png/svg 导出 |
+| `assets/architecture/` | 架构图成品：HTML、JPEG、单页 PDF；Excalidraw 为可编辑源码，另有 PNG/SVG 导出。兼容旧引用的文件名保留，图内品牌统一为 Axoxe |
 | `assets/screenshots/archive/` | 历史版本截图（v1-v2 … v4.7.3、TUI、旧 mockup、旧架构图）。当前无任何引用，仅作存档；新增截图请放回 `docs/imgs/screenshot.png` 前先确认引用方 |
 | `assets/social-preview/` | GitHub 社交预览模板：`social-preview.html` + 1280×640 的 png/jpg |
-| `assets/carousel/` | 六帧宣传图 `1-6.jpeg` 与设计渲染页 `Ech0_carousel/index.html` |
+| `assets/carousel/` | 六帧宣传图 `1-6.jpeg` 与设计渲染页 `AXOXE_carousel/index.html` |
 | `assets/video/` | 品牌宣传片成片、关键帧与可复现出片工程，说明见 [assets/video/README.md](assets/video/README.md) |
 
 `docs/imgs/` 只保留 4 个对外契约文件：`logo.svg`、`screenshot.png`、`pay.jpeg`、`qq.png`。

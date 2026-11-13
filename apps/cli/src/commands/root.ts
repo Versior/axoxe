@@ -124,7 +124,7 @@ function authCommand(): Command {
     "--token -：从 stdin 读取 access token（CI 也可用 ECH0_TOKEN）",
     "-u <name>：密码登录；管理员会额外铸造 audience=cli 的 1 个月令牌，普通用户保存会话令牌 + refresh cookie",
     `--scopes：只在密码/设备登录铸造令牌时生效，默认 ${auth.DEFAULT_CLI_SCOPES.join(",")}`,
-    "凭据按 profile 保存（ech0 config list 查看）；ECH0_NO_KEYCHAIN=1 可跳过系统钥匙串（强制写文件）",
+    "凭据按 profile 保存（axoxe config list 查看）；ECH0_NO_KEYCHAIN=1 可跳过系统钥匙串（强制写文件）",
   ]);
 
   group
@@ -276,18 +276,18 @@ function localExamples(program: Command): void {
     [
       ["auth", "login"],
       [
-        "ech0 auth login --server https://example.com --device",
-        "ech0 auth login --server https://example.com -u admin",
-        "ech0 auth login --server https://example.com --token -",
+        "axoxe auth login --server https://example.com --device",
+        "axoxe auth login --server https://example.com -u admin",
+        "axoxe auth login --server https://example.com --token -",
       ],
     ],
-    [["auth", "status"], ["ech0 auth status --verify"]],
-    [["info"], ["ech0 info", "ech0 info --json", "ech0 info --server https://example.com"]],
-    [["config", "use"], ["ech0 config use memo"]],
-    [["config", "list"], ["ech0 config list"]],
-    [["catalog", "refresh"], ["ech0 catalog refresh"]],
-    [["install", "skills"], ["ech0 install skills ~/.claude/skills"]],
-    [["help"], ["ech0 help", "ech0 help echo", "ech0 help page"]],
+    [["auth", "status"], ["axoxe auth status --verify"]],
+    [["info"], ["axoxe info", "axoxe info --json", "axoxe info --server https://example.com"]],
+    [["config", "use"], ["axoxe config use memo"]],
+    [["config", "list"], ["axoxe config list"]],
+    [["catalog", "refresh"], ["axoxe catalog refresh"]],
+    [["install", "skills"], ["axoxe install skills ~/.claude/skills"]],
+    [["help"], ["axoxe help", "axoxe help echo", "axoxe help page"]],
   ];
   for (const [path, lines] of examples) {
     const command = nodeAt(program, path);
@@ -295,9 +295,9 @@ function localExamples(program: Command): void {
   }
 }
 
-/** Builds the `ech0` command tree: local commands plus one command per server operation. */
+/** Builds the `axoxe` command tree: local commands plus one command per server operation. */
 export async function createRootCommand(): Promise<Command> {
-  const program = new Command("ech0")
+  const program = new Command("axoxe")
     .description(pkg.description)
     .version(CLI_VERSION, "-v, --version", "显示 CLI 版本")
     .option("--profile <name>", "使用指定 profile")
@@ -377,15 +377,15 @@ export async function createRootCommand(): Promise<Command> {
     entriesUnder(child).some((entry) => commandOp(entry) !== undefined),
   );
   setCommandExamples(program, [
-    "ech0 auth login --server https://example.com --device",
-    "ech0 info",
-    "ech0 help",
-    ...(serverGroup === undefined ? [] : [`ech0 help ${serverGroup.name()}`]),
-    "ech0 catalog refresh",
-    "ech0 install skills ~/.claude/skills",
+    "axoxe auth login --server https://example.com --device",
+    "axoxe info",
+    "axoxe help",
+    ...(serverGroup === undefined ? [] : [`axoxe help ${serverGroup.name()}`]),
+    "axoxe catalog refresh",
+    "axoxe install skills ~/.claude/skills",
   ]);
 
-  program.argument("[words...]", "命令或关键词（与 `ech0 help` 等价）");
+  program.argument("[words...]", "命令或关键词（与 `axoxe help` 等价）");
   program.action((words: string[]) => {
     if (words.length === 0) {
       process.stdout.write(renderHelp(helpModel(program)));
@@ -395,8 +395,8 @@ export async function createRootCommand(): Promise<Command> {
     throw new UsageError(
       [
         `未知命令：${words.join(" ")}`,
-        ...(hints.length === 0 ? [] : [`  是否想运行：${hints.map((id) => `ech0 ${id}`).join("、")}`]),
-        "  运行 `ech0 help` 查看全部命令，或 `ech0 help <关键词>` 搜索",
+        ...(hints.length === 0 ? [] : [`  是否想运行：${hints.map((id) => `axoxe ${id}`).join("、")}`]),
+        "  运行 `axoxe help` 查看全部命令，或 `axoxe help <关键词>` 搜索",
       ].join("\n"),
     );
   });

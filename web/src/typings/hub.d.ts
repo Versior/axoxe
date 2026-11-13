@@ -13,13 +13,13 @@ declare namespace App {
         id: string
         content: string
         username: string
-        echo_files?: Ech0.EchoFile[]
+        echo_files?: AXOXE.EchoFile[]
         tags?: Tag[]
         layout?: string
         private: boolean
         user_id: string
-        extension?: Ech0.EchoExtension | null
-        reactions?: Ech0.ReactionCount[]
+        extension?: AXOXE.EchoExtension | null
+        reactions?: AXOXE.ReactionCount[]
         created_at: number | string
         createdTs: number
         virtual_key: string

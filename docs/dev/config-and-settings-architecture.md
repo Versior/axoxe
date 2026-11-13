@@ -1,6 +1,6 @@
 # 配置与设置的依赖架构（config / setting / kvstore / transaction）
 
-> 本文讲清 Ech0 里「配置」相关的四层——`config`（env + 默认值）、`internal/setting`（设置原语 + seeder）、`kvstore`（KV 存储）、`transaction`（事务）——**谁依赖谁、事务怎么流、读写各走哪条路**。这是一道严肃的架构题：分层划错、读写不分，会直接拖垮可维护性。
+> 本文讲清 AXOXE 里「配置」相关的四层——`config`（env + 默认值）、`internal/setting`（设置原语 + seeder）、`kvstore`（KV 存储）、`transaction`（事务）——**谁依赖谁、事务怎么流、读写各走哪条路**。这是一道严肃的架构题：分层划错、读写不分，会直接拖垮可维护性。
 >
 > 配套：分层后端总览见 [architecture-overview.md](architecture-overview.md)；事务/DI 约定见 `AGENTS.md`。
 
@@ -8,7 +8,7 @@
 
 ## 1. 为什么有「两层配置」，且不能合并
 
-Ech0 的配置分两层，刻意不合并，因为它们的**生命周期**和**可变性**根本不同：
+AXOXE 的配置分两层，刻意不合并，因为它们的**生命周期**和**可变性**根本不同：
 
 | | **Bootstrap 配置** | **运行时设置** |
 |---|---|---|

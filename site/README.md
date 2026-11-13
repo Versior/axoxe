@@ -1,6 +1,6 @@
-# Ech0 — official site & documentation
+# AXOXE — official site & documentation
 
-This package is the **official** landing page and **documentation site** for [Ech0](https://github.com/lin-snow/Ech0). It is a **client-side SPA** (no SSR): React Router 7, React 19, Vite, Tailwind CSS v4, and Markdown-backed docs.
+This package is the **official** landing page and **documentation site** for [AXOXE](https://github.com/Versior/Ech0). It is a **client-side SPA** (no SSR): React Router 7, React 19, Vite, Tailwind CSS v4, and Markdown-backed docs.
 
 ## What lives here
 
@@ -38,7 +38,7 @@ pnpm format       # or pnpm format:check
 
 | Variable        | Purpose                                                                                                                         |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `VITE_SITE_URL` | Canonical site origin (no trailing slash) for OG URLs, JSON-LD, sitemap-related logic. Default in code: `https://www.ech0.app`. |
+| `VITE_SITE_URL` | Canonical site origin (no trailing slash) for OG URLs, JSON-LD, sitemap-related logic. Default in code: `https://www.axoxe.com`. |
 
 When deploying to a custom domain, align `VITE_SITE_URL` and update `public/sitemap.xml` / `public/robots.txt` if needed.
 
@@ -58,4 +58,4 @@ When deploying to a custom domain, align `VITE_SITE_URL` and update `public/site
 
 ## License
 
-Content and code follow the same terms as the parent [Ech0](https://github.com/lin-snow/Ech0) repository unless noted otherwise.
+Content and code follow the same terms as the parent [AXOXE](https://github.com/Versior/Ech0) repository unless noted otherwise.

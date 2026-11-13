@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Served at /arch with or without the trailing slash: every relative asset resolves under /arch/ -->
 <base href="/arch/">
-<title>Ech0 Architecture</title>
-<meta name="description" content="Ech0 交互式架构图：单个 Go 二进制的进程全景，以及 pkg/ 自研库、事件总线、webhook、存储、生命周期的内部结构。">
-<link rel="canonical" href="https://www.ech0.app/arch">
+<title>AXOXE Architecture</title>
+<meta name="description" content="AXOXE 交互式架构图：单个 Go 二进制的进程全景，以及 pkg/ 自研库、事件总线、webhook、存储、生命周期的内部结构。">
+<link rel="canonical" href="https://www.axoxe.com/arch">
 <link rel="icon" href="logo.svg">
 <style>
   :root {
@@ -16,7 +16,7 @@
     --line: #57606a;
     --faint: #d0d7de;
     --bg: #ffffff;
-    --ech0: #e8490a;       /* Ech0's own orange: the process frame, the HTTP entry and the domains */
+    --ech0: #e8490a;       /* AXOXE's own orange: the process frame, the HTTP entry and the domains */
     --pkg: #8250df;        /* pkg/: the in-repo libraries */
     --infra: #0969da;      /* internal/ infrastructure */
     --bus: #bf8700;        /* pub / sub through the event bus */
@@ -24,7 +24,7 @@
     --stream: #1b7c83;     /* SSE / WebSocket streams */
     --ai: #1a7f37;         /* LLM / embedding traffic */
     --store: #cf222e;      /* persistence: disk, SQLite, S3 */
-    --client: #eac54f;     /* Ech0's own clients' frame */
+    --client: #eac54f;     /* AXOXE's own clients' frame */
     --icon-filter: none;   /* monochrome icons are drawn dark; inverted in dark mode */
     --sans: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
     --mono: "SF Mono", Menlo, Consolas, monospace;
@@ -87,7 +87,7 @@
   html { cursor: grab; }
   html.panning, html.panning * { cursor: grabbing; }
 
-  /* About: what Ech0 is and what the filled corner tags mean; the page behind is dimmed */
+  /* About: what AXOXE is and what the filled corner tags mean; the page behind is dimmed */
   #about { width: min(660px, calc(100% - 32px)); margin: auto; padding: 0; color: var(--ink); background: var(--bg); border: 1px solid var(--line); cursor: auto; }
   #about::backdrop { background: rgb(0 0 0 / .45); }
   #about > div { position: relative; padding: 24px 28px 28px; }
@@ -303,8 +303,8 @@
 <main id="page">
 <header>
   <div class="brand">
-    <h1><img src="logo.svg" alt="">Ech0 Architecture</h1>
-    <button id="info" type="button" title="关于 Ech0 与这张图" aria-label="关于 Ech0 与这张图">
+    <h1><img src="logo.svg" alt="">AXOXE Architecture</h1>
+    <button id="info" type="button" title="关于 AXOXE 与这张图" aria-label="关于 AXOXE 与这张图">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
     </button>
     <button id="theme" type="button" title="切换亮 / 暗" aria-label="切换亮 / 暗">
@@ -316,7 +316,7 @@
     </button>
   </div>
   <p>自托管的轻量个人微博（时间线）· 单个 Go 二进制同时提供 REST API 与内嵌 SPA</p>
-  <p class="meta">Author: <a href="https://github.com/lin-snow">L1nSn0w</a> · Repo: <a href="https://github.com/lin-snow/Ech0">https://github.com/lin-snow/Ech0</a> · 依据 main@228fa33b 的代码绘制 · 2026-09-28</p>
+  <p class="meta">Author: <a href="https://github.com/lin-snow">L1nSn0w</a> · Repo: <a href="https://github.com/Versior/Ech0">https://github.com/Versior/Ech0</a> · 依据 main@228fa33b 的代码绘制 · 2026-09-28</p>
   <p class="meta hint">
     <span>✋ 拖拽平移</span>
     <span>🔍 <kbd>⌘</kbd> / <kbd>Ctrl</kbd> + 滚轮或双指捏合缩放</span>
@@ -425,7 +425,7 @@
     <div><div class="name">Webhook 端点</div><div class="sub">校验 X-Ech0-Signature</div></div>
   </div>
 
-  <!-- ===== Outside, top: services Ech0 calls out to ===== -->
+  <!-- ===== Outside, top: services AXOXE calls out to ===== -->
   <div class="zone outside" style="left:1720px; top:40px; width:1840px; height:150px">
     <span class="tag" data-card="thirdparty">外部服务</span>
   </div>
@@ -435,7 +435,7 @@
   </div>
   <div class="node" id="remote" style="left:2080px; top:88px; width:260px; height:64px">
     <img class="mono" src="icons/connect.svg" alt="">
-    <div><div class="name">其他 Ech0 实例</div><div class="sub">connect 互联 · 聚合时间线</div></div>
+    <div><div class="name">其他 AXOXE 实例</div><div class="sub">connect 互联 · 聚合时间线</div></div>
   </div>
   <div class="node" id="embedapi" style="left:2400px; top:88px; width:300px; height:64px">
     <img class="mono" src="icons/openai.svg" alt="">
@@ -479,9 +479,9 @@
     <div><div class="name">S3 兼容存储</div><div class="sub">AWS · MinIO · R2 · CDN</div></div>
   </div>
 
-  <!-- ===== The Ech0 process ===== -->
+  <!-- ===== The AXOXE process ===== -->
   <div class="zone platform" style="left:800px; top:240px; width:3400px; height:1590px">
-    <span class="tag" data-card="platform">Ech0 · 单个 Go 二进制<span class="sub">Go 1.27 · CGO (SQLite + sqlite-vec) · 默认 :6277</span></span>
+    <span class="tag" data-card="platform">AXOXE · 单个 Go 二进制<span class="sub">Go 1.27 · CGO (SQLite + sqlite-vec) · 默认 :6277</span></span>
   </div>
 
   <!-- HTTP entry: global middleware in order, then the posture every route declares -->
@@ -735,7 +735,7 @@
     <b>4 · 投递</b><code>同步 (默认): 发布者 goroutine 内联执行</code><code>异步: 按 key 选 mailbox 入队</code><code>Observer 逐个同步通知</code><code>各订阅者的错误 errors.Join</code>
   </div>
   <div class="card" id="bs5" style="left:1856px; top:1980px; width:396px; height:150px">
-    <b>5 · PublishDone</b><code>OnPublishDone{Matched, Delivered, Err}</code><code>同步订阅的错误回到 Publish</code><code>异步订阅的错误只经 hook</code><code>Ech0: 仅在出错时记日志</code>
+    <b>5 · PublishDone</b><code>OnPublishDone{Matched, Delivered, Err}</code><code>同步订阅的错误回到 Publish</code><code>异步订阅的错误只经 hook</code><code>AXOXE: 仅在出错时记日志</code>
   </div>
 
   <div class="box" id="bs-async" style="left:80px; top:2180px; width:1100px; height:380px">
@@ -761,8 +761,8 @@
   </div>
   <div class="aside" style="left:100px; top:2450px">有 key: FNV-1a 64(key) % n → 同一个 key 永远进同一个 mailbox → 同 key 有序</div>
   <div class="aside" style="left:100px; top:2476px">无 key: round-robin · 只有 1 个 mailbox (Sequential) 时全局 FIFO</div>
-  <div class="aside" style="left:100px; top:2502px">Ech0: AsyncParallel = 2 workers × 128 · AsyncSequential = 1 worker × 64</div>
-  <div class="aside" style="left:100px; top:2528px">Ech0 的 Echo / User / Comment 事件以实体 ID 为 key，ResourceUploaded 以文件 key</div>
+  <div class="aside" style="left:100px; top:2502px">AXOXE: AsyncParallel = 2 workers × 128 · AsyncSequential = 1 worker × 64</div>
+  <div class="aside" style="left:100px; top:2528px">AXOXE 的 Echo / User / Comment 事件以实体 ID 为 key，ResourceUploaded 以文件 key</div>
 
   <div class="box" id="bs-over" style="left:1240px; top:2180px; width:1020px; height:380px; --name-w: 130px">
     <div class="head"><span class="name">Overflow 策略</span><span class="sub">mailbox 满时 · <code>WithOverflow</code> / <code>WithDefaultOverflow</code></span></div>
@@ -772,7 +772,7 @@
       <div class="row"><span>DropNewest</span><code>丢弃新事件 · ErrDropped · OnEventDropped</code></div>
       <div class="row"><span>DropOldest</span><code>弹出最旧一条再入队 · ErrDropped</code></div>
       <div class="row"><span>库默认</span><code>buffer 64 · parallelism 1 · Block · 非法选项让 New panic</code></div>
-      <div class="row"><span>Ech0 覆盖</span><code>ECH0_EVENT_DEFAULT_BUFFER 512 · ECH0_EVENT_DEFAULT_OVERFLOW block</code></div>
+      <div class="row"><span>AXOXE 覆盖</span><code>ECH0_EVENT_DEFAULT_BUFFER 512 · ECH0_EVENT_DEFAULT_OVERFLOW block</code></div>
       <div class="row"><span>Block 的代价</span><code>异步 mailbox 满时，发布者会阻塞在 Publish 上</code></div>
       <div class="row"><span>可观测</span><code>Dropped / Rejected 事件带 QueueLen · QueueCap · MailboxIndex</code></div>
     </div>
@@ -786,7 +786,7 @@
       <div class="row"><span>Panic</span><code>recover → HandlerPanicError · OnHandlerPanic</code></div>
       <div class="row"><span>错误</span><code>同步: 返回给 Publish · 异步: 只经 hook</code></div>
       <div class="row"><span>计数</span><code>processed · dropped · rejected · shutdownDrop</code></div>
-      <div class="row"><span>Ech0</span><code>未用 Use / Observer / topic 订阅</code></div>
+      <div class="row"><span>AXOXE</span><code>未用 Use / Observer / topic 订阅</code></div>
     </div>
   </div>
   <div class="box" style="left:820px; top:2600px; width:640px; height:250px; --name-w: 170px">
@@ -808,7 +808,7 @@
       <div class="row"><span>Abort</span><code>清空 mailbox · 计入 shutdownDrop</code></div>
       <div class="row"><span>Close(ctx)</span><code>= Shutdown(ctx, Drain)</code></div>
       <div class="row"><span>Unsubscribe</span><code>关订阅 gate → 移除 → 等 idle → 关 mailbox</code></div>
-      <div class="row"><span>Ech0</span><code>生产环境不 Close bus · 由 Registrar 逆序退订</code></div>
+      <div class="row"><span>AXOXE</span><code>生产环境不 Close bus · 由 Registrar 逆序退订</code></div>
     </div>
   </div>
 
@@ -898,7 +898,7 @@
     <div class="head"><span class="name">请求</span></div>
     <div class="list">
       <div class="row"><span>Content-Type</span><code>application/json</code></div>
-      <div class="row"><span>User-Agent</span><code>Ech0-Webhook-Client</code></div>
+      <div class="row"><span>User-Agent</span><code>AXOXE-Webhook-Client</code></div>
       <div class="row"><span>X-Ech0-Event</span><code>&lt;topic&gt;</code></div>
       <div class="row"><span>X-Ech0-Event-ID</span><code>&lt;unix 纳秒&gt;</code></div>
       <div class="row"><span>X-Ech0-Timestamp</span><code>&lt;unix 秒&gt;</code></div>
@@ -952,7 +952,7 @@
       <div class="row"><span>Hooks · Chain</span><code>包装 FS 的中间件</code></div>
       <div class="row"><span>Walk</span><code>基于 List 递归 · ErrSkipDir</code></div>
       <div class="row"><span>Migrate</span><code>跨 FS 复制 · Error / Skip / Overwrite</code></div>
-      <div class="row"><span>Ech0</span><code>只用到 Walk，其余暂未使用</code></div>
+      <div class="row"><span>AXOXE</span><code>只用到 Walk，其余暂未使用</code></div>
     </div>
   </div>
   <div class="box" id="vf-local" style="left:3040px; top:3020px; width:640px; height:200px; --name-w: 60px">
@@ -976,7 +976,7 @@
     </div>
   </div>
   <div class="box" id="vf-storage" style="left:3740px; top:3020px; width:840px; height:230px; --name-w: 80px">
-    <div class="head"><span class="name">Ech0 · internal/storage</span></div>
+    <div class="head"><span class="name">AXOXE · internal/storage</span></div>
     <div class="list">
       <div class="row"><span>Schema</span><code>按扩展名 → images/ · audios/ · videos/ · documents/ · 其余 files/</code></div>
       <div class="row"><span>Local</span><code>data/files · atomic 写 · URL /api/files/&lt;path&gt;</code></div>
@@ -1010,7 +1010,7 @@
     <b>3 · redeem</b><code>验签 → sk → 过期 → 参数边界</code><code>VerifySolutions · 解的个数 = c</code><code>TryMarkChallengeSigUsed 防重放</code><code>发 redeem token · TTL 2h</code>
   </div>
   <div class="card" id="gc4" style="left:1730px; top:3660px; width:510px; height:150px">
-    <b>4 · siteverify (Ech0 后端)</b><code>评论提交时 SiteVerify(token)</code><code>secret 常量时间比较</code><code>ConsumeRedeemToken 读即删</code><code>→ 每个 token 只能用一次</code>
+    <b>4 · siteverify (AXOXE 后端)</b><code>评论提交时 SiteVerify(token)</code><code>secret 常量时间比较</code><code>ConsumeRedeemToken 读即删</code><code>→ 每个 token 只能用一次</code>
   </div>
   <div class="box" id="gc-store" style="left:80px; top:3860px; width:700px; height:210px; --name-w: 140px">
     <div class="head"><span class="name">store · memstore</span><span class="sub">唯一实现 · 一把 RWMutex</span></div>
@@ -1026,14 +1026,14 @@
     <div class="head"><span class="name">transport/http</span><span class="sub">只做协议转换</span></div>
     <div class="list">
       <div class="row"><span>路由</span><code>POST /{site}/{challenge | redeem | siteverify} · 其余 405</code></div>
-      <div class="row"><span>CORS</span><code>Ech0 开启 · OPTIONS → 204</code></div>
+      <div class="row"><span>CORS</span><code>AXOXE 开启 · OPTIONS → 204</code></div>
       <div class="row"><span>解码</span><code>redeem 宽松 · siteverify 严格 · 上限 1 MiB</code></div>
       <div class="row"><span>错误</span><code>{success: false, code, error} · 400 / 403 / 404 / 429</code></div>
       <div class="row"><span>限流</span><code>challenge 总是限流 · 键 site:IP</code></div>
     </div>
   </div>
   <div class="box" id="gc-ech0" style="left:1560px; top:3860px; width:700px; height:240px; --name-w: 60px">
-    <div class="head"><span class="name">Ech0 · internal/captcha</span></div>
+    <div class="head"><span class="name">AXOXE · internal/captcha</span></div>
     <div class="list">
       <div class="row"><span>引擎</span><code>sync.OnceValues 单例 · 不经 Wire</code></div>
       <div class="row"><span>站点</span><code>ech0-comment · secret 缺省 = sha256(JWT secret)</code></div>
@@ -1321,11 +1321,11 @@
 
 <dialog id="about">
   <div>
-    <h2>关于 Ech0</h2>
+    <h2>关于 AXOXE</h2>
     <form method="dialog"><button class="close" aria-label="关闭">×</button></form>
 
     <h3>是什么</h3>
-    <p><b>Ech0 是一个自托管的轻量个人微博（时间线）平台。</b>
+    <p><b>AXOXE 是一个自托管的轻量个人微博（时间线）平台。</b>
       一个 Go 二进制同时提供 REST API 与内嵌的 Vue 3 SPA，数据默认全部落在 <code>data/</code>：SQLite 数据库、上传文件与日志。</p>
     <p>后端按 handler → service → repository → model 严格分层，由 Wire 在编译期装配；副作用经进程内事件总线解耦；
       LLM 能力分为出站的 Agent 与入站的 MCP 两个方向。<code>pkg/</code> 下是几个与业务无关的自研库。</p>
@@ -1338,7 +1338,7 @@
     <h3>角标颜色</h3>
     <p style="margin: 0 0 12px">框左上角的实心角标说明这个框装的是什么，点击可看详情。线型见标题下的图例。</p>
     <dl>
-      <dt><span class="tag" style="--c: var(--ech0)">Ech0 · 单个 Go 二进制</span></dt>
+      <dt><span class="tag" style="--c: var(--ech0)">AXOXE · 单个 Go 二进制</span></dt>
       <dd>进程边界，以及 HTTP 入口与业务领域。框内都是同一个进程。</dd>
       <dt><span class="tag" style="--c: var(--ai)">internal/agent</span></dt>
       <dd>LLM 能力层：出站的 Agent 与入站的 MCP。</dd>
@@ -1351,9 +1351,9 @@
       <dt><span class="tag" style="--c: var(--store)">data/ · 本地磁盘</span></dt>
       <dd>进程外的持久化：磁盘上的 data/ 与可选的 S3。</dd>
       <dt><span class="tag" style="--c: var(--client); color: #1f2328">客户端</span></dt>
-      <dd>Ech0 的客户端：内嵌 SPA、API 与 MCP 客户端、RSS。</dd>
+      <dd>AXOXE 的客户端：内嵌 SPA、API 与 MCP 客户端、RSS。</dd>
       <dt><span class="tag" style="--c: var(--muted); color: var(--bg)">外部用户</span></dt>
-      <dd>Ech0 之外的人和服务。</dd>
+      <dd>AXOXE 之外的人和服务。</dd>
     </dl>
   </div>
 </dialog>
@@ -1432,10 +1432,10 @@
   // Tag cards: what each filled tag's frame is, in a few lines. STEPS is the tour: its tags get a number,
   // its cards a link to the next, and About lists it
   const KINDS = {
-    outside:  ['Ech0 之外', 'var(--muted)', 'var(--bg)'],
+    outside:  ['AXOXE 之外', 'var(--muted)', 'var(--bg)'],
     clients:  ['客户端', 'var(--client)', '#1f2328'],
     platform: ['进程边界', 'var(--ech0)'],
-    ech0:     ['Ech0 进程内', 'var(--ech0)'],
+    ech0:     ['AXOXE 进程内', 'var(--ech0)'],
     ai:       ['LLM 能力层', 'var(--ai)'],
     events:   ['事件', 'var(--bus)'],
     hook:     ['出站投递', 'var(--hook)'],
@@ -1445,21 +1445,21 @@
     runtime:  ['生命周期', 'var(--ink)', 'var(--bg)'],
   };
   const CARDS = {
-    users: { kind: 'outside', title: '外部用户', gist: '谁在用 Ech0',
-      text: '从这里开始。站长、管理员和访客在浏览器里使用 Web SPA；集成方用带 scope 的 access token 调 API；AI 助手用户通过 MCP 客户端把 Ech0 当成一组工具；订阅者用 RSS 阅读器拉取内容。沿连线往右，所有请求都进入同一个 Gin 进程。' },
+    users: { kind: 'outside', title: '外部用户', gist: '谁在用 AXOXE',
+      text: '从这里开始。站长、管理员和访客在浏览器里使用 Web SPA；集成方用带 scope 的 access token 调 API；AI 助手用户通过 MCP 客户端把 AXOXE 当成一组工具；订阅者用 RSS 阅读器拉取内容。沿连线往右，所有请求都进入同一个 Gin 进程。' },
     clients: { kind: 'clients', title: '客户端',
       text: 'Web SPA 内嵌在二进制里（<code>template/dist</code>），由 <code>/</code> 路由组提供；登录后用 Bearer JWT 调 <code>/api</code>，Copilot 对话与系统日志走 SSE / WebSocket。API 客户端和 MCP 客户端使用 access token，audience 分别是 <code>cli</code> / <code>integration</code> 和 <code>mcp-remote</code>。RSS、sitemap、robots 走资源路由组。' },
     receivers: { kind: 'outside', title: 'Webhook 接收方',
-      text: '在设置页或经 MCP 工具配置的 webhook 端点。Ech0 以 POST JSON 推送 13 类事件，带 <code>X-Ech0-Event</code>、<code>X-Ech0-Timestamp</code> 等头；设置了 Secret 时附 <code>X-Ech0-Signature: sha256=HMAC-SHA256(secret, body)</code>。' },
+      text: '在设置页或经 MCP 工具配置的 webhook 端点。AXOXE 以 POST JSON 推送 13 类事件，带 <code>X-Ech0-Event</code>、<code>X-Ech0-Timestamp</code> 等头；设置了 Secret 时附 <code>X-Ech0-Signature: sha256=HMAC-SHA256(secret, body)</code>。' },
     thirdparty: { kind: 'outside', title: '外部服务',
-      text: 'Ech0 主动访问的外部服务：OAuth2 / OIDC 身份源（auth 域交换 code）、其他 Ech0 实例（connect 域互联）、OpenAI 兼容的 Embedding API（向量索引），以及 LLM Provider（Copilot 的 Agent 循环，流式返回，支持工具调用）。' },
+      text: 'AXOXE 主动访问的外部服务：OAuth2 / OIDC 身份源（auth 域交换 code）、其他 AXOXE 实例（connect 域互联）、OpenAI 兼容的 Embedding API（向量索引），以及 LLM Provider（Copilot 的 Agent 循环，流式返回，支持工具调用）。' },
     ops: { kind: 'outside', title: '运维',
       text: '在服务器上直接运行 <code>ech0</code>：<code>serve</code> 启动服务，裸 <code>ech0</code> 或 <code>tui</code> 进入 TUI；<code>export</code> / <code>import</code> 各有 <code>capsule</code> 与 <code>snapshot</code> 两种格式；<code>check</code> 校验 capsule，<code>build</code> 把 capsule 烘焙成只读静态站点。' },
     data: { kind: 'store', title: 'data/ · 本地磁盘',
       text: '默认的数据根目录，Docker 中挂载为 <code>/app/data</code>：SQLite 数据库 <code>ech0.db</code>（WAL、busy_timeout 5s、<code>_txlock=immediate</code>、sqlite-vec）、本地文件 <code>files/</code>（按扩展名分目录）、JSON 行日志 <code>app.log</code>。快照就是把 <code>data/</code> 打成 zip，数据库部分用 <code>VACUUM INTO</code> 的一致副本。' },
     s3: { kind: 'store', title: '对象存储',
       text: '可选的 S3 兼容后端（AWS / MinIO / R2）。配置存在 KV 的 <code>s3_setting</code> 里，由 <code>storage.Manager</code> 热切换；可以配 CDN URL 与路径前缀；上传支持 24 小时的预签名直传。启用后定时快照也会上传到 S3。' },
-    platform: { kind: 'platform', title: 'Ech0 · 单个 Go 二进制',
+    platform: { kind: 'platform', title: 'AXOXE · 单个 Go 二进制',
       text: '整个后端都在一个进程里：HTTP 入口、15 个业务领域、Agent / MCP 能力层、事件总线与订阅者、internal/ 基础设施，以及 pkg/ 下的自研库。进程外只有磁盘上的 <code>data/</code> 和可选的外部服务。右侧一列是启动链：Cobra → bootstrap → Wire → app.App。' },
     http: { kind: 'ech0', title: 'HTTP 入口', gist: '请求如何进来',
       text: 'Gin 引擎上挂着 Huma（类型优先的 OpenAPI）。全局中间件依次是 Recovery、PoweredBy、CORS、i18n、WriteGuard。每个 Huma 操作声明一个 posture：<code>public()</code> / <code>optional()</code> / <code>secured(scopes…).audience(…)</code>，它同时生成 OpenAPI 的安全声明和运行时中间件链，二者不会漂移。SSE、WebSocket、上传、下载、MCP 等非 JSON 端点仍是原生 gin 路由。' },
@@ -1468,7 +1468,7 @@
     agent: { kind: 'ai', title: 'internal/agent',
       text: '出站的 LLM 核心：把 OpenAI Chat Completions、OpenAI Responses、Anthropic 三种协议收口为一个 <code>Provider</code>（Complete / Stream），上层是 ReAct 工具循环 <code>agent.Run</code>。它不依赖任何领域包：工具由 copilot service 以 <code>Tool{Def, Execute}</code> 注入，i18n 文案也由调用方传入。SDK 的差异（如流式工具调用分片的拼接）都封装在各 Provider 内部。' },
     mcp: { kind: 'ai', title: 'internal/mcp',
-      text: '入站的 MCP 服务端，挂在 <code>/mcp</code>（JSON-RPC 2.0，streamable-http）。每个 tool / resource 在注册时声明所需 scope，<code>Server.dispatch</code> 在调用 Adapter 之前统一校验 access token 的 scope，鉴权不会散落进业务代码。与 Agent 方向相反：这里是外部 LLM 调用 Ech0。' },
+      text: '入站的 MCP 服务端，挂在 <code>/mcp</code>（JSON-RPC 2.0，streamable-http）。每个 tool / resource 在注册时声明所需 scope，<code>Server.dispatch</code> 在调用 Adapter 之前统一校验 access token 的 scope，鉴权不会散落进业务代码。与 Agent 方向相反：这里是外部 LLM 调用 AXOXE。' },
     app: { kind: 'runtime', title: 'app.App',
       text: '通用的组件生命周期编排器，与业务无关。BeforeStart 播种设置并注册事件订阅；按 job → task → server 顺序启动；阻塞至 SIGTERM / SIGINT；在 5 秒预算内逆序停止；AfterStop 退订事件并排空 webhook 池。详见下方「进程生命周期」时间线。' },
     bus: { kind: 'events', title: 'Event Bus', gist: '把同步写和副作用分开',
@@ -1478,13 +1478,13 @@
     pkg: { kind: 'pkg', title: 'pkg/ · 自研库', gist: '与业务解耦的库',
       text: '六个与业务无关的库：busen（事件总线）、virefs（文件系统抽象）、gocap（PoW 验证码）、viewer（身份上下文）、log（slog 日志管道）、leakcheck（测试用的 goroutine 泄漏检查）。它们都不 import <code>internal/</code>。busen、gocap、viewer、leakcheck 只依赖标准库；virefs 依赖 AWS SDK v2；log 依赖 lumberjack，并内置了一份 tint。' },
     busen: { kind: 'pkg', title: 'pkg/busen', gist: '一次发布经过什么',
-      text: '类型安全、有界、可异步的进程内事件总线。一次发布先按 Go 类型精确匹配订阅，再过 topic 通配与过滤器；同步订阅在发布者的 goroutine 里执行，异步订阅按 key 的 FNV 哈希进入各 worker 的 mailbox。队列满时怎么办由 Overflow 策略决定，7 个 hook 暴露所有可观测的事件。Ech0 只用到按类型订阅、key 有序和 hooks；topic、中间件、Observer、Shutdown 暂未使用。' },
+      text: '类型安全、有界、可异步的进程内事件总线。一次发布先按 Go 类型精确匹配订阅，再过 topic 通配与过滤器；同步订阅在发布者的 goroutine 里执行，异步订阅按 key 的 FNV 哈希进入各 worker 的 mailbox。队列满时怎么办由 Overflow 策略决定，7 个 hook 暴露所有可观测的事件。AXOXE 只用到按类型订阅、key 有序和 hooks；topic、中间件、Observer、Shutdown 暂未使用。' },
     events: { kind: 'events', title: '事件目录', gist: '13 类事件，谁发谁收',
       text: '<code>internal/event</code> 是纯词汇包：13 个事件结构体，各自用 <code>EventName()</code> 给出稳定的 webhook 名；用户、echo、评论、资源事件用 <code>OrderingKey()</code> 按实体 ID 保序。表中列出每类事件的生产者和四个订阅者。webhook.Dispatcher 订阅全部 13 类，而且是同步订阅。' },
     webhook: { kind: 'hook', title: 'internal/webhook', gist: '事件如何推到外部',
       text: 'Dispatcher 是事件总线的同步订阅者：把事件转成中立的 <code>WebhookObservation</code>，查出启用的 webhook，为每个 webhook 往 6 worker、队列 6 的池里提交一个任务；池满时 Submit 阻塞，反压到发布事件的那次请求。Sender 经 egress 守卫发 POST，最多 3 次，只有 2xx 算成功，结果只写回 <code>last_status</code> / <code>last_trigger</code>。' },
     virefs: { kind: 'pkg', title: 'pkg/virefs', gist: '用 key 统一本地盘与 S3',
-      text: '用扁平的 key 统一本地盘与 S3：FS 接口有 7 个方法，Copier / BatchDeleter / Presigner 是可选能力。Schema 按扩展名把 key 路由到 <code>images/</code>、<code>audios/</code> 等前缀；plugin/zip 为快照和 capsule 提供打包、解包和只读的 zip FS。Ech0 的 <code>storage.Manager</code> 持有一个 StorageSelector（local 常驻，S3 可选），切换 S3 时原子替换。' },
+      text: '用扁平的 key 统一本地盘与 S3：FS 接口有 7 个方法，Copier / BatchDeleter / Presigner 是可选能力。Schema 按扩展名把 key 路由到 <code>images/</code>、<code>audios/</code> 等前缀；plugin/zip 为快照和 capsule 提供打包、解包和只读的 zip FS。AXOXE 的 <code>storage.Manager</code> 持有一个 StorageSelector（local 常驻，S3 可选），切换 S3 时原子替换。' },
     gocap: { kind: 'pkg', title: 'pkg/gocap', gist: '评论验证码',
       text: '内嵌、单节点的 PoW 验证码。challenge 发一个 HS256 签名的 token；浏览器求解 80 个 sha256 前缀难题；redeem 验证解并防重放，换出一次性的 redeem token；评论提交时后端 siteverify，读即删。状态全在内存（memstore），每 2 秒 GC 一次。' },
     log: { kind: 'pkg', title: 'pkg/log', gist: '日志去了哪里',
@@ -1641,7 +1641,7 @@
     { from: 'wh4', to: 'wh5', fs: 'r', ts: 'l', kind: 'hook' },
     { from: 'wh5', to: 'wh-egress', fs: 'b', ts: 't', via: [[1966, 3175], [1170, 3175]], kind: 'hook', lp: [1500, 3169, 'start'], label: 'egress.NewClient(Guard, 5s)' },
 
-    // ----- virefs: the interface, its two implementations, and Ech0's storage on top -----
+    // ----- virefs: the interface, its two implementations, and AXOXE's storage on top -----
     { from: 'vf-fs', to: 'vf-local',  fs: 'r', ts: 'l', fo: -30, mid: 3010 },
     { from: 'vf-fs', to: 'vf-object', fs: 'r', ts: 'l', fo: 30, mid: 3010 },
     { from: 'vf-storage', to: 'vf-local',  fs: 'l', ts: 'r', fo: -15, mid: 3710 },

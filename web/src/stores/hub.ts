@@ -188,7 +188,7 @@ export const useHubStore = defineStore('hubStore', () => {
 
     state.isLoading = true
     try {
-      const { error, data } = await useFetch<App.Api.Response<App.Api.Ech0.PaginationResult>>(
+      const { error, data } = await useFetch<App.Api.Response<App.Api.AXOXE.PaginationResult>>(
         hubUrl + '/api/echo/page',
       )
         .post({
@@ -203,13 +203,13 @@ export const useHubStore = defineStore('hubStore', () => {
         return
       }
 
-      const items = (data.value?.data.items || []).map((echo: App.Api.Ech0.Echo) => ({
+      const items = (data.value?.data.items || []).map((echo: App.Api.AXOXE.Echo) => ({
         ...echo,
         createdTs: timeValueToMs(echo.created_at),
-        server_name: hubInfoMap.value.get(hubUrl)?.server_name || 'Ech0',
+        server_name: hubInfoMap.value.get(hubUrl)?.server_name || 'AXOXE',
         server_url: hubUrl,
         virtual_key: `${hubUrl}-${echo.id}`,
-        logo: hubInfoMap.value.get(hubUrl)?.logo || '/Ech0.svg',
+        logo: hubInfoMap.value.get(hubUrl)?.logo || '/axoxe.svg',
       }))
 
       items.sort((a: App.Api.Hub.Echo, b: App.Api.Hub.Echo) => b.createdTs - a.createdTs)

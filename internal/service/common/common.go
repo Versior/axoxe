@@ -91,7 +91,7 @@ func (s *CommonService) GetHeatMap(timezone string) ([]commonModel.Heatmap, erro
 	return results[:], nil
 }
 
-const rssDefaultTitle = "Ech0"
+const rssDefaultTitle = "AXOXE"
 
 // rssCacheKey folds the feed identity into the key: the site title is rendered
 // into the payload, so renaming the site must miss the cache instead of serving
@@ -132,7 +132,7 @@ func (s *CommonService) GenerateRSS(ctx *gin.Context) (RSSDocument, error) {
 			}
 
 			home := fmt.Sprintf("%s://%s/", schema, host)
-			logo := fmt.Sprintf("%s://%s/Ech0.svg", schema, host)
+			logo := fmt.Sprintf("%s://%s/axoxe.svg", schema, host)
 			baseURL := &url.URL{Scheme: schema, Host: host}
 			page := rssPage{
 				Title:   title,

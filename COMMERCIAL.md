@@ -1,5 +1,9 @@
 # Commercial Licensing
 
+AXOXE is a modified distribution of [Ech0](https://github.com/lin-snow/Ech0)
+under AGPL-3.0-or-later. The commercial licensing terms below belong to the
+upstream project and do not imply that AXOXE has a proprietary license.
+
 Ech0 is open source under AGPL-3.0-or-later. The AGPL is designed to keep
 modified network services open: if you modify Ech0 and make it available to
 users over a network, you must provide the complete corresponding source code

@@ -1,9 +1,9 @@
 ---
 title: Getting started
-description: Your first Ech0 deployment — from preparing the environment to publishing a post
+description: Your first AXOXE deployment — from preparing the environment to publishing a post
 ---
 
-If you have just heard of Ech0, read the [Product overview](/docs/guide/overview) first, then work through this page in order. The following assumes you have a Linux server or a local machine that can run Docker, and the goal is to open the web page and finish your first login **within 10 minutes**.
+If you have just heard of AXOXE, read the [Product overview](/docs/guide/overview) first, then work through this page in order. The following assumes you have a Linux server or a local machine that can run Docker, and the goal is to open the web page and finish your first login **within 10 minutes**.
 
 ---
 
@@ -11,7 +11,7 @@ If you have just heard of Ech0, read the [Product overview](/docs/guide/overview
 
 When you finish this section, you will have:
 
-- An Ech0 instance reachable in a browser (default port **6277**)
+- An AXOXE instance reachable in a browser (default port **6277**)
 - An **Owner (first registered)** account that can manage the site and posting permissions
 - A basic grasp of “where the data lives and how to back it up”
 
@@ -77,7 +77,7 @@ In the current version, **posting permission is usually granted only to high-pri
 | Term                      | Meaning                                                                                                                                         |
 | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Echo**                  | One timeline post (like a single social media update); it may contain Markdown, images, link cards, and so on.                                  |
-| **Instance**              | This Ech0 service that you deployed; multiple instances can federate via Connect / Hub, see [Federation & aggregation](/docs/guide/federation). |
+| **Instance**              | This AXOXE service that you deployed; multiple instances can federate via Connect / Hub, see [Federation & aggregation](/docs/guide/federation). |
 | **Owner / administrator** | The first registered account is the Owner; it can manage users and some site-wide options in settings.                                          |
 
 ---

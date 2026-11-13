@@ -19,7 +19,7 @@ import {
 process.env.ECH0_NO_KEYCHAIN = "1";
 
 function tempDir(): string {
-  return mkdtempSync(join(tmpdir(), "ech0-cli-"));
+  return mkdtempSync(join(tmpdir(), "axoxe-cli-"));
 }
 
 describe("config paths", () => {

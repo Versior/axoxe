@@ -17,7 +17,7 @@ export function useFilesModule({ t }: FilesModuleDeps) {
   const fileUploading = ref<boolean>(false)
   const fileIndex = ref<number>(0)
 
-  const fileToAdd = ref<App.Api.Ech0.FileToAdd>({
+  const fileToAdd = ref<App.Api.AXOXE.FileToAdd>({
     url: '',
     storage_type: FILE_STORAGE_TYPE.LOCAL,
     key: '',
@@ -123,7 +123,7 @@ export function useFilesModule({ t }: FilesModuleDeps) {
     }
   }
 
-  const setFilesToAdd = (files: App.Api.Ech0.FileToAdd[]) => {
+  const setFilesToAdd = (files: App.Api.AXOXE.FileToAdd[]) => {
     resetAttachments(
       files.map((file) => ({
         id: file.id,
@@ -145,7 +145,7 @@ export function useFilesModule({ t }: FilesModuleDeps) {
     const rank = new Map(orderedIds.map((id, i) => [id, i]))
     const current = filesToAdd.value
     const positions: number[] = []
-    const managed: App.Api.Ech0.FileToAdd[] = []
+    const managed: App.Api.AXOXE.FileToAdd[] = []
     current.forEach((file, idx) => {
       if (file.id && idSet.has(file.id)) {
         positions.push(idx)

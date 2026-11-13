@@ -93,7 +93,7 @@ func (s *OAuthServerService) AuthorizationRequest(
 }
 
 // Consent validates the request and checks that the approving user may mint
-// tokens. Ech0 restricts access-token issuance to administrators, so the same
+// tokens. AXOXE restricts access-token issuance to administrators, so the same
 // rule applies to OAuth consent.
 func (s *OAuthServerService) Consent(
 	ctx context.Context,
@@ -180,7 +180,7 @@ func (s *OAuthServerService) authorizationErrorRedirect(
 	})
 }
 
-// consentUser enforces the population allowed to mint MCP tokens: Ech0
+// consentUser enforces the population allowed to mint MCP tokens: AXOXE
 // restricts access-token issuance to administrators, so consent inherits the
 // same rule.
 func (s *OAuthServerService) consentUser(

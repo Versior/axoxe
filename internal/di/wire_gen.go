@@ -263,7 +263,7 @@ func BuildTasker(dbProvider func() *gorm.DB, appCache *cache.Cache, tx transacti
 
 var AppSet = wire.NewSet(ProvideApp)
 
-// ProvideApp composes Ech0's runtime on the generic app lifecycle: components
+// ProvideApp composes AXOXE's runtime on the generic app lifecycle: components
 // start in order job → task → server; settings are seeded and event
 // subscriptions registered before any of them, and torn down after all stop.
 func ProvideApp(

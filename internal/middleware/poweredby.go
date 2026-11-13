@@ -9,7 +9,7 @@ import (
 )
 
 func PoweredBy() gin.HandlerFunc {
-	value := "Ech0/" + versionPkg.Version
+	value := "AXOXE/" + versionPkg.Version
 	return func(c *gin.Context) {
 		c.Header("X-Powered-By", value)
 		c.Next()

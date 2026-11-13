@@ -3,7 +3,7 @@ title: 评论系统
 description: 内建评论、审核、验证码与自动化
 ---
 
-Ech0 使用**内置评论系统**，无需接入 Twikoo、Waline 等第三方评论托管。
+AXOXE 使用**内置评论系统**，无需接入 Twikoo、Waline 等第三方评论托管。
 
 ---
 
@@ -39,7 +39,7 @@ Ech0 使用**内置评论系统**，无需接入 Twikoo、Waline 等第三方评
 - 单条或批量通过、拒绝、删除。
 - 将优质评论标为「热评」等（若版本提供）。
 
-也可以在终端完成单条审核：`ech0 comment panel list --status pending` → `ech0 comment panel status --id <id> --status approved` → `ech0 comment panel delete --id <id> --yes`，见 [命令行（CLI）](/zh/docs/guide/cli)。
+也可以在终端完成单条审核：`axoxe comment panel list --status pending` → `axoxe comment panel status --id <id> --status approved` → `axoxe comment panel delete --id <id> --yes`，见 [命令行（CLI）](/zh/docs/guide/cli)。
 
 ---
 

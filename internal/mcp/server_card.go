@@ -26,7 +26,7 @@ const (
 
 	serverCardSchemaURI   = "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json"
 	serverCardServerName  = "ech0"
-	serverCardDescription = "Read and write this Ech0 instance's posts, comments, files and stats over MCP."
+	serverCardDescription = "Read and write this AXOXE instance's posts, comments, files and stats over MCP."
 	serverCardTitleMaxLen = 100
 	serverCardAuthName    = "Authorization"
 	serverCardAuthValue   = "Bearer {token}"
@@ -96,7 +96,7 @@ func buildServerCard(baseURL, siteTitle string) ServerCard {
 	base := strings.TrimRight(baseURL, "/")
 	title := strings.Join(strings.Fields(siteTitle), " ")
 	if title == "" {
-		title = "Ech0"
+		title = "AXOXE"
 	}
 	title = clipRunes(title, serverCardTitleMaxLen)
 
@@ -118,7 +118,7 @@ func buildServerCard(baseURL, siteTitle string) ServerCard {
 			SupportedProtocolVersions: SupportedVersions,
 			Headers: []ServerCardHeader{{
 				Name:        serverCardAuthName,
-				Description: "Ech0 access token with the mcp-remote audience, created in Preferences → Access tokens.",
+				Description: "AXOXE access token with the mcp-remote audience, created in Preferences → Access tokens.",
 				IsRequired:  true,
 				IsSecret:    true,
 				Value:       serverCardAuthValue,

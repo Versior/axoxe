@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2025-2026 lin-snow
 
-// Package authz is Ech0's pure authorization vocabulary and policy. It has no
+// Package authz is AXOXE's pure authorization vocabulary and policy. It has no
 // I/O and no domain dependencies: middleware, the MCP server and the OAuth
 // authorization server all decide access through this package.
 package authz

@@ -80,7 +80,7 @@ import { useEchoStore, useEditorStore } from '@/stores'
 import { useBaseDialog } from '@/composables/useBaseDialog'
 import { theToast } from '@/utils/toast'
 
-type Echo = App.Api.Ech0.Echo
+type Echo = App.Api.AXOXE.Echo
 
 const props = defineProps<{
   echo: Echo

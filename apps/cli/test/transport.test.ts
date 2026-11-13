@@ -105,7 +105,7 @@ describe("parseSse", () => {
 
 describe("multipart upload", () => {
   test("builds parts for text fields and files", async () => {
-    const dir = mkdtempSync(join(tmpdir(), "ech0-cli-"));
+    const dir = mkdtempSync(join(tmpdir(), "axoxe-cli-"));
     const path = join(dir, "note.txt");
     writeFileSync(path, "hello");
 
@@ -148,7 +148,7 @@ describe("multipart upload", () => {
       },
     });
     try {
-      const dir = mkdtempSync(join(tmpdir(), "ech0-cli-"));
+      const dir = mkdtempSync(join(tmpdir(), "axoxe-cli-"));
       const path = join(dir, "tiny.txt");
       writeFileSync(path, "abc");
       const op = baseOp({
@@ -323,7 +323,7 @@ describe("binary download", () => {
       },
     });
     try {
-      const dir = mkdtempSync(join(tmpdir(), "ech0-cli-"));
+      const dir = mkdtempSync(join(tmpdir(), "axoxe-cli-"));
       const target = join(dir, "out.zip");
       const op = baseOp({
         method: "GET",
@@ -364,7 +364,7 @@ describe("binary download", () => {
         });
       },
     });
-    const dir = mkdtempSync(join(tmpdir(), "ech0-cli-name-"));
+    const dir = mkdtempSync(join(tmpdir(), "axoxe-cli-name-"));
     const previousCwd = process.cwd();
     const previousTty = process.stdout.isTTY;
     const op = baseOp({
@@ -399,7 +399,7 @@ describe("binary download", () => {
       port: 0,
       fetch: () => new Response("bytes", { headers: { "Content-Disposition": 'attachment; filename="../../evil.zip"' } }),
     });
-    const dir = mkdtempSync(join(tmpdir(), "ech0-cli-name-"));
+    const dir = mkdtempSync(join(tmpdir(), "axoxe-cli-name-"));
     const previousCwd = process.cwd();
     const previousTty = process.stdout.isTTY;
     const op = baseOp({
@@ -430,7 +430,7 @@ describe("binary download", () => {
 
   test("falls back to download when the response carries no filename", async () => {
     const server = Bun.serve({ port: 0, fetch: () => new Response("bytes") });
-    const dir = mkdtempSync(join(tmpdir(), "ech0-cli-name-"));
+    const dir = mkdtempSync(join(tmpdir(), "axoxe-cli-name-"));
     const previousCwd = process.cwd();
     const previousTty = process.stdout.isTTY;
     const op = baseOp({

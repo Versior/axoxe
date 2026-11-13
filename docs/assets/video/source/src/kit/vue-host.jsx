@@ -1,4 +1,4 @@
-// Host element for a real Ech0 Vue composition. React owns the div; the bridge mounts a Vue app
+// Host element for a real AXOXE Vue composition. React owns the div; the bridge mounts a Vue app
 // inside it (shared Pinia/i18n/router). client.jsx waits on window.__vueMounts before builders run.
 import React, {useEffect, useRef} from 'react';
 const mounts = (window.__vueMounts ??= []);

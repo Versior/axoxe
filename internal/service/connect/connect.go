@@ -181,8 +181,11 @@ func (connectService *ConnectService) GetConnect() (model.Connect, error) {
 	trimmedServerURL := strings.TrimRight(setting.ServerURL, "/")
 	logoPath := strings.TrimSpace(setting.ServerLogo)
 
-	if logoPath == "" || logoPath == "Ech0.svg" || logoPath == "/Ech0.svg" {
+	if logoPath == "" {
+		// Older upstream instances omit the logo and expose this compatibility URL.
 		connect.Logo = fmt.Sprintf("%s/Ech0.svg", trimmedServerURL)
+	} else if logoPath == "axoxe.svg" || logoPath == "/axoxe.svg" {
+		connect.Logo = fmt.Sprintf("%s/axoxe.svg", trimmedServerURL)
 	} else if strings.HasPrefix(logoPath, "http://") || strings.HasPrefix(logoPath, "https://") {
 		connect.Logo = logoPath
 	} else if strings.HasPrefix(logoPath, "/") {
@@ -227,7 +230,7 @@ func (connectService *ConnectService) GetConnectsInfo() ([]model.Connect, error)
 func fetchPeerConnectInfo(peerConnectURL string, requestTimeout time.Duration) (model.Connect, error) {
 	url := urlUtil.TrimURL(peerConnectURL) + "/api/connect"
 	resp, err := egress.Fetch(url, "GET", egress.Header{
-		Header:  "Ech0_URL",
+		Header:  "AXOXE_URL",
 		Content: peerConnectURL,
 	}, requestTimeout)
 	if err != nil {

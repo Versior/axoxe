@@ -98,7 +98,7 @@ func TestBuildRequest_HeaderContract(t *testing.T) {
 
 	assert.Equal(t, "application/json", req.Header.Get("Content-Type"))
 	assert.Equal(t, obs.Topic, req.Header.Get("X-Ech0-Event"))
-	assert.Equal(t, "Ech0-Webhook-Client", req.Header.Get("User-Agent"))
+	assert.Equal(t, "AXOXE-Webhook-Client", req.Header.Get("User-Agent"))
 
 	eventID := req.Header.Get("X-Ech0-Event-ID")
 	require.NotEmpty(t, eventID, "X-Ech0-Event-ID 必须存在")

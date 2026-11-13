@@ -26,7 +26,7 @@ func buildRequest(wh *webhookModel.Webhook, obs event.WebhookObservation) (*http
 	headers := make(http.Header)
 	headers.Set("Content-Type", "application/json")
 	headers.Set("X-Ech0-Event", obs.Topic)
-	headers.Set("User-Agent", "Ech0-Webhook-Client")
+	headers.Set("User-Agent", "AXOXE-Webhook-Client")
 	headers.Set("X-Ech0-Event-ID", eventID)
 	headers.Set("X-Ech0-Timestamp", timestamp)
 

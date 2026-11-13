@@ -19,8 +19,8 @@ type DocsUi = {
 
 export const DOCS_UI: Record<DocLocale, DocsUi> = {
   en: {
-    docsTitle: "Documentation — Ech0",
-    docsDescription: "Ech0 documentation: deployment, features, and policies.",
+    docsTitle: "Documentation — AXOXE",
+    docsDescription: "AXOXE documentation: deployment, features, and policies.",
     allDocs: "All docs",
     home: "Home",
     documentation: "Documentation",
@@ -32,8 +32,8 @@ export const DOCS_UI: Record<DocLocale, DocsUi> = {
     language: "Language",
   },
   zh: {
-    docsTitle: "文档 — Ech0",
-    docsDescription: "Ech0 文档：部署、功能与使用说明。",
+    docsTitle: "文档 — AXOXE",
+    docsDescription: "AXOXE 文档：部署、功能与使用说明。",
     allDocs: "全部文档",
     home: "首页",
     documentation: "文档",

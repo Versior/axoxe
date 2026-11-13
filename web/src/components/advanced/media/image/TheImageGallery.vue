@@ -80,7 +80,7 @@ import GalleryStack from './layouts/GalleryStack.vue'
 
 const props = withDefaults(
   defineProps<{
-    images?: App.Api.Ech0.FileObject[]
+    images?: App.Api.AXOXE.FileObject[]
     baseUrl?: string
     layout?: ImageLayout | string | undefined
     priority?: boolean
@@ -123,13 +123,13 @@ const openGallery = (index: number, sourceElement?: HTMLElement | null) => {
   open(index, sourceElement)
 }
 
-const getImageKey = (image: App.Api.Ech0.FileObject, idx: number) =>
+const getImageKey = (image: App.Api.AXOXE.FileObject, idx: number) =>
   image.id || `${image.url}-${idx}`
 
 const FALLBACK_ASPECT_RATIO = '4 / 3'
 
 const getAspectRatioStyle = (
-  image: App.Api.Ech0.FileObject,
+  image: App.Api.AXOXE.FileObject,
   loaded: boolean,
 ): Record<string, string> | undefined => {
   if (image.width && image.height) return { aspectRatio: `${image.width} / ${image.height}` }
@@ -138,7 +138,7 @@ const getAspectRatioStyle = (
 }
 
 const getHorizontalAspectStyle = (
-  image: App.Api.Ech0.FileObject,
+  image: App.Api.AXOXE.FileObject,
   loaded: boolean,
 ): Record<string, string> | undefined => {
   if (image.width && image.height) {
@@ -148,10 +148,10 @@ const getHorizontalAspectStyle = (
   return { aspectRatio: FALLBACK_ASPECT_RATIO, width: 'auto' }
 }
 
-const isImageLoaded = (image: App.Api.Ech0.FileObject, idx: number) =>
+const isImageLoaded = (image: App.Api.AXOXE.FileObject, idx: number) =>
   Boolean(loadedImages.value[getImageKey(image, idx)])
 
-const markImageLoaded = (image: App.Api.Ech0.FileObject, idx: number) => {
+const markImageLoaded = (image: App.Api.AXOXE.FileObject, idx: number) => {
   loadedImages.value[getImageKey(image, idx)] = true
 }
 

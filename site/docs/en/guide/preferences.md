@@ -3,7 +3,7 @@ title: Preferences & profile
 description: Site icon and avatar, site-wide information and personal identity — why they live in two places, and how to configure them
 ---
 
-Have you ever wanted visitors to land on your site and **know at a glance that this is your place** — while your avatar and name stay **consistent** whenever you post or comment? In Ech0, "what the whole site looks like" and "what your account looks like" are separate: **the former** gives visitors and federation scenarios a stable public face, **the latter** lets you be recognized on the timeline. This page follows that logic, with fewer menu paths and more on "what it actually does for you".
+Have you ever wanted visitors to land on your site and **know at a glance that this is your place** — while your avatar and name stay **consistent** whenever you post or comment? In AXOXE, "what the whole site looks like" and "what your account looks like" are separate: **the former** gives visitors and federation scenarios a stable public face, **the latter** lets you be recognized on the timeline. This page follows that logic, with fewer menu paths and more on "what it actually does for you".
 
 ---
 

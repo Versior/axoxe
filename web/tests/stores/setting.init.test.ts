@@ -28,9 +28,9 @@ describe('settingStore.init', () => {
     apiMocks.fetchGetSettings.mockResolvedValue({
       code: 1,
       data: {
-        site_title: 'Ech0',
-        server_logo: '/Ech0.svg',
-        server_name: 'Ech0',
+        site_title: 'AXOXE',
+        server_logo: '/axoxe.svg',
+        server_name: 'AXOXE',
         server_url: '',
         allow_register: true,
         default_locale: 'zh-CN',

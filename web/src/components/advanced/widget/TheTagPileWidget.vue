@@ -114,7 +114,7 @@ const palette = [
 ]
 
 const fixedTags = computed(() => [
-  `Ech0 ${props.ech0Version}`,
+  `AXOXE ${props.ech0Version}`,
   'Go',
   'Gin',
   'Gorm',

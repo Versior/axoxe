@@ -1,4 +1,4 @@
-// Builds the Vue "product bridge": Ech0's real Vue components, compiled with the product's own
+// Builds the Vue "product bridge": AXOXE's real Vue components, compiled with the product's own
 // Vite + @vitejs/plugin-vue + UnoCSS + Sass toolchain (resolved from the product's node_modules),
 // wrapped in an IIFE that exposes window.Ech0Bridge for the React film engine to mount per shot.
 // Nothing in the product repo is written: output lands in .build/bridge/.
@@ -19,7 +19,7 @@ await build({
   root: web,                 // UnoCSS picks up the product's uno.config.ts; envDir -> product .env*
   mode: 'production',
   configFile: false,
-  publicDir: path.join(web, 'public'),   // resolves /Ech0.svg-style imports; copied into dist/ by build.mjs
+  publicDir: path.join(web, 'public'),   // resolves /axoxe.svg-style imports; copied into dist/ by build.mjs
   logLevel: 'warn',
   plugins: [
     {

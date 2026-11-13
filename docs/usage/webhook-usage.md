@@ -1,4 +1,4 @@
-# Ech0 Webhook 使用说明
+# AXOXE Webhook 使用说明
 
 这份文档基于当前项目实现编写，目标是让你可以直接把 Webhook 配起来并稳定落地到业务系统。
 
@@ -6,7 +6,7 @@
 
 ## 1. Webhook 是什么
 
-Webhook 是 Ech0 的事件推送能力。当系统内发生关键事件（如用户、Echo、资源、系统任务相关事件）时，Ech0 会把事件通过 HTTP `POST` 推送到你配置的 URL。
+Webhook 是 AXOXE 的事件推送能力。当系统内发生关键事件（如用户、Echo、资源、系统任务相关事件）时，AXOXE 会把事件通过 HTTP `POST` 推送到你配置的 URL。
 
 你可以用它做：
 - 同步数据到外部系统（检索库、BI、消息中心）
@@ -64,7 +64,7 @@ Webhook 是 Ech0 的事件推送能力。当系统内发生关键事件（如用
 - 禁止 `.local` 结尾域名
 - 禁止内网/环回/链路本地等 IP（如 `127.0.0.1`、`10.x.x.x`、`192.168.x.x` 等）
 
-这意味着：本机联调地址一般无法直接作为 Webhook 目标地址。  
+这意味着：本机联调地址一般无法直接作为 Webhook 目标地址。\
 本地调试建议通过可公开访问的临时隧道域名。确需直连本机/内网时，可在**仅限本地开发**的实例上设置
 `ECH0_EGRESS_ALLOW_PRIVATE=true` 关闭守卫（见 [环境变量参考](./configuration.md)）。
 
@@ -76,7 +76,7 @@ Webhook 是 Ech0 的事件推送能力。当系统内发生关键事件（如用
 
 - Method: `POST`
 - `Content-Type: application/json`
-- `User-Agent: Ech0-Webhook-Client`
+- `User-Agent: AXOXE-Webhook-Client`
 - `X-Ech0-Event`: 事件 topic（例如 `echo.created`）
 - `X-Ech0-Event-ID`: 事件 ID（时间戳纳秒字符串）
 - `X-Ech0-Timestamp`: Unix 秒级时间戳（UTC）
@@ -131,7 +131,7 @@ Webhook 是 Ech0 的事件推送能力。当系统内发生关键事件（如用
 
 ### 7.1 一次投递何时算成功
 
-当接收端返回 HTTP `2xx` 时，判定成功。  
+当接收端返回 HTTP `2xx` 时，判定成功。\
 否则（网络错误、超时、4xx/5xx）判定失败。
 
 ### 7.2 即时重试（单次发送内）
@@ -151,7 +151,7 @@ Webhook 发送内置指数退避重试：
 
 ## 8. 签名校验（接收端建议强制启用）
 
-当你配置了 `secret`，Ech0 会对请求体做 HMAC-SHA256：
+当你配置了 `secret`，AXOXE 会对请求体做 HMAC-SHA256：
 
 - 算法：`HMAC_SHA256(secret, rawBodyBytes)`
 - Header：`X-Ech0-Signature: sha256=<hex>`
@@ -199,7 +199,7 @@ curl -X POST "https://<your-ech0-domain>/api/webhook/<webhook-id>/test" \
   -H "Authorization: <your-token>"
 ```
 
-测试会发送一条 `webhook.test` 事件，用于验证连通性和签名链路。  
+测试会发送一条 `webhook.test` 事件，用于验证连通性和签名链路。\
 测试结果也会更新该 webhook 的 `last_status` 和 `last_trigger`。
 
 ---
@@ -240,4 +240,4 @@ Webhook 接收端建议：
 
 ---
 
-如果你愿意，我可以继续补一份 `receiver-demo`（Node/Go 二选一）到 `examples/`，你拉起来就能直接接 Ech0 的 Webhook。
+如果你愿意，我可以继续补一份 `receiver-demo`（Node/Go 二选一）到 `examples/`，你拉起来就能直接接 AXOXE 的 Webhook。

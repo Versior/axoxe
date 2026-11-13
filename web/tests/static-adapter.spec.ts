@@ -12,7 +12,7 @@ const echo = (
   content: string,
   createdAt: number,
   reactionCount = 0,
-): App.Api.Ech0.Echo => ({
+): App.Api.AXOXE.Echo => ({
   id,
   content,
   username: 'owner',
@@ -47,7 +47,7 @@ const dataset = {
   generated_at: 1_770_000_000,
   base_url: '/blog/',
   init_status: { initialized: true, owner_exists: true },
-  settings: { site_title: 'Ech0' },
+  settings: { site_title: 'AXOXE' },
   hello: { hello: 'hi' },
   agent: { enable: false },
   echos: [
@@ -62,7 +62,7 @@ const dataset = {
   comments: [comment('c1', 'e1'), comment('c2', 'e2'), comment('c3', 'e1')],
   comment_form: { enable_comment: false },
   connects: [],
-  connect: { server_name: 'Ech0' },
+  connect: { server_name: 'AXOXE' },
 } as unknown as StaticDataset
 
 let fetchMock: Mock
@@ -83,7 +83,7 @@ describe('handleStaticRequest', () => {
   })
 
   it('POST /api/echo/query 分页与 search 过滤正确，total 为过滤后总数', async () => {
-    const page1 = await handleStaticRequest<App.Api.Ech0.PaginationResult>(
+    const page1 = await handleStaticRequest<App.Api.AXOXE.PaginationResult>(
       '/api/echo/query',
       'POST',
       { page: 1, pageSize: 2, search: 'hello' },
@@ -93,7 +93,7 @@ describe('handleStaticRequest', () => {
     expect(page1.data.total).toBe(3)
     expect(page1.data.items.map((item) => item.id)).toEqual(['e5', 'e4'])
 
-    const page2 = await handleStaticRequest<App.Api.Ech0.PaginationResult>(
+    const page2 = await handleStaticRequest<App.Api.AXOXE.PaginationResult>(
       '/api/echo/query',
       'POST',
       { page: 2, pageSize: 2, search: 'HeLLo' },
@@ -101,7 +101,7 @@ describe('handleStaticRequest', () => {
     expect(page2.data.total).toBe(3)
     expect(page2.data.items.map((item) => item.id)).toEqual(['e2'])
 
-    const unfiltered = await handleStaticRequest<App.Api.Ech0.PaginationResult>(
+    const unfiltered = await handleStaticRequest<App.Api.AXOXE.PaginationResult>(
       '/api/echo/query',
       'POST',
       { page: 1, pageSize: 0 },
@@ -111,7 +111,7 @@ describe('handleStaticRequest', () => {
   })
 
   it('POST /api/echo/query cursor 分页续接且不重叠', async () => {
-    const first = await handleStaticRequest<App.Api.Ech0.PaginationResult>(
+    const first = await handleStaticRequest<App.Api.AXOXE.PaginationResult>(
       '/api/echo/query',
       'POST',
       { page: 1, pageSize: 2, cursor: '' },
@@ -119,14 +119,14 @@ describe('handleStaticRequest', () => {
     expect(first.data.items.map((item) => item.id)).toEqual(['e5', 'e4'])
     expect(first.data.nextCursor).toBeTruthy()
 
-    const second = await handleStaticRequest<App.Api.Ech0.PaginationResult>(
+    const second = await handleStaticRequest<App.Api.AXOXE.PaginationResult>(
       '/api/echo/query',
       'POST',
       { page: 1, pageSize: 2, cursor: first.data.nextCursor ?? '' },
     )
     expect(second.data.items.map((item) => item.id)).toEqual(['e3', 'e2'])
 
-    const third = await handleStaticRequest<App.Api.Ech0.PaginationResult>(
+    const third = await handleStaticRequest<App.Api.AXOXE.PaginationResult>(
       '/api/echo/query',
       'POST',
       { page: 1, pageSize: 2, cursor: second.data.nextCursor ?? '' },
@@ -136,11 +136,11 @@ describe('handleStaticRequest', () => {
   })
 
   it('GET /api/echo/{id} 命中返回 Echo，未命中返回 code 0', async () => {
-    const hit = await handleStaticRequest<App.Api.Ech0.Echo>('/api/echo/e3', 'GET', undefined)
+    const hit = await handleStaticRequest<App.Api.AXOXE.Echo>('/api/echo/e3', 'GET', undefined)
     expect(hit.code).toBe(1)
     expect(hit.data.id).toBe('e3')
 
-    const miss = await handleStaticRequest<App.Api.Ech0.Echo | null>(
+    const miss = await handleStaticRequest<App.Api.AXOXE.Echo | null>(
       '/api/echo/nope',
       'GET',
       undefined,

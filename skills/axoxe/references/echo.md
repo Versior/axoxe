@@ -25,9 +25,9 @@ and audio or video is limited to one per Echo.
 ## Create
 
 ```bash
-ech0 echo create --content "今天的想法" --tag daily
-ech0 echo create --content "只给自己看" --private
-ech0 echo create --content "配图" --file-id <file_id>
+axoxe echo create --content "今天的想法" --tag daily
+axoxe echo create --content "只给自己看" --private
+axoxe echo create --content "配图" --file-id <file_id>
 ```
 
 - `--tag <name>` appends a tag and is repeatable; `--tags` takes a JSON array of
@@ -40,15 +40,15 @@ ech0 echo create --content "配图" --file-id <file_id>
 Upload first; the upload prints a JSON object whose `id` is the file id:
 
 ```bash
-ech0 file upload --file photo.png --json
-cat photo.png | ech0 file upload --file - --file-name photo.png --json
+axoxe file upload --file photo.png --json
+cat photo.png | axoxe file upload --file - --file-name photo.png --json
 ```
 
 `--storage-type local|s3|object` picks the target when the instance has more than
 one. `external` files are registered by URL, not uploaded:
 
 ```bash
-ech0 file external --url https://example.com/photo.png --category image --json
+axoxe file external --url https://example.com/photo.png --category image --json
 ```
 
 `upload` and `external` stay separate commands because they are separate
@@ -60,10 +60,10 @@ and never transfers bytes. Both still create the same kind of file record, so
 ### Browse, inspect and download
 
 ```bash
-ech0 file list --page 1 --page-size 20 --search photo --json
-ech0 file get --id <file_id> --json            # metadata, including url
-ech0 file tree --storage-type local            # browse by storage prefix
-ech0 file download --id <file_id> --output ./photo.png
+axoxe file list --page 1 --page-size 20 --search photo --json
+axoxe file get --id <file_id> --json            # metadata, including url
+axoxe file tree --storage-type local            # browse by storage prefix
+axoxe file download --id <file_id> --output ./photo.png
 ```
 
 `file download` streams the content: `--output -` writes stdout, and a non-TTY
@@ -76,8 +76,8 @@ uses (`local`, `s3`, `object`).
 template in `$EDITOR`. The template lists every field the server accepts.
 
 ```bash
-ech0 echo create --from echo.json
-ech0 echo get --id <echo_id> --json | ech0 echo update --id <echo_id> --from -
+axoxe echo create --from echo.json
+axoxe echo get --id <echo_id> --json | axoxe echo update --id <echo_id> --from -
 ```
 
 Merge rules: `--from`/`--edit` values override same-named flags, while `tags` and
@@ -86,9 +86,9 @@ Merge rules: `--from`/`--edit` values override same-named flags, while `tags` an
 ## Update
 
 ```bash
-ech0 echo get --id <echo_id> --json
-ech0 echo update --id <echo_id> --content "改过的正文"
-ech0 echo update --id <echo_id> --content "改过的正文" --tag daily
+axoxe echo get --id <echo_id> --json
+axoxe echo update --id <echo_id> --content "改过的正文"
+axoxe echo update --id <echo_id> --content "改过的正文" --tag daily
 ```
 
 Update is a **full replacement**: `content`, `private` and `layout` are written
@@ -99,7 +99,7 @@ want to keep. `--id` is required.
 ## Delete
 
 ```bash
-ech0 echo delete --id <echo_id> --yes
+axoxe echo delete --id <echo_id> --yes
 ```
 
 Destructive and admin-only. Interactive terminals print the exact `DELETE`
@@ -110,13 +110,13 @@ the id first. Deleting an Echo also deletes its attachments.
 ## Read
 
 ```bash
-ech0 echo get --id <echo_id>
-ech0 echo list --page 1 --page-size 20 --search daily
-ech0 echo list --sort-by reactions --tag-ids <tag_id>
-ech0 echo hot --limit 10
-ech0 echo today
-ech0 echo random
-ech0 echo onthisday
+axoxe echo get --id <echo_id>
+axoxe echo list --page 1 --page-size 20 --search daily
+axoxe echo list --sort-by reactions --tag-ids <tag_id>
+axoxe echo hot --limit 10
+axoxe echo today
+axoxe echo random
+axoxe echo onthisday
 ```
 
 `echo list` filters (`--help` shows the same text the server publishes):
@@ -132,7 +132,7 @@ ech0 echo onthisday
 | `--private`, `--no-private` | Private-only or public-only; omit both for no filter. Only admins are honoured; other accounts always see public Echoes |
 
 Boolean flags are tri-state: passing neither sends no filter. Tag IDs come from
-`ech0 tag list`. Responses look like `{code, msg, data}`; `ech0 echo list`
+`axoxe tag list`. Responses look like `{code, msg, data}`; `axoxe echo list`
 returns `data.items` plus `total`, and the curated views return arrays (or one
 Echo for `random`). With `--cursor`, `total` still counts the whole filtered
 set and `data.nextCursor` carries the position of the next page — it is absent

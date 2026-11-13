@@ -65,7 +65,7 @@ import Music from '@/components/icons/music.vue'
 
 const props = withDefaults(
   defineProps<{
-    files?: App.Api.Ech0.FileObject[]
+    files?: App.Api.AXOXE.FileObject[]
     baseUrl?: string
   }>(),
   { files: () => [] },

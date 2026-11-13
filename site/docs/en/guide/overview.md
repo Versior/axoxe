@@ -1,15 +1,15 @@
 ---
 title: Product overview
-description: What Ech0 is, who it is for, and what it can do
+description: What AXOXE is, who it is for, and what it can do
 ---
 
 # Product overview
 
-## What is Ech0?
+## What is AXOXE?
 
-Ech0 is a **self-hosted personal microblog**: your content lives on a **timeline** where it can be shared and commented on, and the data stays on your own server. Think of it as “a lightweight status site on your own domain” — built for publishing and reading, not for heavyweight note-taking or team collaboration.
+AXOXE is a **self-hosted personal microblog**: your content lives on a **timeline** where it can be shared and commented on, and the data stays on your own server. Think of it as “a lightweight status site on your own domain” — built for publishing and reading, not for heavyweight note-taking or team collaboration.
 
-Compared with tools like Memos that help you “jot down a thought quickly,” Ech0 focuses on **what happens after you write**: publishing the timeline publicly or semi-publicly so others can keep reading and interacting. It is not a backlinked knowledge base, nor a Notion-style team workspace.
+Compared with tools like Memos that help you “jot down a thought quickly,” AXOXE focuses on **what happens after you write**: publishing the timeline publicly or semi-publicly so others can keep reading and interacting. It is not a backlinked knowledge base, nor a Notion-style team workspace.
 
 ---
 
@@ -17,11 +17,11 @@ Compared with tools like Memos that help you “jot down a thought quickly,” E
 
 1. **Just want it running**: follow [Getting started](/docs/start/getting-started) from Docker to your first login (about 10 minutes).
 2. **Want to deploy directly**: see [Installation](/docs/start/installation) (Docker / Compose / binary / Helm).
-3. **Hitting a problem**: check the [FAQ](/docs/start/faq) first, then search [GitHub Issues](https://github.com/lin-snow/Ech0/issues).
+3. **Hitting a problem**: check the [FAQ](/docs/start/faq) first, then search [GitHub Issues](https://github.com/Versior/Ech0/issues).
 
 ---
 
-## Who Ech0 is for
+## Who AXOXE is for
 
 **A good fit** if you want to:
 

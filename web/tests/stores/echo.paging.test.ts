@@ -16,10 +16,10 @@ vi.mock('@/service/api', () => ({
 
 const queryMock = vi.mocked(fetchQueryEchos)
 
-type EchoPageResponse = App.Api.Response<App.Api.Ech0.PaginationResult>
+type EchoPageResponse = App.Api.Response<App.Api.AXOXE.PaginationResult>
 
-const echo = (id: string): App.Api.Ech0.Echo =>
-  ({ id, content: id, created_at: 1 }) as App.Api.Ech0.Echo
+const echo = (id: string): App.Api.AXOXE.Echo =>
+  ({ id, content: id, created_at: 1 }) as App.Api.AXOXE.Echo
 
 const page = (ids: string[], total: number, nextCursor: string | null): EchoPageResponse => ({
   code: 1,
@@ -36,7 +36,7 @@ const failure: EchoPageResponse = {
 const range = (prefix: string, count: number): string[] =>
   Array.from({ length: count }, (_, i) => `${prefix}${i}`)
 
-const idsOf = (items: App.Api.Ech0.Echo[]): string[] => items.map((item) => item.id)
+const idsOf = (items: App.Api.AXOXE.Echo[]): string[] => items.map((item) => item.id)
 
 describe('echoStore paging', () => {
   beforeEach(() => {

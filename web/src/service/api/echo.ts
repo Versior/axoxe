@@ -3,24 +3,24 @@
 
 import { request, requestWithDirectUrlAndData } from '../request'
 
-export async function fetchQueryEchos(params: App.Api.Ech0.EchoQueryParams) {
-  return request<App.Api.Ech0.PaginationResult>({
+export async function fetchQueryEchos(params: App.Api.AXOXE.EchoQueryParams) {
+  return request<App.Api.AXOXE.PaginationResult>({
     url: `/echo/query`,
     method: 'POST',
     data: params,
   })
 }
 
-export async function fetchGetEchosByPage(searchParams: App.Api.Ech0.ParamsByPagination) {
-  return request<App.Api.Ech0.PaginationResult>({
+export async function fetchGetEchosByPage(searchParams: App.Api.AXOXE.ParamsByPagination) {
+  return request<App.Api.AXOXE.PaginationResult>({
     url: `/echo/page`,
     method: 'POST',
     data: searchParams,
   })
 }
 
-export function fetchAddEcho(echoToAdd: App.Api.Ech0.EchoToAdd) {
-  return request<App.Api.Ech0.Echo>({
+export function fetchAddEcho(echoToAdd: App.Api.AXOXE.EchoToAdd) {
+  return request<App.Api.AXOXE.Echo>({
     url: `/echo`,
     method: 'POST',
     data: echoToAdd,
@@ -34,8 +34,8 @@ export function fetchDeleteEcho(echoId: string) {
   })
 }
 
-export function fetchUpdateEcho(echo: App.Api.Ech0.EchoToUpdate) {
-  return request<App.Api.Ech0.Echo>({
+export function fetchUpdateEcho(echo: App.Api.AXOXE.EchoToUpdate) {
+  return request<App.Api.AXOXE.Echo>({
     url: `/echo`,
     method: 'PUT',
     data: echo,
@@ -43,7 +43,7 @@ export function fetchUpdateEcho(echo: App.Api.Ech0.EchoToUpdate) {
 }
 
 export function fetchReactionCatalog() {
-  return request<App.Api.Ech0.ReactionCatalogItem[]>({
+  return request<App.Api.AXOXE.ReactionCatalogItem[]>({
     url: `/reactions`,
     method: 'GET',
     silentError: true,
@@ -51,49 +51,49 @@ export function fetchReactionCatalog() {
 }
 
 export function fetchReactEcho(echoId: string, emoji: string) {
-  return request<App.Api.Ech0.ReactionCount[]>({
+  return request<App.Api.AXOXE.ReactionCount[]>({
     url: `/echo/${echoId}/reactions/${encodeURIComponent(emoji)}`,
     method: 'PUT',
   })
 }
 
 export function fetchUnreactEcho(echoId: string, emoji: string) {
-  return request<App.Api.Ech0.ReactionCount[]>({
+  return request<App.Api.AXOXE.ReactionCount[]>({
     url: `/echo/${echoId}/reactions/${encodeURIComponent(emoji)}`,
     method: 'DELETE',
   })
 }
 
 export function fetchGetTodayEchos() {
-  return request<App.Api.Ech0.Echo[]>({
+  return request<App.Api.AXOXE.Echo[]>({
     url: `/echo/today`,
     method: 'GET',
   })
 }
 
 export function fetchGetHotEchos(limit = 5) {
-  return request<App.Api.Ech0.Echo[]>({
+  return request<App.Api.AXOXE.Echo[]>({
     url: `/echo/hot?limit=${limit}`,
     method: 'GET',
   })
 }
 
 export async function fetchGetEchoById(echoId: string) {
-  return request<App.Api.Ech0.Echo>({
+  return request<App.Api.AXOXE.Echo>({
     url: `/echo/${echoId}`,
     method: 'GET',
   })
 }
 
 export function fetchGetHeatMap() {
-  return request<App.Api.Ech0.HeatMap>({
+  return request<App.Api.AXOXE.HeatMap>({
     url: `/heatmap`,
     method: 'GET',
   })
 }
 
 export function fetchGetGithubRepo(githubRepo: { owner: string; repo: string }) {
-  return requestWithDirectUrlAndData<App.Api.Ech0.GithubCardData>({
+  return requestWithDirectUrlAndData<App.Api.AXOXE.GithubCardData>({
     dirrectUrlAndData: `https://api.github.com/repos/${githubRepo.owner}/${githubRepo.repo}`,
     url: `/github`,
     method: 'GET',
@@ -101,7 +101,7 @@ export function fetchGetGithubRepo(githubRepo: { owner: string; repo: string }) 
 }
 
 export function fetchGetTags() {
-  return request<App.Api.Ech0.Tag[]>({
+  return request<App.Api.AXOXE.Tag[]>({
     url: `/tags`,
     method: 'GET',
   })
@@ -115,7 +115,7 @@ export function fetchDeleteTagById(tagId: string) {
 }
 
 export function fetchCreateTag(name: string) {
-  return request<App.Api.Ech0.Tag>({
+  return request<App.Api.AXOXE.Tag>({
     url: `/tag`,
     method: 'POST',
     data: { name },
@@ -124,9 +124,9 @@ export function fetchCreateTag(name: string) {
 
 export async function fetchGetEchosByTagId(
   tagId: string,
-  searchParams: App.Api.Ech0.ParamsByPagination,
+  searchParams: App.Api.AXOXE.ParamsByPagination,
 ) {
-  return request<App.Api.Ech0.PaginationResult>({
+  return request<App.Api.AXOXE.PaginationResult>({
     url: `/echo/tag/${tagId}?page=${searchParams.page}&pageSize=${searchParams.pageSize}&search=${searchParams.search || ''}`,
     method: 'GET',
   })

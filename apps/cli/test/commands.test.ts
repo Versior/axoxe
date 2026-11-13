@@ -29,7 +29,7 @@ describe("auth login", () => {
         body: { code: 1, msg: "ok", data: { id: "u1", username: "owner", is_admin: true, is_owner: true } },
       }),
     });
-    const dir = mkdtempSync(join(tmpdir(), "ech0-cli-login-"));
+    const dir = mkdtempSync(join(tmpdir(), "axoxe-cli-login-"));
     const env = { ...process.env, ECH0_CONFIG: join(dir, "config.json"), ECH0_NO_KEYCHAIN: "1" };
     const ctx = loadContext({ json: false, yaml: false }, env);
 
@@ -48,7 +48,7 @@ describe("auth login", () => {
 
 describe("session", () => {
   test("env token wins over the stored token", async () => {
-    const dir = mkdtempSync(join(tmpdir(), "ech0-cli-session-"));
+    const dir = mkdtempSync(join(tmpdir(), "axoxe-cli-session-"));
     const env = {
       ...process.env,
       ECH0_CONFIG: join(dir, "config.json"),

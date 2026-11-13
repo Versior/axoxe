@@ -25,11 +25,14 @@
           @pointerup="onPointerUp"
           @pointercancel="onPointerUp"
         >
-          <img class="about-sticker__img" src="/Ech0.svg" alt="" draggable="false" />
+          <img class="about-sticker__img" src="/axoxe.svg" alt="" draggable="false" />
         </span>
 
         <div class="about-colophon__body">
-          <h1 class="about-colophon__name">Ech0</h1>
+          <h1 class="about-colophon__name">
+            <span class="sr-only">AXOXE</span>
+            <span class="about-colophon__wordmark" aria-hidden="true" />
+          </h1>
           <p class="about-colophon__build">
             v{{ version
             }}<template v-if="hasCommit">
@@ -69,6 +72,14 @@
           </p>
 
           <p class="about-colophon__copyright">{{ copyright }}</p>
+          <p class="about-colophon__powered">
+            <a
+              href="https://github.com/lin-snow/Ech0"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="about-link"
+            >{{ t('about.upstreamAttribution') }}</a>
+          </p>
           <p class="about-colophon__powered">{{ t('about.poweredBy') }}</p>
         </div>
       </div>
@@ -117,7 +128,7 @@ const onPointerUp = (e: PointerEvent) => {
   } catch {}
 }
 
-const FALLBACK_REPO = 'https://github.com/lin-snow/Ech0'
+const FALLBACK_REPO = 'https://github.com/Versior/Ech0'
 const FALLBACK_AUTHOR = 'L1nSn0w'
 const FALLBACK_LICENSE = 'AGPL-3.0-or-later'
 
@@ -233,12 +244,16 @@ const commitURL = computed(() => `${repoURL.value}/tree/${commit.value}`)
 
 .about-colophon__name {
   margin: 0;
-  font-family: var(--font-family-display);
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
   color: var(--color-text-primary);
+}
+
+.about-colophon__wordmark {
+  display: block;
+  width: 14rem;
+  max-width: 100%;
+  height: 3.4rem;
+  background-color: currentColor;
+  mask: url('/axoxe-wordmark.svg') center / contain no-repeat;
 }
 
 .about-colophon__build {

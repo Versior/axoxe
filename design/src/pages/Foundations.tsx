@@ -47,7 +47,7 @@ export function Foundations() {
                 className="type-row__sample"
                 style={{ fontSize: `${item.px}px`, lineHeight: item.line }}
               >
-                Ech0 时间线
+                AXOXE 时间线
               </span>
               <span className="type-row__meta">
                 {item.token} · {item.px}px / {item.line} · {item.use}

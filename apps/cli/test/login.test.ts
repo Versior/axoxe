@@ -46,7 +46,7 @@ describe("password login", () => {
       }),
     });
     api = fake;
-    const dir = mkdtempSync(join(tmpdir(), "ech0-cli-pw-"));
+    const dir = mkdtempSync(join(tmpdir(), "axoxe-cli-pw-"));
     const ctx = context(dir);
 
     const output = await auth.loginWithPassword(ctx, {
@@ -77,7 +77,7 @@ describe("password login", () => {
       }),
     });
     api = fake;
-    const dir = mkdtempSync(join(tmpdir(), "ech0-cli-pw2-"));
+    const dir = mkdtempSync(join(tmpdir(), "axoxe-cli-pw2-"));
     const ctx = context(dir);
 
     await auth.loginWithPassword(ctx, {
@@ -124,7 +124,7 @@ describe("device login", () => {
       }),
     });
     api = fake;
-    const dir = mkdtempSync(join(tmpdir(), "ech0-cli-device-"));
+    const dir = mkdtempSync(join(tmpdir(), "axoxe-cli-device-"));
     const ctx = context(dir);
 
     const delays: number[] = [];
@@ -147,7 +147,7 @@ describe("device login", () => {
     expect((await readToken("memo", ctx.credentialsPath))?.value).toBe("device-token");
 
     const start = fake.calls.find((call) => call.path === "/api/auth/device/code");
-    expect(start?.body).toMatchObject({ client_name: "ech0-cli", scopes: ["echo:read", "echo:private", "echo:write", "echo:delete", "profile:read", "file:read", "file:write", "comment:write", "comment:review", "comment:delete", "connect:read", "connect:write", "connect:delete", "admin:webhook"] });
+    expect(start?.body).toMatchObject({ client_name: "axoxe-cli", scopes: ["echo:read", "echo:private", "echo:write", "echo:delete", "profile:read", "file:read", "file:write", "comment:write", "comment:review", "comment:delete", "connect:read", "connect:write", "connect:delete", "admin:webhook"] });
   });
 });
 
@@ -163,7 +163,7 @@ describe("session refresh", () => {
       }),
     });
     api = fake;
-    const dir = mkdtempSync(join(tmpdir(), "ech0-cli-refresh-"));
+    const dir = mkdtempSync(join(tmpdir(), "axoxe-cli-refresh-"));
     const ctx = context(dir);
 
     // Seed a profile + stored credentials.

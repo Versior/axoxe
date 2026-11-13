@@ -5,7 +5,7 @@
     <div class="w-full">
       <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
-          <h1 class="text-lg font-bold text-[var(--color-text-primary)]">Ech0 MCP</h1>
+          <h1 class="text-lg font-bold text-[var(--color-text-primary)]">AXOXE MCP</h1>
           <p class="mcp-lead mt-1">{{ t('mcpSetting.description') }}</p>
         </div>
         <BaseButton

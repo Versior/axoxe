@@ -15,21 +15,21 @@ Bug reports, usage questions, and contributions are all welcome. Below are the e
 
 | Your situation                                       | Suggested channel                                                                                        |
 | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| Suspected bug, crash, failed deployment              | [GitHub Issues](https://github.com/lin-snow/Ech0/issues) (include version, environment, and repro steps) |
-| Feature ideas, usage discussions, experience sharing | [GitHub Discussions](https://github.com/lin-snow/Ech0/discussions)                                       |
+| Suspected bug, crash, failed deployment              | [GitHub Issues](https://github.com/Versior/Ech0/issues) (include version, environment, and repro steps) |
+| Feature ideas, usage discussions, experience sharing | [GitHub Discussions](https://github.com/Versior/Ech0/discussions)                                       |
 | Real-time chat, Chinese-speaking users               | **QQ group** (see below)                                                                                 |
 
 Before opening an issue, search for an existing report of the same problem; including your **deployment method** (Docker / binary, etc.), **version**, and a **log excerpt** makes it much easier to pinpoint.
 
 ### Links
 
-- **Bugs and defects**: [GitHub Issues](https://github.com/lin-snow/Ech0/issues)
-- **Discussions and Q&A**: [GitHub Discussions](https://github.com/lin-snow/Ech0/discussions)
+- **Bugs and defects**: [GitHub Issues](https://github.com/Versior/Ech0/issues)
+- **Discussions and Q&A**: [GitHub Discussions](https://github.com/Versior/Ech0/discussions)
 - **QQ group**: [1065435773](https://qm.qq.com/cgi-bin/qm/qr?group_code=1065435773)
 
 ### Contributing
 
-Code and documentation repository: [lin-snow/Ech0](https://github.com/lin-snow/Ech0). If you have fixed a bug or improved the docs, pull requests are welcome; for large changes, it's best to float the direction in a Discussion first. For the developer setup, see [Developer guide](/docs/dev/guide).
+Code and documentation repository: [Versior/Ech0](https://github.com/Versior/Ech0). If you have fixed a bug or improved the docs, pull requests are welcome; for large changes, it's best to float the direction in a Discussion first. For the developer setup, see [Developer guide](/docs/dev/guide).
 
 ---
 
@@ -37,7 +37,7 @@ Code and documentation repository: [lin-snow/Ech0](https://github.com/lin-snow/E
 
 Thanks to everyone who has filed issues, sent PRs, and shared feedback.
 
-[![Contributors](https://contrib.rocks/image?repo=lin-snow/Ech0)](https://github.com/lin-snow/Ech0/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=lin-snow/Ech0)](https://github.com/Versior/Ech0/graphs/contributors)
 
 ![Repobeats](https://repobeats.axiom.co/api/embed/d69b9177e4a121e31aaed95354ff862c928ca22d.svg)
 
@@ -45,4 +45,4 @@ Thanks to everyone who has filed issues, sent PRs, and shared feedback.
 
 ![Star History](https://api.star-history.com/svg?repos=lin-snow/Ech0&type=timeline&legend=top-left)
 
-If you find it useful, a Star on [GitHub](https://github.com/lin-snow/Ech0) is appreciated; you can also support maintenance via [Afdian](https://afdian.com/a/l1nsn0w).
+If you find it useful, a Star on [GitHub](https://github.com/Versior/Ech0) is appreciated; you can also support maintenance via [Afdian](https://afdian.com/a/l1nsn0w).

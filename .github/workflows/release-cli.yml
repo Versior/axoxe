@@ -1,12 +1,12 @@
 name: Release CLI
 
 # Builds the standalone `ech0` CLI (Bun cross-compiled binaries) and publishes the
-# npm packages. The CLI is versioned independently from the Ech0 server: the
+# npm packages. The CLI is versioned independently from the AXOXE server: the
 # source of truth is `apps/cli/package.json`, and a release is cut by pushing a
 # `cli-vX.Y.Z` tag. `workflow_dispatch` rebuilds an existing CLI tag.
 #
 # Publishing authenticates with npm trusted publishing (OIDC), not a token: every
-# package (`@useech0/cli` + the four `@useech0/cli-<os>-<arch>`) must have a trusted
+# package (`@axoxe/cli` + the four `@axoxe/cli-<os>-<arch>`) must have a trusted
 # publisher pointing at this workflow, with `npm publish` allowed. See
 # docs/dev/release-process.md ("CLI release"). Tokens that bypass 2FA are being
 # retired for publishing; a 2FA-guarded token fails here with EOTP.
@@ -79,7 +79,7 @@ jobs:
             exit 1
           fi
 
-          # Prerelease versions go to `next` so `npm i -g @useech0/cli` keeps resolving
+          # Prerelease versions go to `next` so `npm i -g @axoxe/cli` keeps resolving
           # the latest stable release.
           dist_tag="latest"
           case "${version}" in *-*) dist_tag="next" ;; esac
@@ -111,8 +111,8 @@ jobs:
       - name: Verify binary reports the release version
         run: |
           set -euo pipefail
-          ./apps/cli/dist/release/bin/ech0-linux-x64 --version
-          test "$(./apps/cli/dist/release/bin/ech0-linux-x64 --version)" = "${{ steps.meta.outputs.version }}"
+          ./apps/cli/dist/release/bin/axoxe-linux-x64 --version
+          test "$(./apps/cli/dist/release/bin/axoxe-linux-x64 --version)" = "${{ steps.meta.outputs.version }}"
 
       - name: Create GitHub Release when missing
         env:
@@ -138,7 +138,7 @@ jobs:
         run: |
           set -euo pipefail
           gh release upload "${TAG}" \
-            apps/cli/dist/release/ech0-cli-*.tar.gz \
+            apps/cli/dist/release/axoxe-cli-*.tar.gz \
             apps/cli/dist/release/SHA256SUMS \
             --clobber
 
@@ -195,7 +195,7 @@ jobs:
             fi
             echo "publish ${name}@${VERSION} (dist-tag: ${DIST_TAG})"
             if ! (cd "${dir}" && npm publish --provenance --access public --tag "${DIST_TAG}"); then
-              echo "::error title=npm publish failed::${name}@${VERSION} was rejected. Publishing is OIDC-only: add a trusted publisher for it (lin-snow/Ech0, release-cli.yml, allow npm publish). A token with 2FA fails here with EOTP."
+              echo "::error title=npm publish failed::${name}@${VERSION} was rejected. Publishing is OIDC-only: add a trusted publisher for it (Versior/Ech0, release-cli.yml, allow npm publish). A token with 2FA fails here with EOTP."
               exit 1
             fi
           }

@@ -14,9 +14,9 @@ export interface EchoPost {
   username?: string
   created_at: number | string
   tags?: EchoTag[]
-  echo_files?: App.Api.Ech0.EchoFile[]
+  echo_files?: App.Api.AXOXE.EchoFile[]
   layout?: string
-  extension?: App.Api.Ech0.EchoExtension | null
+  extension?: App.Api.AXOXE.EchoExtension | null
   private?: boolean
   user_id?: string
 }

@@ -22,16 +22,16 @@ const resolveFileUrlByPath = (rawUrl?: string, baseUrl?: string) => {
 }
 
 const resolveFileUrl = (
-  file: Pick<App.Api.Ech0.FileObject | App.Api.Ech0.FileToAdd, 'url'> & { image_url?: string },
+  file: Pick<App.Api.AXOXE.FileObject | App.Api.AXOXE.FileToAdd, 'url'> & { image_url?: string },
   baseUrl?: string,
 ) => resolveFileUrlByPath(file.url || file.image_url, baseUrl)
 
-export const getFileUrl = (file: App.Api.Ech0.FileObject) => resolveFileUrl(file)
+export const getFileUrl = (file: App.Api.AXOXE.FileObject) => resolveFileUrl(file)
 
-export const getImageUrl = (image: App.Api.Ech0.FileObject) => resolveFileUrl(image)
+export const getImageUrl = (image: App.Api.AXOXE.FileObject) => resolveFileUrl(image)
 
-export const getHubImageUrl = (image: App.Api.Ech0.FileObject, baseurl: string) =>
+export const getHubImageUrl = (image: App.Api.AXOXE.FileObject, baseurl: string) =>
   resolveFileUrl(image, baseurl)
 
-export const getHubFileUrl = (file: App.Api.Ech0.FileObject, baseurl: string) =>
+export const getHubFileUrl = (file: App.Api.AXOXE.FileObject, baseurl: string) =>
   resolveFileUrl(file, baseurl)

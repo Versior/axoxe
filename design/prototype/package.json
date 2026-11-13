@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "Ech0 6.x UI/UX sketch lab — Base UI primitives, three candidate layout directions",
+  "description": "AXOXE 6.x UI/UX sketch lab — Base UI primitives, three candidate layout directions",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

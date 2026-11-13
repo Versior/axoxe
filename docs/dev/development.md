@@ -1,6 +1,6 @@
 # Development Guide
 
-This guide covers local development for **Ech0** — environment setup, hot reload, and front-/back-end integration. For higher-level architecture see [`AGENTS.md`](../../AGENTS.md) and [`CONTRIBUTING.md`](../../CONTRIBUTING.md).
+This guide covers local development for **AXOXE** — environment setup, hot reload, and front-/back-end integration. For higher-level architecture see [`AGENTS.md`](../../AGENTS.md) and [`CONTRIBUTING.md`](../../CONTRIBUTING.md).
 
 ## Backend Requirements
 
@@ -56,7 +56,7 @@ All variables, defaults and the env-vs-admin-settings boundary are documented in
 
 ## Start Backend & Frontend
 
-**Step 1: Backend (in Ech0 root directory)**
+**Step 1: Backend (in AXOXE root directory)**
 ```shell
 just run # normal backend start (equivalent to go run main.go serve)
 just dev # backend hot reload with Air

@@ -36,8 +36,8 @@
         class="flex-none opacity-70 hover:opacity-100 transition-opacity"
       >
         <img
-          src="/Ech0.svg"
-          alt="Ech0"
+          src="/axoxe.svg"
+          alt="AXOXE"
           loading="lazy"
           decoding="async"
           class="w-5 h-5 sm:w-6 sm:h-6 object-contain"

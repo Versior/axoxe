@@ -50,7 +50,7 @@ func DoServeWithBlock() {
 		tuiUtil.PrintCLIInfo("😭 Failed to start service", err.Error())
 		return
 	}
-	tuiUtil.PrintCLIInfo("🎉 Service stopped", "Ech0 server has stopped")
+	tuiUtil.PrintCLIInfo("🎉 Service stopped", "AXOXE server has stopped")
 }
 
 func DoVersion() {
@@ -63,14 +63,14 @@ func DoVersion() {
 	}
 	items = append(items,
 		tuiUtil.CLIInfoItem{Title: "Author", Msg: versionPkg.Author},
-		tuiUtil.CLIInfoItem{Title: "Website", Msg: "https://ech0.app/"},
+		tuiUtil.CLIInfoItem{Title: "Website", Msg: "https://www.axoxe.com/"},
 		tuiUtil.CLIInfoItem{Title: "License", Msg: versionPkg.License},
 		tuiUtil.CLIInfoItem{Title: "Source", Msg: versionPkg.RepoURL},
 		tuiUtil.CLIInfoItem{},
 		tuiUtil.CLIInfoItem{Msg: versionPkg.Copyright()},
 	)
 
-	tuiUtil.PrintCLIWithBox(tuiUtil.CLIBoxHeader{Icon: "📦", Title: "Ech0"}, items...)
+	tuiUtil.PrintCLIWithBox(tuiUtil.CLIBoxHeader{Icon: "📦", Title: "AXOXE"}, items...)
 }
 
 func DoHello() {
@@ -95,12 +95,12 @@ func DoTui() {
 		}
 
 		options = append(options,
-			huh.NewOption("📌 About Ech0", "version"),
+			huh.NewOption("📌 About AXOXE", "version"),
 			huh.NewOption("❌ Exit", "exit"),
 		)
 
 		err := huh.NewSelect[string]().
-			Title("Welcome to the Ech0 TUI.").
+			Title("Welcome to the AXOXE TUI.").
 			Options(options...).
 			Value(&action).
 			WithTheme(huh.ThemeFunc(huh.ThemeCatppuccin)).
@@ -120,7 +120,7 @@ func DoTui() {
 			tuiUtil.ClearScreen()
 			DoVersion()
 		case "exit":
-			fmt.Println("👋 Thanks for using the Ech0 TUI. See you next time!")
+			fmt.Println("👋 Thanks for using the AXOXE TUI. See you next time!")
 			return
 		}
 	}

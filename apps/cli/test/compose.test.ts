@@ -158,7 +158,7 @@ describe("composed Echo payload", () => {
 
 describe("file external command", () => {
   test("registers a URL as an external file", async () => {
-    const program = new Command("ech0");
+    const program = new Command("axoxe");
     let captured: Record<string, unknown> | undefined;
     const external: CatalogOp = baseOp({
       path: "/files/external",
@@ -189,7 +189,7 @@ describe("file external command", () => {
 
 describe("file upload command", () => {
   test("rejects storage types that cannot upload", async () => {
-    const program = new Command("ech0");
+    const program = new Command("axoxe");
     registerCatalogCommands(
       program,
       { ops: { "file.upload": UPLOAD } },
@@ -208,7 +208,7 @@ describe("file upload command", () => {
   });
 
   test("infers the category from the filename", async () => {
-    const program = new Command("ech0");
+    const program = new Command("axoxe");
     let captured: Record<string, unknown> | undefined;
     registerCatalogCommands(
       program,
@@ -228,7 +228,7 @@ describe("file upload command", () => {
   });
 
   test("--file-name overrides the multipart filename", async () => {
-    const dir = mkdtempSync(join(tmpdir(), "ech0-upload-"));
+    const dir = mkdtempSync(join(tmpdir(), "axoxe-upload-"));
     const path = join(dir, "blob");
     writeFileSync(path, "x");
 
@@ -237,7 +237,7 @@ describe("file upload command", () => {
   });
 
   test("forwards --file-name for stdin uploads", async () => {
-    const program = new Command("ech0");
+    const program = new Command("axoxe");
     let extra: { uploadFileName?: string } | undefined;
     registerCatalogCommands(
       program,

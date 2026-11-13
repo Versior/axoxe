@@ -192,7 +192,7 @@
     {
       "name": "create_external_file",
       "title": "Create External File",
-      "description": "Register an external URL as an Ech0 file record (no upload needed). Returns the created file metadata including id, which can be used as echo_files[].file_id in create_post/update_post.",
+      "description": "Register an external URL as an AXOXE file record (no upload needed). Returns the created file metadata including id, which can be used as echo_files[].file_id in create_post/update_post.",
       "scopes": [
         "file:write"
       ],
@@ -202,7 +202,7 @@
     {
       "name": "list_connects",
       "title": "List Connects",
-      "description": "List all saved peer connections (id and URL). These are the remote Ech0 instances the current instance is tracking.",
+      "description": "List all saved peer connections (id and URL). These are the remote AXOXE instances the current instance is tracking.",
       "scopes": [
         "connect:read"
       ],
@@ -222,7 +222,7 @@
     {
       "name": "add_connect",
       "title": "Add Connect",
-      "description": "Add a remote Ech0 instance as a peer connection. The connect_url must point to the /connect endpoint of the remote instance (e.g. https://example.com/api/connect). Returns {id, message}.",
+      "description": "Add a remote AXOXE instance as a peer connection. The connect_url must point to the /connect endpoint of the remote instance (e.g. https://example.com/api/connect). Returns {id, message}.",
       "scopes": [
         "connect:write"
       ],
@@ -368,7 +368,7 @@
       "uri": "ech0://connect/self",
       "name": "connect_self",
       "title": "Current Instance Info",
-      "description": "Public card of this Ech0 instance: server name, URL, logo, today/total post counts, owner username, and version.",
+      "description": "Public card of this AXOXE instance: server name, URL, logo, today/total post counts, owner username, and version.",
       "scopes": [
         "connect:read"
       ]

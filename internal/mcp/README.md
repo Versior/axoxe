@@ -1,6 +1,6 @@
 # internal/mcp
 
-Ech0 内建的 MCP（Model Context Protocol）Server 实现。
+AXOXE 内建的 MCP（Model Context Protocol）Server 实现。
 
 通过 `/mcp` 端点（复用主服务 6277 端口）对外暴露 **Streamable HTTP**，任意支持该传输方式的 MCP Host 均可统一调用 Tools、读取 Resources；鉴权与 Scope 与 REST API 共用同一套 JWT。
 
@@ -91,7 +91,7 @@ MCP-compatible client / Host
 7. 按 `method` 分发；未知方法返回 HTTP 404 + `-32601`
 8. list 方法按 token scope 过滤（`ToolDefinitionsFor` 等），并把 `cacheScope` 标为 `private`；`tools/call` / `resources/read` 查 Registry 取 binding，比对 token scope；不足返回 HTTP 403 + `WWW-Authenticate: Bearer error="insufficient_scope", scope="…"`
 9. modern 下 destructive 工具且客户端声明 `elicitation` 时，先返回 `input_required`（不执行）；重试校验 `requestState` 后按 `inputResponses.confirm` 执行或取消
-10. 调用 Adapter 注册的业务函数，Adapter 转发到 Ech0 Service 层
+10. 调用 Adapter 注册的业务函数，Adapter 转发到 AXOXE Service 层
 11. modern 结果盖上 `resultType: "complete"`、`_meta.serverInfo` 与缓存提示；legacy 结果不带这些 2026 专有字段；`input_required` 结果只带 `_meta.serverInfo`，不带缓存提示
 
 ## 2026-07-28 最佳实践

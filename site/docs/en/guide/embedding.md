@@ -39,11 +39,11 @@ Dimension mismatch ... Expected 1024 dimensions but received 2048
 
 This means the index table was created with `1024` dimensions, but the model returned `2048` this time. How to get it right:
 
-- **Models that support custom dimensions** (OpenAI `text-embedding-3` family, Qwen `text-embedding-v4`, etc.): `Dim` can be any tier the model supports (such as `1024` or `1536`), and Ech0 requests that dimension.
+- **Models that support custom dimensions** (OpenAI `text-embedding-3` family, Qwen `text-embedding-v4`, etc.): `Dim` can be any tier the model supports (such as `1024` or `1536`), and AXOXE requests that dimension.
 - **Models that do not support custom dimensions**: `Dim` **must be the model's native dimension** — check the vendor documentation, for example `1536`.
 
 ::: tip What if I change the model or dimensions?
-Changing the **embedding model** or **Dim** invalidates the existing index. Ech0 prompts you to **rebuild the vector index** — follow the prompt and **rebuild once** to regenerate vectors for all past Echoes with the new model and dimensions.
+Changing the **embedding model** or **Dim** invalidates the existing index. AXOXE prompts you to **rebuild the vector index** — follow the prompt and **rebuild once** to regenerate vectors for all past Echoes with the new model and dimensions.
 :::
 
 ---

@@ -43,7 +43,7 @@ const props = defineProps<GalleryStackProps>()
 
 const imageRows = computed(() => {
   const list = props.images
-  const rows: { image: App.Api.Ech0.FileObject; idx: number }[][] = []
+  const rows: { image: App.Api.AXOXE.FileObject; idx: number }[][] = []
   for (let i = 0; i < list.length; i++) {
     const rowIndex = Math.floor(i / STACK_MAX_PER_ROW)
     if (!rows[rowIndex]) rows[rowIndex] = []

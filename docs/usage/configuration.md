@@ -1,6 +1,6 @@
 # 环境变量与 `.env` 配置参考
 
-面向部署者：Ech0 读哪些环境变量、默认值是什么，以及 env 与管理后台设置的边界。
+面向部署者：AXOXE 读哪些环境变量、默认值是什么，以及 env 与管理后台设置的边界。
 为什么要分两层、为什么有些项必须留在 env，见 [配置与设置的依赖架构](../dev/config-and-settings-architecture.md)。
 
 ## 加载顺序与 `.env`
@@ -183,10 +183,10 @@ ECH0_DB_PATH=data/ech0.db
 
 | 变量 | 默认值 |
 |---|---|
-| `ECH0_SETTING_SITE_TITLE` | `Ech0` |
-| `ECH0_SETTING_SERVER_LOGO` | `/Ech0.svg` |
-| `ECH0_SETTING_SERVER_NAME` | `Ech0` |
-| `ECH0_SETTING_SERVER_URL` | `https://ech0.example.com` |
+| `ECH0_SETTING_SITE_TITLE` | `AXOXE` |
+| `ECH0_SETTING_SERVER_LOGO` | `/axoxe.svg` |
+| `ECH0_SETTING_SERVER_NAME` | `AXOXE` |
+| `ECH0_SETTING_SERVER_URL` | `https://www.axoxe.com` |
 | `ECH0_SETTING_ALLOW_REGISTER` | `true` |
 | `ECH0_SETTING_ICP_NUMBER` | `(空)` |
 | `ECH0_SETTING_FOOTER_CONTENT` | `(空)` |

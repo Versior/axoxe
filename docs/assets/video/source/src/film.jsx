@@ -6,7 +6,7 @@ import {HomeLayer} from './shots/home-layer.jsx';
 import {Rail} from './shots/rail.jsx';
 import {PanelLayer} from './shots/panel.jsx';
 import {DetailLayer} from './shots/detail.jsx';
-// Layer order: paper → real Ech0 home (write → land → stream → reach) → real admin panel (panel → own)
+// Layer order: paper → real AXOXE home (write → land → stream → reach) → real admin panel (panel → own)
 // → film rail (timeline-entry captions) → per-shot sections (title cards, Copilot, close).
 export function Film() {
   return <main id="film" className="film-theme">

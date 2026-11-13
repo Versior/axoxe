@@ -81,7 +81,7 @@ export function loadContext(
 export function resolveTarget(ctx: CliContext): ResolvedTarget {
   const profile = activeProfileName(ctx.config, ctx.flags.profile, ctx.env);
   if (!profile) {
-    throw new UsageError("未配置任何 profile：先运行 `ech0 auth login --server <url> --token <token>`");
+    throw new UsageError("未配置任何 profile：先运行 `axoxe auth login --server <url> --token <token>`");
   }
   const server = ctx.flags.server ?? ctx.env.ECH0_SERVER ?? ctx.config.profiles[profile]?.server;
   if (!server) {
@@ -152,7 +152,7 @@ export async function openSession(ctx: CliContext): Promise<Session> {
   } else {
     const stored = await readToken(target.profile, ctx.credentialsPath);
     if (!stored) {
-      throw new UsageError(`profile "${target.profile}" 没有可用 token：先运行 \`ech0 auth login\``);
+      throw new UsageError(`profile "${target.profile}" 没有可用 token：先运行 \`axoxe auth login\``);
     }
     token = stored.value;
     tokenSource = stored.source;

@@ -189,7 +189,7 @@ func TestAddConnect_Success_TrimsURLBeforePersist(t *testing.T) {
 func systemSettingJSON(t *testing.T, serverURL, serverLogo string) string {
 	t.Helper()
 	raw, err := json.Marshal(settingModel.SystemSetting{
-		ServerName: "My Ech0",
+		ServerName: "My AXOXE",
 		ServerURL:  serverURL,
 		ServerLogo: serverLogo,
 	})
@@ -204,15 +204,16 @@ func TestGetConnect_LogoDerivation(t *testing.T) {
 		serverLogo string
 		wantLogo   string
 	}{
-		{"empty logo falls back to default", "https://ech0.app", "", "https://ech0.app/Ech0.svg"},
-		{"Ech0.svg sentinel falls back to default", "https://ech0.app", "Ech0.svg", "https://ech0.app/Ech0.svg"},
-		{"/Ech0.svg sentinel falls back to default", "https://ech0.app", "/Ech0.svg", "https://ech0.app/Ech0.svg"},
-		{"trailing slash on server url is trimmed", "https://ech0.app/", "", "https://ech0.app/Ech0.svg"},
-		{"absolute https logo is kept verbatim", "https://ech0.app", "https://cdn.example.com/logo.png", "https://cdn.example.com/logo.png"},
-		{"absolute http logo is kept verbatim", "https://ech0.app", "http://cdn.example.com/logo.png", "http://cdn.example.com/logo.png"},
-		{"root-relative logo joins server url", "https://ech0.app", "/static/logo.png", "https://ech0.app/static/logo.png"},
-		{"relative logo joins server url with slash", "https://ech0.app/", "logo.png", "https://ech0.app/logo.png"},
-		{"surrounding whitespace is trimmed", "https://ech0.app", "  /static/logo.png  ", "https://ech0.app/static/logo.png"},
+		{"empty logo preserves upstream compatibility", "https://legacy.example.com", "", "https://legacy.example.com/Ech0.svg"},
+		{"legacy logo path is preserved", "https://legacy.example.com", "/Ech0.svg", "https://legacy.example.com/Ech0.svg"},
+		{"axoxe.svg sentinel falls back to default", "https://www.axoxe.com", "axoxe.svg", "https://www.axoxe.com/axoxe.svg"},
+		{"/axoxe.svg sentinel falls back to default", "https://www.axoxe.com", "/axoxe.svg", "https://www.axoxe.com/axoxe.svg"},
+		{"trailing slash on server url is trimmed", "https://www.axoxe.com/", "", "https://www.axoxe.com/Ech0.svg"},
+		{"absolute https logo is kept verbatim", "https://www.axoxe.com", "https://cdn.example.com/logo.png", "https://cdn.example.com/logo.png"},
+		{"absolute http logo is kept verbatim", "https://www.axoxe.com", "http://cdn.example.com/logo.png", "http://cdn.example.com/logo.png"},
+		{"root-relative logo joins server url", "https://www.axoxe.com", "/static/logo.png", "https://www.axoxe.com/static/logo.png"},
+		{"relative logo joins server url with slash", "https://www.axoxe.com/", "logo.png", "https://www.axoxe.com/logo.png"},
+		{"surrounding whitespace is trimmed", "https://www.axoxe.com", "  /static/logo.png  ", "https://www.axoxe.com/static/logo.png"},
 	}
 
 	for _, tc := range cases {
@@ -243,7 +244,7 @@ func TestGetConnect_PopulatesMetrics(t *testing.T) {
 	kv := kvmock.NewMockStore(t)
 	kv.EXPECT().
 		Get(mock.Anything, commonModel.SystemSettingsKey).
-		Return(systemSettingJSON(t, "https://ech0.app", ""), nil).
+		Return(systemSettingJSON(t, "https://www.axoxe.com", ""), nil).
 		Once()
 
 	cs := commonmock.NewMockService(t)
@@ -257,8 +258,8 @@ func TestGetConnect_PopulatesMetrics(t *testing.T) {
 	got, err := svc.GetConnect()
 
 	require.NoError(t, err)
-	assert.Equal(t, "My Ech0", got.ServerName)
-	assert.Equal(t, "https://ech0.app", got.ServerURL)
+	assert.Equal(t, "My AXOXE", got.ServerName)
+	assert.Equal(t, "https://www.axoxe.com", got.ServerURL)
 	assert.Equal(t, "alice", got.SysUsername)
 	assert.Equal(t, 3, got.TodayEchos)
 	assert.Equal(t, 42, got.TotalEchos)
@@ -286,7 +287,7 @@ func TestGetConnect_OwnerErrorShortCircuits(t *testing.T) {
 	kv := kvmock.NewMockStore(t)
 	kv.EXPECT().
 		Get(mock.Anything, commonModel.SystemSettingsKey).
-		Return(systemSettingJSON(t, "https://ech0.app", ""), nil).
+		Return(systemSettingJSON(t, "https://www.axoxe.com", ""), nil).
 		Once()
 
 	cs := commonmock.NewMockService(t)

@@ -154,7 +154,7 @@ async function run(
     env: {
       ...base,
       ECH0_NO_KEYCHAIN: "1",
-      ECH0_CONFIG: join(mkdtempSync(join(tmpdir(), "ech0-cli-help-")), "config.json"),
+      ECH0_CONFIG: join(mkdtempSync(join(tmpdir(), "axoxe-cli-help-")), "config.json"),
       ...env,
     },
     stdout: "pipe",
@@ -170,7 +170,7 @@ async function run(
 
 /** The descriptor of one command, rendered from an unfiltered catalog tree. */
 function helpText(id: string): string {
-  const program = new Command("ech0");
+  const program = new Command("axoxe");
   registerCatalogCommands(program, parseCatalog(new TextEncoder().encode(JSON.stringify(CATALOG))), {
     run: async () => ({ human: "", json: "" }),
     scope: () => true,
@@ -201,7 +201,7 @@ describe("help", () => {
     const result = await run(["--help"], { ECH0_SERVER: server.baseUrl });
 
     expect(result.exitCode).toBe(0);
-    expect(result.stdout).toContain("用法: ech0 [options] [command]");
+    expect(result.stdout).toContain("用法: axoxe [options] [command]");
     expect(result.stdout).toContain("本地命令");
     expect(result.stdout).toContain("auth");
     expect(result.stdout).toContain("服务端命令");
@@ -225,11 +225,11 @@ describe("help", () => {
     const result = await run(["help", "echo", "create"], { ECH0_SERVER: server.baseUrl });
 
     expect(result.exitCode).toBe(0);
-    expect(result.stdout).toContain("用法: ech0 echo create [options]");
+    expect(result.stdout).toContain("用法: axoxe echo create [options]");
     expect(result.stdout).toContain("接口: POST /api/echo · 写入 · scope: echo:write");
     expect(result.stdout).toContain("--content <content>");
     expect(result.stdout).toContain("必填");
-    expect(result.stdout).toContain("ech0 echo create --content \"今天的想法\" --tag daily");
+    expect(result.stdout).toContain("axoxe echo create --content \"今天的想法\" --tag daily");
     expect(result.stdout).toContain("全局选项");
     expect(result.stdout).toContain("提示");
     expect(result.stdout).toContain("需要 scope：echo:write");
@@ -289,7 +289,7 @@ describe("help", () => {
 
     expect(result.exitCode).toBe(2);
     expect(result.stderr).toContain("未知命令：echos");
-    expect(result.stderr).toContain("是否想运行：ech0 echo");
+    expect(result.stderr).toContain("是否想运行：axoxe echo");
   });
 
   test("--json emits the descriptor, not the text view", async () => {
@@ -331,7 +331,7 @@ describe("help", () => {
     const result = await run(["help"], { ECH0_SERVER: server.baseUrl });
 
     expect(result.stdout).toContain("尚未登录");
-    expect(result.stdout).toContain("ech0 auth login");
+    expect(result.stdout).toContain("axoxe auth login");
   });
 
   test("a failed call explains the next step", async () => {
@@ -352,7 +352,7 @@ describe("help", () => {
     expect(result.exitCode).toBe(1);
     expect(result.stderr).toContain("token expired");
     expect(result.stderr).toContain("提示：token 无效或已过期");
-    expect(result.stderr).toContain("ech0 auth login");
+    expect(result.stderr).toContain("axoxe auth login");
   });
 
   test("a rejected request points at the command descriptor", async () => {
@@ -376,7 +376,7 @@ describe("help", () => {
     expect(received).toEqual({});
     expect(result.exitCode).toBe(1);
     expect(result.stderr).toContain("无效的请求");
-    expect(result.stderr).toContain("ech0 echo list --help");
+    expect(result.stderr).toContain("axoxe echo list --help");
   });
 
   test("missing required flags print the runnable usage", async () => {
@@ -389,7 +389,7 @@ describe("help", () => {
 
     expect(result.exitCode).toBe(2);
     expect(result.stderr).toContain("缺少必填参数 --content");
-    expect(result.stderr).toContain("ech0 echo create --content <content>");
+    expect(result.stderr).toContain("axoxe echo create --content <content>");
   });
 
   test("without an instance the map still explains how to get one", async () => {

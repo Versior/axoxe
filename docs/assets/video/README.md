@@ -1,4 +1,4 @@
-# Ech0 品牌宣传片
+# AXOXE 品牌宣传片
 
 > 素材产线，不是文档。文档索引见 [`docs/README.md`](../../README.md)。
 
@@ -12,7 +12,7 @@
 
 ## 故事线
 
-主线是一颗橙点：它是时间线上每条 Echo 的日期圆点，也是 logo 的"眼睛"。一条想法写下、发布，被读者点赞、分享、回复，被更多人看到，被 Copilot 回想起来，由你自己管理，最后仍然属于你。
+主线是一颗橙点：它是时间线上每条 Echo 的日期圆点。一条想法写下、发布，被读者点赞、分享、回复，被更多人看到，被 Copilot 回想起来，由你自己管理，最后仍然属于你。
 
 | 时间 | 章节 | 画面 |
 |---|---|---|
@@ -25,7 +25,7 @@
 | 56.25–66.25s | Ask your own timeline. | Copilot：检索 → 流式回答，附引用的 Echo |
 | 66.25–83.75s | Run it your way. | 管理后台：仪表盘 → 评论审核 → 文件管理（展开 images/）→ MCP（真实的 29 个工具）→ 实时系统日志，全部是真实点击 |
 | 83.75–92.5s | Yours to keep. | 数据管理页：导出，选中 Capsule 格式；旁边打出 README 里的 `docker run` 命令 |
-| 92.5–97.5s | Ech0 | logo 由四个笔画拼成，接一句 "A timeline you own." |
+| 92.5–97.5s | AXOXE | 完整 Axoxe 字标淡入并上移，接一句 "Where moments stay." 和 axoxe.com |
 
 完整的方向推导、画面规范和逐秒镜头表见 [`source/DIRECTION.md`](source/DIRECTION.md)，制作 brief 见 [`source/BRIEF.md`](source/BRIEF.md)。
 
@@ -48,12 +48,14 @@ video/
 
 ## 怎么做的
 
-- **真实组件**：功能镜头里是 Ech0 真实的 Vue 组件。`build-bridge.mjs` 用 `web/` 自己的 Vite、`@vitejs/plugin-vue`、UnoCSS 和主题样式编译 `HomeView`、`EchoView`、`ChatPage`、`PanelView` 等页面，通过 `window.Ech0Bridge` 挂进影片页面。上传附件（真实的 drop 事件，本地上传走一个按影片时间推进进度的假 XHR，响应格式和后端一致）、打字、选标签、发布、点时间进详情、分享、点赞、填写并提交评论、点 back、点 Status、发送问题、切换后台页面和子标签、展开文件树、选导出格式，都是对真实 DOM 的点击和输入。`PanelView` 挂载时注入了 `viewDepthKey = 1`，这样它内部的 `RouterView` 直接渲染子页面。
+- **真实组件**：功能镜头里是 AXOXE 真实的 Vue 组件。`build-bridge.mjs` 用 `web/` 自己的 Vite、`@vitejs/plugin-vue`、UnoCSS 和主题样式编译 `HomeView`、`EchoView`、`ChatPage`、`PanelView` 等页面，通过 `window.Ech0Bridge` 挂进影片页面。上传附件（真实的 drop 事件，本地上传走一个按影片时间推进进度的假 XHR，响应格式和后端一致）、打字、选标签、发布、点时间进详情、分享、点赞、填写并提交评论、点 back、点 Status、发送问题、切换后台页面和子标签、展开文件树、选导出格式，都是对真实 DOM 的点击和输入。`PanelView` 挂载时注入了 `viewDepthKey = 1`，这样它内部的 `RouterView` 直接渲染子页面。
 - **数据**：接口由 `src/fixtures/api.js`（前台）和 `src/fixtures/panel.js`（后台）返回演示数据，人物 "Mira"、评论者和其他实例都是虚构的。详情章节的"读者视角"是把用户状态临时清空后重新挂载详情页（`Ech0Bridge.setVisitor`），所以评论表单显示的是访客才有的昵称、邮箱字段。Copilot 的回答是写好的脚本，按影片时间以真实的 SSE 帧推给 `TheChatBox`。系统日志的实时行由一个假 WebSocket 按影片时间推送，帧格式和后端一致。
 - **MCP manifest 是真的**：`src/fixtures/mcp-manifest.json` 是用真实的 `Adapter.RegisterAll` 构造 Registry 后导出的，通过 `go test -overlay` 临时加一个测试文件完成，没有改动仓库。后端工具变了以后可以用同样的方法重新导出。
 - **演示域名**：出片脚本用 `https://mira.example/` 打开页面，请求由 Playwright 拦截后转给本地服务（`server.mjs` 的 `openFilm`）。所以 MCP 页显示的 endpoint 是演示地址，而不是 `127.0.0.1`。
 - **素材**：照片、头像、配乐都是代码原创生成。上传演示用的视频 `public/demo/cats-at-dusk.mp4` 来自本地实例的 `data/files/videos/`（按你的要求使用），在片中随影片时间逐帧播放。音效来自 [guizang product video skill](https://github.com/op7418/guizang-product-video-skill) 自带的原创 WAV。
 - **许可**：影片引擎起步代码来自上述 skill，采用 AGPL-3.0（见 `source/LICENSE`、`source/NOTICE.md`）。
+
+全片已于 2026-11-14 从当前组件源稿重新导出：默认头像、品牌字幕、部署命令和片尾字标统一更新。原 AAC 音轨逐字节保留。
 
 ## 重新出片
 

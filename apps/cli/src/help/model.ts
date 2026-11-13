@@ -207,7 +207,7 @@ function argToken(command: Command): string[] {
 }
 
 function usageOf(command: Command): string {
-  const parts = ["ech0", ...pathOf(command)];
+  const parts = ["axoxe", ...pathOf(command)];
   // The root's operands exist only to forward unknown words into `help`.
   if (command.parent !== null) parts.push(...argToken(command));
   parts.push("[options]");
@@ -305,7 +305,7 @@ export function exampleFor(command: Command): string | undefined {
   const fields = fieldOptions(op).filter(
     (field) => field.required || isFileField(field.schema),
   );
-  const parts = ["ech0", ...pathOf(command), ...fields.map(flagTerm)];
+  const parts = ["axoxe", ...pathOf(command), ...fields.map(flagTerm)];
   if (op.effect === "destructive") parts.push("--yes");
   return parts.join(" ");
 }
@@ -317,7 +317,7 @@ function hintsOf(command: Command, op: CatalogOp | undefined): string[] {
 
   if (op === undefined) {
     if (context?.loaded === true && context.authenticated === false) {
-      hints.push("尚未登录：运行 ech0 auth login --server <url> --device；catalog 可匿名读取，执行操作需要 token");
+      hints.push("尚未登录：运行 axoxe auth login --server <url> --device；catalog 可匿名读取，执行操作需要 token");
     }
     return hints;
   }
@@ -349,7 +349,7 @@ function globalHintOf(root: Command): string | undefined {
     .filter((option) => option.long !== "--help" && option.long !== "--version")
     .map((option) => option.flags);
   if (names.length === 0) return undefined;
-  return `全局选项（任意位置）：${names.join(" ")}（详见 ech0 --help）`;
+  return `全局选项（任意位置）：${names.join(" ")}（详见 axoxe --help）`;
 }
 
 /** Top-level namespaces that exist only because the catalog published them. */
@@ -416,7 +416,7 @@ export function helpModel(command: Command): HelpModel {
   }
   if (isGroup && op === undefined && !isRoot) {
     if (model.summary === "") model.summary = `服务端命令组（${entries.length} 个操作）`;
-    model.footer = `运行 ech0 help <关键词> 搜索命令；ech0 help ${pathOf(command).join(" ")} 与本页等价。`;
+    model.footer = `运行 axoxe help <关键词> 搜索命令；axoxe help ${pathOf(command).join(" ")} 与本页等价。`;
   }
   if (model.examples.some((example) => example.includes("<"))) {
     model.footer = "示例中的 <字段名> 是占位符，按实际值替换。";

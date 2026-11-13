@@ -1,4 +1,4 @@
-# Ech0 Capsule 规格 v1
+# AXOXE Capsule 规格 v1
 
 > **状态：已实现（v1）。** 本文是 Capsule 格式与相关命令的**规范性定义**——只写「是什么」。
 > 设计依据、备选方案与讨论见 [`capsule-design.md`](./capsule-design.md)；文中 Q 编号指向该文档 §9。
@@ -15,9 +15,9 @@
 
 | 术语 | 定义 |
 |---|---|
-| **Capsule（胶囊）** | 一个符合本规格的目录（或其 zip 打包），自包含承载一个 Ech0 站点的全部公开内容 |
-| **生产者** | 产出胶囊的一方：`ech0 export capsule`、手写、第三方转换器 |
-| **消费者** | 读取胶囊的一方：`ech0 import capsule`、`ech0 build`、`ech0 check`、第三方工具 |
+| **Capsule（胶囊）** | 一个符合本规格的目录（或其 zip 打包），自包含承载一个 AXOXE 站点的全部公开内容 |
+| **生产者** | 产出胶囊的一方：`axoxe export capsule`、手写、第三方转换器 |
+| **消费者** | 读取胶囊的一方：`axoxe import capsule`、`axoxe build`、`axoxe check`、第三方工具 |
 | **内容级往返** | `export → import` 后内容等价（非字节等价）；保真度边界见 §11 |
 
 ## 2. 目录布局
@@ -137,7 +137,7 @@
 - 胶囊**必须**自包含：所有 `files[].key` 对应 `files/ + Resolve(key)` 的字节都在胶囊内；S3 托管文件由生产者下载入胶囊。外链（`url`）文件除外。
 - 既不被任何 Echo 的 `files[]`、也不被清单 `files` 块声明的字节：合法，`check` **应当**告警（悬空文件）。真实导出不会产生这种情况——未挂 Echo 的文件行都会进清单 `files` 块；它只在手写胶囊里出现。
 
-## 7. 校验规则（`ech0 check`）
+## 7. 校验规则（`axoxe check`）
 
 | 级别 | 条件 |
 |---|---|
@@ -149,7 +149,7 @@
 > 降级只发生在**消费侧的渲染**（`build`）。`export`/`import` 一律逐字保留原值——库里是 `stream` 就导出 `stream`、导入回去还是 `stream`（§11 的 1:1 纪律）。
 
 - `--fix` 可自动修复项：缺失 `id`（生成 UUIDv7 回写 frontmatter）。仅此一项，后续扩展须逐项列入本规格。
-- `ech0 import capsule` / `ech0 build` 隐式执行同一套校验。
+- `axoxe import capsule` / `axoxe build` 隐式执行同一套校验。
 
 ## 8. 版本与兼容
 
@@ -159,15 +159,15 @@
 
 ## 9. CLI 命令语法
 
-动词在前、格式为子命令（设计依据见 design §5.0）。裸 `ech0 export` / `ech0 import` 打印 help，无默认格式。
+动词在前、格式为子命令（设计依据见 design §5.0）。裸 `axoxe export` / `axoxe import` 打印 help，无默认格式。
 
 ```bash
-ech0 export capsule   [-o ./capsule] [--include-private] [--zip]
-ech0 export snapshot  [-o ./snapshot.zip]                          # P4，语法保留
-ech0 import capsule   [<path>=./capsule] [--dry-run]
-ech0 import snapshot  <snapshot.zip> --yes                         # P4，语法保留；破坏性整库替换
-ech0 check            [<path>=./capsule] [--fix]
-ech0 build            [<path>=./capsule] [-o ./dist] [--base-url /]
+axoxe export capsule   [-o ./capsule] [--include-private] [--zip]
+axoxe export snapshot  [-o ./snapshot.zip]                          # P4，语法保留
+axoxe import capsule   [<path>=./capsule] [--dry-run]
+axoxe import snapshot  <snapshot.zip> --yes                         # P4，语法保留；破坏性整库替换
+axoxe check            [<path>=./capsule] [--fix]
+axoxe build            [<path>=./capsule] [-o ./dist] [--base-url /]
 ```
 
 | flag | 命令 | 语义 |
@@ -202,7 +202,7 @@ ech0 build            [<path>=./capsule] [-o ./dist] [--base-url /]
 - Web 导入与 CLI 一样把校验作为硬前置：有错误级发现即拒绝落库，错误摘要回填进作业的 `error_message`。
 - 导出胶囊**禁止**发布 `SystemSnapshot` 事件：webhook 订阅它来确认「备份已完成」，而胶囊不是备份。
 
-## 10. `ech0 build` 产物约定
+## 10. `axoxe build` 产物约定
 
 ```text
 <dist>/

@@ -1,10 +1,10 @@
 {
-  "name": "web",
+  "name": "axoxe-web",
   "version": "1.0.0",
   "private": true,
   "license": "AGPL-3.0-or-later",
   "author": "lin-snow",
-  "homepage": "https://github.com/lin-snow/Ech0",
+  "homepage": "https://github.com/Versior/Ech0",
   "type": "module",
   "engines": {
     "node": ">=26.0.0"
@@ -78,5 +78,5 @@
     "vitest": "^5.0.5",
     "vue-tsc": "^3.3.14"
   },
-  "packageManager": "pnpm@12.16.1"
+  "packageManager": "pnpm@12.14.0"
 }

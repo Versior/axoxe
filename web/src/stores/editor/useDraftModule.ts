@@ -20,8 +20,8 @@ const EDITOR_DRAFT_TTL_MS = 24 * 60 * 60 * 1000
 const EDITOR_DRAFT_SAVE_DEBOUNCE_MS = 600
 
 type DraftModuleDeps = {
-  echoToAdd: Ref<App.Api.Ech0.EchoToAdd>
-  filesToAdd: Ref<App.Api.Ech0.FileToAdd[]>
+  echoToAdd: Ref<App.Api.AXOXE.EchoToAdd>
+  filesToAdd: Ref<App.Api.AXOXE.FileToAdd[]>
   websiteToAdd: Ref<WebsiteToAdd>
   videoURL: Ref<string>
   musicURL: Ref<string>
@@ -31,7 +31,7 @@ type DraftModuleDeps = {
   tweetToAdd: Ref<TweetToAdd>
   tagToAdd: Ref<string[]>
   isUpdateMode: Ref<boolean>
-  resetAttachments: (files: App.Api.Ech0.FileToAdd[]) => void
+  resetAttachments: (files: App.Api.AXOXE.FileToAdd[]) => void
   t: Translate
 }
 

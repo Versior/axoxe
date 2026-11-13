@@ -18,11 +18,11 @@ function expandHome(path: string): string {
 }
 
 export function installCommand(): Command {
-  const group = new Command("install").description("安装 Ech0 资源到其他工具");
+  const group = new Command("install").description("安装 AXOXE 资源到其他工具");
 
   group
     .command("skills <dir>")
-    .description("把内置 Ech0 skill 写入 skills 根目录（如 ~/.claude/skills）")
+    .description("把内置 AXOXE skill 写入 skills 根目录（如 ~/.claude/skills）")
     .option("--from <folder>", "安装本地 skill 文件夹，而不是内置版本")
     .action((dir: string, _options, command: Command) => {
       const flags = readGlobalFlags(command);
@@ -35,7 +35,7 @@ export function installCommand(): Command {
 
       printResult(
         {
-          human: [`✓ 已安装 Ech0 skill 到 ${target}`, ...files.map((path) => `  ${path}`)].join("\n"),
+          human: [`✓ 已安装 AXOXE skill 到 ${target}`, ...files.map((path) => `  ${path}`)].join("\n"),
           json: JSON.stringify({ target, files }, null, 2),
         },
         flags,

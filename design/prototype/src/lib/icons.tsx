@@ -127,15 +127,15 @@ export function Icon({ name, size = 16, ...rest }: IconProps) {
 export function Wordmark({ compact = false }: { compact?: boolean }) {
   return (
     <span
+      role="img"
+      aria-label="Axoxe"
       style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: compact ? 14 : 15,
-        fontWeight: 600,
-        letterSpacing: '-0.02em',
-        lineHeight: 1,
+        display: 'inline-block',
+        width: compact ? 80 : 100,
+        height: compact ? 22 : 28,
+        backgroundColor: 'currentColor',
+        mask: 'url(./wordmark.svg) center / contain no-repeat',
       }}
-    >
-      ech0
-    </span>
+    />
   )
 }

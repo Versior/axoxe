@@ -294,7 +294,7 @@
     "initDone": "初始化完成",
     "alreadyInitializedRedirect": "系统已初始化，正在跳转登录",
     "initFailed": "初始化失败",
-    "introHeading": "开始使用 Ech0",
+    "introHeading": "开始使用 AXOXE",
     "introDescription": "创建 Owner 账号，完成站点基本设置，开启你的个人记录空间。",
     "siteTitlePlaceholder": "站点名称（可留空）",
     "autoLoginFailed": "Owner 已创建，请手动登录。"
@@ -318,7 +318,7 @@
   },
   "hub": {
     "emptyList": "Hub列表为空，请到设置中添加Connect吧~",
-    "emptyListGuest": "这里还没有连接其他 Ech0，暂时探测不到别人的 Echo～",
+    "emptyListGuest": "这里还没有连接其他 AXOXE，暂时探测不到别人的 Echo～",
     "noAvailableInstance": "当前Hub暂无可连接的实例。",
     "connectedCount": "成功连接 {count} 个实例，开始加载 Echos",
     "loading": "加载中...",
@@ -454,7 +454,7 @@
     "tags": "标签"
   },
   "homeBio": {
-    "tagline": "欢迎光临"
+    "tagline": "Where moments stay."
   },
   "homeFooter": {},
   "homeFeed": {
@@ -493,8 +493,8 @@
   "echoDetail": {
     "share": "分享",
     "copied": "链接已复制到剪贴板！",
-    "shareSuffix": "来自 Ech0 分享",
-    "sharePanelTitle": "分享这条 Ech0",
+    "shareSuffix": "来自 AXOXE 分享",
+    "sharePanelTitle": "分享这条 AXOXE",
     "shareSystem": "系统分享",
     "shareCopyMarkdown": "复制为 Markdown",
     "shareCopyLink": "复制链接",
@@ -800,7 +800,7 @@
     "guideHeaderEventId": "事件唯一标识，建议用于幂等去重",
     "guideHeaderTimestamp": "Unix 秒级时间戳（UTC），建议用于防重放",
     "guideHeaderSignature": "可选签名头，格式 sha256=<hex>",
-    "guideHeaderUserAgent": "固定为 Ech0-Webhook-Client",
+    "guideHeaderUserAgent": "固定为 AXOXE-Webhook-Client",
     "guideBodyTitle": "请求体（Body）",
     "guideBodyTopic": "事件主题",
     "guideBodyEventName": "事件类型名（后端事件结构名）",
@@ -914,7 +914,7 @@
   },
   "migrationSetting": {
     "title": "数据导入",
-    "description": "支持从 Ech0 v4、Memos 以及 Ech0 胶囊导入数据。",
+    "description": "支持从 AXOXE v4、Memos 以及 AXOXE 胶囊导入数据。",
     "inDevelopment": "开发中",
     "sourceZip": "来源压缩包",
     "pickZip": "选择 zip 文件",
@@ -953,10 +953,10 @@
     "cancelled": "迁移已取消",
     "cleanupFailed": "清理迁移失败",
     "cleaned": "迁移记录已清理",
-    "sourceEch0": "支持从 Ech0 导入",
+    "sourceEch0": "支持从 AXOXE 导入",
     "sourceMemos": "支持 Memos（开发中）",
-    "sourceCapsuleTitle": "Ech0 胶囊",
-    "sourceCapsule": "支持从 Ech0 胶囊导入",
+    "sourceCapsuleTitle": "AXOXE 胶囊",
+    "sourceCapsule": "支持从 AXOXE 胶囊导入",
     "capsuleNote": "追加导入，按 id 去重，不覆盖现有内容",
     "capsuleIncludePrivate": "包含私密内容",
     "statusIdle": "空闲",
@@ -967,7 +967,7 @@
     "statusCancelled": "已取消"
   },
   "connectSetting": {
-    "description": "连接到其他 Ech0 节点，实现跨站互联。",
+    "description": "连接到其他 AXOXE 节点，实现跨站互联。",
     "addConnect": "新建",
     "urlPlaceholder": "请输入 Connect 地址（带https/http）",
     "connectHint": "仅支持 http/https 地址。",
@@ -1066,11 +1066,12 @@
     "back": "返回"
   },
   "about": {
-    "linkAriaLabel": "关于本 Ech0 实例",
+    "linkAriaLabel": "关于本 AXOXE 实例",
     "fieldSource": "源码",
     "viewSource": "在 GitHub 上查看源代码",
     "viewSourceAtCommit": "在 GitHub 上查看 commit {'@'} {commit} 的源代码",
-    "poweredBy": "Powered by Ech0"
+    "poweredBy": "Powered by AXOXE",
+    "upstreamAttribution": "Based on Ech0 by L1nSn0w and contributors"
   },
   "echoPage": {
     "loadingDetail": "正在加载 Echo 详情..."
@@ -1131,10 +1132,10 @@
     "invalidMessage": "收到无效的 WebSocket 消息"
   },
   "copilotSetting": {
-    "title": "Ech0 Copilot"
+    "title": "AXOXE Copilot"
   },
   "mcpSetting": {
-    "description": "将 Ech0 接入支持 MCP 的 AI 客户端。支持 OAuth 2.1 自动发现，也可以使用访问令牌。",
+    "description": "将 AXOXE 接入支持 MCP 的 AI 客户端。支持 OAuth 2.1 自动发现，也可以使用访问令牌。",
     "createToken": "创建访问令牌",
     "endpointTitle": "MCP Endpoint",
     "endpointHint": "将这个地址添加到 MCP Client。支持 OAuth 的客户端会自动打开授权页；其他客户端使用 Bearer Token。",
@@ -1156,7 +1157,7 @@
     "tokenPolicy": "令牌策略",
     "tokenPolicyValue": "仅签发 Access Token · 不签发 refresh token",
     "oauthServer": "授权服务器",
-    "refreshHint": "Ech0 不签发 refresh token。若客户端默认申请 refresh_token grant，请先在客户端中关闭该选项。",
+    "refreshHint": "AXOXE 不签发 refresh token。若客户端默认申请 refresh_token grant，请先在客户端中关闭该选项。",
     "capabilitiesTitle": "Capabilities",
     "dangerLegend": "标红的操作具有破坏性。支持 elicitation 的客户端会先弹出确认；其他客户端由 Host 根据破坏性注解确认。点击名称查看所需 Scope 与完整说明。",
     "groupEcho": "内容",
@@ -1273,7 +1274,7 @@
   },
   "oauthConsent": {
     "title": "授权应用访问",
-    "subtitle": "一个应用请求访问你的 Ech0 实例。",
+    "subtitle": "一个应用请求访问你的 AXOXE 实例。",
     "client": "客户端",
     "resource": "资源",
     "approve": "允许",

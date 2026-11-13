@@ -11,7 +11,7 @@ declare namespace App {
         echo_created: number
         distance: number
         files?: ChatSourceFile[]
-        extension?: Ech0.EchoExtension
+        extension?: AXOXE.EchoExtension
       }
 
       type ChatSourceFile = {

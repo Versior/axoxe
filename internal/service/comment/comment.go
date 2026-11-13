@@ -580,7 +580,7 @@ func (s *CommentService) SendTestEmail(ctx context.Context, setting model.System
 		EchoID:    "demo",
 		Nickname:  "comment-test",
 		Email:     "author@example.com",
-		Content:   "这是一条测试评论内容，用于预览 Ech0 邮件通知样式。",
+		Content:   "这是一条测试评论内容，用于预览 AXOXE 邮件通知样式。",
 		Status:    model.StatusPending,
 		CreatedAt: time.Now().UTC().Unix(),
 	}, serverURL)

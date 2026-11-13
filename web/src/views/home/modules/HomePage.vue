@@ -54,7 +54,7 @@
               @open-chat="chatLauncherOpen = true"
             />
             <a
-              href="https://github.com/lin-snow/Ech0"
+              href="https://github.com/Versior/Ech0"
               target="_blank"
               rel="noopener noreferrer"
               class="home-aside__version"

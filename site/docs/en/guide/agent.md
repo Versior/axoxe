@@ -3,7 +3,7 @@ title: AI models & recent summary
 description: Configure the AI generation model (Agent) that powers the recent summary and AI chat
 ---
 
-All AI capabilities in Ech0 **share a single "generation model" configuration**. Set it up once in **System settings → Copilot → Model** and it drives both:
+All AI capabilities in AXOXE **share a single "generation model" configuration**. Set it up once in **System settings → Copilot → Model** and it drives both:
 
 - **Recent summary**: the large model generates a short summary from your latest Echoes, so visitors can quickly catch up on what is happening (covered in the lower half of this page).
 - **[AI chat](/docs/guide/chat)**: talk to your own Echoes in natural language.
@@ -35,7 +35,7 @@ The exact field names follow the UI.
 
 ## Recent summary
 
-Once enabled, Ech0 draws context from your **recent Echoes** and calls the model to generate a short summary for public display.
+Once enabled, AXOXE draws context from your **recent Echoes** and calls the model to generate a short summary for public display.
 
 - To avoid hammering the API with repeated calls in a short window, summaries are **cached**; publishing a new Echo invalidates the cache and it is regenerated on the next visit.
 - The style and length of the summary can be adjusted with the **Prompt** above.

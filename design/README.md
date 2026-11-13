@@ -1,6 +1,6 @@
-# Ech0 Design
+# AXOXE Design
 
-Ech0 的设计资产库。全部在 `main` 工作区维护，不单独开设计分支。
+AXOXE 的设计资产库。全部在 `main` 工作区维护，不单独开设计分支。
 
 ```
 design/
@@ -41,7 +41,7 @@ pnpm build:prototype  # 原型 -> design/prototype/dist
 
 ## 设计系统
 
-- 文档外壳（导航、首页、页头、section 标题）使用中性灰 `--doc-*` token；只有具体资产标本使用 Ech0 的 `--canvas/--ink/--accent`。LIGHT/DARK 只切资产预览，不切外壳。
+- 文档外壳（导航、首页、页头、section 标题）使用中性灰 `--doc-*` token；只有具体资产标本使用 AXOXE 的 `--canvas/--ink/--accent`。LIGHT/DARK 只切资产预览，不切外壳。
 - `src/styles/tokens.css` — 唯一 token 源：颜色、字号、间距、几何、动效；亮/暗双主题。
 - `src/tokens.ts` — 给 Foundations 页面用的机器可读镜像；改 CSS 时同步这里。
 - `src/fixtures/mock.ts` — 真实 echo、热力图、标签与账户数据。

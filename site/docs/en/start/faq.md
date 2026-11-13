@@ -3,17 +3,17 @@ title: FAQ
 description: Deployment, permissions, storage, and integration Q&A
 ---
 
-If your situation isn't covered here, search or ask in [GitHub Discussions](https://github.com/lin-snow/Ech0/discussions).
+If your situation isn't covered here, search or ask in [GitHub Discussions](https://github.com/Versior/Ech0/discussions).
 
 ---
 
 ## Product & positioning
 
-### What is Ech0?
+### What is AXOXE?
 
 A lightweight, open-source, **self-hosted** publishing tool: post short notes, links, and media to a single **timeline**, with your data on your own server. It emphasizes calm reading and full ownership. For a fuller product description, see [Product overview](/docs/guide/overview).
 
-### What is Ech0 not?
+### What is AXOXE not?
 
 It is not a **knowledge base or team wiki** like Obsidian / Notion; it is closer to a **personal feed** in the spirit of status updates — not a professional note-taking workflow.
 

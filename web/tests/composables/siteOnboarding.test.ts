@@ -15,7 +15,7 @@ describe('isDefaultSiteTitle', () => {
     expect(isDefaultSiteTitle('')).toBe(true)
     expect(isDefaultSiteTitle('   ')).toBe(true)
     expect(isDefaultSiteTitle(undefined)).toBe(true)
-    expect(isDefaultSiteTitle('Ech0')).toBe(true)
+    expect(isDefaultSiteTitle('AXOXE')).toBe(true)
   })
 
   it('accepts a custom title', () => {
@@ -41,7 +41,7 @@ describe('isPlaceholderSiteURL', () => {
 
 describe('resolveSiteOnboardingSteps', () => {
   it('marks every step pending on a fresh instance', () => {
-    expect(resolveSiteOnboardingSteps({ echoTotal: 0, siteTitle: 'Ech0', serverURL: '' })).toEqual([
+    expect(resolveSiteOnboardingSteps({ echoTotal: 0, siteTitle: 'AXOXE', serverURL: '' })).toEqual([
       { id: 'publish', done: false },
       { id: 'siteTitle', done: false },
       { id: 'siteUrl', done: false },
@@ -66,7 +66,7 @@ describe('shouldShowSiteChecklist', () => {
     filtering: false,
     dismissed: false,
     echoTotal: 0,
-    siteTitle: 'Ech0',
+    siteTitle: 'AXOXE',
     serverURL: '',
   }
 

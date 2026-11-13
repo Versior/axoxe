@@ -5,7 +5,7 @@ description: Last updated: October 21, 2025
 
 ## Where your data lives
 
-Ech0 is **self-hosted**: your data stays in your instance, under your control. The project authors **do not** host or collect your business data.
+AXOXE is **self-hosted**: your data stays in your instance, under your control. The project authors **do not** host or collect your business data.
 
 If you enable **third-party services** such as OAuth or object storage, their own terms govern how they handle data; assess the risks yourself.
 
@@ -19,7 +19,7 @@ Content usually lives in a local database and in storage you configure; apply ac
 
 ## This site and third parties
 
-The core Ech0 interface ships **no** commercial tracking scripts. Third-party services may set their own cookies or analytics; refer to their documentation.
+The core AXOXE interface ships **no** commercial tracking scripts. Third-party services may set their own cookies or analytics; refer to their documentation.
 
 ## Changes
 

@@ -136,7 +136,7 @@ interface Invocation {
 }
 
 function programWith(invoked: Invocation[]): Command {
-  const program = new Command("ech0").option("--json", "json", false);
+  const program = new Command("axoxe").option("--json", "json", false);
   registerCatalogCommands(program, FILE_OPS, {
     run: async (_command, op, values, extra): Promise<CommandOutput> => {
       invoked.push({ op, values, extra });

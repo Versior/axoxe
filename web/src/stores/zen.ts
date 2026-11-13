@@ -6,9 +6,9 @@ import { computed, ref } from 'vue'
 import { fetchQueryEchos } from '@/service/api'
 
 export const useZenStore = defineStore('zenStore', () => {
-  const normalizeId = (echo: App.Api.Ech0.Echo): string => String(echo?.id ?? '').trim()
+  const normalizeId = (echo: App.Api.AXOXE.Echo): string => String(echo?.id ?? '').trim()
 
-  const echoList = ref<App.Api.Ech0.Echo[]>([])
+  const echoList = ref<App.Api.AXOXE.Echo[]>([])
   const isLoading = ref<boolean>(false)
   const total = ref<number>(0)
   const pageSize = ref<number>(20)

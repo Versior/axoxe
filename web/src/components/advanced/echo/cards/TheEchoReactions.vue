@@ -141,8 +141,8 @@ import { isStaticMode } from '@/service/request/shared'
 import { theToast } from '@/utils/toast'
 import { getVisitorId } from '@/utils/visitor'
 
-type ReactionCount = App.Api.Ech0.ReactionCount
-type ReactionKey = App.Api.Ech0.ReactionKey
+type ReactionCount = App.Api.AXOXE.ReactionCount
+type ReactionKey = App.Api.AXOXE.ReactionKey
 
 type ReactionEcho = {
   id: string
@@ -164,7 +164,7 @@ type Particle = {
   delay: number
 }
 
-const FALLBACK_CATALOG: App.Api.Ech0.ReactionCatalogItem[] = [
+const FALLBACK_CATALOG: App.Api.AXOXE.ReactionCatalogItem[] = [
   { key: 'like', emoji: '👍' },
   { key: 'heart', emoji: '❤️' },
   { key: 'haha', emoji: '😂' },
@@ -184,7 +184,7 @@ const { t } = useI18n()
 
 const staticMode = isStaticMode()
 const disabled = computed(() => staticMode)
-const catalog = ref<App.Api.Ech0.ReactionCatalogItem[]>([...FALLBACK_CATALOG])
+const catalog = ref<App.Api.AXOXE.ReactionCatalogItem[]>([...FALLBACK_CATALOG])
 const items = ref<ReactionCount[]>((props.echo.reactions ?? []).map((item) => ({ ...item })))
 
 const open = ref(false)

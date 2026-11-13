@@ -47,7 +47,7 @@ function renderAsk(payload: unknown, askId: string | undefined): void {
   }
   const id = typeof ask.ask_id === "string" ? ask.ask_id : askId;
   if (id) {
-    printErr(palette.dim(`  用 \`ech0 copilot chat-answer --ask-id ${id} ...\` 回答`));
+    printErr(palette.dim(`  用 \`axoxe copilot chat-answer --ask-id ${id} ...\` 回答`));
   }
 }
 

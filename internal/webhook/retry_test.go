@@ -162,7 +162,7 @@ func TestSendWithRetry_SignatureEndToEnd(t *testing.T) {
 
 	assert.Equal(t, obs.Topic, got.headers.Get("X-Ech0-Event"))
 	assert.Equal(t, "application/json", got.headers.Get("Content-Type"))
-	assert.Equal(t, "Ech0-Webhook-Client", got.headers.Get("User-Agent"))
+	assert.Equal(t, "AXOXE-Webhook-Client", got.headers.Get("User-Agent"))
 }
 
 func TestSendWithRetry_NoSecretNoSignature(t *testing.T) {

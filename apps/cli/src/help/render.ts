@@ -135,7 +135,7 @@ function serverSection(model: HelpModel): string {
   const reason = context?.failure ?? (context === undefined ? "未配置实例" : "catalog 尚未加载");
   return section("服务端命令", [
     `${INDENT}${palette.dim(reason)}`,
-    `${INDENT}${palette.dim("先运行 `ech0 auth login --server <url>`，或临时设置 ECH0_SERVER=<url>")}`,
+    `${INDENT}${palette.dim("先运行 `axoxe auth login --server <url>`，或临时设置 ECH0_SERVER=<url>")}`,
   ]);
 }
 

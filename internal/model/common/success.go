@@ -92,7 +92,7 @@ const (
 
 const (
 	AGENT_GET_RECENT_SUCCESS      = "获取近期活动总结成功"
-	AGENT_TEST_CONNECTION_SUCCESS = "Ech0 Copilot 连接测试成功"
+	AGENT_TEST_CONNECTION_SUCCESS = "AXOXE Copilot 连接测试成功"
 )
 
 const (

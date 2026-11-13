@@ -13,7 +13,7 @@ if [ -n "${NO_COLOR:-}" ] || [ "${TERM:-}" = "dumb" ]; then
   RESET=''
 fi
 
-REPO="${ECH0_GITHUB_REPO:-lin-snow/Ech0}"
+REPO="${ECH0_GITHUB_REPO:-Versior/Ech0}"
 BRANCH="${ECH0_GITHUB_BRANCH:-main}"
 SCRIPT_URL="https://raw.githubusercontent.com/${REPO}/${BRANCH}/scripts/ech0.sh"
 SERVICE_NAME="ech0"
@@ -156,7 +156,7 @@ resolve_latest_tag() {
   fi
 
   if [ -z "$tag" ]; then
-    handle_error 1 "无法解析 Ech0 最新版本（GitHub API 可能被限流，可设置 GITHUB_TOKEN 后重试）"
+    handle_error 1 "无法解析 AXOXE 最新版本（GitHub API 可能被限流，可设置 GITHUB_TOKEN 后重试）"
   fi
 
   LATEST_TAG="$tag"
@@ -192,7 +192,7 @@ download_package() {
 
   if ! curl -fL --proto '=https' --retry 3 --retry-delay 3 \
     --connect-timeout 10 --max-time 600 "$url" -o "$DOWNLOAD_FILE"; then
-    handle_error 1 "下载 Ech0 失败，请检查网络连接"
+    handle_error 1 "下载 AXOXE 失败，请检查网络连接"
   fi
 }
 
@@ -204,7 +204,7 @@ prepare_install_dir() {
   mkdir -p "$parent" || handle_error 1 "无法创建目录: $parent"
 
   if [ -f "$install_path/ech0" ]; then
-    handle_error 1 "目标位置已存在 Ech0，请使用 update"
+    handle_error 1 "目标位置已存在 AXOXE，请使用 update"
   fi
 
   mkdir -p "$install_path" || handle_error 1 "无法创建安装目录: $install_path"
@@ -224,7 +224,7 @@ extract_release_package_dir() {
   binary_path=$(find "$extract_dir" -mindepth 1 -maxdepth 5 -type f \
     \( -name "ech0" -o -name "ech0-linux-${ARCH}" \) -print -quit)
   if [ -z "$binary_path" ]; then
-    handle_error 1 "未找到 Ech0 二进制文件"
+    handle_error 1 "未找到 AXOXE 二进制文件"
   fi
 
   dirname "$binary_path"
@@ -314,7 +314,7 @@ ensure_service() {
 
   cat <<EOF >"$UNIT_FILE"
 [Unit]
-Description=Ech0 Service
+Description=AXOXE Service
 Documentation=https://github.com/${REPO}
 After=network-online.target
 Wants=network-online.target
@@ -395,7 +395,7 @@ verify_service() {
   local install_path=$1
 
   if ! wait_active 20; then
-    log_error "Ech0 服务未能在预期时间内启动"
+    log_error "AXOXE 服务未能在预期时间内启动"
     journalctl -u "$SERVICE_NAME" -n 20 --no-pager 2>/dev/null || true
     return 1
   fi
@@ -557,14 +557,14 @@ install_ech0() {
   local installed_path
   installed_path=$(get_installed_path)
   if [ -f "$installed_path/ech0" ]; then
-    handle_error 1 "检测到 Ech0 已安装在 ${installed_path}，请使用 update 或先 uninstall（仅升级管理脚本可用 self-update）"
+    handle_error 1 "检测到 AXOXE 已安装在 ${installed_path}，请使用 update 或先 uninstall（仅升级管理脚本可用 self-update）"
   fi
 
   local target_path
   target_path=$(resolve_install_path "$1")
 
   if [ -f "$target_path/ech0" ]; then
-    handle_error 1 "目标位置已存在 Ech0 (${target_path})，请使用 update 或先 uninstall"
+    handle_error 1 "目标位置已存在 AXOXE (${target_path})，请使用 update 或先 uninstall"
   fi
 
   download_package
@@ -578,7 +578,7 @@ install_ech0() {
 
   systemctl restart "$SERVICE_NAME"
   if ! verify_service "$target_path"; then
-    handle_error 1 "Ech0 启动失败，请查看 systemctl status ${SERVICE_NAME} 与日志"
+    handle_error 1 "AXOXE 启动失败，请查看 systemctl status ${SERVICE_NAME} 与日志"
   fi
 
   local cli_installed="false"
@@ -590,7 +590,7 @@ install_ech0() {
     log_warn "已跳过管理命令安装，可稍后重新运行本脚本来安装"
   fi
 
-  log_info "Ech0 安装完成"
+  log_info "AXOXE 安装完成"
   echo "安装路径: $target_path"
   echo "服务命令: systemctl {start|stop|restart|status} ${SERVICE_NAME}"
   if [ "$cli_installed" = "true" ]; then
@@ -609,7 +609,7 @@ update_ech0() {
   target_path=$(get_installed_path)
 
   if [ ! -f "$target_path/ech0" ]; then
-    handle_error 1 "未检测到已安装的 Ech0"
+    handle_error 1 "未检测到已安装的 AXOXE"
   fi
 
   detect_arch
@@ -661,7 +661,7 @@ update_ech0() {
   fi
 
   rm -f "$backup"
-  log_info "Ech0 更新完成: ${current_version:-unknown} -> ${LATEST_TAG}"
+  log_info "AXOXE 更新完成: ${current_version:-unknown} -> ${LATEST_TAG}"
 }
 
 uninstall_ech0() {
@@ -672,10 +672,10 @@ uninstall_ech0() {
   target_path=$(get_installed_path)
 
   if [ ! -f "$target_path/ech0" ] && [ ! -f "$UNIT_FILE" ]; then
-    handle_error 1 "未检测到 Ech0 安装"
+    handle_error 1 "未检测到 AXOXE 安装"
   fi
 
-  read -r -p "确认卸载 Ech0? [y/N]: " choice
+  read -r -p "确认卸载 AXOXE? [y/N]: " choice
   case "$choice" in
     y|Y)
       local delete_data_choice
@@ -716,7 +716,7 @@ uninstall_ech0() {
 
       rm -f "$MANAGER_PATH" "$COMMAND_LINK" "$COMMAND_LINK_COMPAT" "$LEGACY_MANAGER_PATH"
 
-      log_info "Ech0 已卸载"
+      log_info "AXOXE 已卸载"
       ;;
     *)
       log_warn "已取消卸载"
@@ -736,18 +736,18 @@ show_status() {
     echo "安装路径: ${target_path}"
     echo "安装版本: ${version:-未知}"
   else
-    log_warn "未检测到 Ech0 安装"
+    log_warn "未检测到 AXOXE 安装"
   fi
 
   if systemctl is-active --quiet "$SERVICE_NAME"; then
-    log_info "Ech0 服务运行中"
+    log_info "AXOXE 服务运行中"
     local version
     if version=$(running_version "$target_path"); then
       echo "运行版本: v${version}"
     fi
     echo "开机自启: $(systemctl is-enabled "$SERVICE_NAME" 2>/dev/null || echo unknown)"
   else
-    log_error "Ech0 服务未运行"
+    log_error "AXOXE 服务未运行"
     if [ -f "$UNIT_FILE" ]; then
       echo -e "最近日志: journalctl -u ${SERVICE_NAME} -n 50"
     fi
@@ -821,7 +821,7 @@ render_script_header() {
   echo -e "${ORANGE} |  _| / __| '_ \\\\| | | |${RESET}"
   echo -e "${ORANGE} | |__| (__| | | | |_| |${RESET}"
   echo -e "${ORANGE} |_____|\\___|_| |_|\\___/${RESET}"
-  echo -e "${ORANGE}Ech0 管理脚本 (安装/更新/卸载/服务管理)${RESET}"
+  echo -e "${ORANGE}AXOXE 管理脚本 (安装/更新/卸载/服务管理)${RESET}"
   echo "当前命令: ${command_name}"
   echo -e "安装状态: ${install_state_display}"
   echo "安装路径: ${install_path}"
@@ -836,7 +836,7 @@ run_cli_command() {
   local target_path
   target_path=$(get_installed_path)
   if [ ! -f "$target_path/ech0" ]; then
-    handle_error 1 "未检测到 Ech0 安装"
+    handle_error 1 "未检测到 AXOXE 安装"
   fi
 
   (cd "$target_path" && "$target_path/ech0" "$@")
@@ -846,34 +846,34 @@ start_service() {
   ensure_root
   ensure_command systemctl
   systemctl start "$SERVICE_NAME"
-  log_info "Ech0 已启动"
+  log_info "AXOXE 已启动"
 }
 
 stop_service() {
   ensure_root
   ensure_command systemctl
   systemctl stop "$SERVICE_NAME"
-  log_info "Ech0 已停止"
+  log_info "AXOXE 已停止"
 }
 
 restart_service() {
   ensure_root
   ensure_command systemctl
   systemctl restart "$SERVICE_NAME"
-  log_info "Ech0 已重启"
+  log_info "AXOXE 已重启"
 }
 
 show_menu() {
-  local install_label="1) 安装 Ech0"
+  local install_label="1) 安装 AXOXE"
   if is_ech0_installed; then
-    install_label="1) 安装 Ech0 (已安装)"
+    install_label="1) 安装 AXOXE (已安装)"
   fi
 
   echo
-  echo "欢迎使用 Ech0 部署脚本"
+  echo "欢迎使用 AXOXE 部署脚本"
   echo "$install_label"
-  echo "2) 更新 Ech0"
-  echo "3) 删除 Ech0"
+  echo "2) 更新 AXOXE"
+  echo "3) 删除 AXOXE"
   echo "4) 查看服务状态"
   echo "5) 查看版本信息"
   echo "6) 启动服务"
@@ -935,9 +935,9 @@ show_menu() {
 usage() {
   cat <<EOF
 用法: $0 [命令]
-  install [路径]   安装 Ech0 (默认安装到 ${INSTALL_PATH_DEFAULT})
+  install [路径]   安装 AXOXE (默认安装到 ${INSTALL_PATH_DEFAULT})
   update [--force] 更新到最新版本（--force 可重装同版本）
-  uninstall        删除 Ech0 及 systemd 服务
+  uninstall        删除 AXOXE 及 systemd 服务
   status           查看服务状态
   version          查看已安装版本
   logs [-f]        查看服务日志（-f 持续跟踪）

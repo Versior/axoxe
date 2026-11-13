@@ -2,7 +2,7 @@
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ech0 Architecture Atlas · Master System Diagram</title>
+<title>AXOXE Architecture Atlas · Master System Diagram</title>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
 <style>
@@ -360,7 +360,7 @@ p { margin: 0; text-wrap: pretty; }
 
       <header class="poster-head" data-od-id="poster-head">
         <p class="kicker">Master System Diagram · System Architecture</p>
-        <h1 class="poster-title">Ech0 Architecture Atlas <span>/ Single Go Binary · Self-Hosted Timeline Platform</span></h1>
+        <h1 class="poster-title"><img src="../../brand/axoxe-logo.svg" alt="Axoxe" style="width:180px;height:50px;vertical-align:middle;margin-right:16px"> Architecture Atlas <span>/ Single Go Binary · Self-Hosted Timeline Platform</span></h1>
         <p class="poster-sub">A single <b>synchronous request spine</b> runs down the center (handler → service → repository → DB); the <b>Agent subsystem</b> and the <b>event-driven subsystem</b> hang off the left and right wings as peer subsystems; four foundations — <b>config · tools · in-house libraries · local disk</b> — sit beneath the binary. Infrastructure is placed where it actually acts, not stacked into one uniform grid.</p>
 
         <div class="head-foot">
@@ -662,7 +662,7 @@ p { margin: 0; text-wrap: pretty; }
             <div class="outcell"><div class="ot">OAuth2 / OIDC</div><div class="os">GitHub · Google · QQ · custom IdP</div><div class="ofrom">← auth</div></div>
             <div class="outcell"><div class="ot">Object store · S3-compatible</div><div class="os">virefs ObjectFS · AWS SDK v2 · optional</div><div class="ofrom">← storage.Manager ★</div></div>
             <div class="outcell"><div class="ot">Webhook receiver</div><div class="os">HMAC-signed delivery · retries · worker pool</div><div class="ofrom">← right wing webhook.Dispatcher</div></div>
-            <div class="outcell"><div class="ot">Federated Ech0 instances</div><div class="os">discovery / health check / aggregated timeline</div><div class="ofrom">← connect</div></div>
+            <div class="outcell"><div class="ot">Federated AXOXE instances</div><div class="os">discovery / health check / aggregated timeline</div><div class="ofrom">← connect</div></div>
           </div>
 
           <div class="rgn">
@@ -694,7 +694,7 @@ p { margin: 0; text-wrap: pretty; }
       </section>
 
       <footer class="poster-foot" data-od-id="poster-foot">
-        <span class="brand">ECH0 · MASTER ARCHITECTURE MAP</span>
+        <span class="brand"><img src="../../brand/axoxe-logo.svg" alt="Axoxe" style="width:88px;height:25px;vertical-align:middle;margin-right:8px"> · MASTER ARCHITECTURE MAP</span>
         <span>Spine + two wings + four foundations · source architecture-overview.md · single master map · static view · 2026-06-14</span>
       </footer>
 

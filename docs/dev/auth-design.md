@@ -1,10 +1,10 @@
 # 认证与身份系统设计文档
 
-> 本文档描述 Ech0 的认证（Authentication）体系，包含双 Token 机制、OAuth/Passkey 登录、吊销策略以及前后端协作方式。
+> 本文档描述 AXOXE 的认证（Authentication）体系，包含双 Token 机制、OAuth/Passkey 登录、吊销策略以及前后端协作方式。
 
 ## 1. 架构总览
 
-Ech0 采用 **Access Token + Refresh Token** 双令牌机制，遵循 OWASP 推荐的最佳实践：
+AXOXE 采用 **Access Token + Refresh Token** 双令牌机制，遵循 OWASP 推荐的最佳实践：
 
 | Token 类型 | 存储位置 | 有效期 | 用途 |
 |---|---|---|---|
@@ -66,7 +66,7 @@ type TokenPair struct {
 
 ## 3. 登录流程
 
-Ech0 支持三种登录方式，它们最终都汇聚到同一个函数：
+AXOXE 支持三种登录方式，它们最终都汇聚到同一个函数：
 
 ```
 密码登录 ──→ AuthService.Login()              ──→ issueUserToken(user)

@@ -4,7 +4,7 @@
 import pkg from "../package.json" with { type: "json" };
 
 /**
- * Version reported by `ech0 version` / `--version`.
+ * Version reported by `axoxe version` / `--version`.
  *
  * Release builds pass `--define process.env.ECH0_CLI_VERSION="<tag>"` to
  * `bun build --compile`, which inlines the value here. Dev builds and `bun run`

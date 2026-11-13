@@ -166,7 +166,7 @@ const onSegmentsPointerDown = (event: PointerEvent) => {
   window.addEventListener('pointercancel', onUp)
 }
 
-const onItemLoad = (image: App.Api.Ech0.FileObject, idx: number) => {
+const onItemLoad = (image: App.Api.AXOXE.FileObject, idx: number) => {
   props.markLoaded(image, idx)
   nextTick(updateMetrics)
 }

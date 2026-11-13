@@ -21,7 +21,7 @@ type Resource struct {
 
 var mcpResource = Resource{
 	Path:          oauthserverModel.MCPResourcePath,
-	Name:          "Ech0 MCP",
+	Name:          "AXOXE MCP",
 	Audience:      authz.AudienceMCPRemote,
 	TokenPrefix:   "mcp",
 	DefaultScopes: oauthserverModel.DefaultScopes,

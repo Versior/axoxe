@@ -234,8 +234,8 @@ func TestRunBakesDataset(t *testing.T) {
 	for _, tc := range []struct{ logo, serverURL, want string }{
 		{"/api/files/images/logo.png", "https://a.example.com/", "https://a.example.com/api/files/images/logo.png"},
 		{"https://cdn.example.com/l.png", "https://a.example.com", "https://cdn.example.com/l.png"},
-		{"", "https://a.example.com", "https://a.example.com/Ech0.svg"},
-		{"/Ech0.svg", "https://a.example.com", "https://a.example.com/Ech0.svg"},
+		{"", "https://a.example.com", "https://a.example.com/axoxe.svg"},
+		{"/axoxe.svg", "https://a.example.com", "https://a.example.com/axoxe.svg"},
 		{"/api/files/images/logo.png", "", "/api/files/images/logo.png"},
 	} {
 		assert.Equal(t, tc.want, connectLogo(tc.logo, tc.serverURL, "/"),

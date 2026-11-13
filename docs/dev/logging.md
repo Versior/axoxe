@@ -1,4 +1,4 @@
-# Ech0 日志规范
+# AXOXE 日志规范
 
 ## 目标
 - 全项目统一使用 `internal/util/log`。

@@ -3,7 +3,7 @@
 // Copyright (C) 2025-2026 lin-snow
 
 // Launcher for the platform-specific binary shipped as an optional dependency
-// (@useech0/cli-<os>-<arch>). Kept as plain CommonJS so `npm install -g` works with
+// (@axoxe/cli-<os>-<arch>). Kept as plain CommonJS so `npm install -g` works with
 // any supported Node version and no install scripts run.
 
 "use strict";
@@ -25,20 +25,20 @@ if (!SUPPORTED[platform] || !SUPPORTED[platform].includes(arch)) {
     .flatMap(([os, arches]) => arches.map((candidate) => `${os}/${candidate}`))
     .join(", ");
   console.error(
-    `ech0: unsupported platform ${platform}/${arch}. Supported: ${list}. ` +
-      "Build from source: https://github.com/lin-snow/ech0/tree/main/apps/cli",
+    `axoxe: unsupported platform ${platform}/${arch}. Supported: ${list}. ` +
+      "Build from source: https://github.com/Versior/Ech0/tree/main/apps/cli",
   );
   process.exit(1);
 }
 
-const pkg = `@useech0/cli-${platform}-${arch}`;
+const pkg = `@axoxe/cli-${platform}-${arch}`;
 let binary;
 try {
-  binary = path.join(path.dirname(require.resolve(`${pkg}/package.json`)), "bin", "ech0");
+  binary = path.join(path.dirname(require.resolve(`${pkg}/package.json`)), "bin", "axoxe");
 } catch {
   console.error(
-    `ech0: the optional dependency ${pkg} is not installed. ` +
-      "Reinstall without --omit=optional: npm install -g @useech0/cli",
+    `axoxe: the optional dependency ${pkg} is not installed. ` +
+      "Reinstall without --omit=optional: npm install -g @axoxe/cli",
   );
   process.exit(1);
 }
@@ -54,7 +54,7 @@ try {
 const result = spawnSync(binary, process.argv.slice(2), { stdio: "inherit" });
 
 if (result.error) {
-  console.error(`ech0: failed to start ${binary}: ${result.error.message}`);
+  console.error(`axoxe: failed to start ${binary}: ${result.error.message}`);
   process.exit(1);
 }
 if (result.signal !== null) {

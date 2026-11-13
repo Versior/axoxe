@@ -1,4 +1,4 @@
-# Ech0 i18n Contract
+# AXOXE i18n Contract
 
 ## 1. Locale Strategy
 

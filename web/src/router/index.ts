@@ -24,7 +24,7 @@ const router = createRouter({
       component: () => import('../views/home/HomeView.vue'),
       meta: {
         title: 'Home',
-        description: 'Ech0 home timeline for publishing and browsing thoughts, notes, and links.',
+        description: 'AXOXE home timeline for publishing and browsing thoughts, notes, and links.',
         optionalAuth: true,
       },
     },
@@ -40,7 +40,7 @@ const router = createRouter({
       redirect: '/panel/dashboard',
       meta: {
         title: 'Panel',
-        description: 'Ech0 management panel.',
+        description: 'AXOXE management panel.',
         requiresAuth: true,
         noindex: true,
       },
@@ -103,7 +103,7 @@ const router = createRouter({
       component: () => import('../views/auth/AuthView.vue'),
       meta: {
         title: 'Sign In',
-        description: 'Sign in to your Ech0 workspace.',
+        description: 'Sign in to your AXOXE workspace.',
         noindex: true,
       },
     },
@@ -113,7 +113,7 @@ const router = createRouter({
       component: () => import('../views/device/DeviceView.vue'),
       meta: {
         title: 'Device Authorization',
-        description: 'Approve a CLI sign-in request for this Ech0 instance.',
+        description: 'Approve a CLI sign-in request for this AXOXE instance.',
         requiresAuth: true,
         noindex: true,
       },
@@ -124,7 +124,7 @@ const router = createRouter({
       component: () => import('../views/oauth/AuthorizeView.vue'),
       meta: {
         title: 'MCP Authorization',
-        description: 'Approve an MCP client request for this Ech0 instance.',
+        description: 'Approve an MCP client request for this AXOXE instance.',
         requiresAuth: true,
         noindex: true,
       },
@@ -135,7 +135,7 @@ const router = createRouter({
       component: () => import('../views/widget/WidgetView.vue'),
       meta: {
         title: 'Widget',
-        description: 'Ech0 embeddable widget.',
+        description: 'AXOXE embeddable widget.',
         noindex: true,
       },
     },
@@ -145,7 +145,7 @@ const router = createRouter({
       component: () => import('../views/init/InitView.vue'),
       meta: {
         title: 'Initialize',
-        description: 'Initialize your Ech0 instance.',
+        description: 'Initialize your AXOXE instance.',
         noindex: true,
       },
     },
@@ -155,7 +155,7 @@ const router = createRouter({
       component: () => import('../views/hub/HubView.vue'),
       meta: {
         title: 'Hub',
-        description: 'Discover and explore curated content in Ech0 hub.',
+        description: 'Discover and explore curated content in AXOXE hub.',
       },
     },
     {
@@ -193,7 +193,7 @@ const router = createRouter({
       },
       meta: {
         title: 'Echo',
-        description: 'Read a shared Ech0 post.',
+        description: 'Read a shared AXOXE post.',
       },
     },
     {
@@ -202,7 +202,7 @@ const router = createRouter({
       component: () => import('../views/about/AboutView.vue'),
       meta: {
         title: 'About',
-        description: 'Copyright, license and author information for this Ech0 instance.',
+        description: 'Copyright, license and author information for this AXOXE instance.',
       },
     },
     {

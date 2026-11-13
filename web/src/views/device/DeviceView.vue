@@ -37,7 +37,7 @@ const lookupFailed = ref(false)
 const expired = ref(false)
 const remaining = ref(0)
 
-const siteName = computed(() => String(SystemSetting.value?.server_name || 'Ech0'))
+const siteName = computed(() => String(SystemSetting.value?.server_name || 'AXOXE'))
 const accountAvatar = computed(() =>
   resolveAvatarUrl(user.value?.avatar || SystemSetting.value?.server_logo),
 )

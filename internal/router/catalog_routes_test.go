@@ -29,7 +29,7 @@ var catalogExclusions = []struct {
 	{"/api/login", "the CLI signs in locally instead of shelling out to a command"},
 	{"/api/auth/", "cookie/token plumbing plus device authorization, owned by `ech0 auth`"},
 	{"/api/passkey/", "WebAuthn ceremonies need a browser"},
-	{"/api/chat", "Ech0 Copilot: CLI support is intentionally deferred"},
+	{"/api/chat", "AXOXE Copilot: CLI support is intentionally deferred"},
 	{"/api/consent", "MCP OAuth consent plumbing; the OAuth protocol endpoints live at /oauth/*"},
 }
 

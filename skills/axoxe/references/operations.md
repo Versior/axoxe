@@ -1,6 +1,6 @@
 # Running commands
 
-Every command is described by `ech0 help <id> --json`: it lists the fields, where
+Every command is described by `axoxe help <id> --json`: it lists the fields, where
 they go, the result kind and the examples. Read it before guessing a flag.
 
 ## Global flags
@@ -62,6 +62,6 @@ list changed, the CLI refreshes it and retries once.
 
 ## Keeping commands up to date
 
-`ech0 catalog refresh` fetches the command list again; `ech0 catalog path` prints
+`axoxe catalog refresh` fetches the command list again; `axoxe catalog path` prints
 where it is cached. Without a reachable instance, local commands and the cached
-commands still work, and `ech0 help` explains what is missing.
+commands still work, and `axoxe help` explains what is missing.

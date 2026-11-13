@@ -38,14 +38,14 @@ import { useI18n } from 'vue-i18n'
 
 defineProps<{ fluid?: boolean }>()
 
-const heatmapData = ref<App.Api.Ech0.HeatMap>([])
+const heatmapData = ref<App.Api.AXOXE.HeatMap>([])
 const { t } = useI18n()
 
 const grid = computed(() => {
   const cells = [...heatmapData.value]
   const total = 3 * 10
-  while (cells.length < total) cells.push({ date: '', count: 0 } as App.Api.Ech0.HeatMap[0])
-  const result: (App.Api.Ech0.HeatMap[0] | null)[][] = []
+  while (cells.length < total) cells.push({ date: '', count: 0 } as App.Api.AXOXE.HeatMap[0])
+  const result: (App.Api.AXOXE.HeatMap[0] | null)[][] = []
   for (let row = 0; row < 3; row++) {
     result.push(cells.slice(row * 10, (row + 1) * 10))
   }

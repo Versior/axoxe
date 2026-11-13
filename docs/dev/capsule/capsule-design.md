@@ -1,4 +1,4 @@
-# Ech0 Capsule（内容胶囊）Schema 与静态站构建（设计草案）
+# AXOXE Capsule（内容胶囊）Schema 与静态站构建（设计草案）
 
 > **状态：草案，讨论中。** 本文是设计讨论的工作文档，尚未定稿，任何小节都可能被推翻。
 > 开放问题集中在 [§9](#9-开放问题讨论议程)，按编号引用讨论。
@@ -7,45 +7,45 @@
 
 ## 1. 一句话概括
 
-为 Ech0 增加一套**版本化、人类可读、自包含**的内容交换格式——**Capsule（胶囊）**（frontmatter-markdown + YAML + 媒体目录），并提供一组 CLI 命令（语法详见 §5）：
+为 AXOXE 增加一套**版本化、人类可读、自包含**的内容交换格式——**Capsule（胶囊）**（frontmatter-markdown + YAML + 媒体目录），并提供一组 CLI 命令（语法详见 §5）：
 
-- `ech0 export capsule|snapshot`：从运行实例导出胶囊 / zip 快照；
-- `ech0 import capsule|snapshot`：内容级增量灌入 / 字节级整库替换；
-- `ech0 check`：校验胶囊是否符合 schema（`--fix` 回写可自动修复项，如缺失的 `id`）；仅作用于胶囊；
-- `ech0 build`：从胶囊编译出可静态部署的只读站点（复用现有 `web/` SPA）；仅作用于胶囊。
+- `axoxe export capsule|snapshot`：从运行实例导出胶囊 / zip 快照；
+- `axoxe import capsule|snapshot`：内容级增量灌入 / 字节级整库替换；
+- `axoxe check`：校验胶囊是否符合 schema（`--fix` 回写可自动修复项，如缺失的 `id`）；仅作用于胶囊；
+- `axoxe build`：从胶囊编译出可静态部署的只读站点（复用现有 `web/` SPA）；仅作用于胶囊。
 
-产品形态不变：Ech0 仍是常驻服务端 + SPA 的微博客。胶囊、导入与静态构建是**纯增量能力**。
+产品形态不变：AXOXE 仍是常驻服务端 + SPA 的微博客。胶囊、导入与静态构建是**纯增量能力**。
 
 ## 2. 目标与非目标
 
 ### 2.1 目标（按优先级）
 
-1. **数据长期主义**：数据比软件活得久。胶囊可读、可 diff、可被第三方工具（Obsidian、Hugo、自写脚本）直接消费，即使 Ech0 项目停止维护，内容也不锁死。
+1. **数据长期主义**：数据比软件活得久。胶囊可读、可 diff、可被第三方工具（Obsidian、Hugo、自写脚本）直接消费，即使 AXOXE 项目停止维护，内容也不锁死。
 2. **内容级往返**：`export` → `import` 闭环。换机、跨实例迁移、跨存储后端迁移（本地导出 → S3 实例导入）都走胶囊，不再需要手工操作数据库。
 3. **体面的退场路径**：不想继续运维实例时，一条命令把全部内容变成可托管在 GitHub Pages / CDN 上的永久存档。
 4. **灾备与归档部署**：server 写、静态读的镜像模式（主站挂了静态站还在）。
-5. **中立交换格式 /「微博客编译器」**：`ech0 build` / `ech0 import` 只认 schema 不认来源——手写胶囊、第三方转换器（如 Twitter/memos 导出 → 胶囊）产出的合规胶囊同样能编译成静态站或灌入实例，无需运行过 Ech0。
+5. **中立交换格式 /「微博客编译器」**：`axoxe build` / `axoxe import` 只认 schema 不认来源——手写胶囊、第三方转换器（如 Twitter/memos 导出 → 胶囊）产出的合规胶囊同样能编译成静态站或灌入实例，无需运行过 AXOXE。
 
 ### 2.2 非目标（v1 明确不做）
 
-- ❌ **CLI-first 写作流**：不改变「随手快发」的微博客产品形态。胶囊**可以**手写（受支持的输入，见目标 5），但 v1 **不优化手写工作流**——不做 `ech0 new` 脚手架、不做 watch 模式、不做本地预览服务器。server 仍是旗舰写作体验。
+- ❌ **CLI-first 写作流**：不改变「随手快发」的微博客产品形态。胶囊**可以**手写（受支持的输入，见目标 5），但 v1 **不优化手写工作流**——不做 `axoxe new` 脚手架、不做 watch 模式、不做本地预览服务器。server 仍是旗舰写作体验。
 - ❌ **flat-file 存储引擎**：SQLite 仍是运行时唯一 source of truth，不做「文件即数据库」的架构反转（会重写整个 repository 层，且与产品形态冲突，已否决，见 §10）。
 - ❌ **字节级灾备**：胶囊承诺**内容等价**而非字节等价（见 §4.8）。凭据、运维配置、访客统计不经胶囊往返；完整灾备仍由 Migrator 域的 zip 快照负责。
-- ❌ **主题系统 / 增量构建 / 部署集成**：静态站输出就是现有 Ech0 外观，一条命令一种输出。
+- ❌ **主题系统 / 增量构建 / 部署集成**：静态站输出就是现有 AXOXE 外观，一条命令一种输出。
 - ❌ **第二套前端**：不为静态站单独维护一套 UI（双倍前端维护成本，已否决，见 §10）。
 
 ## 3. 总体架构
 
 ```mermaid
 graph LR
-    DB[运行实例数据<br/>SQLite + 存储后端] -->|ech0 export capsule| CP[capsule/<br/>本文档的 Schema]
-    CP -->|ech0 import capsule| DB2[运行实例<br/>同一个或另一个]
+    DB[运行实例数据<br/>SQLite + 存储后端] -->|axoxe export capsule| CP[capsule/<br/>本文档的 Schema]
+    CP -->|axoxe import capsule| DB2[运行实例<br/>同一个或另一个]
     HW[手写 / 第三方转换器<br/>Twitter/memos → 胶囊] --> CP
-    CP -->|ech0 build| ST[静态站点<br/>Pages/CDN 可托管]
+    CP -->|axoxe build| ST[静态站点<br/>Pages/CDN 可托管]
     CP --> TP[第三方工具消费<br/>Obsidian / Hugo / 脚本…]
 ```
 
-关键设计约束：**胶囊是命令之间的唯一接口**。`ech0 build` / `ech0 import` 只读胶囊、只认 schema 不认来源，手写或第三方生成的合规胶囊一律可用（经 §4.7 严格校验）。这同时保证 schema 有第一方消费者天天使用，不会随版本漂移腐烂。
+关键设计约束：**胶囊是命令之间的唯一接口**。`axoxe build` / `axoxe import` 只读胶囊、只认 schema 不认来源，手写或第三方生成的合规胶囊一律可用（经 §4.7 严格校验）。这同时保证 schema 有第一方消费者天天使用，不会随版本漂移腐烂。
 
 ## 4. Capsule Schema v1
 
@@ -71,7 +71,7 @@ capsule/
 
 - **每条 Echo 一个文件**，而不是一个大 YAML。理由：可 diff、可单独编辑、frontmatter-markdown 是 Hugo/Astro/Obsidian 通吃的生态标准，`Echo.Content` 本来就是 markdown。
 - **files/ 内部结构原样 mirror `DataRoot`（默认 `data/files`）**：胶囊内相对路径 = `files/ + schema.Resolve(key)`，与本地磁盘布局逐一对应（`files/files/` 即 `DefaultRoute` 兜底类别的 mirror，属预期布局）。导出按 `files` 表**记录驱动**落位（非盲目目录拷贝，`data/files/snapshots/` 等非托管产物不进胶囊）；对本地实例，效果上仍近似一次目录拷贝。
-- **胶囊自包含（托管文件）**：本地与对象存储（S3）的托管文件在导出时**字节入胶囊**，胶囊内一律相对路径、不依赖 `File.url`（URL 是运行时表示：`File.AfterFind` 会按当前配置重算，胶囊作为离线交换格式不该携带它）。**例外——外链文件（`storage_type=external`）**：字节不在 Ech0 存储里，`url` 即其权威表示，导出时原样透传、不下载本地化（版权与预期问题）。
+- **胶囊自包含（托管文件）**：本地与对象存储（S3）的托管文件在导出时**字节入胶囊**，胶囊内一律相对路径、不依赖 `File.url`（URL 是运行时表示：`File.AfterFind` 会按当前配置重算，胶囊作为离线交换格式不该携带它）。**例外——外链文件（`storage_type=external`）**：字节不在 AXOXE 存储里，`url` 即其权威表示，导出时原样透传、不下载本地化（版权与预期问题）。
 
 ### 4.2 清单文件 `ech0.yaml`
 
@@ -82,7 +82,7 @@ exported_at: 2026-08-02T10:00:00Z
 
 site:                        # 站点设置的公开子集（供静态站渲染与导入恢复）
   site_title: L1nSn0w 的小站            # 键名 = SystemSetting json tag 原样，import 整块反序列化零映射
-  server_name: Ech0
+  server_name: AXOXE
   server_logo: /api/files/images/logo.png  # ServerLogo 原样字符串，不本地化改写（含实例 URL 时 check 警告）
   # 完整 site.* 字段清单见 spec.md §3（原 Q7：「渲染所需皆入，运维行为皆弃」，仅踢除 allow_register）
 
@@ -166,11 +166,11 @@ comments:
 - `schema_version` 为整数。**追加字段不升版本**（消费者必须忽略未知字段）；字段语义变更或删除才升版本。
 - 胶囊格式（目录布局、frontmatter 字段、`ech0.yaml`、`comments.yaml`）是**公开契约**，规范性定义见 [`spec.md`](./spec.md)（已起草，随本文档讨论同步演进）；定稿后 `spec.md` 即对外规格，本设计文档退役为背景资料。胶囊相关文档统一存放在 `docs/dev/capsule/`。
 
-### 4.7 校验规则（`ech0 check`，import/build 前强制执行）
+### 4.7 校验规则（`axoxe check`，import/build 前强制执行）
 
 胶囊可能是手写的，良构不再是前提。校验错误报告精确到文件与字段（如 `echoes/2026/xxx.md: layout: gird 不是合法值，可选 waterfall|grid|…`）：
 
-- `id`：**必填**且为合法 UUID。permalink（`/echo/:id`）稳定性与导入幂等都依赖它——缺失时拒绝，提示用 `ech0 check --fix` 生成 UUIDv7 并**回写进 frontmatter**（一次生成、永久稳定）。**不做**从路径/内容推断 id 的隐式魔法：路径一改深链全断，且推断规则会膨胀公开契约。
+- `id`：**必填**且为合法 UUID。permalink（`/echo/:id`）稳定性与导入幂等都依赖它——缺失时拒绝，提示用 `axoxe check --fix` 生成 UUIDv7 并**回写进 frontmatter**（一次生成、永久稳定）。**不做**从路径/内容推断 id 的隐式魔法：路径一改深链全断，且推断规则会膨胀公开契约。
 - `created_at`：必填，RFC3339 可解析。
 - `layout` / `extension.type` / `files[].category`：必须为已定义枚举值。
 - `files[].key`：禁止含 `/` 或 `..`；字节必须存在于 `files/ + Resolve(key)`。
@@ -204,40 +204,40 @@ comments:
 1. **flag 集合完全分叉**：`export capsule` 有 `--include-private/--zip`，`export snapshot` 只有 `-o`；`import capsule` 有 `--dry-run`，`import snapshot` 需要 `--yes`。子命令天然隔离各自的 flag 与 help，`--type` 则需要脆弱的条件校验。
 2. **破坏性语义需要独立命令名**：`import snapshot` 是整库替换，`import capsule` 是幂等增量——一个 `--type` 值的笔误不该能把后者变成前者。
 
-`check` / `build` 只作用于胶囊（snapshot 是不透明 zip，无 schema 可校验、无内容可编译），故无格式维度，直接吃位置参数。裸 `ech0 export` / `ech0 import` 不设默认格式，打印 help 列出两个子命令——备份语义下显式优于隐式。
+`check` / `build` 只作用于胶囊（snapshot 是不透明 zip，无 schema 可校验、无内容可编译），故无格式维度，直接吃位置参数。裸 `axoxe export` / `axoxe import` 不设默认格式，打印 help 列出两个子命令——备份语义下显式优于隐式。
 
-### 5.1 `ech0 export capsule`
+### 5.1 `axoxe export capsule`
 
 ```bash
-ech0 export capsule [-o ./capsule] [--include-private] [--zip]
+axoxe export capsule [-o ./capsule] [--include-private] [--zip]
 ```
 
 - 读取运行实例数据（SQLite + 当前存储后端配置），写出 §4 胶囊。
 - S3 文件按 `key + 当前存储配置` 拉取字节（与 `StreamFileByID` 同一读取路径语义，见 `internal/service/file/file.go`），保证自包含。
 - `Private` Echo **默认排除**，`--include-private` 显式包含（原 Q2 已裁决，不做加密）。
 
-### 5.2 `ech0 export snapshot`（P4，语法先行保留）
+### 5.2 `axoxe export snapshot`（P4，语法先行保留）
 
 ```bash
-ech0 export snapshot [-o ./snapshot.zip]
+axoxe export snapshot [-o ./snapshot.zip]
 ```
 
 - 现有 Migrator 域 zip 快照逻辑的 CLI 薄封装，补上服务器侧 cron 备份通道（目前只能 curl 带 token 调 web API）。
 
-### 5.3 `ech0 check`
+### 5.3 `axoxe check`
 
 ```bash
-ech0 check [路径，默认 ./capsule] [--fix]
+axoxe check [路径，默认 ./capsule] [--fix]
 ```
 
 - 按 §4.7 校验胶囊，供手写/第三方生成的胶囊在 import/build 前自检。**仅作用于胶囊。**
 - `--fix` 回写可自动修复项（目前仅：为缺失 `id` 的 Echo 生成 UUIDv7 并写回 frontmatter）。
-- `ech0 import capsule` / `ech0 build` 隐式执行同一套校验，校验失败即终止。
+- `axoxe import capsule` / `axoxe build` 隐式执行同一套校验，校验失败即终止。
 
-### 5.4 `ech0 import capsule`
+### 5.4 `axoxe import capsule`
 
 ```bash
-ech0 import capsule [路径，默认 ./capsule] [--dry-run] [--include-private]
+axoxe import capsule [路径，默认 ./capsule] [--dry-run] [--include-private]
 ```
 
 内容级往返的落地端，语义如下：
@@ -251,19 +251,19 @@ ech0 import capsule [路径，默认 ./capsule] [--dry-run] [--include-private]
 - **不发布事件**（原 Q13 已裁决）：导入不触发事件总线——webhook 回放历史内容是语义错误（消费者会理解为「刚刚发布」），embedding 增量索引本就「存量由回填命令兜底」（`internal/event/subscriber/embedding.go`），agent 处理器忽略事件载荷。导入报告末尾提醒可在后台触发索引重建。
 - `--dry-run`：输出将创建/跳过的清单，不写库。
 
-### 5.5 `ech0 import snapshot`（P4，语法先行保留）
+### 5.5 `axoxe import snapshot`（P4，语法先行保留）
 
 ```bash
-ech0 import snapshot <snapshot.zip> --yes
+axoxe import snapshot <snapshot.zip> --yes
 ```
 
 - **字节级整库替换**（破坏性），对应现有 zip 快照恢复语义；`--yes` 为强制确认门，缺失即拒绝执行。
 - 与 `import capsule` 的分工：zip 恢复 = 灾备回滚；胶囊导入 = 内容级增量灌入，二者并存、用途不同。
 
-### 5.6 `ech0 build`
+### 5.6 `axoxe build`
 
 ```bash
-ech0 build [路径，默认 ./capsule] [-o ./dist] [--base-url /]
+axoxe build [路径，默认 ./capsule] [-o ./dist] [--base-url /]
 ```
 
 **仅作用于胶囊。** 纯 Go 实现，用户侧不需要 Node/pnpm：
@@ -284,7 +284,7 @@ ech0 build [路径，默认 ./capsule] [-o ./dist] [--base-url /]
 
 ### 6.2 接线方式：单 bundle + 运行时开关
 
-**不做第二份前端构建。** `main.ts` 启动时检查 `window.__ECH0_STATIC__`（由 `ech0 build` 注入），命中则动态 import 静态 adapter 替换 `request` 实现；正常模式下 adapter 代码不加载。前端产物不分叉，serve 与 build 共用同一份 `template/dist/` embed。
+**不做第二份前端构建。** `main.ts` 启动时检查 `window.__ECH0_STATIC__`（由 `axoxe build` 注入），命中则动态 import 静态 adapter 替换 `request` 实现；正常模式下 adapter 代码不加载。前端产物不分叉，serve 与 build 共用同一份 `template/dist/` embed。
 
 adapter 需要覆盖的只读端点（首页/详情/hub 所需）：
 
@@ -320,9 +320,9 @@ adapter 需要覆盖的只读端点（首页/详情/hub 所需）：
 
 | 阶段 | 交付 | 依赖 |
 |---|---|---|
-| P1 | 胶囊 schema 定稿 + `ech0 export` + `ech0 check` + 公开规格文档 | 本草案讨论收敛 |
-| P2 | `ech0 import`（内容级往返闭环） | P1 |
-| P3 | 静态 adapter + `ech0 build` + 降级矩阵落地 | P1（与 P2 互相独立，顺序可换） |
+| P1 | 胶囊 schema 定稿 + `axoxe export` + `axoxe check` + 公开规格文档 | 本草案讨论收敛 |
+| P2 | `axoxe import`（内容级往返闭环） | P1 |
+| P3 | 静态 adapter + `axoxe build` + 降级矩阵落地 | P1（与 P2 互相独立，顺序可换） |
 | P4 | 打磨：hub 页静态化、`--zip`、i18n 校验、文档 | P2 + P3 |
 
 ## 9. 开放问题（讨论议程）
@@ -337,11 +337,11 @@ adapter 需要覆盖的只读端点（首页/详情/hub 所需）：
 - **格式**：frontmatter-markdown 每 Echo 一文件，而非单一大 YAML。
 - **命名**：格式名 **Capsule（胶囊）**（原 Q14，已终确认；候选 Bundle 因与 SPA bundle 项目内撞名、Artifact 因 CI 副产物语义反向而否决）；相关文档集中在 `docs/dev/capsule/`。
 - **往返承诺 = 内容级**（原 Q1/Q8/Q9）：不做 sidecar，靠「忽略未知字段」留演进后门；旧 `fav_count` 仅保留兼容解析；字节级恢复永久归 zip 快照，两者并存。
-- **前端**：复用 `web/` SPA，单 bundle + 运行时开关 + 请求层 adapter；`ech0 build` 纯 Go。
+- **前端**：复用 `web/` SPA，单 bundle + 运行时开关 + 请求层 adapter；`axoxe build` 纯 Go。
 - **隐私**：评论快照复用 `PublicComment` 投影，接受评论有损往返（胶囊会被公开分享，Email/IPHash 绝不入内）；凭据与运维配置永不入胶囊。
 - **自包含**：托管媒体字节全部入胶囊，胶囊内只用相对路径，不携带运行时 URL；外链文件（`external`）例外，URL 原样透传；导入时按目标实例存储配置重建 `files` 行。
-- **手写胶囊受支持**：`ech0 build` / `ech0 import` 只认 schema 不认来源；严格校验（§4.7）+ `ech0 check --fix` 回写 id；不优化手写工作流（无脚手架/watch/预览）。
-- **CLI 语法 = 动词在前、格式为子命令**（原 Q11）：`ech0 export|import capsule|snapshot`，`check`/`build` 仅胶囊、吃位置参数；snapshot 子命令为 Migrator 既有逻辑的薄封装（P4，语法先行保留）。裸 `export`/`import` 无默认格式，打印 help。
+- **手写胶囊受支持**：`axoxe build` / `axoxe import` 只认 schema 不认来源；严格校验（§4.7）+ `axoxe check --fix` 回写 id；不优化手写工作流（无脚手架/watch/预览）。
+- **CLI 语法 = 动词在前、格式为子命令**（原 Q11）：`axoxe export|import capsule|snapshot`，`check`/`build` 仅胶囊、吃位置参数；snapshot 子命令为 Migrator 既有逻辑的薄封装（P4，语法先行保留）。裸 `export`/`import` 无默认格式，打印 help。
 - **评论独立单文件**（原 Q3）：`comments.yaml` 不混入 Echo frontmatter——第三方数据不污染创作物身份、评论追加不制造内容文件 diff 噪音；单文件而非按 Echo 分文件（微博客量级可管理，机器产出无手改冲突）。
 - **时间导出统一 UTC**（原 Q6）：系统无「站点时区」概念（见 `docs/dev/timezone-design.md`，存储即 UTC、展示归浏览器），UTC 导出零新配置且逐字节确定；输入接受任意合法 RFC3339 偏移，语义为时刻。
 - **`files[]` = `File` 列 1:1**（随「导出即转储」原则修订）：不设 `path` 字段——DB 无此列，位置由 `files/ + Resolve(key)` 纯函数派生；`key/category/name/content_type/size/width/height/id` 全部原样携带（可选）；幂等先按 `id` 复用、再按 key+内容哈希去重、撞名走 keygen 改名；export 取不回托管字节必须报错列清单（自包含是硬承诺）。

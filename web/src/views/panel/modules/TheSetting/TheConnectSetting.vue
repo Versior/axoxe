@@ -5,7 +5,7 @@
     <div class="w-full">
       <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 class="text-[var(--color-text-primary)] font-bold text-lg">Ech0 Connect</h1>
+          <h1 class="text-[var(--color-text-primary)] font-bold text-lg">AXOXE Connect</h1>
           <p class="mt-1 text-sm text-[var(--color-text-muted)]">
             {{ t('connectSetting.description') }}
           </p>

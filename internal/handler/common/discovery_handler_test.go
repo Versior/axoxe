@@ -61,7 +61,7 @@ func discoveryRouter(t *testing.T, kv kvstore.Store) *gin.Engine {
 }
 
 func TestGetLlmsTxt_Document(t *testing.T) {
-	r := discoveryRouter(t, settingsStore(t, `{"site_title":"Ech0 Blog","server_name":"Notes from a self-hosted corner"}`))
+	r := discoveryRouter(t, settingsStore(t, `{"site_title":"AXOXE Blog","server_name":"Notes from a self-hosted corner"}`))
 
 	req := httptest.NewRequest(http.MethodGet, "/llms.txt", nil)
 	req.Host = "blog.example.com"
@@ -74,11 +74,11 @@ func TestGetLlmsTxt_Document(t *testing.T) {
 	assert.Contains(t, rec.Header().Get("Cache-Control"), "must-revalidate")
 
 	body := rec.Body.String()
-	assert.Contains(t, body, "# Ech0 Blog\n")
+	assert.Contains(t, body, "# AXOXE Blog\n")
 	assert.Contains(
 		t,
 		body,
-		"> Notes from a self-hosted corner — a self-hosted microblogging platform powered by Ech0.",
+		"> Notes from a self-hosted corner — a self-hosted microblogging platform powered by AXOXE.",
 	)
 	// The guidance is "at least one link", and every link must be absolute.
 	assert.Contains(t, body, "[Agent Catalog](http://blog.example.com/.well-known/ard.json)")
@@ -92,8 +92,8 @@ func TestGetLlmsTxt_DescriptionFallback(t *testing.T) {
 		name string
 		raw  string
 	}{
-		{name: "no-server-name", raw: `{"site_title":"Ech0 Blog"}`},
-		{name: "server-name-repeats-title", raw: `{"site_title":"Ech0 Blog","server_name":"ech0 blog"}`},
+		{name: "no-server-name", raw: `{"site_title":"AXOXE Blog"}`},
+		{name: "server-name-repeats-title", raw: `{"site_title":"AXOXE Blog","server_name":"axoxe blog"}`},
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
@@ -106,14 +106,14 @@ func TestGetLlmsTxt_DescriptionFallback(t *testing.T) {
 			assert.Contains(
 				t,
 				rec.Body.String(),
-				"> A self-hosted microblogging platform powered by Ech0.",
+				"> A self-hosted microblogging platform powered by AXOXE.",
 			)
 		})
 	}
 }
 
 func TestGetLlmsTxt_UsesForwardedOrigin(t *testing.T) {
-	r := discoveryRouter(t, settingsStore(t, `{"site_title":"Ech0 Blog"}`))
+	r := discoveryRouter(t, settingsStore(t, `{"site_title":"AXOXE Blog"}`))
 
 	req := httptest.NewRequest(http.MethodGet, "/llms.txt", nil)
 	req.Host = "internal:6277"
@@ -127,7 +127,7 @@ func TestGetLlmsTxt_UsesForwardedOrigin(t *testing.T) {
 }
 
 func TestGetAgentCatalog_Document(t *testing.T) {
-	r := discoveryRouter(t, settingsStore(t, `{"site_title":"Ech0 Blog"}`))
+	r := discoveryRouter(t, settingsStore(t, `{"site_title":"AXOXE Blog"}`))
 
 	for _, path := range []string{"/.well-known/ard.json", "/.well-known/ai-catalog.json"} {
 		t.Run(path, func(t *testing.T) {
@@ -156,7 +156,7 @@ func TestGetAgentCatalog_Document(t *testing.T) {
 			require.NoError(t, json.Unmarshal(rec.Body.Bytes(), &doc))
 
 			assert.Equal(t, "1.0", doc.SpecVersion)
-			assert.Equal(t, "Ech0 Blog", doc.Host.DisplayName)
+			assert.Equal(t, "AXOXE Blog", doc.Host.DisplayName)
 			require.Len(t, doc.Entries, 1)
 
 			entry := doc.Entries[0]
@@ -203,7 +203,7 @@ func TestAgentDiscovery_SettingsFailure(t *testing.T) {
 }
 
 func TestAgentDiscovery_ETagRevalidation(t *testing.T) {
-	r := discoveryRouter(t, settingsStore(t, `{"site_title":"Ech0 Blog"}`))
+	r := discoveryRouter(t, settingsStore(t, `{"site_title":"AXOXE Blog"}`))
 
 	first := httptest.NewRecorder()
 	r.ServeHTTP(first, httptest.NewRequest(http.MethodGet, "/llms.txt", nil))

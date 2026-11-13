@@ -15,10 +15,10 @@ vi.mock('@/service/api', () => ({
 
 const queryMock = vi.mocked(fetchQueryEchos)
 
-const echo = (id: string): App.Api.Ech0.Echo =>
-  ({ id, content: id, created_at: 1 }) as App.Api.Ech0.Echo
+const echo = (id: string): App.Api.AXOXE.Echo =>
+  ({ id, content: id, created_at: 1 }) as App.Api.AXOXE.Echo
 
-type EchoPageResponse = App.Api.Response<App.Api.Ech0.PaginationResult>
+type EchoPageResponse = App.Api.Response<App.Api.AXOXE.PaginationResult>
 
 const page = (ids: string[], total: number, nextCursor: string | null): EchoPageResponse => ({
   code: 1,

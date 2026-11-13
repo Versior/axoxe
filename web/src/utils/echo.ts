@@ -24,7 +24,7 @@ type EchoLike = {
   }> | null
 }
 
-export function getEchoFiles(echo?: EchoLike | null): App.Api.Ech0.FileObject[] {
+export function getEchoFiles(echo?: EchoLike | null): App.Api.AXOXE.FileObject[] {
   if (!echo) return []
 
   return (echo.echo_files || []).map((item) => {
@@ -47,8 +47,8 @@ export function getEchoFiles(echo?: EchoLike | null): App.Api.Ech0.FileObject[] 
 
 export function getEchoFilesBy(
   echo?: EchoLike | null,
-  options: FileSelectorOptions<App.Api.Ech0.FileObject> = {},
-): App.Api.Ech0.FileObject[] {
+  options: FileSelectorOptions<App.Api.AXOXE.FileObject> = {},
+): App.Api.AXOXE.FileObject[] {
   return filterFiles(getEchoFiles(echo), options)
 }
 

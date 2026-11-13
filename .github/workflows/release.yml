@@ -65,7 +65,7 @@ jobs:
       - name: Setup Node.js Environment
         uses: pnpm/action-setup@v6
         with:
-          version: 12.16.1
+          version: 12.14.0
       - uses: actions/setup-node@v7
         with:
           node-version: 26
@@ -221,7 +221,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/ech0:${{ github.ref_name }}
-            ghcr.io/${{ github.repository_owner }}/ech0:latest
+            ghcr.io/${{ github.repository_owner }}/axoxe:${{ github.ref_name }}
+            ghcr.io/${{ github.repository_owner }}/axoxe:latest
             docker.io/${{ vars.DOCKERHUB_USERNAME }}/ech0:${{ github.ref_name }}
             docker.io/${{ vars.DOCKERHUB_USERNAME }}/ech0:latest

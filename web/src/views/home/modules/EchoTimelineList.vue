@@ -23,7 +23,7 @@ import {
 } from '@/utils/timeline'
 
 const props = defineProps<{
-  items: App.Api.Ech0.Echo[]
+  items: App.Api.AXOXE.Echo[]
   scrollTarget: HTMLElement | null
   useWindow: boolean
   busy?: boolean

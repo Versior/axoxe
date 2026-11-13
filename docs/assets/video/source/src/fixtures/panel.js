@@ -17,7 +17,7 @@ const PANEL_COMMENTS = [
   cm('pc1', 'e-new', 'Lena', 'Same words, my address. Stealing this line for my own about page.', 0.3, 'pending'),
   cm('pc2', 'e-harbor', 'Jonas', 'Four minutes of gold is worth the alarm. Great shot.', 1, 'approved', true),
   cm('pc3', 'e-quiet', 'Aiko', 'Printing "own it either way" and taping it to my monitor.', 5, 'approved'),
-  cm('pc4', 'e-link', 'Sam', 'Found you through Ech0 Hub. Subscribed via RSS!', 20, 'approved'),
+  cm('pc4', 'e-link', 'Sam', 'Found you through AXOXE Hub. Subscribed via RSS!', 20, 'approved'),
   cm('pc5', 'e-ridge', 'Noor', 'Which lens was this? The layers are unreal.', 30, 'pending'),
   cm('pc6', 'e-build', 'Theo', 'Reading mode looks lovely. Any plans to open source it?', 70, 'approved'),
 ];

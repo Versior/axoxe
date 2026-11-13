@@ -4,7 +4,7 @@
 import { request, downloadFile } from '../request'
 
 export function fetchHelloEch0() {
-  return request<App.Api.Ech0.HelloEch0>({
+  return request<App.Api.AXOXE.HelloEch0>({
     url: '/hello',
     method: 'GET',
   })

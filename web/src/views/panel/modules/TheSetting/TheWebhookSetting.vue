@@ -350,7 +350,7 @@ const webhookPayloadExample = `{
   "payload_raw": {
     "echo": {
       "id": "018f5e24-0fb7-7af0-a31b-a7ac0ad5e731",
-      "content": "Hello from Ech0 webhook"
+      "content": "Hello from AXOXE webhook"
     },
     "user": {
       "id": "018f5e24-12f7-70e5-8a87-cf03a12bf10c",

@@ -10,7 +10,7 @@
  * terminal otherwise; `comment:review` and `comment:delete` stay separate
  * scopes, like every other write/delete pair. Connect keeps list/info/add/delete
  * and now the read-only health probe (`connect:read`); the self card stays out
- * because `ech0 info` presents it. Tag management is list/delete only — Echo
+ * because `axoxe info` presents it. Tag management is list/delete only — Echo
  * create/update already auto-creates tags by name. Webhook management uses
  * `admin:webhook`. Widen this list to add a capability — the command generation
  * needs no other change.
@@ -58,7 +58,7 @@ export function inScope(id: string): boolean {
 
 /**
  * Command-path overrides for catalog ids that read poorly as a command name.
- * `file.stream.by_id` is a content download, so it becomes `ech0 file download`
+ * `file.stream.by_id` is a content download, so it becomes `axoxe file download`
  * while the catalog id stays the stable key used by help, scopes and requests.
  */
 export const COMMAND_NAMES: Readonly<Record<string, string>> = {

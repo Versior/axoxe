@@ -63,17 +63,17 @@ func TestNormalizeEchoExtension_AllTypes(t *testing.T) {
 	t.Run("website ok", func(t *testing.T) {
 		got, err := normalizeEchoExtension(&model.EchoExtension{
 			Type:    model.Extension_WEBSITE,
-			Payload: map[string]any{"title": "Ech0", "site": "https://ech0.app"},
+			Payload: map[string]any{"title": "AXOXE", "site": "https://www.axoxe.com"},
 		})
 		require.NoError(t, err)
-		assert.Equal(t, "Ech0", got.Payload["title"])
+		assert.Equal(t, "AXOXE", got.Payload["title"])
 		assert.NotEmpty(t, got.Payload["site"])
 	})
 
 	t.Run("website missing site", func(t *testing.T) {
 		_, err := normalizeEchoExtension(&model.EchoExtension{
 			Type:    model.Extension_WEBSITE,
-			Payload: map[string]any{"title": "Ech0"},
+			Payload: map[string]any{"title": "AXOXE"},
 		})
 		require.Error(t, err)
 	})

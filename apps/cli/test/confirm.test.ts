@@ -112,7 +112,7 @@ describe("destructive confirmation", () => {
 
 describe("destructive commands", () => {
   test("help lists --yes and the confirmation hint", () => {
-    const program = new Command("ech0");
+    const program = new Command("axoxe");
     registerCatalogCommands(program, parseCatalog(new TextEncoder().encode(JSON.stringify(CATALOG))), {
       run: async () => ({ human: "", json: "" }),
     });
@@ -126,7 +126,7 @@ describe("destructive commands", () => {
   });
 
   test("without --yes the operation is not invoked and --json fails fast", async () => {
-    const program = new Command("ech0")
+    const program = new Command("axoxe")
       .exitOverride()
       .option("--json", "输出 JSON", false)
       .option("--yaml", "输出 YAML", false);
@@ -143,7 +143,7 @@ describe("destructive commands", () => {
   });
 
   test("--yes invokes the operation", async () => {
-    const program = new Command("ech0")
+    const program = new Command("axoxe")
       .exitOverride()
       .option("--json", "输出 JSON", false)
       .option("--yaml", "输出 YAML", false);

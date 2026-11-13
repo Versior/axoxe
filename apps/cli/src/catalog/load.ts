@@ -28,7 +28,7 @@ export interface LoadCatalogOptions {
   /** Config file path; the cache lives beside it. */
   configPath: string;
   fetchImpl?: typeof fetch;
-  /** Skip the cache and refetch (412 recovery, `ech0 catalog refresh`). */
+  /** Skip the cache and refetch (412 recovery, `axoxe catalog refresh`). */
   force?: boolean;
 }
 

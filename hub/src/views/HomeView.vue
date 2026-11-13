@@ -79,7 +79,8 @@ onBeforeUnmount(() => {
         <h1
           class="hub-home-title mx-auto max-w-[min(100%,26rem)] text-center font-normal leading-[1.45] tracking-[0.02em] text-[var(--color-text-primary)] text-[clamp(0.8125rem,2.65vw,1.1875rem)]"
         >
-          Ech0 Hub — where echoes meet and ideas resonate.
+          <span class="hub-home-wordmark" role="img" aria-label="Axoxe" />
+          Hub — where echoes meet and ideas resonate.
         </h1>
         <HubHomeFoliageCanvas class="w-full" />
         <p
@@ -115,3 +116,14 @@ onBeforeUnmount(() => {
     <HubToast :message="toastMessage" />
   </div>
 </template>
+
+<style scoped>
+.hub-home-wordmark {
+  display: block;
+  width: 160px;
+  height: 44px;
+  margin: 0 auto 1rem;
+  background-color: currentColor;
+  mask: url('/wordmark.svg') center / contain no-repeat;
+}
+</style>

@@ -126,7 +126,7 @@ function versionLine(hello: HelloDto | undefined, self: SelfCardDto | undefined)
 }
 
 /**
- * `ech0 info` — one read-only view of the instance this profile points at.
+ * `axoxe info` — one read-only view of the instance this profile points at.
  *
  * Every field comes from a public endpoint (`/hello`, `/connect`, `/settings`,
  * `/init/status`) plus local profile state, so the command needs no token and
@@ -180,7 +180,7 @@ export async function info(ctx: CliContext): Promise<CommandOutput> {
   let authRejected = false;
 
   if (server === undefined) {
-    errors.push("未配置实例：用 --server / ECH0_SERVER 指定，或先运行 `ech0 auth login --server <url> --device`");
+    errors.push("未配置实例：用 --server / ECH0_SERVER 指定，或先运行 `axoxe auth login --server <url> --device`");
   } else {
     const client = new Client({ server, token: storedToken, lang });
     const started = Date.now();
@@ -256,7 +256,7 @@ export async function info(ctx: CliContext): Promise<CommandOutput> {
         stale: serverFingerprint !== null && serverFingerprint !== loaded.fingerprint,
       };
       if (catalog.stale) {
-        notes.push("catalog 缓存落后于服务端，运行 `ech0 catalog refresh` 更新命令树");
+        notes.push("catalog 缓存落后于服务端，运行 `axoxe catalog refresh` 更新命令树");
       }
     } catch (error) {
       errors.push(`catalog: ${message(error)}`);

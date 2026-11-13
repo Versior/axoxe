@@ -7,7 +7,7 @@ import { dirname, join } from "node:path";
 import { SKILL_NAME, type SkillSource } from "./source.ts";
 
 /**
- * Writes the skill into `<root>/ech0`, replacing any previous install: the
+ * Writes the skill into `<root>/axoxe`, replacing any previous install: the
  * folder is owned by the CLI, so stale references never survive an upgrade.
  */
 export function installSkill(root: string, source: SkillSource): string[] {

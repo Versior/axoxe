@@ -1,4 +1,4 @@
-// Shared film pieces derived from Ech0 itself (DIRECTION.md §4):
+// Shared film pieces derived from AXOXE itself (DIRECTION.md §4):
 // - Rings: echo rings from a date dot (the product is named Echo; every timeline entry starts with a dot)
 // - typeInto: typed text with the product's own typewriter cursor (HomeHeader .home-header__cursor)
 import React from 'react';

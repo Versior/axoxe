@@ -3,17 +3,17 @@ title: 常见问题
 description: 部署、权限、存储与集成问答
 ---
 
-若这里没有你的情况，可到 [GitHub Discussions](https://github.com/lin-snow/Ech0/discussions) 搜索或提问。
+若这里没有你的情况，可到 [GitHub Discussions](https://github.com/Versior/Ech0/discussions) 搜索或提问。
 
 ---
 
 ## 产品与定位
 
-### Ech0 是什么？
+### AXOXE 是什么？
 
 轻量、开源、**自托管**的发布工具：用一条**时间线**发短文、链接和媒体，数据在你自己的服务器上，强调简洁阅读和自主可控。更完整的产品说明见 [产品概览](/zh/docs/guide/overview)。
 
-### Ech0 不是什么？
+### AXOXE 不是什么？
 
 不是 Obsidian / Notion 那种**知识库或团队文档**；更接近「朋友圈 / 说说」式的**个人动态**，而不是专业笔记工作流。
 

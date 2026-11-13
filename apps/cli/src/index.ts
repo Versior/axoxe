@@ -20,21 +20,21 @@ function errorHints(error: Ech0Error): string[] {
   const hints = error.details.hint === undefined ? [] : [error.details.hint];
   if (status === 400 || status === 422) {
     if (hints.length === 0) {
-      hints.push("请求参数未被接受：核对字段与取值（`ech0 <命令> --help`），服务端刚升级时先 `ech0 catalog refresh`");
+      hints.push("请求参数未被接受：核对字段与取值（`axoxe <命令> --help`），服务端刚升级时先 `axoxe catalog refresh`");
     }
     return hints;
   }
   if (status === 401) {
-    return [...hints, "token 无效或已过期：运行 `ech0 auth status --verify` 检查", "重新登录：`ech0 auth login`"];
+    return [...hints, "token 无效或已过期：运行 `axoxe auth status --verify` 检查", "重新登录：`axoxe auth login`"];
   }
   if (status === 403) {
-    return [...hints, "token 缺少所需 scope：在面板重新铸造，或 `ech0 auth login --scopes <list>`"];
+    return [...hints, "token 缺少所需 scope：在面板重新铸造，或 `axoxe auth login --scopes <list>`"];
   }
   if (status === undefined) {
-    return [...hints, "无法连接实例：检查 --server / profile（`ech0 config list`）与网络"];
+    return [...hints, "无法连接实例：检查 --server / profile（`axoxe config list`）与网络"];
   }
   if (status >= 500) {
-    return [...hints, "服务端错误：稍后重试；必要时 `ech0 catalog refresh`"];
+    return [...hints, "服务端错误：稍后重试；必要时 `axoxe catalog refresh`"];
   }
   return hints;
 }

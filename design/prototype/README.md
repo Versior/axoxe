@@ -1,4 +1,4 @@
-# Ech0 6.x — 首页 UI/UX 草图
+# AXOXE 6.x — 首页 UI/UX 草图
 
 纯前端设计稿，不接后端、不复用现有 Vue 前端。中间时间线直接使用 [memo.sn0w.fyi](https://memo.sn0w.fyi) 第一页的 7 条公开 echo（含图片），样式对齐现有 `TheEchoCard` 的 timeline（日期轴/圆点/2px 竖线/11-12 正文/88% 媒体）。交互只发生在当前页面。
 

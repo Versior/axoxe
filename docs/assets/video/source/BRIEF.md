@@ -1,4 +1,4 @@
-# 视频 brief · Ech0 品牌宣传片
+# 视频 brief · AXOXE 品牌宣传片
 
 - **状态**：正式片（`plan.demo = false`）。
 - **用户决定**（2026-09-28）：
@@ -12,6 +12,6 @@
 - **未覆盖的平台面**：TUI / CLI、移动端与 PWA、外部 MCP 客户端的实际调用、Webhook、S3 存储配置。管理后台中只演示了仪表盘、评论管理、文件管理、MCP、系统日志、数据导出。片中的 docker 命令是 README 原文字卡，不是 CLI 界面演示。
 - **链接 / CTA**：用户未作限制；片尾只写产品官网 `ech0.app`（README 顶部链接）。演示数据里的网址都用 `example.com` / `.example`。
 - **仓库**：本仓库根目录（`../../../..`；制作时只读，未改动产品代码）。
-- **品牌资源**：`web/public/Ech0.svg`（片尾按其几何重绘为 SVG 分件动画）、主题 tokens、`--font-family-display`（Iowan Old Style）。
+- **品牌资源**：`web/public/axoxe.svg`（片尾按其几何重绘为 SVG 分件动画）、主题 tokens、`--font-family-display`（Iowan Old Style）。
 - **声音**：代码原创配乐（`tools/score.py`），音效用 skill 内置 WAV（本机没有录音素材库，见 evidence/audio-selection.json）。
 - **证据**：evidence/feature-evidence.md、style-audit.md、component-usage.json、audio-selection.json、copy-review.md。

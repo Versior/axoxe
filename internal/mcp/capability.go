@@ -66,7 +66,7 @@ const (
 	liveTTLMs     = 30 * 1000
 )
 
-const serverInstructions = "Ech0 personal microblog. Manage posts, tags, comments, files, connects and webhooks via tools; read site data via ech0:// resources."
+const serverInstructions = "AXOXE personal microblog. Manage posts, tags, comments, files, connects and webhooks via tools; read site data via ech0:// resources."
 
 type ServerCapabilities struct {
 	Tools     *ToolsCapability     `json:"tools,omitempty"`

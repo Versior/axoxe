@@ -53,7 +53,7 @@ export interface QueueItem {
   progress: number
   error?: string
   preview: string
-  result?: App.Api.Ech0.FileToAdd
+  result?: App.Api.AXOXE.FileToAdd
   abort?: AbortController
   delivered?: boolean
 }
@@ -66,7 +66,7 @@ export interface UseUploadOptions {
   maxFiles?: number
   maxFileSize?: number
   concurrency?: number
-  onAllComplete: (files: App.Api.Ech0.FileToAdd[]) => void
+  onAllComplete: (files: App.Api.AXOXE.FileToAdd[]) => void
 }
 
 function extractUploadPayload(response: unknown): Record<string, unknown> {
@@ -259,7 +259,7 @@ export function useUpload(opts: UseUploadOptions) {
     file: File,
     item: QueueItem,
     signal: AbortSignal,
-  ): Promise<App.Api.Ech0.FileToAdd> {
+  ): Promise<App.Api.AXOXE.FileToAdd> {
     const res = await httpUpload(
       file,
       {
@@ -303,7 +303,7 @@ export function useUpload(opts: UseUploadOptions) {
     file: File,
     item: QueueItem,
     signal: AbortSignal,
-  ): Promise<App.Api.Ech0.FileToAdd> {
+  ): Promise<App.Api.AXOXE.FileToAdd> {
     const contentType = file.type || 'application/octet-stream'
     const rawName = String(file.name || '').trim()
     const fileName = rawName || `upload_${Date.now()}${inferFileExtFromType(contentType)}`

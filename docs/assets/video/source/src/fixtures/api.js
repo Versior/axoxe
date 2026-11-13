@@ -1,4 +1,4 @@
-// Fixture responses for Ech0's real API routes (paths/shapes from web/src/service/api/* and
+// Fixture responses for AXOXE's real API routes (paths/shapes from web/src/service/api/* and
 // web/src/typings/*). Demo persona "Mira" is fictional; no user data is copied from any instance.
 import {PANEL_FIXTURES} from './panel.js';
 export const API_PREFIXES = ['/api/'];
@@ -53,9 +53,9 @@ const cm = (id, echo, nickname, content, hoursAgo) => ({id, echo_id: echo, nickn
 const COMMENTS = [
   cm('c1', 'e-harbor', 'Jonas', 'Four minutes of gold is worth the alarm. Great shot.', 1),
   cm('c2', 'e-quiet', 'Aiko', 'Printing "own it either way" and taping it to my monitor.', 5),
-  cm('c3', 'e-link', 'Sam', 'Found you through Ech0 Hub. Subscribed via RSS!', 20),
+  cm('c3', 'e-link', 'Sam', 'Found you through AXOXE Hub. Subscribed via RSS!', 20),
 ];
-// Other (fictional) Ech0 instances this one is connected to.
+// Other (fictional) AXOXE instances this one is connected to.
 const inst = (id, name, user, total, today) => ({id, server_name: name, server_url: `https://${id}.example`, logo: `/demo/av-${id}.png`, total_echos: total, today_echos: today, sys_username: user, version: '5.7.0'});
 const CONNECTS = [inst('jonas', 'Jonas', 'jonas', 812, 2), inst('aiko', 'Aiko Notes', 'aiko', 356, 1), inst('sam', 'sam.log', 'sam', 1204, 3), inst('lena', 'Lena', 'lena', 97, 0)];
 
@@ -80,7 +80,7 @@ export const API_FIXTURES = {
   '/api/user': ok(USER),
   '/api/settings': ok(settings),
   '/api/agent/info': ok({enable: true, model: 'claude-sonnet-5', protocol: 'anthropic'}),
-  '/api/hello': ok({hello: 'Hello, Ech0!', copyright: '', version: '5.7.0', commit: '', build_time: '', license: 'AGPL-3.0-or-later', author: 'lin-snow', repo_url: 'https://github.com/lin-snow/Ech0'}),
+  '/api/hello': ok({hello: 'Hello, AXOXE!', copyright: '', version: '5.7.0', commit: '', build_time: '', license: 'AGPL-3.0-or-later', author: 'lin-snow', repo_url: 'https://github.com/Versior/Ech0'}),
   '/api/oauth2/status': ok({enabled: false, provider: '', oauth_ready: false}),
   '/api/passkey/status': ok({passkey_ready: false}),
   '/api/tags': ok(TAGS),

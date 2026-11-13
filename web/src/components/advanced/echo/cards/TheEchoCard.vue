@@ -96,7 +96,7 @@ const TheExtensionRenderer = defineAsyncComponent(
 
 const { t } = useI18n()
 
-type Echo = App.Api.Ech0.Echo
+type Echo = App.Api.AXOXE.Echo
 
 const props = defineProps<{
   echo: Echo

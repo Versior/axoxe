@@ -22,9 +22,9 @@ export function meta({ loaderData, location }: Route.MetaArgs) {
   if (!loaderData?.title) {
     return [{ title: DOCS_UI[locale].docsTitle }];
   }
-  const title = `${loaderData.title} — Ech0 Docs`;
+  const title = `${loaderData.title} — AXOXE Docs`;
   const description =
-    loaderData.description || `${loaderData.title} — Ech0 documentation.`;
+    loaderData.description || `${loaderData.title} — AXOXE documentation.`;
   return [
     { title },
     { name: "description", content: description },

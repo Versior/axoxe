@@ -32,9 +32,9 @@ const { t, locale } = useI18n()
 
 const echoStore = useEchoStore()
 const isLoading = ref(true)
-const echo = ref<App.Api.Ech0.Echo | null>(null)
+const echo = ref<App.Api.AXOXE.Echo | null>(null)
 
-const getEchoFromStore = (echoId: string): App.Api.Ech0.Echo | null => {
+const getEchoFromStore = (echoId: string): App.Api.AXOXE.Echo | null => {
   const idx = echoStore.echoIndexMap.get(echoId)
   if (idx !== undefined) {
     return echoStore.echoList[idx] ?? null

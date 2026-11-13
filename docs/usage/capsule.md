@@ -1,4 +1,4 @@
-# Ech0 胶囊（Capsule）使用说明
+# AXOXE 胶囊（Capsule）使用说明
 
 这份文档基于当前项目实现编写，目标是让你可以直接把内容导出、迁移，并编译成一个能白嫖静态托管的只读站点。
 
@@ -8,7 +8,7 @@
 
 ## 1. 胶囊是什么
 
-**胶囊是一个自包含的目录（或 zip），装着一个 Ech0 站点的全部公开内容，人类可读、可编辑、可用 git 管理。**
+**胶囊是一个自包含的目录（或 zip），装着一个 AXOXE 站点的全部公开内容，人类可读、可编辑、可用 git 管理。**
 
 ```text
 capsule/
@@ -21,7 +21,7 @@ capsule/
 它解决三件事：
 
 - **搬家**：把内容从一个实例整体搬到另一个实例，不碰数据库文件。
-- **长期保存**：十年后没有 Ech0，这些 markdown 和图片照样能读。
+- **长期保存**：十年后没有 AXOXE，这些 markdown 和图片照样能读。
 - **静态发布**：编译成纯静态站，扔到 GitHub Pages / Cloudflare Pages 就是一个只读的个人站。
 
 ### 胶囊 vs 快照
@@ -44,24 +44,24 @@ capsule/
 所有命令都在**实例根目录**下执行（即 `data/` 所在目录）。
 
 ```bash
-ech0 export capsule   [-o ./capsule] [--include-private] [--zip]
-ech0 export snapshot  [-o ./snapshot.zip]
-ech0 import capsule   [<path>=./capsule] [--include-private] [--dry-run]
-ech0 import snapshot  <snapshot.zip> --yes
-ech0 check            [<path>=./capsule] [--fix]
-ech0 build            [<path>=./capsule] [-o ./dist] [--base-url /]
+axoxe export capsule   [-o ./capsule] [--include-private] [--zip]
+axoxe export snapshot  [-o ./snapshot.zip]
+axoxe import capsule   [<path>=./capsule] [--include-private] [--dry-run]
+axoxe import snapshot  <snapshot.zip> --yes
+axoxe check            [<path>=./capsule] [--fix]
+axoxe build            [<path>=./capsule] [-o ./dist] [--base-url /]
 ```
 
 退出码：`0` 成功，`1` 校验错误或执行失败。警告不影响退出码。
 
-`export capsule` 和 `import capsule` 现在还有一条**网页路径**：**面板 → 数据管理**，「导出」tab 选「胶囊」，「导入」tab 选「Ech0 胶囊」。两条路调用的是同一套实现，产物格式与落地规则完全一致，按手边方便挑一条就行。`check` 和 `build` 仍然只有 CLI（网页导入会在写库前自动校验一遍）。
+`export capsule` 和 `import capsule` 现在还有一条**网页路径**：**面板 → 数据管理**，「导出」tab 选「胶囊」，「导入」tab 选「AXOXE 胶囊」。两条路调用的是同一套实现，产物格式与落地规则完全一致，按手边方便挑一条就行。`check` 和 `build` 仍然只有 CLI（网页导入会在写库前自动校验一遍）。
 
 ---
 
 ## 3. 导出
 
 ```bash
-ech0 export capsule -o ./my-capsule
+axoxe export capsule -o ./my-capsule
 ```
 
 - 默认**排除**私密 Echo。要带走加 `--include-private`（胶囊不加密，别随手往公开仓库推）。
@@ -102,8 +102,8 @@ data/files/snapshots/   # 快照
 ## 4. 校验
 
 ```bash
-ech0 check ./my-capsule          # 目录或 .zip 都行
-ech0 check ./my-capsule --fix
+axoxe check ./my-capsule          # 目录或 .zip 都行
+axoxe check ./my-capsule --fix
 ```
 
 分两级：**错误**会让 import / build 拒绝执行；**警告**只提示。
@@ -111,7 +111,7 @@ ech0 check ./my-capsule --fix
 常见警告：
 
 - `embeds source instance URL` — 正文或 logo 里写死了原实例地址，迁移后可能断链。v1 不自动改写（保「逐字一致」契约），你自己决定要不要改。
-- `dangling media` — 胶囊里有字节，但既没有 Echo 引用它、清单 `files` 块也没声明它。`ech0 export` 不会产生这种情况（未挂 Echo 的附件会进清单），基本只在手写胶囊里出现。
+- `dangling media` — 胶囊里有字节，但既没有 Echo 引用它、清单 `files` 块也没声明它。`axoxe export` 不会产生这种情况（未挂 Echo 的附件会进清单），基本只在手写胶囊里出现。
 - `custom_js / custom_css is not empty` — 别人给的胶囊里带着脚本，导入等于执行对方代码。看一眼再说。
 
 `--fix` **只**补一件事：缺失的 `id`（生成 UUIDv7 回写 frontmatter）。手写胶囊时很有用。zip 形态不可写，`--fix` 会直接拒绝。
@@ -123,17 +123,17 @@ ech0 check ./my-capsule --fix
 > **两个前提，踩空了会直接报错。**
 >
 > 1. **目标实例必须已有站主。** 胶囊不携带账号，内容得挂到既有站主名下，所以全新实例要先
->    `ech0 serve` 跑一次、在页面上把站主建出来，然后再导入。CLI 没有建站主的命令。
-> 2. **在目标实例的目录里执行。** `ech0` 按**当前工作目录**解析 `./data`——在别处执行会就地
+>    `axoxe serve` 跑一次、在页面上把站主建出来，然后再导入。CLI 没有建站主的命令。
+> 2. **在目标实例的目录里执行。** `axoxe` 按**当前工作目录**解析 `./data`——在别处执行会就地
 >    新建一个空库，然后因为「没有站主」失败。报错里会打印它实际用的数据库绝对路径，对不上
 >    就是走错目录了。
 >
 > `--dry-run` 同样要满足这两条：它预演的是「导进这个实例会发生什么」，没有可用的实例就无从
-> 预演。只想看看胶囊里有什么、格式对不对，用 `ech0 check`，那个不碰数据库。
+> 预演。只想看看胶囊里有什么、格式对不对，用 `axoxe check`，那个不碰数据库。
 
 ```bash
-ech0 import capsule ./my-capsule --dry-run   # 先看清单，不写库
-ech0 import capsule ./my-capsule
+axoxe import capsule ./my-capsule --dry-run   # 先看清单，不写库
+axoxe import capsule ./my-capsule
 ```
 
 落地规则，记住这几条就够：
@@ -148,13 +148,13 @@ ech0 import capsule ./my-capsule
 
 ### 从网页导入
 
-**面板 → 数据管理 → 导入**，来源卡选「Ech0 胶囊」（另外两个是 Ech0 和 Memos，Memos 还是置灰的开发中项）。
+**面板 → 数据管理 → 导入**，来源卡选「AXOXE 胶囊」（另外两个是 AXOXE 和 Memos，Memos 还是置灰的开发中项）。
 
 1. 选中后页面会给出两条说明：胶囊导入是追加式且幂等的，按内容 id 去重，重复导入同一个胶囊不会产生重复内容、也不会清空或覆盖现有数据；以及胶囊不含账号与凭据，恢复不了用户和密码，导入的内容会归属**当前登录的站主**。旁边是「包含私密内容」开关，默认关闭。
 2. 上传导出得到的胶囊 zip，提交。
 3. 进度按 **校验（checking） → 导入（importing） → 完成** 走。
 
-**写库前会强制跑一遍校验**，跑的就是 `ech0 check` 那一套。有错误级问题直接拒绝落库，前几条错误会附在错误信息里；改完重传即可，库里不会留下半截数据。
+**写库前会强制跑一遍校验**，跑的就是 `axoxe check` 那一套。有错误级问题直接拒绝落库，前几条错误会附在错误信息里；改完重传即可，库里不会留下半截数据。
 
 和 CLI 相比只少一个 `--dry-run`：要先看清单再决定，用命令行预演。判重、原样入库、只填空位、不发事件这些落地规则，两条路一模一样。
 
@@ -165,22 +165,22 @@ ech0 import capsule ./my-capsule
 ## 6. 编译静态站
 
 ```bash
-ech0 build ./my-capsule -o ./dist
-ech0 build ./my-capsule -o ./dist --base-url /blog/    # 部署到子路径
+axoxe build ./my-capsule -o ./dist
+axoxe build ./my-capsule -o ./dist --base-url /blog/    # 部署到子路径
 ```
 
 产物是一个可以直接扔进任何静态托管的目录：
 
 ```text
 dist/
-  index.html  404.html  assets/…   # 内嵌的 Ech0 前端，原样复用
+  index.html  404.html  assets/…   # 内嵌的 AXOXE 前端，原样复用
   dataset.json                     # 烘焙好的全部数据
   api/files/…                      # 媒体
-  api/connect                      # Connect 名片，别的 Ech0 实例可以来连你
+  api/connect                      # Connect 名片，别的 AXOXE 实例可以来连你
   rss.xml  sitemap.xml
 ```
 
-**不需要装 Node 或 pnpm** —— 前端产物已经内嵌在 `ech0` 二进制里。
+**不需要装 Node 或 pnpm** —— 前端产物已经内嵌在 `axoxe` 二进制里。
 
 静态站是**冻结展示**的：点赞数、评论都按导出时的状态只读呈现，发布 / 回复入口自动隐藏。互动痕迹是内容史的一部分，藏掉只会让存档站显得比原站「死」。
 
@@ -200,7 +200,7 @@ created_at: 2026-08-02T10:00:00Z
 正文写在这里，逐字入库。
 ```
 
-`id` 缺了可以用 `ech0 check --fix` 生成。时间接受任意合法 RFC3339 偏移（`+08:00` 也行），导出时会统一成 UTC。
+`id` 缺了可以用 `axoxe check --fix` 生成。时间接受任意合法 RFC3339 偏移（`+08:00` 也行），导出时会统一成 UTC。
 
 引用媒体时，`key` 是扁平文件名，字节放在 `files/` 下按扩展名分好的目录里（`.png` → `files/images/`，其余见 spec §6）：
 
@@ -210,7 +210,7 @@ files:
     category: image
 ```
 
-写完先 `ech0 check` 一遍再导入。
+写完先 `axoxe check` 一遍再导入。
 
 ---
 

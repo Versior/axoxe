@@ -28,7 +28,7 @@ func buildNotifyContent(kind string, comment model.Comment, serverURL string) no
 	authorEmail := fallbackText(comment.Email, "未提供")
 	contentText := strings.TrimSpace(comment.Content)
 	if contentText == "" && kind == "test" {
-		contentText = "这是一封来自 Ech0 的评论通知测试邮件，用于验证 SMTP 与模板渲染是否正常。"
+		contentText = "这是一封来自 AXOXE 的评论通知测试邮件，用于验证 SMTP 与模板渲染是否正常。"
 	}
 	if contentText == "" {
 		contentText = "（无正文）"
@@ -49,7 +49,7 @@ func buildNotifyContent(kind string, comment model.Comment, serverURL string) no
   <tr><td align="center">
     <table role="presentation" width="100%%" cellpadding="0" cellspacing="0" style="max-width:640px;background:#ffffff;border:1px solid #e6dfd4;border-radius:0;overflow:hidden;">
       <tr><td style="padding:16px 20px;border-bottom:1px solid #ebe5db;">
-        <div style="font-size:16px;font-weight:700;color:#3a3329;">Ech0 评论通知</div>
+        <div style="font-size:16px;font-weight:700;color:#3a3329;">AXOXE 评论通知</div>
       </td></tr>
       <tr><td style="padding:20px;">
         <div style="display:inline-block;padding:3px 10px;border-radius:0;font-size:12px;font-weight:600;color:%s;background:%s;border:1px solid %s;">%s</div>
@@ -62,7 +62,7 @@ func buildNotifyContent(kind string, comment model.Comment, serverURL string) no
           <tr><td style="padding:7px 10px;font-size:12px;line-height:1.45;color:#8b8377;">邮箱</td><td style="padding:7px 10px;font-size:12px;line-height:1.45;color:#5f574a;">%s</td></tr>
         </table>
         %s
-        <div style="margin-top:14px;font-size:12px;line-height:1.6;color:#958d80;">此邮件由 Ech0 评论系统自动发送。</div>
+        <div style="margin-top:14px;font-size:12px;line-height:1.6;color:#958d80;">此邮件由 AXOXE 评论系统自动发送。</div>
       </td></tr>
     </table>
   </td></tr>
@@ -97,7 +97,7 @@ func buildNotifyText(
 	echoLink string,
 ) string {
 	text := fmt.Sprintf(
-		"Ech0 评论通知\n\n动作: %s\n状态: %s\n时间: %s\n作者: %s <%s>\n\n评论正文:\n%s",
+		"AXOXE 评论通知\n\n动作: %s\n状态: %s\n时间: %s\n作者: %s <%s>\n\n评论正文:\n%s",
 		eventTitle,
 		statusLabel,
 		createdAt,
@@ -130,7 +130,7 @@ func fallbackText(value string, fallback string) string {
 }
 
 func notifySubject(kind string, status model.Status) string {
-	prefix := "[Ech0]"
+	prefix := "[AXOXE]"
 	switch kind {
 	case "created":
 		return prefix + " 新评论待审核"

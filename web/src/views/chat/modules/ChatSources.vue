@@ -66,7 +66,7 @@ type DisplaySource = {
   day: string
   text: string
   empty: boolean
-  images: App.Api.Ech0.FileObject[]
+  images: App.Api.AXOXE.FileObject[]
   ext?: { icon: string; label: string }
   mediaBadges: { icon: string; label: string }[]
 }
@@ -95,7 +95,7 @@ const displaySources = computed<DisplaySource[]>(() =>
       : trimmed.length > 40
         ? trimmed.slice(0, 40) + '…'
         : trimmed
-    const images: App.Api.Ech0.FileObject[] = (src.files ?? [])
+    const images: App.Api.AXOXE.FileObject[] = (src.files ?? [])
       .filter((f) => f.category === 'image' && f.url)
       .slice(0, THUMB_LIMIT)
       .map((f) => ({ ...f, echo_id: src.echo_id }))

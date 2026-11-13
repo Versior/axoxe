@@ -1,7 +1,7 @@
 apiVersion: v2
-name: ech0
-description: A Helm chart for Ech0
+name: axoxe
+description: A Helm chart for AXOXE
 type: application
 version: 1.0.0
 appVersion: "4.4.4"
-icon: "https://github.com/lin-snow/Ech0/blob/main/docs/imgs/logo.svg"
+icon: "https://github.com/Versior/Ech0/blob/main/docs/imgs/logo.svg"

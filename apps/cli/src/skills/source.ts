@@ -2,7 +2,7 @@
 // Copyright (C) 2025-2026 lin-snow
 
 /**
- * The skill ships inside the CLI: the Markdown files under `skills/ech0/` are
+ * The skill ships inside the CLI: the Markdown files under `skills/axoxe/` are
  * imported as text, so `bun build` (and `--compile`) embeds them. `--from` is
  * the escape hatch for installing a folder from disk instead.
  */
@@ -10,18 +10,18 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
-import authReference from "../../../../skills/ech0/references/auth.md" with { type: "text" };
-import commentsReference from "../../../../skills/ech0/references/comments.md" with { type: "text" };
-import connectReference from "../../../../skills/ech0/references/connect.md" with { type: "text" };
-import echoReference from "../../../../skills/ech0/references/echo.md" with { type: "text" };
-import operationsReference from "../../../../skills/ech0/references/operations.md" with { type: "text" };
-import tagsReference from "../../../../skills/ech0/references/tags.md" with { type: "text" };
-import webhooksReference from "../../../../skills/ech0/references/webhooks.md" with { type: "text" };
-import skillEntry from "../../../../skills/ech0/SKILL.md" with { type: "text" };
+import authReference from "../../../../skills/axoxe/references/auth.md" with { type: "text" };
+import commentsReference from "../../../../skills/axoxe/references/comments.md" with { type: "text" };
+import connectReference from "../../../../skills/axoxe/references/connect.md" with { type: "text" };
+import echoReference from "../../../../skills/axoxe/references/echo.md" with { type: "text" };
+import operationsReference from "../../../../skills/axoxe/references/operations.md" with { type: "text" };
+import tagsReference from "../../../../skills/axoxe/references/tags.md" with { type: "text" };
+import webhooksReference from "../../../../skills/axoxe/references/webhooks.md" with { type: "text" };
+import skillEntry from "../../../../skills/axoxe/SKILL.md" with { type: "text" };
 
 import { UsageError } from "../output/console.ts";
 
-export const SKILL_NAME = "ech0";
+export const SKILL_NAME = "axoxe";
 export const SKILL_FILE = "SKILL.md";
 
 const EMBEDDED: Record<string, string> = {

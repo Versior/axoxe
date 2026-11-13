@@ -37,8 +37,8 @@
           @click="goDetail"
         >
           <img
-            src="/Ech0.svg"
-            alt="Ech0"
+            src="/axoxe.svg"
+            alt="AXOXE"
             loading="lazy"
             decoding="async"
             class="w-5 h-5 sm:w-6 sm:h-6 object-contain"
@@ -92,7 +92,7 @@ const TheMediaPlayer = defineAsyncComponent(
 )
 
 const props = defineProps<{
-  echo: App.Api.Ech0.Echo
+  echo: App.Api.AXOXE.Echo
   index?: number
 }>()
 
@@ -100,7 +100,7 @@ const router = useRouter()
 const settingStore = useSettingStore()
 const { SystemSetting } = storeToRefs(settingStore)
 
-const siteName = computed(() => String(SystemSetting.value?.server_name ?? 'Ech0'))
+const siteName = computed(() => String(SystemSetting.value?.server_name ?? 'AXOXE'))
 const avatarUrl = computed(() => resolveAvatarUrl(SystemSetting.value?.server_logo))
 const hasMedia = computed(() => getEchoFilesBy(props.echo, { dedupeBy: 'id' }).length > 0)
 

@@ -1,11 +1,11 @@
 ---
 title: MCP 接入
-description: 把 Ech0 接到 Cursor、Claude 等 AI 客户端
+description: 把 AXOXE 接到 Cursor、Claude 等 AI 客户端
 ---
 
-接入 MCP 后，你可以直接在 AI 客户端里读写自己的 Ech0：查动态、发帖、看评论、管理 Webhook，不用切到网页。
+接入 MCP 后，你可以直接在 AI 客户端里读写自己的 AXOXE：查动态、发帖、看评论、管理 Webhook，不用切到网页。
 
-Ech0 自带 MCP 服务，和站点同一个地址、同一个端口，不需要额外部署。
+AXOXE 自带 MCP 服务，和站点同一个地址、同一个端口，不需要额外部署。
 
 ---
 

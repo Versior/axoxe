@@ -19,7 +19,7 @@ import (
 
 const heatmapDays = 30
 
-var idNamespace = uuidUtil.NewV5(uuidUtil.NameSpaceURL, []byte("https://github.com/lin-snow/Ech0/capsule/build"))
+var idNamespace = uuidUtil.NewV5(uuidUtil.NameSpaceURL, []byte("https://github.com/Versior/Ech0/capsule/build"))
 
 func derivedID(kind string, parts ...string) string {
 	name := kind + "\x00" + strings.Join(parts, "\x00")
@@ -74,7 +74,7 @@ func bake(in bakeInput) (*dataset, error) {
 	info := versionPkg.Get()
 	title := site.SiteTitle
 	if title == "" {
-		title = "Ech0"
+		title = "AXOXE"
 	}
 
 	ds := &dataset{
@@ -420,8 +420,8 @@ func connectLogo(logo, serverURL, baseURL string) string {
 
 	path := strings.TrimSpace(rebased)
 	switch {
-	case path == "" || path == "Ech0.svg" || path == "/Ech0.svg":
-		return origin + "/Ech0.svg"
+	case path == "" || path == "axoxe.svg" || path == "/axoxe.svg":
+		return origin + "/axoxe.svg"
 	case strings.HasPrefix(path, "http://"), strings.HasPrefix(path, "https://"):
 		return path
 	case strings.HasPrefix(path, "/"):

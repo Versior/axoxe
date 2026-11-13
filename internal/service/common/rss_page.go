@@ -224,7 +224,7 @@ const rssPageSource = `<!DOCTYPE html>
       <footer class="site-footer">
         <a href="{{.Home}}" target="_blank" rel="noopener">访问站点 →</a>
         <span class="sep">|</span>
-        Powered by Ech0
+        Powered by AXOXE
       </footer>
     </main>
   </body>

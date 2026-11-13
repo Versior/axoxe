@@ -186,7 +186,7 @@ const { t } = useI18n()
 
 const props = defineProps<{
   echo: {
-    extension?: App.Api.Ech0.EchoExtension | null
+    extension?: App.Api.AXOXE.EchoExtension | null
   }
 }>()
 

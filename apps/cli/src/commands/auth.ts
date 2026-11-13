@@ -39,7 +39,7 @@ export const DEFAULT_CLI_SCOPES = [
   "connect:delete",
   "admin:webhook",
 ];
-const DEVICE_CLIENT_NAME = "ech0-cli";
+const DEVICE_CLIENT_NAME = "axoxe-cli";
 
 interface TokenPair {
   access_token?: string;

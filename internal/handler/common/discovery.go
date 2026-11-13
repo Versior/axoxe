@@ -32,7 +32,7 @@ const (
 	agentCatalogContentType = "application/ai-catalog+json"
 
 	agentCatalogSpecVersion = "1.0"
-	defaultSiteTitle        = "Ech0"
+	defaultSiteTitle        = "AXOXE"
 
 	agentCatalogNamespace = "mcp"
 	agentCatalogServer    = "ech0"
@@ -90,11 +90,11 @@ func buildLLMsTxt(baseURL string, system settingModel.SystemSetting) string {
 	var doc strings.Builder
 	fmt.Fprintf(&doc, "# %s\n\n", title)
 	if description := singleLine(system.ServerName); description != "" && !strings.EqualFold(description, title) {
-		fmt.Fprintf(&doc, "> %s — a self-hosted microblogging platform powered by Ech0.\n\n", description)
+		fmt.Fprintf(&doc, "> %s — a self-hosted microblogging platform powered by AXOXE.\n\n", description)
 	} else {
-		doc.WriteString("> A self-hosted microblogging platform powered by Ech0.\n\n")
+		doc.WriteString("> A self-hosted microblogging platform powered by AXOXE.\n\n")
 	}
-	doc.WriteString("Ech0 is a personal publishing platform that provides content feeds, REST APIs, and " +
+	doc.WriteString("AXOXE is a personal publishing platform that provides content feeds, REST APIs, and " +
 		"Model Context Protocol (MCP) integration. Use the following resources to discover and " +
 		"interact with this instance.\n\n")
 
@@ -170,7 +170,7 @@ func buildAgentCatalog(baseURL string, system settingModel.SystemSetting) agentC
 			Type:        mcp.ServerCardMediaType,
 			URL:         base + mcp.ServerCardPath,
 			Version:     versionPkg.Version,
-			Description: "Read and write this Ech0 instance's posts, comments, files and stats " +
+			Description: "Read and write this AXOXE instance's posts, comments, files and stats " +
 				"over the Model Context Protocol.",
 			RepresentativeQueries: []string{
 				"find recent posts on this timeline",

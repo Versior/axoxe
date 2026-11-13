@@ -109,7 +109,7 @@ export function toEch0Error(status: number, envelope: Envelope<unknown> | undefi
   });
 }
 
-/** Thin JSON client for a single Ech0 instance. */
+/** Thin JSON client for a single AXOXE instance. */
 export class Client {
   readonly baseUrl: string;
 

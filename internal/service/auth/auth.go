@@ -634,7 +634,7 @@ func userIDFromHandle(handle []byte) string {
 
 func (authService *AuthService) newWebAuthn(rpID, origin string) (*webauthn.WebAuthn, error) {
 	return webauthn.New(&webauthn.Config{
-		RPDisplayName: "Ech0",
+		RPDisplayName: "AXOXE",
 		RPID:          rpID,
 		RPOrigins:     []string{origin},
 	})

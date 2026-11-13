@@ -48,12 +48,12 @@ func settingsStore(t *testing.T, raw string) kvstore.Store {
 var serverCardNamePattern = regexp.MustCompile(`^[a-zA-Z0-9.-]+/[a-zA-Z0-9._-]+$`)
 
 func TestBuildServerCard(t *testing.T) {
-	card := buildServerCard("https://blog.example.com/", "  Ech0   Blog ")
+	card := buildServerCard("https://blog.example.com/", "  AXOXE   Blog ")
 
 	assert.Equal(t, serverCardSchemaURI, card.Schema)
 	assert.Regexp(t, serverCardNamePattern, card.Name)
 	assert.Equal(t, "com.example.blog/ech0", card.Name)
-	assert.Equal(t, "Ech0 Blog", card.Title)
+	assert.Equal(t, "AXOXE Blog", card.Title)
 	assert.Equal(t, versionPkg.Version, card.Version)
 	assert.Equal(t, "https://blog.example.com/", card.WebsiteURL)
 
@@ -78,7 +78,7 @@ func TestBuildServerCard_KeepsPortInURLsButNotInName(t *testing.T) {
 
 	assert.Equal(t, "1.0.0.127/ech0", card.Name)
 	assert.Equal(t, "http://127.0.0.1:6277/mcp", card.Remotes[0].URL)
-	assert.Equal(t, "Ech0", card.Title)
+	assert.Equal(t, "AXOXE", card.Title)
 }
 
 func TestBuildServerCard_IPv6HostFallsBackToLocalhost(t *testing.T) {
@@ -111,7 +111,7 @@ func TestGetServerCard(t *testing.T) {
 	}{
 		{
 			name:       "enabled",
-			kv:         func(t *testing.T) kvstore.Store { return settingsStore(t, `{"site_title":"Ech0 Blog"}`) },
+			kv:         func(t *testing.T) kvstore.Store { return settingsStore(t, `{"site_title":"AXOXE Blog"}`) },
 			wantStatus: http.StatusOK,
 		},
 		{

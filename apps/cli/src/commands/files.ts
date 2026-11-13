@@ -12,7 +12,7 @@ const UPLOAD_STORAGE_TYPES = new Set(["local", "s3", "object"]);
 export function assertUploadStorage(value: string): void {
   if (!UPLOAD_STORAGE_TYPES.has(value)) {
     throw new UsageError(
-      `--storage-type 只支持 ${[...UPLOAD_STORAGE_TYPES].join(" / ")}；external 文件请用 \`ech0 file external --url <url>\` 注册`,
+      `--storage-type 只支持 ${[...UPLOAD_STORAGE_TYPES].join(" / ")}；external 文件请用 \`axoxe file external --url <url>\` 注册`,
     );
   }
 }

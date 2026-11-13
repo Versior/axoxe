@@ -47,9 +47,15 @@ const getServiceBaseUrl = () => {
   return baseUrl.replace(/\/+$/, '')
 }
 
-export const resolveAvatarUrl = (rawUrl?: string, fallback = '/Ech0.svg') => {
+export const resolveAvatarUrl = (rawUrl?: string, fallback = '/axoxe.svg') => {
   const value = (rawUrl || '').trim()
-  if (!value || value === 'Ech0.svg' || value === '/Ech0.svg') {
+  if (
+    !value ||
+    value === 'axoxe.svg' ||
+    value === '/axoxe.svg' ||
+    value === 'Ech0.svg' ||
+    value === '/Ech0.svg'
+  ) {
     return fallback
   }
 

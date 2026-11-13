@@ -11,7 +11,7 @@
         class="home-banner__powered"
         :aria-label="t('about.linkAriaLabel')"
       >
-        Powered by Ech0
+        {{ t('about.poweredBy') }}
       </RouterLink>
       <RouterLink
         :to="{ name: 'about' }"

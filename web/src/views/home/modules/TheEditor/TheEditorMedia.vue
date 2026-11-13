@@ -94,7 +94,7 @@ const isAudio = computed(() => mediaCategory.value === FILE_CATEGORY.AUDIO)
 const isVideo = computed(() => mediaCategory.value === FILE_CATEGORY.VIDEO)
 const isImage = computed(() => !isAudio.value && !isVideo.value)
 
-const mediaFiles = computed<App.Api.Ech0.FileObject[]>(() =>
+const mediaFiles = computed<App.Api.AXOXE.FileObject[]>(() =>
   filesToAdd.value.map((file) => ({ ...file, id: file.id ?? '', echo_id: '' })),
 )
 

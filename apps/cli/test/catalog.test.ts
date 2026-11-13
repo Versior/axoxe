@@ -101,7 +101,7 @@ afterEach(() => {
 describe("catalog fetch and cache", () => {
   test("stores the served bytes and reuses the cache", async () => {
     api = startFakeApi({ "GET /api/_catalog": () => ({ body: CATALOG }) });
-    const configPath = join(mkdtempSync(join(tmpdir(), "ech0-cli-cat-")), "config.json");
+    const configPath = join(mkdtempSync(join(tmpdir(), "axoxe-cli-cat-")), "config.json");
 
     const first = await loadCatalog({ server: api.baseUrl, configPath });
     expect(first.source).toBe("network");
@@ -119,7 +119,7 @@ describe("catalog fetch and cache", () => {
 
   test("reports an old server without the catalog endpoint", async () => {
     api = startFakeApi({});
-    const configPath = join(mkdtempSync(join(tmpdir(), "ech0-cli-old-")), "config.json");
+    const configPath = join(mkdtempSync(join(tmpdir(), "axoxe-cli-old-")), "config.json");
     await expect(loadCatalog({ server: api.baseUrl, configPath })).rejects.toBeInstanceOf(Ech0Error);
   });
 });
@@ -168,7 +168,7 @@ describe("buildRequest", () => {
 
 describe("dynamic commands", () => {
   function programWith(run: (command: Command, op: CatalogOp, values: FieldValues) => Promise<CommandOutput>) {
-    const program = new Command("ech0").option("--json", "json", false);
+    const program = new Command("axoxe").option("--json", "json", false);
     registerCatalogCommands(program, parsedCatalog(), { run });
     const override = (command: Command) => {
       command.exitOverride();
@@ -204,7 +204,7 @@ describe("dynamic commands", () => {
   });
 
   test("only the curated Echo operations are exposed", async () => {
-    const program = new Command("ech0");
+    const program = new Command("axoxe");
     const ops = { ...CATALOG.ops } as Record<string, unknown>;
     ops["file.upload"] = {
       summary: "upload",
@@ -244,7 +244,7 @@ describe("dynamic commands", () => {
   });
 
   test("a callable op also gets children without flag stealing", async () => {
-    const program = new Command("ech0");
+    const program = new Command("axoxe");
     const withNested: Catalog = {
       ops: {
         "migration.export": {
@@ -295,8 +295,8 @@ describe("dynamic commands", () => {
     const error = await program.parseAsync(["echo", "get"], { from: "user" }).catch((reason: unknown) => reason);
 
     expect(error).toBeInstanceOf(UsageError);
-    expect((error as UsageError).hint).toContain("ech0 echo get --id <id>");
-    expect((error as UsageError).hint).toContain("ech0 help echo get");
+    expect((error as UsageError).hint).toContain("axoxe echo get --id <id>");
+    expect((error as UsageError).hint).toContain("axoxe help echo get");
   });
 });
 
@@ -316,7 +316,7 @@ describe("invokeOperation", () => {
       },
     });
     api = fake;
-    const configPath = join(mkdtempSync(join(tmpdir(), "ech0-cli-412-")), "config.json");
+    const configPath = join(mkdtempSync(join(tmpdir(), "axoxe-cli-412-")), "config.json");
     let refreshes = 0;
 
     const output = await invokeOperation({
@@ -342,7 +342,7 @@ describe("invokeOperation", () => {
       "POST /api/echo": () => ({ status: 403, body: { code: 0, msg: "forbidden" } }),
     });
     api = fake;
-    const configPath = join(mkdtempSync(join(tmpdir(), "ech0-cli-403-")), "config.json");
+    const configPath = join(mkdtempSync(join(tmpdir(), "axoxe-cli-403-")), "config.json");
     let refreshes = 0;
 
     await expect(
@@ -387,7 +387,7 @@ describe("session-only catalog operations", () => {
         }),
       ),
     );
-    const program = new Command("ech0");
+    const program = new Command("axoxe");
     registerCatalogCommands(program, catalog, {
       scope: () => true,
       run: async () => ({ human: "", json: "" }),

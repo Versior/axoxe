@@ -3,7 +3,7 @@
 // Copyright (C) 2025-2026 lin-snow
 
 /**
- * Release helper for the `ech0` CLI, wrapped by `just cli bump` and
+ * Release helper for the `axoxe` CLI, wrapped by `just cli bump` and
  * `just cli release`.
  *
  *   bun run scripts/release.ts bump 0.1.4
@@ -113,7 +113,7 @@ Next steps:
   # 2. Commit the bump (plus the changelog):
        git commit -am 'chore(cli-release): v${version}'
   # 3. Tag and push:
-       git tag -a ${tag} -m 'Release ech0 CLI v${version}'
+       git tag -a ${tag} -m 'Release axoxe CLI v${version}'
        git push origin main
        git push origin ${tag}
 `);
@@ -127,7 +127,7 @@ if (branch !== "main") {
 
 run(["git", "add", "apps/cli/package.json"]);
 run(["git", "commit", "-m", `chore(cli-release): v${version}`]);
-run(["git", "tag", "-a", tag, "-m", `Release ech0 CLI v${version}`]);
+run(["git", "tag", "-a", tag, "-m", `Release axoxe CLI v${version}`]);
 info(`pushing ${branch} and ${tag}`);
 run(["git", "push", "origin", branch]);
 run(["git", "push", "origin", tag]);

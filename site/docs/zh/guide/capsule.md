@@ -20,7 +20,7 @@ description: 把内容导出成可读的胶囊，用来搬家、长期保存，�
 
 一句话：备份"整台机器"用快照，带走"我写的东西"用胶囊。
 
-两件事都不必开终端了：导出和导入胶囊在**网页面板里也能点**——面板 → 数据管理，「导出」tab 里选「胶囊」，「导入」tab 里选「Ech0 胶囊」。命令行原样保留，两条路等价，挑顺手的用。
+两件事都不必开终端了：导出和导入胶囊在**网页面板里也能点**——面板 → 数据管理，「导出」tab 里选「胶囊」，「导入」tab 里选「AXOXE 胶囊」。命令行原样保留，两条路等价，挑顺手的用。
 
 > **千万别把胶囊当备份。** 胶囊里只有内容，没有账号、密码和任何凭据。真到了要重建实例那天，它能把文章和图片还给你，却还不回"谁能登录这个站"——用户和登录方式只存在快照里。定期备份请用快照，胶囊负责搬家和归档。
 
@@ -49,7 +49,7 @@ tags:
 正文写在这里，逐字保存。
 ```
 
-即使有一天没有 Ech0 了，这些文件用任何编辑器都能打开。
+即使有一天没有 AXOXE 了，这些文件用任何编辑器都能打开。
 
 ---
 
@@ -58,10 +58,10 @@ tags:
 需要**二进制安装**（Docker 用户可 `docker exec` 进容器执行）。所有命令都在实例根目录（`data/` 所在目录）下运行。
 
 ```bash
-ech0 export capsule   [-o ./capsule] [--include-private] [--zip]
-ech0 import capsule   [<路径>=./capsule] [--include-private] [--dry-run]
-ech0 check            [<路径>=./capsule] [--fix]
-ech0 build            [<路径>=./capsule] [-o ./dist] [--base-url /]
+axoxe export capsule   [-o ./capsule] [--include-private] [--zip]
+axoxe import capsule   [<路径>=./capsule] [--include-private] [--dry-run]
+axoxe check            [<路径>=./capsule] [--fix]
+axoxe build            [<路径>=./capsule] [-o ./dist] [--base-url /]
 ```
 
 其中两条有对应的网页入口，另外两条只能在命令行跑：
@@ -69,15 +69,15 @@ ech0 build            [<路径>=./capsule] [-o ./dist] [--base-url /]
 | 命令             | 做什么         | 网页入口                               |
 | ---------------- | -------------- | -------------------------------------- |
 | `export capsule` | 把内容导成胶囊 | 有：数据管理 → 导出 → 胶囊             |
-| `import capsule` | 把胶囊导进实例 | 有：数据管理 → 导入 → Ech0 胶囊        |
+| `import capsule` | 把胶囊导进实例 | 有：数据管理 → 导入 → AXOXE 胶囊        |
 | `check`          | 校验胶囊       | 无，仅 CLI（网页导入前会自动校验一遍） |
 | `build`          | 编译成静态站   | 无，仅 CLI                             |
 
 顺带一提，快照也有了命令行入口，可以直接写进 cron：
 
 ```bash
-ech0 export snapshot  [-o ./snapshot.zip]
-ech0 import snapshot  <snapshot.zip> --yes    # 破坏性，必须显式确认
+axoxe export snapshot  [-o ./snapshot.zip]
+axoxe import snapshot  <snapshot.zip> --yes    # 破坏性，必须显式确认
 ```
 
 ---
@@ -85,7 +85,7 @@ ech0 import snapshot  <snapshot.zip> --yes    # 破坏性，必须显式确认
 ## 导出
 
 ```bash
-ech0 export capsule -o ./my-capsule
+axoxe export capsule -o ./my-capsule
 ```
 
 - 默认**排除私密 Echo**。要带走加 `--include-private`——胶囊不加密，别随手推到公开仓库。
@@ -106,8 +106,8 @@ ech0 export capsule -o ./my-capsule
 ## 校验
 
 ```bash
-ech0 check ./my-capsule
-ech0 check ./my-capsule --fix
+axoxe check ./my-capsule
+axoxe check ./my-capsule --fix
 ```
 
 分**错误**和**警告**两级：错误会让导入和构建拒绝执行，警告只是提醒。常见警告：
@@ -122,8 +122,8 @@ ech0 check ./my-capsule --fix
 ## 导入
 
 ```bash
-ech0 import capsule ./my-capsule --dry-run   # 先看清单，不写库
-ech0 import capsule ./my-capsule
+axoxe import capsule ./my-capsule --dry-run   # 先看清单，不写库
+axoxe import capsule ./my-capsule
 ```
 
 几条要点：
@@ -135,7 +135,7 @@ ech0 import capsule ./my-capsule
 
 ### 在网页上导入
 
-面板 → 数据管理 → 导入，来源选「Ech0 胶囊」，上传导出得到的 zip。同样有「包含私密内容」开关，默认关闭。进度走 **校验 → 导入 → 完成**。
+面板 → 数据管理 → 导入，来源选「AXOXE 胶囊」，上传导出得到的 zip。同样有「包含私密内容」开关，默认关闭。进度走 **校验 → 导入 → 完成**。
 
 页面上会先给你两颗定心丸，这也是胶囊导入和"快照导入"差别最大的地方：
 
@@ -150,11 +150,11 @@ ech0 import capsule ./my-capsule
 
 ```bash
 # 旧实例
-ech0 export capsule -o ./capsule --include-private
+axoxe export capsule -o ./capsule --include-private
 
 # 把 capsule/ 复制到新机器，然后在新实例上
-ech0 check ./capsule
-ech0 import capsule ./capsule --include-private
+axoxe check ./capsule
+axoxe import capsule ./capsule --include-private
 ```
 
 ---
@@ -162,22 +162,22 @@ ech0 import capsule ./capsule --include-private
 ## 编译成静态站
 
 ```bash
-ech0 build ./my-capsule -o ./dist
-ech0 build ./my-capsule -o ./dist --base-url /blog/   # 部署到子路径
+axoxe build ./my-capsule -o ./dist
+axoxe build ./my-capsule -o ./dist --base-url /blog/   # 部署到子路径
 ```
 
 产物是一个能直接扔进 GitHub Pages、Cloudflare Pages、对象存储的目录：
 
 ```text
 dist/
-  index.html  404.html  assets/…   # 完整的 Ech0 前端，界面与你的站点一模一样
+  index.html  404.html  assets/…   # 完整的 AXOXE 前端，界面与你的站点一模一样
   dataset.json                     # 烘焙好的内容数据
   api/files/…                      # 附件
-  api/connect                      # Connect 名片，别的 Ech0 实例仍可以连你
+  api/connect                      # Connect 名片，别的 AXOXE 实例仍可以连你
   rss.xml  sitemap.xml
 ```
 
-**不需要装 Node 或 pnpm**——前端已经内嵌在 `ech0` 二进制里。
+**不需要装 Node 或 pnpm**——前端已经内嵌在 `axoxe` 二进制里。
 
 静态站是**冻结展示**：点赞数和评论都按导出时的样子只读呈现，发布/回复/登录入口自动隐藏，点赞会提示当前为静态归档。互动痕迹本身就是内容史的一部分，藏掉只会让归档站显得比原站"死"。
 
@@ -193,7 +193,7 @@ dist/
 
 ## 手写与第三方胶囊
 
-胶囊格式是**公开规范**，你可以手写，也可以写转换器把别家的数据变成胶囊再导入。最小可用的一条 Echo 只需要 `id` 和 `created_at`——`id` 缺了用 `ech0 check --fix` 生成即可。时间接受任意合法 RFC3339 偏移（写 `+08:00` 也行）。
+胶囊格式是**公开规范**，你可以手写，也可以写转换器把别家的数据变成胶囊再导入。最小可用的一条 Echo 只需要 `id` 和 `created_at`——`id` 缺了用 `axoxe check --fix` 生成即可。时间接受任意合法 RFC3339 偏移（写 `+08:00` 也行）。
 
 除 `id` 与 `created_at` 外，其余字段缺省时按空值处理，导入端不会因此拒绝。
 

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2025-2026 lin-snow
 
-// Product bridge: boots Ech0's real Vue runtime (Pinia stores, vue-i18n, the product router,
+// Product bridge: boots AXOXE's real Vue runtime (Pinia stores, vue-i18n, the product router,
 // FloatingVue, global BaseDialog, full theme + UnoCSS stylesheet) once, then mounts real product
 // components into host elements that the React film engine owns. Film time is pushed in through
 // tick(t) so Vue-side shot compositions stay a pure function of the timeline.

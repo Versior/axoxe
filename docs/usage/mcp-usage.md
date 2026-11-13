@@ -1,6 +1,6 @@
-# Ech0 MCP 接入指南
+# AXOXE MCP 接入指南
 
-Ech0 内建 [MCP（Model Context Protocol）](https://modelcontextprotocol.io/) Server：在标准协议下把**帖子、标签、评论、文件、互联、资料与统计**等能力以 **Tools** 与 **Resources** 暴露给 AI 工作流。传输层为 **Streamable HTTP**（JSON-RPC 2.0 over HTTP），与主服务同端口，通过 **OAuth 2.1 授权** 或 **手工 Access Token** 获取 Bearer 凭据，并用 **Scope** 做最小权限控制。
+AXOXE 内建 [MCP（Model Context Protocol）](https://modelcontextprotocol.io/) Server：在标准协议下把**帖子、标签、评论、文件、互联、资料与统计**等能力以 **Tools** 与 **Resources** 暴露给 AI 工作流。传输层为 **Streamable HTTP**（JSON-RPC 2.0 over HTTP），与主服务同端口，通过 **OAuth 2.1 授权** 或 **手工 Access Token** 获取 Bearer 凭据，并用 **Scope** 做最小权限控制。
 
 > **Audience 要求**：MCP 端点**仅允许** Audience 为 **`mcp-remote`** 的 Access Token 访问。使用其他 audience（如 `public-client`、`cli`）的 Token 将被拒绝（HTTP 403）。
 
@@ -8,7 +8,7 @@ Ech0 内建 [MCP（Model Context Protocol）](https://modelcontextprotocol.io/) 
 
 ## 接入方式
 
-Ech0 的 MCP 端点采用 **Streamable HTTP**（JSON-RPC over HTTP），与 [MCP 规范](https://modelcontextprotocol.io/) 一致。若你的环境支持远程 MCP，并能携带 `Authorization: Bearer <token>`，将 `url` 指向本服务即可。
+AXOXE 的 MCP 端点采用 **Streamable HTTP**（JSON-RPC over HTTP），与 [MCP 规范](https://modelcontextprotocol.io/) 一致。若你的环境支持远程 MCP，并能携带 `Authorization: Bearer <token>`，将 `url` 指向本服务即可。
 
 若运行环境只支持本地 stdio 进程而非远程 HTTP，可通过网关或代理转发到本端点。
 
@@ -23,7 +23,7 @@ Ech0 的 MCP 端点采用 **Streamable HTTP**（JSON-RPC over HTTP），与 [MCP
    - `GET /.well-known/oauth-protected-resource/mcp`（或根路径）→ 授权服务器地址与 `scopes_supported`；
    - `GET /.well-known/oauth-authorization-server` → 授权/令牌/注册端点；
    - 客户端优先用 **Client ID Metadata Document**（`client_id` 是它自己的 HTTPS URL）；老客户端可能回退到 Dynamic Client Registration（规范已 deprecated，仅作兼容）。
-3. 浏览器打开 Ech0 的同意页 `https://your-ech0-instance.com/oauth/authorize`，确认客户端与 scope 后批准。**只有管理员可以批准**（与手工创建令牌的权限一致）。
+3. 浏览器打开 AXOXE 的同意页 `https://your-ech0-instance.com/oauth/authorize`，确认客户端与 scope 后批准。**只有管理员可以批准**（与手工创建令牌的权限一致）。
 4. Host 用授权码 + PKCE（S256）在 `POST /oauth/token` 换取 Access Token，之后所有 MCP 请求带 `Authorization: Bearer <token>`。
 
 协议元数据：
@@ -67,7 +67,7 @@ npx -y mcp-remote@0.16.0 http://localhost:6277/mcp 53682 --debug
 
 ### 步骤 1：创建专用 Access Token
 
-在 Ech0 管理后台 **设置 → 访问令牌** 中创建一个新 Token：
+在 AXOXE 管理后台 **设置 → 访问令牌** 中创建一个新 Token：
 
 - **Audience**：选择 `MCP (AI Agent)`（即 `mcp-remote`，MCP 专用 audience，区别于 `cli`、`integration` 等）
 - **Scopes**：根据需要勾选（建议最小权限）
@@ -177,7 +177,7 @@ npx -y mcp-remote@0.16.0 http://localhost:6277/mcp 53682 --debug
 |------|------|------|-------|
 | Tool | `list_connects` | 列出本实例已保存的对端连接 | `connect:read` |
 | Tool | `get_connects_info` | 聚合获取所有对端的公开信息（有 30 分钟缓存） | `connect:read` |
-| Tool | `add_connect` | 添加远程 Ech0 实例连接 | `connect:write` |
+| Tool | `add_connect` | 添加远程 AXOXE 实例连接 | `connect:write` |
 | Tool | `delete_connect` | 删除已保存的连接 | `connect:delete` |
 | Resource | `ech0://connect/self` | 本实例公开信息卡片（名称、URL、logo、帖子统计、版本） | `connect:read` |
 
@@ -205,7 +205,7 @@ npx -y mcp-remote@0.16.0 http://localhost:6277/mcp 53682 --debug
 
 ## 安全说明
 
-- MCP 使用与 Ech0 API 相同的 JWT 鉴权体系，每个 Tool/Resource 都有独立的 Scope 校验；OAuth 只是获取令牌的另一条路径，不改变授权判定。
+- MCP 使用与 AXOXE API 相同的 JWT 鉴权体系，每个 Tool/Resource 都有独立的 Scope 校验；OAuth 只是获取令牌的另一条路径，不改变授权判定。
 - 请求限流：默认 20 RPS / 40 Burst（按 IP）。
 - 请求体大小限制：256 KB。
 - Tool 执行超时：10 秒。
@@ -216,7 +216,7 @@ npx -y mcp-remote@0.16.0 http://localhost:6277/mcp 53682 --debug
 
 ## 协议兼容
 
-Ech0 的 `/mcp` **同时支持两代协议**，无需任何配置：
+AXOXE 的 `/mcp` **同时支持两代协议**，无需任何配置：
 
 | 客户端 | 开场方式 | 服务端行为 |
 |---|---|---|

@@ -50,7 +50,7 @@ defineProps<{ fluid?: boolean }>()
 
 const { t } = useI18n()
 
-const heatmapData = ref<App.Api.Ech0.HeatMap>([])
+const heatmapData = ref<App.Api.AXOXE.HeatMap>([])
 
 const last7Days = computed(() => {
   const all = heatmapData.value

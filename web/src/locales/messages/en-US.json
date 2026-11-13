@@ -294,7 +294,7 @@
     "initDone": "Initialization completed",
     "alreadyInitializedRedirect": "System already initialized, redirecting to login",
     "initFailed": "Initialization failed",
-    "introHeading": "Get started with Ech0",
+    "introHeading": "Get started with AXOXE",
     "introDescription": "Create the owner account, finish the basic site setup, and open your personal record space.",
     "siteTitlePlaceholder": "Site name (optional)",
     "autoLoginFailed": "Owner created. Please sign in."
@@ -318,7 +318,7 @@
   },
   "hub": {
     "emptyList": "Hub list is empty. Add Connect entries in settings first.",
-    "emptyListGuest": "No Ech0 instances connected yet — nothing to explore here for now.",
+    "emptyListGuest": "No AXOXE instances connected yet — nothing to explore here for now.",
     "noAvailableInstance": "No available Hub instances can be connected right now.",
     "connectedCount": "Connected to {count} instance(s), loading Echos...",
     "loading": "Loading...",
@@ -454,7 +454,7 @@
     "tags": "Tags"
   },
   "homeBio": {
-    "tagline": "Welcome"
+    "tagline": "Where moments stay."
   },
   "homeFooter": {},
   "homeFeed": {
@@ -493,8 +493,8 @@
   "echoDetail": {
     "share": "Share",
     "copied": "Link copied to clipboard!",
-    "shareSuffix": "Shared via Ech0",
-    "sharePanelTitle": "Share this Ech0",
+    "shareSuffix": "Shared via AXOXE",
+    "sharePanelTitle": "Share this AXOXE",
     "shareSystem": "System share",
     "shareCopyMarkdown": "Copy as Markdown",
     "shareCopyLink": "Copy link",
@@ -800,7 +800,7 @@
     "guideHeaderEventId": "Unique event id, recommended for idempotency",
     "guideHeaderTimestamp": "Unix timestamp in UTC, recommended for replay protection",
     "guideHeaderSignature": "Optional signature header in format sha256=<hex>",
-    "guideHeaderUserAgent": "Fixed value: Ech0-Webhook-Client",
+    "guideHeaderUserAgent": "Fixed value: AXOXE-Webhook-Client",
     "guideBodyTitle": "Request Body",
     "guideBodyTopic": "Event topic",
     "guideBodyEventName": "Event type name (backend event struct name)",
@@ -914,7 +914,7 @@
   },
   "migrationSetting": {
     "title": "Data Import",
-    "description": "Supports importing data from Ech0 v4, Memos, and Ech0 capsules.",
+    "description": "Supports importing data from AXOXE v4, Memos, and AXOXE capsules.",
     "inDevelopment": "In development",
     "sourceZip": "Source zip package",
     "pickZip": "Choose zip file",
@@ -953,10 +953,10 @@
     "cancelled": "Migration cancelled",
     "cleanupFailed": "Failed to cleanup migration",
     "cleaned": "Migration records cleaned",
-    "sourceEch0": "Supports importing from Ech0",
+    "sourceEch0": "Supports importing from AXOXE",
     "sourceMemos": "Supports Memos (in development)",
-    "sourceCapsuleTitle": "Ech0 Capsule",
-    "sourceCapsule": "Supports importing from Ech0 capsules",
+    "sourceCapsuleTitle": "AXOXE Capsule",
+    "sourceCapsule": "Supports importing from AXOXE capsules",
     "capsuleNote": "Appends content, de-duplicated by id, never overwrites",
     "capsuleIncludePrivate": "Include private content",
     "statusIdle": "Idle",
@@ -967,7 +967,7 @@
     "statusCancelled": "Cancelled"
   },
   "connectSetting": {
-    "description": "Connect to other Ech0 nodes for federation.",
+    "description": "Connect to other AXOXE nodes for federation.",
     "addConnect": "Create",
     "urlPlaceholder": "Enter Connect URL (with https/http)",
     "connectHint": "Only http/https URLs are supported.",
@@ -1066,11 +1066,12 @@
     "back": "back"
   },
   "about": {
-    "linkAriaLabel": "About this Ech0 instance",
+    "linkAriaLabel": "About this AXOXE instance",
     "fieldSource": "Source",
     "viewSource": "View source on GitHub",
     "viewSourceAtCommit": "View source {'@'} {commit} on GitHub",
-    "poweredBy": "Powered by Ech0"
+    "poweredBy": "Powered by AXOXE",
+    "upstreamAttribution": "Based on Ech0 by L1nSn0w and contributors"
   },
   "echoPage": {
     "loadingDetail": "Loading Echo details..."
@@ -1131,10 +1132,10 @@
     "invalidMessage": "Received invalid WebSocket message"
   },
   "copilotSetting": {
-    "title": "Ech0 Copilot"
+    "title": "AXOXE Copilot"
   },
   "mcpSetting": {
-    "description": "Connect Ech0 to an MCP-capable AI client. OAuth 2.1 discovery is supported, and access tokens remain available.",
+    "description": "Connect AXOXE to an MCP-capable AI client. OAuth 2.1 discovery is supported, and access tokens remain available.",
     "createToken": "Create access token",
     "endpointTitle": "MCP Endpoint",
     "endpointHint": "Add this address to your MCP client. OAuth-capable clients open the consent page automatically; other clients use a Bearer token.",
@@ -1156,7 +1157,7 @@
     "tokenPolicy": "Token policy",
     "tokenPolicyValue": "Access token only · no refresh token",
     "oauthServer": "Authorization server",
-    "refreshHint": "Ech0 does not issue refresh tokens. If your client requests the refresh_token grant by default, disable it before connecting.",
+    "refreshHint": "AXOXE does not issue refresh tokens. If your client requests the refresh_token grant by default, disable it before connecting.",
     "capabilitiesTitle": "Capabilities",
     "dangerLegend": "Operations in red are destructive. Clients that support elicitation get a confirmation step; others rely on the host's destructive annotation. Click any name for its required scope and full description.",
     "groupEcho": "Content",
@@ -1273,7 +1274,7 @@
   },
   "oauthConsent": {
     "title": "Authorize application",
-    "subtitle": "An application wants to access your Ech0 instance.",
+    "subtitle": "An application wants to access your AXOXE instance.",
     "client": "Client",
     "resource": "Resource",
     "approve": "Allow",

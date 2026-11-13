@@ -32,7 +32,7 @@ type ClientRepository interface {
 }
 
 // UserReader resolves the approving principal. Only administrators may mint
-// access tokens in Ech0, so the authorization server inherits that rule.
+// access tokens in AXOXE, so the authorization server inherits that rule.
 type UserReader interface {
 	GetUserByID(ctx context.Context, id string) (userModel.User, error)
 }

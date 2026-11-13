@@ -39,7 +39,7 @@ import { countWords } from '@/utils/echo'
 const { t } = useI18n()
 
 const props = defineProps<{
-  echo: App.Api.Ech0.Echo
+  echo: App.Api.AXOXE.Echo
 }>()
 
 const wordCount = computed(() => countWords(props.echo.content))

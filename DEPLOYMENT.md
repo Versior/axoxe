@@ -1,169 +1,76 @@
-# Deployment Guide
+# AXOXE deployment
 
-Detailed deployment and upgrade instructions for **Ech0**.
+AXOXE is built from this fork, based on Ech0 v5.9.8. The upstream image does not contain AXOXE branding. Existing configuration keys and data formats remain compatible; see the [brand guide](./docs/brand/README.md).
 
-For a 60-second quickstart, see the [main README](./README.md#try-in-60-seconds).
+## Build and run locally
 
-## Table of contents
-
-- [Quick Deployment](#quick-deployment)
-  - [Environment Variables](#environment-variables)
-  - [Docker (Recommended)](#docker-recommended)
-  - [Docker Compose](#docker-compose)
-  - [Script Deployment](#script-deployment)
-  - [Kubernetes (Helm)](#kubernetes-helm)
-- [Upgrading](#upgrading)
-  - [Docker](#docker)
-  - [Docker Compose](#docker-compose-1)
-  - [Kubernetes (Helm)](#kubernetes-helm-1)
-
----
-
-## Quick Deployment
-
-### Environment Variables
-
-All variables, defaults, precedence rules, and the boundary between bootstrap env and admin-panel settings are documented in
-[`docs/usage/configuration.md`](./docs/usage/configuration.md). The essentials:
-
-- **Precedence:** process env → `./.env` (working directory only, no `--env-file` flag) → built-in defaults. Changes need a restart.
-- **`JWT_SECRET` has no `ECH0_` prefix** (`ECH0_JWT_SECRET` is accepted as an alias). If unset, an ephemeral secret is generated and **every restart invalidates all issued tokens**.
-- `ECH0_SERVER_HOST` / `ECH0_SERVER_PORT` control the bind address (default all interfaces, port `6277`); `ECH0_DB_PATH` accepts any SQLite file path.
-- `ECH0_SETTING_*`, `ECH0_S3_*`, Passkey and OAuth2 redirect env vars are only **first-boot defaults** seeded into the database — once the instance is initialized, change them in the admin panel.
-
-### 🐳 Docker (Recommended)
+Requirements: Go 1.27.3+, a C compiler, Node.js 26+, and pnpm 12.14.0. SQLite and vector search use CGO.
 
 ```shell
-docker run -d \
-  --name ech0 \
+pnpm -C web install --frozen-lockfile
+pnpm -C web build
+go build -o bin/axoxe ./cmd/ech0
+./bin/axoxe serve
+```
+
+The default server port is `6277`. The Go binary embeds the built frontend from `template/dist/`; build the frontend before compiling the backend.
+
+The first registered account becomes the owner. Configure a persistent `JWT_SECRET` before running a persistent instance. A generated ephemeral secret invalidates sessions after a restart.
+
+## Docker
+
+Build the branded image from the repository root:
+
+```shell
+docker build -f docker/build.Dockerfile \
+  --build-arg TARGETOS=linux \
+  --build-arg TARGETARCH=amd64 \
+  -t axoxe:local .
+```
+
+For an ARM64 server, use `TARGETARCH=arm64`. Set `JWT_SECRET` in your shell, then run:
+
+```shell
+docker run -d --name axoxe --restart unless-stopped \
   -p 6277:6277 \
-  -v /opt/ech0/data:/app/data \
-  -e JWT_SECRET="Hello Echos" \
-  sn0wl1n/ech0:latest
+  -v /opt/axoxe/data:/app/data \
+  -e JWT_SECRET \
+  axoxe:local
 ```
 
-> 💡 After deployment, access `ip:6277`
-> 🚷 For better security, replace `Hello Echos` in `-e JWT_SECRET="Hello Echos"` with your own secret
-> 📍 The first registered account becomes administrator (currently only admins can publish)
-> 🎈 Data is stored under `/opt/ech0/data`
+`axoxe:local` is a local image name, not a claim that an AXOXE image is published to a registry.
 
-### 🐋 Docker Compose
+## Docker Compose
 
-A ready-to-use example lives at [`docker/docker-compose.yml`](./docker/docker-compose.yml). Copy it into a new directory and run:
+The [Compose example](./docker/docker-compose.yml) builds the fork and persists data in `docker/data/`.
 
 ```shell
-docker-compose up -d
+docker compose -f docker/docker-compose.yml up -d --build
 ```
 
-### 🧙 Script Deployment
+Set `JWT_SECRET` before starting. On ARM64, set `AXOXE_TARGETARCH=arm64`.
 
-```shell
-curl -fsSL "https://raw.githubusercontent.com/lin-snow/Ech0/main/scripts/ech0.sh" -o ech0.sh && bash ech0.sh
-```
+## Upgrade an existing instance
 
-> The script installs and manages Ech0 through systemd, so please run with root privileges when needed.
-> You can run `bash ech0.sh install /your/path/ech0` to customize the install path.
->
-> Already running an older `em` manager script? Refresh it once (installs the current script to `/usr/local/sbin/em`):
->
-> ```shell
-> curl -fsSL "https://raw.githubusercontent.com/lin-snow/Ech0/main/scripts/ech0.sh" | sudo bash -s -- self-update
-> ```
->
-> Afterwards `em update` keeps both the server binary and the manager script up to date.
+1. Export a snapshot and back up the current data directory. Include externally stored media when object storage is enabled.
+2. Build the AXOXE image or binary from the source version you intend to deploy.
+3. Point it at the existing data directory and retain the existing `JWT_SECRET` and authentication settings.
+4. Start the new version and verify sign-in, the timeline, media, RSS, and the About page.
 
-### ☸️ Kubernetes (Helm)
+Do not replace or rename the existing database and media directories as part of branding. SQLite migrations run during startup; keep the pre-upgrade backup for rollback. A downgrade after schema migration should restore the matching backup and binary together.
 
-If you want to deploy Ech0 in a Kubernetes cluster, use the Helm Chart provided by this project.
+Custom instance titles and saved content are retained. Change an existing instance's title in the settings panel if you want it to display AXOXE. Legacy `/Ech0.svg` and `/Ech0.png` URLs serve the new mark so saved settings continue to work.
 
-**Use the online Helm repository:**
+## Configuration and integrations
 
-1.  Add the Ech0 chart repository:
-    ```shell
-    helm repo add ech0 https://lin-snow.github.io/Ech0
-    helm repo update
-    ```
+Runtime configuration still uses `ECH0_*` keys and the existing `JWT_SECRET` alias rules. Webhook headers, capsule formats, importers, and the Go module path retain their compatibility names.
 
-2.  Install with Helm:
-    ```shell
-    # helm install <release-name> <repo-name>/<chart-name>
-    helm install ech0 ech0/ech0
-    ```
+- [Configuration reference](./docs/usage/configuration.md)
+- [Development guide](./docs/dev/development.md)
+- [Storage migration](./docs/usage/storage-migration.md)
+- [AGPL requirements](./docs/legal/agpl-compliance.md)
+- [Source code](https://github.com/Versior/Ech0)
 
-    Customize the release name and namespace if needed:
-    ```shell
-    helm install my-ech0 ech0/ech0 --namespace my-namespace --create-namespace
-    ```
+## Distribution
 
-**Local installation from source:**
-
-```shell
-git clone https://github.com/lin-snow/Ech0.git
-cd Ech0
-helm install ech0 ./charts/ech0
-```
-
----
-
-## Upgrading
-
-### 🔄 Docker
-
-```shell
-# Stop current container
-docker stop ech0
-
-# Remove container
-docker rm ech0
-
-# Pull latest image
-docker pull sn0wl1n/ech0:latest
-
-# Start new version
-docker run -d \
-  --name ech0 \
-  -p 6277:6277 \
-  -v /opt/ech0/data:/app/data \
-  -e JWT_SECRET="Hello Echos" \
-  sn0wl1n/ech0:latest
-```
-
-### 💎 Docker Compose
-
-```shell
-# Enter compose directory
-cd /path/to/compose
-
-# Pull latest image and recreate
-docker-compose pull && \
-docker-compose up -d --force-recreate
-
-# Clean old images
-docker image prune -f
-```
-
-### ☸️ Kubernetes (Helm)
-
-1. Update the Helm repository index:
-   ```shell
-   helm repo update
-   ```
-
-2. Upgrade the Helm release:
-   ```shell
-   # helm upgrade <release-name> <repo-name>/<chart-name>
-   helm upgrade ech0 ech0/ech0
-   ```
-   With a custom release name and namespace:
-   ```shell
-   helm upgrade my-ech0 ech0/ech0 --namespace my-namespace
-   ```
-
----
-
-## See also
-
-- [Storage migration guide](./docs/usage/storage-migration.md) — local ⇄ S3 storage rules and migration.
-- [Webhook usage](./docs/usage/webhook-usage.md) — webhook events and payloads.
-- [MCP usage](./docs/usage/mcp-usage.md) — Model Context Protocol integration.
-- [`CONTRIBUTING.md`](./CONTRIBUTING.md) — contributor workflow.
+The installer, Helm chart, and release automation remain available for maintainers preparing releases. They require actual release artifacts or a configured image registry. Use the source build above until an AXOXE distribution has been published.

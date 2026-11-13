@@ -3,7 +3,7 @@ title: 统一登录
 description: 第三方 OAuth、OIDC 与 Passkey 的配置与排错（新手向）
 ---
 
-「统一登录」让你不必单独给 Ech0 记一套密码：可以用 **GitHub / Google / QQ** 等账号登录，或用 **Passkey（指纹、面容、安全密钥）** 无密码登录。在管理后台进入 **系统设置 → SSO** 分别配置 **OAuth2** 与 **Passkey**；两者可同时开启，用户在登录页按需选择。
+「统一登录」让你不必单独给 AXOXE 记一套密码：可以用 **GitHub / Google / QQ** 等账号登录，或用 **Passkey（指纹、面容、安全密钥）** 无密码登录。在管理后台进入 **系统设置 → SSO** 分别配置 **OAuth2** 与 **Passkey**；两者可同时开启，用户在登录页按需选择。
 
 ---
 
@@ -21,18 +21,18 @@ description: 第三方 OAuth、OIDC 与 Passkey 的配置与排错（新手向�
 
 可以把流程想成「去银行柜台办联名卡」：
 
-1. 用户在 Ech0 点「用 GitHub 登录」。
-2. 浏览器**跳到 GitHub**，由用户在那里登录并**授权**「允许 Ech0 读取你的公开资料」之类权限。
-3. GitHub 把用户**带回**你的 Ech0 站点，并附带一次性的**授权码**。
-4. Ech0 服务器用授权码向 GitHub 换 **Token**，再拉取用户资料，在本地**创建或匹配账号**，最后让用户登录成功。
+1. 用户在 AXOXE 点「用 GitHub 登录」。
+2. 浏览器**跳到 GitHub**，由用户在那里登录并**授权**「允许 AXOXE 读取你的公开资料」之类权限。
+3. GitHub 把用户**带回**你的 AXOXE 站点，并附带一次性的**授权码**。
+4. AXOXE 服务器用授权码向 GitHub 换 **Token**，再拉取用户资料，在本地**创建或匹配账号**，最后让用户登录成功。
 
-**回调地址（Redirect URI）** 就是第 3 步里「GitHub 必须把用户送回哪里」——必须和 Ech0 里显示的地址**完全一致**（协议、域名、路径、末尾斜杠都要一致），否则就会报 **Redirect URI mismatch**。
+**回调地址（Redirect URI）** 就是第 3 步里「GitHub 必须把用户送回哪里」——必须和 AXOXE 里显示的地址**完全一致**（协议、域名、路径、末尾斜杠都要一致），否则就会报 **Redirect URI mismatch**。
 
-**OIDC** 可以理解为「OAuth 的升级版」：除了 access token，还会多一个 **id_token**（JWT），适合对接企业 IdP（如 Keycloak、Authentik）。在 Ech0 里打开 OIDC 相关选项后，会校验 Issuer、JWKS 等字段。
+**OIDC** 可以理解为「OAuth 的升级版」：除了 access token，还会多一个 **id_token**（JWT），适合对接企业 IdP（如 Keycloak、Authentik）。在 AXOXE 里打开 OIDC 相关选项后，会校验 Issuer、JWKS 等字段。
 
 ### 2. Passkey 在干什么（白话）
 
-Passkey 用**设备上的生物识别或硬件安全密钥**代替密码：浏览器和 Ech0 之间走 **WebAuthn** 标准。  
+Passkey 用**设备上的生物识别或硬件安全密钥**代替密码：浏览器和 AXOXE 之间走 **WebAuthn** 标准。\
 配置里有两个容易混淆的概念：
 
 | 配置项                        | 简单理解                                                        | 示例                       |
@@ -56,21 +56,21 @@ Passkey 用**设备上的生物识别或硬件安全密钥**代替密码：浏�
 
 ### 回调地址长什么样
 
-Ech0 使用路径（注意：**没有** `/api` 前缀）：
+AXOXE 使用路径（注意：**没有** `/api` 前缀）：
 
 ```text
 https://你的站点域名/oauth/<provider>/callback
 ```
 
-其中 `<provider>` 只能是 **`github`**、**`google`**、**`qq`** 或与模板对应的 **`custom`**（自定义/OIDC 时常用）。  
+其中 `<provider>` 只能是 **`github`**、**`google`**、**`qq`** 或与模板对应的 **`custom`**（自定义/OIDC 时常用）。\
 管理后台 **OAuth2** 页里会显示**自动生成的 Redirect URI**，请**原样复制**到第三方平台，**不要手改路径或多加斜杠**。
 
-### 在 Ech0 里要填什么
+### 在 AXOXE 里要填什么
 
 1. 在第三方平台创建 OAuth 应用，拿到 **Client ID** 和 **Client Secret**。
 2. 打开 **系统设置 → SSO → OAuth2**，启用开关，选择模板：**GitHub / Google / QQ / 自定义**。
 3. 把页面上的 **Redirect URI** 填回第三方平台。
-4. 把 **Client ID / Secret** 填进 Ech0；**Scope（权限）**按「够用即可」填写，例如：
+4. 把 **Client ID / Secret** 填进 AXOXE；**Scope（权限）**按「够用即可」填写，例如：
    - GitHub：`read:user`（读取公开资料）
    - Google：常填 `openid`、`email`、`profile`（以当前控制台要求为准）
 5. 若使用 **OIDC**（自定义 IdP），在界面中补全 **Issuer、JWKS URL** 等；保存后服务端会对 **id_token** 做校验。
@@ -92,7 +92,7 @@ https://你的站点域名/oauth/<provider>/callback
 **QQ**
 
 1. 在 [QQ 互联](https://connect.qq.com/) 创建网站应用，通过审核后获取 **APP ID / APP Key**。
-2. **回调地址**填：`https://你的域名/oauth/qq/callback`（与 Ech0 后台一致）。
+2. **回调地址**填：`https://你的域名/oauth/qq/callback`（与 AXOXE 后台一致）。
 
 **自定义 / OIDC**
 
@@ -101,7 +101,7 @@ https://你的站点域名/oauth/<provider>/callback
 
 ### 「授权回跳」与 CORS（什么时候要改）
 
-若你从**多个前端域名**访问同一套后端（例如 `https://a.com` 与 `https://b.com`），可能需要在 OAuth 高级设置里配置 **Auth Redirect Allowed Return URLs** 与 **CORS Allowed Origins**，否则登录成功后的**跳转**或**跨域请求**会被拒绝。  
+若你从**多个前端域名**访问同一套后端（例如 `https://a.com` 与 `https://b.com`），可能需要在 OAuth 高级设置里配置 **Auth Redirect Allowed Return URLs** 与 **CORS Allowed Origins**，否则登录成功后的**跳转**或**跨域请求**会被拒绝。\
 一般**单域名自建**使用默认值即可；修改后保存，并确保与反向代理、环境变量中的站点地址一致。
 
 ### 绑定到已有账号
@@ -142,7 +142,7 @@ https://你的站点域名/oauth/<provider>/callback
 
 | 报错或现象                | 处理方向                                                                          |
 | ------------------------- | --------------------------------------------------------------------------------- |
-| **Redirect URI mismatch** | 第三方填的回调与 Ech0 显示的**逐字符一致**；检查 `http`/`https`、末尾 `/`、子域名 |
+| **Redirect URI mismatch** | 第三方填的回调与 AXOXE 显示的**逐字符一致**；检查 `http`/`https`、末尾 `/`、子域名 |
 | **Invalid client**        | Client ID/Secret 复制错误，或应用未启用、未完成审核                               |
 | OAuth 能跳回但无法登录    | 检查 Scope 是否包含拉取用户信息所需权限；OIDC 时检查 Issuer/JWKS                  |
 | Passkey 无响应            | 浏览器是否支持；站点是否 HTTPS；RP ID/Origins 是否与地址栏一致                    |

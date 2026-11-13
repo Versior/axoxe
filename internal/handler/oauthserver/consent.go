@@ -108,7 +108,7 @@ func requireSession(ctx *gin.Context) (string, bool) {
 	return current.UserID(), true
 }
 
-// writeConsentError keeps the SPA on Ech0's result envelope while preserving
+// writeConsentError keeps the SPA on AXOXE's result envelope while preserving
 // the OAuth error code for diagnostics.
 func writeConsentError(ctx *gin.Context, oauthErr *oauthserverModel.Error) {
 	if oauthErr == nil {

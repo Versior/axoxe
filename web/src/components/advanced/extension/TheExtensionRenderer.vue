@@ -40,7 +40,7 @@ const TweetCard = defineAsyncComponent(() => import('./cards/TweetCard.vue'))
 
 defineProps<{
   echo: {
-    extension?: App.Api.Ech0.EchoExtension | null
+    extension?: App.Api.AXOXE.EchoExtension | null
   }
 }>()
 </script>

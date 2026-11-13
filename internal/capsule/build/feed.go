@@ -39,7 +39,7 @@ func (l links) resolve(u string) string {
 func renderAtom(ds *dataset, l links, generatedAt time.Time) (string, error) {
 	title := ds.Settings.SiteTitle
 	if title == "" {
-		title = "Ech0"
+		title = "AXOXE"
 	}
 	description := ds.Settings.ServerName
 	if description == "" {
@@ -49,7 +49,7 @@ func renderAtom(ds *dataset, l links, generatedAt time.Time) (string, error) {
 	feed := &feeds.Feed{
 		Title:       title,
 		Link:        &feeds.Link{Href: l.home},
-		Image:       &feeds.Image{Url: l.home + "Ech0.svg"},
+		Image:       &feeds.Image{Url: l.home + "axoxe.svg"},
 		Description: description,
 		Author:      &feeds.Author{Name: title},
 		Updated:     generatedAt.UTC(),

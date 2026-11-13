@@ -419,7 +419,7 @@ func TestClientIDMetadataDocument(t *testing.T) {
 	if consent.ClientName != "CIMD Client" {
 		t.Errorf("client name = %q", consent.ClientName)
 	}
-	if consent.ResourceName != "Ech0 MCP" {
+	if consent.ResourceName != "AXOXE MCP" {
 		t.Errorf("resource name = %q", consent.ResourceName)
 	}
 

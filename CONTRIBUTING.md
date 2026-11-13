@@ -1,6 +1,6 @@
-# Contributing to Ech0
+# Contributing to AXOXE
 
-Thank you for your interest in contributing to Ech0.
+Thank you for your interest in contributing to AXOXE.
 
 To keep collaboration smooth, please read this document and follow the conventions below.
 
@@ -80,4 +80,4 @@ Maintainers cutting a new release should follow the documented procedure in [`do
 
 ## License
 
-By contributing code to Ech0, you agree that your contributions are licensed under the project’s current open-source license (AGPL-3.0).
+By contributing code to AXOXE, you agree that your contributions are licensed under the project’s current open-source license (AGPL-3.0).

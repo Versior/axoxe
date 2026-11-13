@@ -150,7 +150,7 @@ func seedSourceDB(db *gorm.DB) error {
 		ID:        "ext-source-1",
 		EchoID:    echo.ID,
 		Type:      echoModel.Extension_WEBSITE,
-		Payload:   map[string]any{"title": "Ech0", "site": "https://example.com"},
+		Payload:   map[string]any{"title": "AXOXE", "site": "https://example.com"},
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
@@ -211,7 +211,7 @@ func seedSourceDB(db *gorm.DB) error {
 		return err
 	}
 
-	systemRaw, _ := json.Marshal(map[string]any{"site_title": "Ech0 v4"})
+	systemRaw, _ := json.Marshal(map[string]any{"site_title": "AXOXE v4"})
 	commentRaw, _ := json.Marshal(map[string]any{
 		"enable_comment":   true,
 		"require_approval": true,

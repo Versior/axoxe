@@ -52,7 +52,7 @@ func TestHostAndOrigin(t *testing.T) {
 	if got := Host(r); got != "ech0.app" {
 		t.Fatalf("Host() = %q", got)
 	}
-	if got := Origin(r); got != "https://ech0.app" {
+	if got := Origin(r); got != "https://www.axoxe.com" {
 		t.Fatalf("Origin() = %q", got)
 	}
 
@@ -68,8 +68,8 @@ func TestIsSameOrigin(t *testing.T) {
 		origin string
 		want   bool
 	}{
-		{"https://ech0.app", true},
-		{"https://ech0.app/", true},
+		{"https://www.axoxe.com", true},
+		{"https://www.axoxe.com/", true},
 		{"https://ECH0.APP", true},
 		{"http://ech0.app", false},
 		{"https://evil.example", false},

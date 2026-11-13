@@ -32,7 +32,7 @@ export const useEditorStore = defineStore('editorStore', () => {
   const isSubmitting = ref<boolean>(false)
   const isUpdateMode = ref<boolean>(false)
 
-  const echoToAdd = ref<App.Api.Ech0.EchoToAdd>({
+  const echoToAdd = ref<App.Api.AXOXE.EchoToAdd>({
     content: '',
     echo_files: [],
     private: false,
@@ -118,7 +118,7 @@ export const useEditorStore = defineStore('editorStore', () => {
     draft.clearLocalDraft()
   }
 
-  const handleUppyUploaded = async (uploadedFiles: App.Api.Ech0.FileToAdd[]) => {
+  const handleUppyUploaded = async (uploadedFiles: App.Api.AXOXE.FileToAdd[]) => {
     for (const file of uploadedFiles) {
       if (!file.url) {
         theToast.error(t('editor.uploadNoPreviewUrl'))
@@ -156,7 +156,7 @@ export const useEditorStore = defineStore('editorStore', () => {
     }
   }
 
-  function checkIsEmptyEcho(echo: App.Api.Ech0.EchoToAdd): boolean {
+  function checkIsEmptyEcho(echo: App.Api.AXOXE.EchoToAdd): boolean {
     return (
       !echo.content?.trim() && (!echo.echo_files || echo.echo_files.length === 0) && !echo.extension
     )

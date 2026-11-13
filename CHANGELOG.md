@@ -1,13 +1,24 @@
 # Changelog
 
-All notable user-visible changes to Ech0 are recorded here.
+> AXOXE is based on Ech0 v5.9.8. Product branding has changed; existing configuration keys and data formats remain compatible. See [brand guide](./docs/brand/README.md).
+
+
+All notable user-visible changes to AXOXE are recorded here.
 
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html), and this file follows the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
 
-For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/lin-snow/Ech0/releases) — earlier release notes are not retroactively imported here.
+For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/Versior/Ech0/releases) — earlier release notes are not retroactively imported here.
 
 
 ## [Unreleased]
+
+### Changed
+
+- Rebrand the application, documentation site, Hub, CLI help, API metadata, and Markdown documentation as AXOXE.
+- Add the approved Fraunces-based Axoxe wordmark, with matching favicon, PWA icons, and sharing cover. Existing icon URLs serve the same full-name logo for compatibility.
+- Use `axoxe` for the CLI and locally built server binary; retain the CLI's `ech0` alias and existing configuration, credential, integration, and data-format identifiers.
+- Point product source links to the AXOXE fork while preserving the upstream copyright, license, and attribution.
+- Pin frontend builds to the published pnpm 12.14.0 release; the CLI lockfile requires Bun 1.4.4 or newer.
 
 ## [5.9.8] - 2026-11-09
 
@@ -43,7 +54,7 @@ For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/
 
 ### Added
 
-- **The home timeline scrolls continuously.** `POST /api/echo/query` now accepts an optional `cursor`: omit it for the unchanged page-based mode, send `""` for the first keyset page, then echo the previous response's `nextCursor`. Page-mode responses keep the same shape and fields. Ordering now includes the Echo id in both modes, so posts sharing a `created_at` second can no longer shuffle between pages, repeat, or be skipped, and keyset continuation stays stable while new posts arrive; a full last page no longer advertises an empty next page; the static adapter behind capsule deployments applies the same direction-aware tiebreaker and resumes past a deleted cursor row. Cursor mode only supports `sort_by=created_at`, and an unreadable or overlong cursor is a `400` instead of a silent restart from the top. The web feed replaces the Older/Newer pager with a sentinel that loads more near the viewport, restores the loaded depth and scroll position on reload, patches edits/deletes in place instead of resetting to the top, and appends pages behind the shared loading indicator instead of a skeleton placeholder. The `ech0` CLI passes the same flag through (`ech0 echo list --cursor ""`), and its help, bundled skill and generated types document the empty first page.
+- **The home timeline scrolls continuously.** `POST /api/echo/query` now accepts an optional `cursor`: omit it for the unchanged page-based mode, send `""` for the first keyset page, then echo the previous response's `nextCursor`. Page-mode responses keep the same shape and fields. Ordering now includes the Echo id in both modes, so posts sharing a `created_at` second can no longer shuffle between pages, repeat, or be skipped, and keyset continuation stays stable while new posts arrive; a full last page no longer advertises an empty next page; the static adapter behind capsule deployments applies the same direction-aware tiebreaker and resumes past a deleted cursor row. Cursor mode only supports `sort_by=created_at`, and an unreadable or overlong cursor is a `400` instead of a silent restart from the top. The web feed replaces the Older/Newer pager with a sentinel that loads more near the viewport, restores the loaded depth and scroll position on reload, patches edits/deletes in place instead of resetting to the top, and appends pages behind the shared loading indicator instead of a skeleton placeholder. The `ech0` CLI passes the same flag through (`axoxe echo list --cursor ""`), and its help, bundled skill and generated types document the empty first page.
 
 ### Changed
 
@@ -116,7 +127,7 @@ For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/
 
 - **The horizontal image strip trades its drag scrollbar for a segmented slider.** A row of short pills — one per image — sits under the strip where the custom scrollbar used to be, highlights the segment matching the current scroll position, and disappears (together with the hover chevrons) when every image already fits. Segments jump to that image on click, scrub continuously on pointer drag and are reachable from the keyboard, with labels from the new `imageGallery.goToImage` key in all four locales. The dead `scrollHintText` prop and unused `imageGallery.scrollHint` key are removed.
 
-- **First-run setup and the boot splash match the paper style.** The owner-account form on `/init` is wrapped in `TheSketchFrame` with tightened spacing, its "First setup" kicker is dropped and the intro copy is reworded in every locale. The boot loader in `index.html` swaps the spinning smile for a serif "Ech0" wordmark with a letter-hop animation that is switched off under `prefers-reduced-motion`.
+- **First-run setup and the boot splash match the paper style.** The owner-account form on `/init` is wrapped in `TheSketchFrame` with tightened spacing, its "First setup" kicker is dropped and the intro copy is reworded in every locale. The boot loader in `index.html` swaps the spinning smile for a serif "AXOXE" wordmark with a letter-hop animation that is switched off under `prefers-reduced-motion`.
 
 ### Fixed
 
@@ -132,7 +143,7 @@ For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/
 
 - **Widget headers now share one type system.** The status widgets, the dashboard chart panels and the embeddable `/widget` page use a single-line 18px display title with an 18px colored icon and an optional right-aligned meta label; the serif + handwritten two-line lockup is gone, along with the unused `--font-family-handwritten` token and the duplicated header CSS in seven components. Daily Log loses its date chip and gains a colored calendar icon, and every header is 24px tall instead of 41–64px, leaving the content to carry the hierarchy.
 
-- **The Explore tab has a purposeful empty state.** A hand-drawn frame with dashed ghost list rows replaces the bare sentence, and the copy follows the visitor: guests are no longer told to add a Connect in settings — they see that no Ech0 has been connected yet, so other people's Echoes cannot be discovered — while a connected hub with nothing to show says so instead of repeating the setup hint.
+- **The Explore tab has a purposeful empty state.** A hand-drawn frame with dashed ghost list rows replaces the bare sentence, and the copy follows the visitor: guests are no longer told to add a Connect in settings — they see that no AXOXE has been connected yet, so other people's Echoes cannot be discovered — while a connected hub with nothing to show says so instead of repeating the setup hint.
 
 - **Connect lookups refresh in the background.** Cached peers render immediately and revalidate, editing a Connect drops the cached peer info, and the status tab starts the lookup before its widgets mount, so the Connect card no longer waits behind the AI summary.
 
@@ -145,16 +156,16 @@ For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/
 > **Upgrade notes.** This release changes how browser sessions and access tokens are authorized.
 >
 > * **Sign in again.** Administrator sessions issued before this release do not carry the role the admin APIs now check, so administrator actions return `403` until the session refreshes or you sign in again.
-> * **Recreate access tokens** used by scripts, `ech0` CLI profiles, integrations and MCP clients, then delete the old ones. A token keeps the scopes it was created with, so anything that moved to a new scope — deletes, admin settings, comment moderation, token management — stops working until you create a replacement. CLI users can just run `ech0 auth login` again.
+> * **Recreate access tokens** used by scripts, `ech0` CLI profiles, integrations and MCP clients, then delete the old ones. A token keeps the scopes it was created with, so anything that moved to a new scope — deletes, admin settings, comment moderation, token management — stops working until you create a replacement. CLI users can just run `axoxe auth login` again.
 > * **Reconnect MCP clients** with a token whose scopes cover the tools they call (`mcp:read` is discovery only). OAuth-capable clients can authorize from the client instead, without registration if they publish a Client ID Metadata Document.
 
 ### Added
 
-* **The CLI can inspect and moderate an instance.** `ech0 info` shows the site name, server version, Echo count, initialization and sign-in state and whether the command catalog is current, and works signed out. `ech0 comment panel list|status|delete` completes the review loop started by `ech0 comment create`, and `ech0 connect health` probes every peer. Default CLI logins now request the full command surface (`echo:private`, `echo:delete`, `comment:review`, `comment:delete`, `connect:read`, `connect:delete`, `admin:webhook`, …); `--scopes` still narrows a token. `PATCH` operations are sent as `PATCH` instead of falling back to `GET`.
+* **The CLI can inspect and moderate an instance.** `axoxe info` shows the site name, server version, Echo count, initialization and sign-in state and whether the command catalog is current, and works signed out. `axoxe comment panel list|status|delete` completes the review loop started by `axoxe comment create`, and `axoxe connect health` probes every peer. Default CLI logins now request the full command surface (`echo:private`, `echo:delete`, `comment:review`, `comment:delete`, `connect:read`, `connect:delete`, `admin:webhook`, …); `--scopes` still narrows a token. `PATCH` operations are sent as `PATCH` instead of falling back to `GET`.
 
 * **The account center shows your role.** Owner, administrator and member appear as distinct badges, so it is clear which account can approve MCP clients and manage the instance.
 
-* **Standard MCP authorization (OAuth 2.1 + CIMD).** `/mcp` now advertises RFC 9728 protected-resource metadata and implements RFC 8414 authorization-server metadata, `/oauth/authorize` consent, `/oauth/token` (PKCE S256 only) and a deprecated-but-compatible Dynamic Client Registration endpoint. Clients that publish a Client ID Metadata Document need no registration; non-loopback redirects must share the `client_id` origin, fetches stay on HTTPS and must return JSON. Ech0-branded consent screens list the requested scopes and only administrators can approve. Destructive MCP tools honour the client's `elicitation` capability through MRTR (`input_required` + nonce-bound, single-use `requestState`). `/.well-known` documents vary on the forwarded host/proto headers they derive the origin from.
+* **Standard MCP authorization (OAuth 2.1 + CIMD).** `/mcp` now advertises RFC 9728 protected-resource metadata and implements RFC 8414 authorization-server metadata, `/oauth/authorize` consent, `/oauth/token` (PKCE S256 only) and a deprecated-but-compatible Dynamic Client Registration endpoint. Clients that publish a Client ID Metadata Document need no registration; non-loopback redirects must share the `client_id` origin, fetches stay on HTTPS and must return JSON. AXOXE-branded consent screens list the requested scopes and only administrators can approve. Destructive MCP tools honour the client's `elicitation` capability through MRTR (`input_required` + nonce-bound, single-use `requestState`). `/.well-known` documents vary on the forwarded host/proto headers they derive the origin from.
 
 ### Changed
 
@@ -170,11 +181,11 @@ For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/
 
 ### Added
 
-* **The `ech0` CLI covers comments and Connect.** `ech0 comment create|list` and `ech0 connect list|info|add|delete` build from the operation catalog like the Echo and file commands. The comment/Connect surface mirrors the MCP tools — no comment moderation and no health probe — so default logins request `comment:write` and `connect:write` without `comment:moderate` or `connect:read`. `ech0 comment create` posts to the trusted integration endpoint (`POST /api/comments/integration`) instead of the guest endpoint, so it needs no anti-bot form token or captcha and works from scripts; access tokens with `audience=cli` are now accepted by that route alongside `integration` and `mcp-remote`. `ech0 connect delete` keeps the `--yes` or interactive `[y/N]` guard.
+* **The `ech0` CLI covers comments and Connect.** `axoxe comment create|list` and `axoxe connect list|info|add|delete` build from the operation catalog like the Echo and file commands. The comment/Connect surface mirrors the MCP tools — no comment moderation and no health probe — so default logins request `comment:write` and `connect:write` without `comment:moderate` or `connect:read`. `axoxe comment create` posts to the trusted integration endpoint (`POST /api/comments/integration`) instead of the guest endpoint, so it needs no anti-bot form token or captcha and works from scripts; access tokens with `audience=cli` are now accepted by that route alongside `integration` and `mcp-remote`. `axoxe connect delete` keeps the `--yes` or interactive `[y/N]` guard.
 
 * **The `ech0` CLI gains tag and webhook modules.** `ech0 tag list|delete` closes the loop on `echo list --tag-ids` (tag ids were previously only reachable through the raw API) and cleans a tag up across posts; tags are still auto-created by `echo create/update --tag`, so there is no separate `tag create`. `ech0 webhook list|create|update|delete|test` mirrors the MCP webhook tools. Webhooks currently require `admin:settings` (there is no finer webhook scope), so the default CLI login includes it; the CLI v1 target is the instance owner/admin. `WebhookDto.name`/`url` are now marked required with field docs, so the operation catalog drives the CLI's required checks and help.
 
-* **`ech0 echo` reads answer questions instead of showing bare flags.** `echo hot|today|random|onthisday` join `echo list|get`, and every CLI-visible request field now carries a concise English `doc` tag, so `ech0 echo list --help` spells out paging defaults and limits, sort fields, Unix-second bounds, tag any-of matching and the visibility filter. The catalog also labels body-filtered `POST` queries as `read`, and boolean flags are tri-state (`--private` / `--no-private`; omitting both sends no filter).
+* **`axoxe echo` reads answer questions instead of showing bare flags.** `echo hot|today|random|onthisday` join `echo list|get`, and every CLI-visible request field now carries a concise English `doc` tag, so `axoxe echo list --help` spells out paging defaults and limits, sort fields, Unix-second bounds, tag any-of matching and the visibility filter. The catalog also labels body-filtered `POST` queries as `read`, and boolean flags are tri-state (`--private` / `--no-private`; omitting both sends no filter).
 
 ### Fixed
 
@@ -188,9 +199,9 @@ For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/
 
 ### Added
 
-* **A first-party `ech0` command-line client.** `apps/cli` (Bun + TypeScript) signs in to one instance and covers Echo CRUD (`ech0 echo create|list|get|update|delete`) plus the file surface (`ech0 file upload|external|list|get|tree|download`). Sign in with a pasted access token, username/password, or `--device` browser approval; named profiles keep several instances apart, and credentials live in the system keychain with a file fallback (`ECH0_NO_KEYCHAIN=1`). Human output by default, `--json` / `--yaml` for scripts, exit codes `0`/`1`/`2` (plus `130` on Ctrl+C) and a hint on every error. The CLI has its own version line, starting at `0.1.0`, and ships as `ech0-cli-<os>-<arch>.tar.gz` + `SHA256SUMS` on GitHub Releases and as `@useech0/cli` with per-platform binaries on npm (darwin/linux × arm64/x64; Windows is unsupported). Reference: [`docs/dev/cli-design.md`](docs/dev/cli-design.md).
+* **A first-party `ech0` command-line client.** `apps/cli` (Bun + TypeScript) signs in to one instance and covers Echo CRUD (`axoxe echo create|list|get|update|delete`) plus the file surface (`axoxe file upload|external|list|get|tree|download`). Sign in with a pasted access token, username/password, or `--device` browser approval; named profiles keep several instances apart, and credentials live in the system keychain with a file fallback (`ECH0_NO_KEYCHAIN=1`). Human output by default, `--json` / `--yaml` for scripts, exit codes `0`/`1`/`2` (plus `130` on Ctrl+C) and a hint on every error. The CLI has its own version line, starting at `0.1.0`, and ships as `ech0-cli-<os>-<arch>.tar.gz` + `SHA256SUMS` on GitHub Releases and as `@axoxe/cli` with per-platform binaries on npm (darwin/linux × arm64/x64; Windows is unsupported). Reference: [`docs/dev/cli-design.md`](docs/dev/cli-design.md).
 
-* **Agent skill installer.** `ech0 install skills <dir>` writes the bundled skill (command surface, auth, Echo and operation references) into a skills root such as `~/.claude/skills`; `--from <folder>` installs a local copy instead. The same skill lives at [`skills/ech0`](skills/ech0).
+* **Agent skill installer.** `axoxe install skills <dir>` writes the bundled skill (command surface, auth, Echo and operation references) into a skills root such as `~/.claude/skills`; `--from <folder>` installs a local copy instead. The same skill lives at [`skills/axoxe`](skills/axoxe).
 
 * **Device authorization for sign-in without a browser session.** `POST /api/auth/device/code` returns a `ABCD-EFGH` code (ambiguous characters omitted) valid for 10 minutes; the CLI polls `/api/auth/device/token` every 5 seconds and gets a one-month token with `audience=cli` once approved. `GET /api/auth/device/pending` and `POST /api/auth/device/approve` back the new `/device` page, which looks the code up while you type (debounced, 4-4 grouping), shows the client name, localized scopes, a countdown and the signed-in account with switch-account — and only lets admins approve, matching the rule for minting a token in the panel. The code survives the login redirect, so signing in from the link lands back on the approval.
 
@@ -198,7 +209,7 @@ For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/
 
 * **Echo writes return the stored record.** `POST /echo` and `PUT /echo` now answer with `Result[Echo]` (id, tags, files, timestamps) instead of `null`, so clients learn the new id without a follow-up list/get. Callers that ignored the body are unaffected.
 
-* **Downloads keep the original file name.** Stored files on local, S3 and object storage now send `Content-Disposition: inline; filename=…` (RFC 5987 `filename*` for non-ASCII names, `download` when blank), so a browser "save as" and `ech0 file download` without `--output` use the name the file was uploaded with. Renderable types still preview inline.
+* **Downloads keep the original file name.** Stored files on local, S3 and object storage now send `Content-Disposition: inline; filename=…` (RFC 5987 `filename*` for non-ASCII names, `download` when blank), so a browser "save as" and `axoxe file download` without `--output` use the name the file was uploaded with. Renderable types still preview inline.
 
 ### Changed
 
@@ -224,7 +235,7 @@ For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/
 
 ### Added
 
-* **The `em` manager script updates itself.** `em self-update` (menu option 10) replaces `/usr/local/sbin/em` with the current script and refreshes the `em` / `ech0` links, and `em update` now does the same on every run, even when the server binary is already current. Installs that still run the old script need one bootstrap: `curl -fsSL https://raw.githubusercontent.com/lin-snow/Ech0/main/scripts/ech0.sh | sudo bash -s -- self-update`.
+* **The `em` manager script updates itself.** `em self-update` (menu option 10) replaces `/usr/local/sbin/em` with the current script and refreshes the `em` / `ech0` links, and `em update` now does the same on every run, even when the server binary is already current. Installs that still run the old script need one bootstrap: `curl -fsSL https://raw.githubusercontent.com/Versior/Ech0/main/scripts/ech0.sh | sudo bash -s -- self-update`.
 
 * **`em logs`, `em help`, and `em update --force`.** Logs are one command away instead of a raw `journalctl` invocation, `help` lists every action, and `--force` reinstalls the current release when a normal update skips it.
 
@@ -236,11 +247,11 @@ For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/
 
 * **`curl … | bash` no longer installs the shell as the manager.** The installer copied `/bin/bash` to `/usr/local/sbin/em` when it could not find its own script file; it now downloads the real script instead.
 
-* **Only stable Ech0 releases are selected.** Version lookup uses the latest-release endpoint and ignores pre-releases and chart tags such as `ech0-5.8.2`.
+* **Only stable AXOXE releases are selected.** Version lookup uses the latest-release endpoint and ignores pre-releases and chart tags such as `ech0-5.8.2`.
 
 * **A failed update rolls back.** The previous binary is kept as `ech0.bak` and restored automatically if the new one does not start.
 
-* **The manager's "current information" menu item works again.** It called the removed `ech0 info` command; it now runs `ech0 version`.
+* **The manager's "current information" menu item works again.** It called the removed `axoxe info` command; it now runs `axoxe version`.
 
 * **Uninstall keeps configuration together with the data.** Keeping `data/` now also keeps `.env`, and the "already installed" message points at `update` / `self-update` instead of a dead end.
 
@@ -334,7 +345,7 @@ For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/
 
 * **Go 1.27.1.** `go.mod`, the Docker builder image, CI workflows, and docs now target Go 1.27.1.
 * **Go 1.27 generic methods adopted.** Each job type is now bound to its payload at compile time through `jobModel.Kind[P]`, and `job.Manager` uses generic `Register`/`Submit`/`Get`/`Delete`/`Cancel`. `cache` is a concrete `*cache.Cache` with generic read-through methods and per-instance singleflight. Settings use `Spec[T]` methods with `Pristine()`.
-* **`pkg/app` and `pkg/egress` extracted.** The lifecycle core moved from `internal/app` to `pkg/app`, with Ech0's composition in `di.ProvideApp`, and `internal/util/egress` moved to `pkg/egress`.
+* **`pkg/app` and `pkg/egress` extracted.** The lifecycle core moved from `internal/app` to `pkg/app`, with AXOXE's composition in `di.ProvideApp`, and `internal/util/egress` moved to `pkg/egress`.
 * **Per-run token logging.** Each agent run logs its round count and its input, cached, and output token totals.
 * **Interactive architecture diagram** published at [ech0.app/arch](https://ech0.app/arch). It covers the overall request flow and the internals of `pkg/` plus the event bus, webhooks, kvstore/settings/cache, visitor, job/task, and app lifecycle.
 * **Dependencies updated.** Go: `anthropic-sdk-go` 1.75.0, `openai-go/v3` 3.66.0, `aws-sdk-go-v2` 1.47.1 (`service/s3` 1.113.4), `go-webauthn/webauthn` 0.18.2, `go-oidc/v3` 3.21.0, and the `golang.org/x/*` modules; `golang.org/x/image` is a new dependency for WebP. Web: `unocss` 66.10.5, `eslint-plugin-vue` 10.11.1, and `prettier` 3.9.9, plus in-range `pnpm update` across `web/`, `hub/`, and `site/`.
@@ -425,20 +436,20 @@ For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/
 
 ## [5.5.0] - 2026-08-02
 
-Ech0 gets a way out. **Capsules** turn everything you have written into a self-contained
+AXOXE gets a way out. **Capsules** turn everything you have written into a self-contained
 folder of markdown and media that you can read, keep, hand to another instance, or compile
 into a static site — from the dashboard or the terminal.
 
 ### Added
 
-- **Capsule: a portable, human-readable format for your content — plus a one-command static site.** Four new CLI commands ship together. `ech0 export capsule` writes your instance to a plain directory (or `--zip`): one frontmatter-markdown file per echo, a `comments.yaml` snapshot, `ech0.yaml` for site info, and the media bytes laid out exactly as they are on disk — S3-hosted files are pulled down so the capsule is always self-contained (if any byte can't be fetched the export fails loudly rather than producing a capsule with holes). `ech0 import capsule` merges one back **idempotently**: echoes are matched by id and skipped if they already exist, values land 1:1 with no conversion, and nothing is ever overwritten. `ech0 check` validates a capsule with errors/warnings and can `--fix` missing ids. `ech0 build` compiles a capsule into a static, read-only site that reuses the real Ech0 frontend — no Node or pnpm needed, the assets are embedded in the binary — ready to drop on GitHub Pages or Cloudflare Pages, with likes and comments shown frozen and read-only. The format is a published spec, so hand-writing a capsule or converting from another tool is supported. See [`docs/usage/capsule.md`](docs/usage/capsule.md).
-- **Capsules are now available from the dashboard, not just the CLI.** *Panel → Data management* gains a format choice on **Export** — *Snapshot* (the default) or *Capsule* — and a third source card on **Import**, *Ech0 Capsule*. The two formats are deliberately not presented as interchangeable: the snapshot card states that it is a full backup containing accounts and credentials and is the only format that can restore an instance, while picking Capsule surfaces a warning that it carries no accounts or credentials and cannot be used for disaster recovery, plus an opt-in *Include private content* switch (off by default). Importing a capsule is append-only and idempotent — entries are matched by id, so re-importing the same capsule creates nothing new and never wipes or overwrites what you already have — and validation runs first, refusing to write anything if the capsule has errors. Downloads always point at whatever the job actually produced, even if you flip the selector afterwards. Capsule artifacts live in `data/files/capsules/`, kept separate from snapshots so the two can't delete each other, and excluded from snapshots so backups don't swallow them. The CLI commands are unchanged; both routes drive the same engine.
-- **`ech0 export snapshot` / `ech0 import snapshot` are now available from the CLI.** The full-instance backup and restore that previously existed only as a dashboard job can now be driven from a terminal or a cron entry. Restoring is destructive and requires an explicit `--yes`.
+- **Capsule: a portable, human-readable format for your content — plus a one-command static site.** Four new CLI commands ship together. `axoxe export capsule` writes your instance to a plain directory (or `--zip`): one frontmatter-markdown file per echo, a `comments.yaml` snapshot, `ech0.yaml` for site info, and the media bytes laid out exactly as they are on disk — S3-hosted files are pulled down so the capsule is always self-contained (if any byte can't be fetched the export fails loudly rather than producing a capsule with holes). `axoxe import capsule` merges one back **idempotently**: echoes are matched by id and skipped if they already exist, values land 1:1 with no conversion, and nothing is ever overwritten. `ech0 check` validates a capsule with errors/warnings and can `--fix` missing ids. `ech0 build` compiles a capsule into a static, read-only site that reuses the real AXOXE frontend — no Node or pnpm needed, the assets are embedded in the binary — ready to drop on GitHub Pages or Cloudflare Pages, with likes and comments shown frozen and read-only. The format is a published spec, so hand-writing a capsule or converting from another tool is supported. See [`docs/usage/capsule.md`](docs/usage/capsule.md).
+- **Capsules are now available from the dashboard, not just the CLI.** *Panel → Data management* gains a format choice on **Export** — *Snapshot* (the default) or *Capsule* — and a third source card on **Import**, *AXOXE Capsule*. The two formats are deliberately not presented as interchangeable: the snapshot card states that it is a full backup containing accounts and credentials and is the only format that can restore an instance, while picking Capsule surfaces a warning that it carries no accounts or credentials and cannot be used for disaster recovery, plus an opt-in *Include private content* switch (off by default). Importing a capsule is append-only and idempotent — entries are matched by id, so re-importing the same capsule creates nothing new and never wipes or overwrites what you already have — and validation runs first, refusing to write anything if the capsule has errors. Downloads always point at whatever the job actually produced, even if you flip the selector afterwards. Capsule artifacts live in `data/files/capsules/`, kept separate from snapshots so the two can't delete each other, and excluded from snapshots so backups don't swallow them. The CLI commands are unchanged; both routes drive the same engine.
+- **`axoxe export snapshot` / `axoxe import snapshot` are now available from the CLI.** The full-instance backup and restore that previously existed only as a dashboard job can now be driven from a terminal or a cron entry. Restoring is destructive and requires an explicit `--yes`.
 - **Quick search can now filter by visibility (public / private).** The command palette (⌘K) gains a three-state **Visibility** section — *All*, *Public only*, *Private only* — shown only to logged-in admins; anonymous visitors don't see it and the timeline behaves exactly as before. An active filter shows up as a clearable chip next to the search box, like date-range and tag filters. Server-side, `POST /api/echo/query` accepts an optional `private` boolean; requests without private-content permission have it silently ignored and keep getting public-only results, so nothing can leak.
 
 ### Changed
 
-- **`ech0 version` and the other CLI result boxes were restyled.** The box used to run its heading and its numbers through one `label: value` formatter, so the leading emoji sat in the label column and pushed that row out of line with everything under it. Headings now sit on their own line and the figures below them line up in a column.
+- **`axoxe version` and the other CLI result boxes were restyled.** The box used to run its heading and its numbers through one `label: value` formatter, so the leading emoji sat in the label column and pushed that row out of line with everything under it. Headings now sit on their own line and the figures below them line up in a column.
 
 ## [5.4.7] - 2026-07-31
 
@@ -488,8 +499,8 @@ A reliability release centered on the database and on leftover-data hygiene. SQL
 ### Fixed
 
 - **Deleting an Echo no longer strands its extension row.** `DeleteEchoById` relied on the schema's `ON DELETE CASCADE` to remove the Echo's extension (website card, video link, GitHub card, …) — which never fires, because SQLite connections default to `foreign_keys=OFF` — so every deleted Echo that carried an extension silently left an orphaned `echo_extensions` row behind. The extension is now deleted explicitly alongside the Echo's files, and a one-shot idempotent migration sweeps out the orphans accumulated by older versions on next startup.
-- **Direct-link attachments abandoned in a draft no longer linger in the database forever** ([#316](https://github.com/lin-snow/Ech0/issues/316)). Uploaded files get a temp-tracking row that the periodic orphan cleanup reaps if the Echo is never published — but direct-link (external URL) attachments never got one, so removing one from a draft with the ✕ button, or closing the browser mid-draft, left its `files` row behind permanently with nothing ever cleaning it up. New external records are now temp-tracked exactly like uploads: publishing the Echo confirms them, and the periodic cleanup reaps the unconfirmed rest. (When the same URL is deduplicated onto an existing record, that record is deliberately *not* re-tracked — it may already back published Echos.)
-- **Failed attachment-blob deletions are now visible in the logs** ([#316](https://github.com/lin-snow/Ech0/issues/316)). When deleting an Echo (or a single file) removed the database record but deleting the stored blob failed, the error was silently swallowed — the blob became an invisible orphan on disk or in the bucket. Both paths now warn-log the file key and storage type, so operators can spot and reclaim leftovers.
+- **Direct-link attachments abandoned in a draft no longer linger in the database forever** ([#316](https://github.com/Versior/Ech0/issues/316)). Uploaded files get a temp-tracking row that the periodic orphan cleanup reaps if the Echo is never published — but direct-link (external URL) attachments never got one, so removing one from a draft with the ✕ button, or closing the browser mid-draft, left its `files` row behind permanently with nothing ever cleaning it up. New external records are now temp-tracked exactly like uploads: publishing the Echo confirms them, and the periodic cleanup reaps the unconfirmed rest. (When the same URL is deduplicated onto an existing record, that record is deliberately *not* re-tracked — it may already back published Echos.)
+- **Failed attachment-blob deletions are now visible in the logs** ([#316](https://github.com/Versior/Ech0/issues/316)). When deleting an Echo (or a single file) removed the database record but deleting the stored blob failed, the error was silently swallowed — the blob became an invisible orphan on disk or in the bucket. Both paths now warn-log the file key and storage type, so operators can spot and reclaim leftovers.
 
 ### Internal
 
@@ -561,7 +572,7 @@ A focused follow-up to 5.4.0's media support: the inline video player got a roun
 
 ## [5.4.0] - 2026-07-04
 
-This release turns Ech0 into a fuller media timeline — **an Echo can now carry uploaded audio or video, not just images**, each with a native in-app player. Under the hood, the logging backend was rebuilt on the standard library's `log/slog`, retiring zap.
+This release turns AXOXE into a fuller media timeline — **an Echo can now carry uploaded audio or video, not just images**, each with a native in-app player. Under the hood, the logging backend was rebuilt on the standard library's `log/slog`, retiring zap.
 
 ### Added
 
@@ -578,7 +589,7 @@ This release turns Ech0 into a fuller media timeline — **an Echo can now carry
 - **Log querying & stream-hub tests.** New `query_test.go` (missing-file handling, level / keyword filtering, entry-limit enforcement) and `streamhub_test.go` (subscribe / publish / dropped-message backpressure) cover the dashboard log viewer.
 - **Single-media-category coverage.** New backend tests (`single_category_test.go`, plus added `post_echo` / `mutate_echo` cases) verify the reject-before-transaction path; `FileService.GetFilesByIDs` batch-loads attached files' categories in one query instead of N per-file lookups.
 - **Frontend media reorganization.** The former `gallery/` tree was folded into `media/{image,audio,video}` behind a single `TheMediaPlayer` dispatcher; the editor's `Mode.Image` became `Mode.Media`, and separate `VideoLayout` / `AudioLayout` enums were split out to leave room for future layouts. The public Hub card reuses the same `TheMediaPlayer`.
-- **Housekeeping.** General code-structure refactors for readability, and `TODO.md` pruned of the retired Ech0 CLI/TUI items.
+- **Housekeeping.** General code-structure refactors for readability, and `TODO.md` pruned of the retired AXOXE CLI/TUI items.
 
 
 ## [5.3.0] - 2026-06-30
@@ -623,7 +634,7 @@ This release is anchored by two large engineering efforts — a **type-first Ope
 
 ### Changed
 
-- **About panel simplified, with a draggable logo sticker.** The About view dropped its dense field list (product subtitle and the version / commit / author / license / build rows) for a cleaner layout and gained a draggable Ech0 logo sticker that springs back to its origin on release; the "view source on GitHub" link (and its at-commit variant) is kept, and the footer line is shortened to "Powered by Ech0". i18n keys trimmed accordingly across zh-CN / en-US / ja-JP / de-DE.
+- **About panel simplified, with a draggable logo sticker.** The About view dropped its dense field list (product subtitle and the version / commit / author / license / build rows) for a cleaner layout and gained a draggable AXOXE logo sticker that springs back to its origin on release; the "view source on GitHub" link (and its at-commit variant) is kept, and the footer line is shortened to "Powered by AXOXE". i18n keys trimmed accordingly across zh-CN / en-US / ja-JP / de-DE.
 
 ### Fixed
 
@@ -656,7 +667,7 @@ This release is anchored by two large engineering efforts — a **type-first Ope
 
 ### Changed
 
-- **Music cards now use Ech0's native single-track player.** The Vue player keeps Meting API metadata resolution while replacing APlayer/MetingJS with the browser audio API, Ech0 theme tokens, synchronized lyrics, seeking, and Media Session controls. Playlist responses intentionally play only the first track and no next-track action is exposed. The APlayer/MetingJS scripts and styles are dropped from `web/public`.
+- **Music cards now use AXOXE's native single-track player.** The Vue player keeps Meting API metadata resolution while replacing APlayer/MetingJS with the browser audio API, AXOXE theme tokens, synchronized lyrics, seeking, and Media Session controls. Playlist responses intentionally play only the first track and no next-track action is exposed. The APlayer/MetingJS scripts and styles are dropped from `web/public`.
 - **The Hub timeline re-enables virtual scrolling for music posts.** Because the native music card survives list recycling (APlayer instances did not), the Hub page no longer falls back to a plain non-virtualized list when a music extension is present — `DynamicScroller` is now used unconditionally on the standalone Hub page, restoring smooth scrolling on long timelines that contain music.
 
 ### Fixed
@@ -722,9 +733,9 @@ A maintenance release with no user-visible product changes — code formatting, 
 - **Reply email notifications.** When a reply is created, the author of the parent comment is notified asynchronously (respecting the existing comment email-notification toggle). Self-replies, invalid recipient emails, and replies where the recipient is the site owner (already covered by the "new comment" notification) are silently skipped. A new `reply` mail template type is added (blue "Reply" badge).
 - **Chat question navigator (right-side ToC).** A pill-shaped navigation rail on the right edge of the chat panel. Hover to reveal the full question text; click to scroll-jump to that question with active highlighting. Shows the most recent 7 questions; auto-highlights the latest one during live streaming.
 - **Chat retry on failure / empty response.** When a streaming turn is interrupted or the model produces no text, the last turn shows a "No response this time" hint with a retry button for in-place resend — no need to retype the question.
-- **`X-Powered-By: Ech0/<version>` response header.** A new global `PoweredBy` middleware stamps every HTTP response with the project identifier.
-- **Build-output fingerprint banner.** Vite entry JS files are prefixed with a `/*! Powered by Ech0 — ... | AGPL-3.0-or-later */` copyright banner at build time.
-- **`<meta name="generator" content="Ech0">`** added to `index.html` to identify the site generator.
+- **`X-Powered-By: AXOXE/<version>` response header.** A new global `PoweredBy` middleware stamps every HTTP response with the project identifier.
+- **Build-output fingerprint banner.** Vite entry JS files are prefixed with a `/*! Powered by AXOXE — ... | AGPL-3.0-or-later */` copyright banner at build time.
+- **`<meta name="generator" content="AXOXE">`** added to `index.html` to identify the site generator.
 
 ### Changed
 
@@ -760,7 +771,7 @@ A small patch release on top of 5.0.0: an unauthenticated denial-of-service fix 
 
 ## [5.0.0] - 2026-06-04
 
-A major **architecture-consolidation** release. Most of Ech0's cross-cutting subsystems — events, settings, tasks, key-value storage, data portability, outbound HTTP, and long-running jobs — were rewritten around one shared shape: a *thin manager + typed/self-describing registry*, with dependencies pointing inward to pure-data vocabulary. The result is the same product with a much smaller, more uniform internal surface. The version is bumped to 5.0 because of the breaking changes below: the **backup → snapshot** rename (on disk, in S3, in routes, events, and settings), the webhook `event_name` derivation, and the removal of the dead-letter retry queue. Self-hosters upgrading from 4.x should read the **Breaking Changes** section before deploying.
+A major **architecture-consolidation** release. Most of AXOXE's cross-cutting subsystems — events, settings, tasks, key-value storage, data portability, outbound HTTP, and long-running jobs — were rewritten around one shared shape: a *thin manager + typed/self-describing registry*, with dependencies pointing inward to pure-data vocabulary. The result is the same product with a much smaller, more uniform internal surface. The version is bumped to 5.0 because of the breaking changes below: the **backup → snapshot** rename (on disk, in S3, in routes, events, and settings), the webhook `event_name` derivation, and the removal of the dead-letter retry queue. Self-hosters upgrading from 4.x should read the **Breaking Changes** section before deploying.
 
 ### Breaking Changes
 
@@ -842,7 +853,7 @@ A major **architecture-consolidation** release. Most of Ech0's cross-cutting sub
 
 - **Dependency bumps (Go)**: `go-patch-minor` group (6 updates).
 - **Dependency bumps (`web/`)**: `@dicebear/core` 9.4.2 → 10.0.1 (migrated to `@dicebear/styles`), plus the `web-patch-minor` group (4 updates).
-- **README**: each language's feature list now includes Ech0 Copilot (recap summaries & Chat).
+- **README**: each language's feature list now includes AXOXE Copilot (recap summaries & Chat).
 
 ## [4.9.0] - 2026-05-31
 
@@ -923,7 +934,7 @@ A major **architecture-consolidation** release. Most of Ech0's cross-cutting sub
 
 ### Added
 
-- **`AGENTS.md`** provides a compact reference for AI agents working in the Ech0 repository. Documents the project architecture, available `make` / `pnpm` commands, backend layering, Wire DI, event bus, frontend build output, and key in-repo docs.
+- **`AGENTS.md`** provides a compact reference for AI agents working in the AXOXE repository. Documents the project architecture, available `make` / `pnpm` commands, backend layering, Wire DI, event bus, frontend build output, and key in-repo docs.
 - **`justfile`** adds a `just` task runner mirroring all Makefile recipes, giving developers who prefer `just` a first-class workflow.
 
 ### Changed
@@ -941,7 +952,7 @@ A major **architecture-consolidation** release. Most of Ech0's cross-cutting sub
 ### Changed
 
 - **Hub Echo card redesign**. The card displayed in the cross-instance Hub feed has been visually rebuilt to read as a quoted post rather than a miniature timeline card:
-  - Header is now a two-segment row — avatar + instance name (with the verified badge) on the left, an Ech0 logo on the right that links directly to the source Echo page (replacing the redundant footer "jump to echo" icon).
+  - Header is now a two-segment row — avatar + instance name (with the verified badge) on the left, an AXOXE logo on the right that links directly to the source Echo page (replacing the redundant footer "jump to echo" icon).
   - The `@username` line was removed; only the instance name (`server_name`) is shown, since for hub consumers the source instance is the meaningful identity.
   - Avatar shrunk from `w-10 h-10 sm:w-12 sm:h-12` (40/48px) to `w-6 h-6 sm:w-7 sm:h-7` (24/28px).
   - Card padding tightened (`p-3.5 sm:p-4` → `p-3 sm:p-3.5`) and corner radius bumped (`rounded-sm` → `rounded-lg`).
@@ -950,7 +961,7 @@ A major **architecture-consolidation** release. Most of Ech0's cross-cutting sub
   - Body text and embedded gallery now share the card's natural padding edge — `TheImageGallery`'s internal `w-[88%] mx-auto` was overridden at the hub-card level so gallery, body, date row, and like row all align to the same vertical guides. The override is scoped via `:deep()` so the main timeline's gallery presentation is unchanged.
   - Footer simplified to a single row: date on the left, like button + count on the right, both in `text-xs` muted style; the dedicated "jump to echo" icon was removed (already covered by the header logo).
 
-- **CLI / TUI strings translated to English**. The interactive `ech0` TUI menu, all `cobra` command descriptions (`ech0`, `ech0 serve`, `ech0 backup`, `ech0 version`, `ech0 info`, `ech0 hello`), and the boxed startup / shutdown messages were emitted in Simplified Chinese only. They are now in English so non-Chinese-speaking operators can use the binary without guessing.
+- **CLI / TUI strings translated to English**. The interactive `ech0` TUI menu, all `cobra` command descriptions (`ech0`, `axoxe serve`, `ech0 backup`, `axoxe version`, `axoxe info`, `axoxe hello`), and the boxed startup / shutdown messages were emitted in Simplified Chinese only. They are now in English so non-Chinese-speaking operators can use the binary without guessing.
 
 ### Internal
 
@@ -958,7 +969,7 @@ A major **architecture-consolidation** release. Most of Ech0's cross-cutting sub
 - **`fix(workflow): add permissions for content access in i18n-guardrails`** — the i18n-guardrails GitHub Actions workflow needed `contents: read` to check out repository content under stricter default token permissions; without it the workflow could not read source files on protected branches.
 - **Dependency bumps (`web/`)**: `vue-virtual-scroller` 3.0.0 → 3.0.2, `stylelint` 17.9.1 → 17.10.0.
 - **Dependency bumps (Go)**: `github.com/caarlos0/env/v11` 11.4.0 → 11.4.1, `github.com/go-webauthn/webauthn` 0.17.0 → 0.17.2, `go.uber.org/zap` 1.27.1 → 1.28.0, `google.golang.org/genai` 1.54.0 → 1.55.0.
-- **Design assets** (`docs/design/`): added social-preview templates (1280×640 JPG/PNG) and a six-frame `Ech0_carousel/` design source for marketing/release imagery. New screenshots under `docs/imgs/` for the v4.7.0 about page, dashboard, and a no-sidebar variant. Documentation only — not shipped in the binary.
+- **Design assets** (`docs/design/`): added social-preview templates (1280×640 JPG/PNG) and a six-frame `AXOXE_carousel/` design source for marketing/release imagery. New screenshots under `docs/imgs/` for the v4.7.0 about page, dashboard, and a no-sidebar variant. Documentation only — not shipped in the binary.
 
 ## [4.7.3] - 2026-05-03
 
@@ -1053,40 +1064,40 @@ This is primarily a security release: six advisories disclosed since v4.7.2 are 
 
   Practical risk in this repo was negligible (the vulnerable code only runs at PWA build time on developer-controlled input), but the alerts are now resolved at the supply-chain level.
 
-[Unreleased]: https://github.com/lin-snow/Ech0/compare/v5.9.5...HEAD
-[5.9.5]: https://github.com/lin-snow/Ech0/compare/v5.9.4...v5.9.5
-[5.9.4]: https://github.com/lin-snow/Ech0/compare/v5.9.3...v5.9.4
-[5.9.3]: https://github.com/lin-snow/Ech0/compare/v5.9.2...v5.9.3
-[5.9.2]: https://github.com/lin-snow/Ech0/compare/v5.9.1...v5.9.2
-[5.9.1]: https://github.com/lin-snow/Ech0/compare/v5.9.0...v5.9.1
-[5.9.0]: https://github.com/lin-snow/Ech0/compare/v5.8.3...v5.9.0
-[5.8.3]: https://github.com/lin-snow/Ech0/compare/v5.8.2...v5.8.3
-[5.5.0]: https://github.com/lin-snow/Ech0/compare/v5.4.7...v5.5.0
-[5.4.7]: https://github.com/lin-snow/Ech0/compare/v5.4.6...v5.4.7
-[5.4.6]: https://github.com/lin-snow/Ech0/compare/v5.4.5...v5.4.6
-[5.4.5]: https://github.com/lin-snow/Ech0/compare/v5.4.4...v5.4.5
-[5.4.4]: https://github.com/lin-snow/Ech0/compare/v5.4.3...v5.4.4
-[5.4.3]: https://github.com/lin-snow/Ech0/compare/v5.4.2...v5.4.3
-[5.4.2]: https://github.com/lin-snow/Ech0/compare/v5.4.1...v5.4.2
-[5.4.1]: https://github.com/lin-snow/Ech0/compare/v5.4.0...v5.4.1
-[5.4.0]: https://github.com/lin-snow/Ech0/compare/v5.3.0...v5.4.0
-[5.3.0]: https://github.com/lin-snow/Ech0/compare/v5.2.5...v5.3.0
-[5.2.5]: https://github.com/lin-snow/Ech0/compare/v5.2.4...v5.2.5
-[5.2.4]: https://github.com/lin-snow/Ech0/compare/v5.2.3...v5.2.4
-[5.2.3]: https://github.com/lin-snow/Ech0/compare/v5.2.2...v5.2.3
-[5.2.2]: https://github.com/lin-snow/Ech0/compare/v5.2.1...v5.2.2
-[5.2.1]: https://github.com/lin-snow/Ech0/compare/v5.2.0...v5.2.1
-[5.2.0]: https://github.com/lin-snow/Ech0/compare/v5.1.0...v5.2.0
-[5.1.0]: https://github.com/lin-snow/Ech0/compare/v5.0.2...v5.1.0
-[5.0.2]: https://github.com/lin-snow/Ech0/compare/v5.0.0...v5.0.2
-[5.0.0]: https://github.com/lin-snow/Ech0/compare/v4.9.2...v5.0.0
-[4.9.2]: https://github.com/lin-snow/Ech0/compare/v4.9.0...v4.9.2
-[4.9.0]: https://github.com/lin-snow/Ech0/compare/v4.8.2...v4.9.0
-[4.8.2]: https://github.com/lin-snow/Ech0/compare/v4.8.1...v4.8.2
-[4.8.1]: https://github.com/lin-snow/Ech0/compare/v4.8.0...v4.8.1
-[4.8.0]: https://github.com/lin-snow/Ech0/compare/v4.7.5...v4.8.0
-[4.7.5]: https://github.com/lin-snow/Ech0/compare/v4.7.4...v4.7.5
-[4.7.4]: https://github.com/lin-snow/Ech0/compare/v4.7.3...v4.7.4
-[4.7.3]: https://github.com/lin-snow/Ech0/compare/v4.7.2...v4.7.3
-[4.7.2]: https://github.com/lin-snow/Ech0/compare/v4.7.1...v4.7.2
-[4.7.1]: https://github.com/lin-snow/Ech0/compare/v4.7.0...v4.7.1
+[Unreleased]: https://github.com/Versior/Ech0/compare/v5.9.5...HEAD
+[5.9.5]: https://github.com/Versior/Ech0/compare/v5.9.4...v5.9.5
+[5.9.4]: https://github.com/Versior/Ech0/compare/v5.9.3...v5.9.4
+[5.9.3]: https://github.com/Versior/Ech0/compare/v5.9.2...v5.9.3
+[5.9.2]: https://github.com/Versior/Ech0/compare/v5.9.1...v5.9.2
+[5.9.1]: https://github.com/Versior/Ech0/compare/v5.9.0...v5.9.1
+[5.9.0]: https://github.com/Versior/Ech0/compare/v5.8.3...v5.9.0
+[5.8.3]: https://github.com/Versior/Ech0/compare/v5.8.2...v5.8.3
+[5.5.0]: https://github.com/Versior/Ech0/compare/v5.4.7...v5.5.0
+[5.4.7]: https://github.com/Versior/Ech0/compare/v5.4.6...v5.4.7
+[5.4.6]: https://github.com/Versior/Ech0/compare/v5.4.5...v5.4.6
+[5.4.5]: https://github.com/Versior/Ech0/compare/v5.4.4...v5.4.5
+[5.4.4]: https://github.com/Versior/Ech0/compare/v5.4.3...v5.4.4
+[5.4.3]: https://github.com/Versior/Ech0/compare/v5.4.2...v5.4.3
+[5.4.2]: https://github.com/Versior/Ech0/compare/v5.4.1...v5.4.2
+[5.4.1]: https://github.com/Versior/Ech0/compare/v5.4.0...v5.4.1
+[5.4.0]: https://github.com/Versior/Ech0/compare/v5.3.0...v5.4.0
+[5.3.0]: https://github.com/Versior/Ech0/compare/v5.2.5...v5.3.0
+[5.2.5]: https://github.com/Versior/Ech0/compare/v5.2.4...v5.2.5
+[5.2.4]: https://github.com/Versior/Ech0/compare/v5.2.3...v5.2.4
+[5.2.3]: https://github.com/Versior/Ech0/compare/v5.2.2...v5.2.3
+[5.2.2]: https://github.com/Versior/Ech0/compare/v5.2.1...v5.2.2
+[5.2.1]: https://github.com/Versior/Ech0/compare/v5.2.0...v5.2.1
+[5.2.0]: https://github.com/Versior/Ech0/compare/v5.1.0...v5.2.0
+[5.1.0]: https://github.com/Versior/Ech0/compare/v5.0.2...v5.1.0
+[5.0.2]: https://github.com/Versior/Ech0/compare/v5.0.0...v5.0.2
+[5.0.0]: https://github.com/Versior/Ech0/compare/v4.9.2...v5.0.0
+[4.9.2]: https://github.com/Versior/Ech0/compare/v4.9.0...v4.9.2
+[4.9.0]: https://github.com/Versior/Ech0/compare/v4.8.2...v4.9.0
+[4.8.2]: https://github.com/Versior/Ech0/compare/v4.8.1...v4.8.2
+[4.8.1]: https://github.com/Versior/Ech0/compare/v4.8.0...v4.8.1
+[4.8.0]: https://github.com/Versior/Ech0/compare/v4.7.5...v4.8.0
+[4.7.5]: https://github.com/Versior/Ech0/compare/v4.7.4...v4.7.5
+[4.7.4]: https://github.com/Versior/Ech0/compare/v4.7.3...v4.7.4
+[4.7.3]: https://github.com/Versior/Ech0/compare/v4.7.2...v4.7.3
+[4.7.2]: https://github.com/Versior/Ech0/compare/v4.7.1...v4.7.2
+[4.7.1]: https://github.com/Versior/Ech0/compare/v4.7.0...v4.7.1

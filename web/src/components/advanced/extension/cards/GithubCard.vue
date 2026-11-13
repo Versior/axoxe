@@ -46,8 +46,8 @@ import Star from '@/components/icons/star.vue'
 import Fork from '@/components/icons/fork.vue'
 import ExtensionCardShell from '../shared/ExtensionCardShell.vue'
 
-const githubRepoCache = new Map<string, App.Api.Ech0.GithubCardData | null>()
-const githubRepoInFlight = new Map<string, Promise<App.Api.Ech0.GithubCardData | null>>()
+const githubRepoCache = new Map<string, App.Api.AXOXE.GithubCardData | null>()
+const githubRepoInFlight = new Map<string, Promise<App.Api.AXOXE.GithubCardData | null>>()
 
 const props = defineProps<{
   githubUrl?: string
@@ -58,7 +58,7 @@ const safeGithubURL = computed(() => String(props.githubUrl ?? '').trim())
 const githubUrlSegments = computed(() => safeGithubURL.value.split('/').filter(Boolean))
 const owner = computed(() => githubUrlSegments.value.slice(-2)[0] ?? '')
 const repo = computed(() => githubUrlSegments.value.slice(-2)[1] ?? '')
-const cardData = ref<App.Api.Ech0.GithubCardData>()
+const cardData = ref<App.Api.AXOXE.GithubCardData>()
 const repoKey = computed(() => `${owner.value}/${repo.value}`)
 
 const loadGithubRepo = async () => {

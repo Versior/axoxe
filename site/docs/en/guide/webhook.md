@@ -3,8 +3,8 @@ title: Webhooks
 description: What webhooks are, how to configure them, request format, signature verification, and retries (beginner-friendly)
 ---
 
-**Webhooks** can be explained in one sentence: when something happens in Ech0 (a new post, a new user signing up), your server can automatically send an **HTTP POST** request to **a URL you provide**, carrying the **event type and JSON data**.  
-That lets you connect Ech0 to **Slack, Discord, your own bots, audit systems** and more, without polling over and over asking “is there anything new?”
+**Webhooks** can be explained in one sentence: when something happens in AXOXE (a new post, a new user signing up), your server can automatically send an **HTTP POST** request to **a URL you provide**, carrying the **event type and JSON data**.\
+That lets you connect AXOXE to **Slack, Discord, your own bots, audit systems** and more, without polling over and over asking “is there anything new?”
 
 ---
 
@@ -29,12 +29,12 @@ If you prefer managing it through the API, you can do that after admin authentic
 
 ## Why you can't use an internal address as the URL
 
-To prevent **SSRF** (server-side request forgery against internal networks), Ech0 rejects obviously unsafe receiving addresses, for example:
+To prevent **SSRF** (server-side request forgery against internal networks), AXOXE rejects obviously unsafe receiving addresses, for example:
 
 - `localhost` and private IPs (such as `10.x`, `192.168.x`, `127.0.0.1`)
 - Hostnames ending in `.local`
 
-So **`http://127.0.0.1:3000` listening on your own laptop can't be entered directly**.  
+So **`http://127.0.0.1:3000` listening on your own laptop can't be entered directly**.\
 For local debugging, use a **publicly reachable tunnel domain** (a temporary HTTPS address from ngrok, Cloudflare Tunnel, and so on), and configure signature verification the same way as in production.
 
 ---
@@ -44,7 +44,7 @@ For local debugging, use a **publicly reachable tunnel domain** (a temporary HTT
 - **Success**: your server returns a **2xx** status code for the HTTP request.
 - **Failure**: network errors, timeouts, and 4xx/5xx responses all count as failures.
 
-When a delivery fails, the client **retries automatically within a short window** (for example 3 attempts in total, spaced roughly 500ms → 1s → 2s, with **a timeout of about 5 seconds per request**; the “test” action in the admin panel may use a shorter retry policy).  
+When a delivery fails, the client **retries automatically within a short window** (for example 3 attempts in total, spaced roughly 500ms → 1s → 2s, with **a timeout of about 5 seconds per request**; the “test” action in the admin panel may use a shorter retry policy).\
 If those immediate retries all fail, the delivery is recorded as failed (visible in the webhook status) and the event is **not** queued for later redelivery.
 
 **Recommendation**: return 2xx **as soon as possible** on receipt, and **push slow work into an async queue**, so you don't exceed 5 seconds and trigger repeated retries.
@@ -74,7 +74,7 @@ Note: comment- and moderation-related behavior is best understood alongside [Com
 
 - **Method**: `POST`
 - **`Content-Type`**: `application/json`
-- **`User-Agent`**: `Ech0-Webhook-Client`
+- **`User-Agent`**: `AXOXE-Webhook-Client`
 - **`X-Ech0-Event`**: the event topic (for example `echo.created`)
 - **`X-Ech0-Event-ID`**: the event ID for this delivery (a string, usable for **idempotent deduplication**)
 - **`X-Ech0-Timestamp`**: Unix timestamp (seconds, UTC)
@@ -104,7 +104,7 @@ For the complete fields and nested structures, refer to the current version and 
 
 ---
 
-## How to verify a request really came from Ech0 (signature verification)
+## How to verify a request really came from AXOXE (signature verification)
 
 If you configured a **Secret**, compute an **HMAC-SHA256** over the **raw request body bytes** (the full body before JSON parsing) using that same Secret, then compare it with **constant-time equality** against the hex string after `sha256=` in the `X-Ech0-Signature` header.
 
@@ -136,21 +136,21 @@ function verifyEch0Signature(rawBody, secret, signatureHeader) {
 
 ## Testing connectivity
 
-When you run **Test** on a webhook in the admin panel, Ech0 sends a test event of type **`webhook.test`** (to validate the URL, the certificate, and the signature chain) and updates that webhook's most recent status.  
+When you run **Test** on a webhook in the admin panel, AXOXE sends a test event of type **`webhook.test`** (to validate the URL, the certificate, and the signature chain) and updates that webhook's most recent status.\
 If you use the API, it's typically the admin endpoint `POST /api/webhook/:id/test` (see Swagger).
 
 ---
 
 ## FAQ
 
-**It always shows as failing?**  
-Check whether the receiving URL is publicly reachable, whether the TLS certificate is trusted by the client, whether you return 2xx **within 5 seconds**, whether a firewall/WAF is blocking it, and whether the verification Secret matches the one configured in Ech0.
+**It always shows as failing?**\
+Check whether the receiving URL is publicly reachable, whether the TLS certificate is trusted by the client, whether you return 2xx **within 5 seconds**, whether a firewall/WAF is blocking it, and whether the verification Secret matches the one configured in AXOXE.
 
-**A particular business event never arrives?**  
+**A particular business event never arrives?**\
 Make sure the webhook is **enabled**; make sure the event is in the **topic allowlist** above; make sure the URL isn't rejected by security policy (for example an internal address entered by mistake).
 
-**Should the receiver return 500 if its own business logic fails?**  
-Not advisable. On the webhook side, return 2xx as soon as you've **acknowledged and persisted** the event; retry downstream failures in your own queue. Otherwise Ech0 treats it as a delivery failure and triggers immediate retries.
+**Should the receiver return 500 if its own business logic fails?**\
+Not advisable. On the webhook side, return 2xx as soon as you've **acknowledged and persisted** the event; retry downstream failures in your own queue. Otherwise AXOXE treats it as a delivery failure and triggers immediate retries.
 
 ---
 

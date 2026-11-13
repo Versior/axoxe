@@ -8,22 +8,22 @@ export const HUB_SITE_ORIGIN = (
 ).replace(/\/+$/, '')
 
 const DEFAULT_DESCRIPTION =
-  'Ech0 Hub — discover and connect with the resonating voices of the web.'
+  'AXOXE Hub — discover and connect with the resonating voices of the web.'
 
 const KEYWORDS =
-  'Ech0, Ech0 Hub, microblog, timeline, self-hosted, open source, RSS, feed, aggregate, decentralized'
+  'AXOXE, AXOXE Hub, microblog, timeline, self-hosted, open source, RSS, feed, aggregate, decentralized'
 
 const ROUTES = {
   home: {
-    title: 'Ech0 Hub — where echoes meet and ideas resonate',
+    title: 'AXOXE Hub — where echoes meet and ideas resonate',
     description: DEFAULT_DESCRIPTION,
     path: '/',
     jsonLdType: 'WebSite',
   },
   explore: {
-    title: 'Explore — Ech0 Hub',
+    title: 'Explore — AXOXE Hub',
     description:
-      'Browse public Ech0 instances in one aggregated timeline — discover voices from across the web.',
+      'Browse public AXOXE instances in one aggregated timeline — discover voices from across the web.',
     path: '/explore',
     jsonLdType: 'CollectionPage',
   },
@@ -74,7 +74,7 @@ export function applyHubRouteMeta(to: RouteLocationNormalized): void {
   ensureMeta('name', 'keywords', KEYWORDS)
 
   ensureMeta('property', 'og:type', 'website')
-  ensureMeta('property', 'og:site_name', 'Ech0 Hub')
+  ensureMeta('property', 'og:site_name', 'AXOXE Hub')
   ensureMeta('property', 'og:title', cfg.title)
   ensureMeta('property', 'og:description', cfg.description)
   ensureMeta('property', 'og:url', url)
@@ -96,7 +96,7 @@ export function applyHubRouteMeta(to: RouteLocationNormalized): void {
       url,
       isPartOf: {
         '@type': 'WebSite',
-        name: 'Ech0 Hub',
+        name: 'AXOXE Hub',
         url: `${HUB_SITE_ORIGIN}/`,
       },
       image: OG_IMAGE,

@@ -3,7 +3,7 @@ title: Access tokens
 description: Long-lived credentials for scripts, the CLI, and AI clients
 ---
 
-An access token is a password you put in a request header, letting scripts, command-line tools, or AI clients call Ech0 as you without storing your login password.
+An access token is a password you put in a request header, letting scripts, command-line tools, or AI clients call AXOXE as you without storing your login password.
 
 Create them in **System settings → Access tokens**; **only administrators** can create or delete them.
 
@@ -13,7 +13,7 @@ Create them in **System settings → Access tokens**; **only administrators** ca
 
 | What you want to do                          | What to do                                                                                                                                |
 | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Use the `ech0` command line                  | Generated automatically at login; no need to create one manually, see [CLI](/docs/guide/cli)                                              |
+| Use the `axoxe` command line                  | Generated automatically at login; no need to create one manually, see [CLI](/docs/guide/cli)                                              |
 | Call the API from a script / n8n             | Create a token and choose **Public client**                                                                                               |
 | Post comments from an external system        | Create a token, set the audience to **System integration**, and check `comment:write`                                                     |
 | Connect an AI client such as Cursor / Claude | Prefer browser authorization; if unsupported, create a token with the audience **MCP (AI Agent)**, see [MCP integration](/docs/guide/mcp) |
@@ -47,7 +47,7 @@ The exact endpoints and fields are those listed at **`/swagger/index.html`** on 
 | UI name                | Internal value  | Where it is used                                                                                |
 | ---------------------- | --------------- | ----------------------------------------------------------------------------------------------- |
 | **Public client**      | `public-client` | General API calls outside the browser, small in-house tools                                     |
-| **Command line**       | `cli`           | The `ech0` CLI and scripts                                                                      |
+| **Command line**       | `cli`           | The `axoxe` CLI and scripts                                                                      |
 | **System integration** | `integration`   | Comment integration: `POST /api/comments/integration`                                           |
 | **MCP (AI Agent)**     | `mcp-remote`    | Only for connecting to `/mcp`; tokens issued by MCP browser authorization are also of this kind |
 

@@ -1,18 +1,18 @@
-# Access Token 权限粒度改造设计（Ech0）
+# Access Token 权限粒度改造设计（AXOXE）
 
-日期：2026-03-23  
-状态：已落地（scope/audience 词汇与判定在 `internal/authz`，令牌铸造在 `internal/access`，JWT 在 `internal/util/jwt`，HTTP 校验在 `internal/middleware`；本文档保留设计背景与决策记录）  
+日期：2026-03-23\
+状态：已落地（scope/audience 词汇与判定在 `internal/authz`，令牌铸造在 `internal/access`，JWT 在 `internal/util/jwt`，HTTP 校验在 `internal/middleware`；本文档保留设计背景与决策记录）\
 范围：后端鉴权与令牌管理（不含完整 OAuth2 授权服务器）
 
 ## 1. 背景与目标
 
-当前 Ech0 的 access token 与登录 JWT 基本等价，核心 claims 仅包含 `user_id` 和 `username`。这使得 token 在服务端的授权判断中会继承账号角色能力（尤其是 admin），在“不受信任客户端”场景下风险偏高。
+当前 AXOXE 的 access token 与登录 JWT 基本等价，核心 claims 仅包含 `user_id` 和 `username`。这使得 token 在服务端的授权判断中会继承账号角色能力（尤其是 admin），在“不受信任客户端”场景下风险偏高。
 
 本次改造目标：
 
 - 将 access token 从“身份票据”改为“能力票据（capability token）”。
 - 引入固定白名单 scope，实现最小权限授权（least privilege）。
-- 保持 Ech0 轻量定位，不引入完整 OAuth2 Server 复杂度。
+- 保持 AXOXE 轻量定位，不引入完整 OAuth2 Server 复杂度。
 - 旧 JWT 不兼容（含旧 access token 与旧 session token），直接失效并重新签发。
 
 非目标：
@@ -262,21 +262,21 @@ viewer 扩展约定：
 
 ## 10. 风险与应对
 
-- 风险：scope 词表过粗导致“看似细粒度，实则过权”  
+- 风险：scope 词表过粗导致“看似细粒度，实则过权”\
   应对：按信任边界拆分（`admin:*` 分域、写与删分离、私密读取独立），并用 MCP `delete_*` 工具测试和 REST 删除路由测试防止回退。
 
-- 风险：切换当日第三方集成全部失效  
+- 风险：切换当日第三方集成全部失效\
   应对：发布公告 + 版本说明 + 管理后台显式提示“先创建新 token 再升级”。
 
-- 风险：授权逻辑分散导致漏检  
+- 风险：授权逻辑分散导致漏检\
   应对：统一使用 `RequireScopes`，减少 service 内手写鉴权分支。
 
-- 风险：query token 在不受信任环境泄露  
+- 风险：query token 在不受信任环境泄露\
   应对：限制 query token 仅可用于低风险读场景，并禁用高危 scope 的 query 传递。
 
 ## 11. 结论
 
-对 Ech0 当前“个人优先、轻量自托管、支持集成”的定位，推荐采用：
+对 AXOXE 当前“个人优先、轻量自托管、支持集成”的定位，推荐采用：
 
 - 固定白名单 scope + audience + 短时效 access token；
 - 与 session token 分型管理；

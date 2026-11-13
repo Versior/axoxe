@@ -64,7 +64,7 @@ const createImage = (overrides: Record<string, unknown> = {}) =>
     width: 300,
     height: 200,
     ...overrides,
-  }) as App.Api.Ech0.FileObject
+  }) as App.Api.AXOXE.FileObject
 
 describe('TheImageGallery', () => {
   it('falls back to waterfall layout for unsupported layout values', () => {
@@ -116,11 +116,11 @@ describe('TheImageGallery', () => {
 
     const beforeChange = wrapper.findComponent(GalleryWaterfallStub)
     const markLoaded = beforeChange.props('markLoaded') as (
-      image: App.Api.Ech0.FileObject,
+      image: App.Api.AXOXE.FileObject,
       idx: number,
     ) => void
     const isLoadedBefore = beforeChange.props('isLoaded') as (
-      image: App.Api.Ech0.FileObject,
+      image: App.Api.AXOXE.FileObject,
       idx: number,
     ) => boolean
 
@@ -132,7 +132,7 @@ describe('TheImageGallery', () => {
 
     const afterChange = wrapper.findComponent(GalleryWaterfallStub)
     const isLoadedAfter = afterChange.props('isLoaded') as (
-      image: App.Api.Ech0.FileObject,
+      image: App.Api.AXOXE.FileObject,
       idx: number,
     ) => boolean
 

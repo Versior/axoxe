@@ -71,7 +71,7 @@ async function run(
     env: {
       ...base,
       ECH0_NO_KEYCHAIN: "1",
-      ECH0_CONFIG: join(mkdtempSync(join(tmpdir(), "ech0-cli-yaml-")), "config.json"),
+      ECH0_CONFIG: join(mkdtempSync(join(tmpdir(), "axoxe-cli-yaml-")), "config.json"),
       ...env,
     },
     stdout: "pipe",

@@ -3,13 +3,13 @@ title: Developer guide
 description: Clone the repo, run the backend and frontend, repository layout, and common commands
 ---
 
-This page helps you **run Ech0 from source** on your machine, so you can change code, debug the API, or contribute a PR. If all you want is a self-hosted instance, start with [Getting started](/docs/start/getting-started) and [Installation](/docs/start/installation) — there is no need to clone the whole repository.
+This page helps you **run AXOXE from source** on your machine, so you can change code, debug the API, or contribute a PR. If all you want is a self-hosted instance, start with [Getting started](/docs/start/getting-started) and [Installation](/docs/start/installation) — there is no need to clone the whole repository.
 
 ---
 
 ## What's in the repository
 
-The main Ech0 repository typically contains (as of the `main` you cloned):
+The main AXOXE repository typically contains (as of the `main` you cloned):
 
 | Path                | Description                                                                                                     |
 | ------------------- | --------------------------------------------------------------------------------------------------------------- |

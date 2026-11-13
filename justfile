@@ -29,7 +29,7 @@ run:
     ECH0_SERVER_MODE=debug ECH0_EGRESS_ALLOW_PRIVATE=true go run -ldflags "{{LDFLAGS}}" ./cmd/ech0 serve
 
 build:
-    go build -ldflags "{{LDFLAGS}}" -o ./bin/ech0 ./cmd/ech0
+    go build -ldflags "{{LDFLAGS}}" -o ./bin/axoxe ./cmd/ech0
 
 dev:
     #!/usr/bin/env bash

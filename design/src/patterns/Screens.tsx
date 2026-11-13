@@ -10,14 +10,14 @@ import { Icon } from '../components/Icon'
 import { IconButton } from '../components/IconButton'
 import { SearchField } from '../components/SearchField'
 import { Tag } from '../components/Tag'
+import { Wordmark } from '../components/Wordmark'
 
 export function SidebarPattern() {
   return (
     <section className="app-frame" aria-label="侧栏模式预览">
       <aside className="app-rail">
         <div className="rail-brand">
-          <span className="wordmark">echo</span>
-          <span className="square" aria-hidden="true" />
+          <Wordmark />
         </div>
 
         <nav className="rail-nav" aria-label="主导航">
@@ -103,7 +103,7 @@ export function MobilePattern() {
   return (
     <section className="mobile-frame" aria-label="移动端预览">
       <header className="mobile-head">
-        <span className="wordmark">echo</span>
+        <Wordmark />
         <AccountRow name={me.name} handle={me.handle} avatar={me.avatar} />
       </header>
 

@@ -5,7 +5,7 @@ import { Select } from '@base-ui/react/select'
 import { Slider } from '@base-ui/react/slider'
 import { Tabs } from '@base-ui/react/tabs'
 import chrome from './chrome.module.css'
-import { Icon } from '../lib/icons'
+import { Icon, Wordmark } from '../lib/icons'
 import { Button, Mono } from './ui'
 
 export type LayoutVariant = 'three' | 'focus'
@@ -40,7 +40,9 @@ export function DesignBar({
 }) {
   return (
     <div className={chrome.designBar} role="toolbar" aria-label="设计草图控制">
-      <span className={chrome.labName}>ECH0 6.0</span>
+      <span className={chrome.labName}>
+        <Wordmark compact /> 6.0
+      </span>
 
       <Tabs.Root value={variant} onValueChange={(value) => onVariant(value as LayoutVariant)}>
         <Tabs.List className={chrome.labTabs}>

@@ -1,6 +1,6 @@
 {
   "demo": false,
-  "product": "Ech0 — a timeline you own",
+  "product": "AXOXE — a timeline you own",
   "style": "repo",
   "width": 1920,
   "height": 1080,
@@ -673,7 +673,7 @@
         "repo:web/src/stores/editor/index.ts#L206",
         "repo:web/src/views/home/modules/TheEchos.vue"
       ],
-      "plainExplanation": "After publishing, Ech0 returns to the home timeline and the new Echo is first.",
+      "plainExplanation": "After publishing, AXOXE returns to the home timeline and the new Echo is first.",
       "component": "repo:web/src/views/home/HomeView.vue",
       "actions": [
         {
@@ -794,7 +794,7 @@
       "type": "detail",
       "headlineEn": "Echoes that\nreach people.",
       "headline": "Echoes that\nreach people.",
-      "description": "Readers follow by RSS, reply in comments, and connect their own Ech0.",
+      "description": "Readers follow by RSS, reply in comments, and connect their own AXOXE.",
       "descriptionAt": 0.4,
       "claim": true,
       "source": [
@@ -804,7 +804,7 @@
         "repo:README.md#L125",
         "repo:README.md#L107"
       ],
-      "plainExplanation": "The real Status tab: activity heatmap, Copilot recap, connected Ech0 instances and recent comments; RSS is in the header.",
+      "plainExplanation": "The real Status tab: activity heatmap, Copilot recap, connected AXOXE instances and recent comments; RSS is in the header.",
       "component": "repo:web/src/views/home/modules/HomePage.vue",
       "actions": [
         {
@@ -846,7 +846,7 @@
       "type": "detail",
       "headlineEn": "Ask your own\ntimeline.",
       "headline": "Ask your own\ntimeline.",
-      "description": "Ech0 Copilot answers from your posts, and shows which ones.",
+      "description": "AXOXE Copilot answers from your posts, and shows which ones.",
       "descriptionAt": 0.4,
       "claim": true,
       "source": [
@@ -1029,38 +1029,32 @@
       "start": 92.5,
       "end": 97.5,
       "type": "end",
-      "headlineEn": "Ech0",
-      "headline": "Ech0",
-      "description": "A timeline you own.",
+      "headlineEn": "AXOXE",
+      "headline": "AXOXE",
+      "description": "Where moments stay.",
       "descriptionAt": 0.4,
       "claim": false,
       "source": [],
-      "plainExplanation": "The four strokes of the Ech0 logo come together; the wordmark and one line are typed.",
+      "plainExplanation": "The complete approved Axoxe wordmark fades in and rises into place; the tagline and website follow.",
       "component": null,
       "actions": [
         {
           "id": "close-assemble",
           "at": 0.5,
-          "action": "dash stroke flies in",
+          "action": "full wordmark reveal",
           "soundRequired": true
         },
         {
-          "id": "close-assemble-2",
-          "at": 0.8125,
-          "action": "slash stroke flies in",
+          "id": "close-tagline",
+          "at": 2.9,
+          "action": "tagline reveal",
           "soundRequired": true
         },
         {
-          "id": "close-assemble-3",
-          "at": 1.125,
-          "action": "bar stroke flies in",
-          "soundRequired": true
-        },
-        {
-          "id": "close-type",
-          "at": 2.0,
-          "action": "wordmark typed",
-          "soundRequired": true
+          "id": "close-meta",
+          "at": 3.6,
+          "action": "website reveal",
+          "soundRequired": false
         },
         {
           "id": "close-end",

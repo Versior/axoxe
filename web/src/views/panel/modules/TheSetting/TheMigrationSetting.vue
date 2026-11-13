@@ -124,7 +124,7 @@ interface SourceCard {
 }
 
 const sourceCards = computed<SourceCard[]>(() => [
-  { value: 'ech0', title: 'Ech0', desc: String(t('migrationSetting.sourceEch0')) },
+  { value: 'ech0', title: 'AXOXE', desc: String(t('migrationSetting.sourceEch0')) },
   {
     value: 'capsule',
     title: String(t('migrationSetting.sourceCapsuleTitle')),
@@ -155,7 +155,7 @@ const statusLabelMap = computed<Record<string, string>>(() => ({
   cancelled: String(t('migrationSetting.statusCancelled')),
 }))
 const sourceLabelMap = computed<Record<string, string>>(() => ({
-  ech0: 'Ech0',
+  ech0: 'AXOXE',
   memos: 'Memos',
   capsule: String(t('migrationSetting.sourceCapsuleTitle')),
 }))

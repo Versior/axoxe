@@ -1,40 +1,29 @@
 <div align="center">
 
-<img alt="Ech0" src="./docs/imgs/logo.svg" width="150">
+<img alt="AXOXE" src="./docs/brand/axoxe-logo.svg" width="420">
 
-# Ech0
+# AXOXE
 
-[预览地址](https://memo.sn0w.fyi/) · [官网与文档](https://www.ech0.app/) · [发布页面](https://lin-snow.github.io/Ech0/) · [Ech0 Hub](https://hub.ech0.app/)
+**Where moments stay.**
 
-<a title="en-US" href="./README.md"><img src="https://img.shields.io/badge/-English-545759?style=for-the-badge" alt="English"></a> <img src="https://img.shields.io/badge/-简体中文-F54A00?style=for-the-badge" alt="简体中文"> <a title="de" href="./README.de.md"><img src="https://img.shields.io/badge/-Deutsch-545759?style=for-the-badge" alt="Deutsch"></a> <a title="ja" href="./README.ja.md"><img src="https://img.shields.io/badge/-日本語-545759?style=for-the-badge" alt="日本語"></a>
+用于记录想法、日常片刻与自我回顾的自托管空间。
 
-[![GitHub release](https://img.shields.io/github/v/release/lin-snow/Ech0?logo=github&logoColor=white&labelColor=%20%23528BFF&color=%20%23155EEF)](https://github.com/lin-snow/Ech0/releases)
-[![License](https://img.shields.io/github/license/lin-snow/Ech0?labelColor=%20%237D89B0&color=%20%235D6B98)](./LICENSE)
-[![Go Report](https://goreportcard.com/badge/github.com/lin-snow/Ech0?style=flat)](https://goreportcard.com/report/github.com/lin-snow/Ech0)
-[![Go Version](https://img.shields.io/github/go-mod/go-version/lin-snow/Ech0?logo=go&logoColor=white&labelColor=%20%235FD4EC&color=%20%2300ADD8)](./go.mod)
-[![Release Build](https://img.shields.io/github/actions/workflow/status/lin-snow/Ech0/release.yml?logo=github&logoColor=white&label=build&labelColor=%20%2332B583&color=%20%2312B76A)](https://github.com/lin-snow/Ech0/actions/workflows/release.yml)
-[![i18n](https://img.shields.io/badge/i18n-4_locales-7A5AF8?logo=googletranslate&logoColor=white&labelColor=%20%239B8AFB)](./web/src/locales/messages)
-[![Ask DeepWiki](https://img.shields.io/badge/Ask-DeepWiki-6E56CF)](https://deepwiki.com/lin-snow/Ech0)
-[![Docker Pulls](https://img.shields.io/docker/pulls/sn0wl1n/ech0?logo=docker&logoColor=white&labelColor=%20%235CADF6&color=%20%232496ED)](https://hub.docker.com/r/sn0wl1n/ech0)
-[![Docker Image Size](https://img.shields.io/docker/image-size/sn0wl1n/ech0/latest?logo=docker&logoColor=white&labelColor=%20%235CADF6&color=%20%231570EF)](https://hub.docker.com/r/sn0wl1n/ech0)
-[![Stars](https://img.shields.io/github/stars/lin-snow/Ech0?logo=github&logoColor=white&labelColor=%20%23FDB022&color=%20%23DC6803)](https://github.com/lin-snow/Ech0/stargazers)
-[![Forks](https://img.shields.io/github/forks/lin-snow/Ech0?logo=github&logoColor=white&labelColor=%20%232ED3B7&color=%20%2315B79E)](https://github.com/lin-snow/Ech0/network/members)
-[![Discussions](https://img.shields.io/github/discussions/lin-snow/Ech0?logo=github&logoColor=white&labelColor=%20%23B692F6&color=%20%239E77ED)](https://github.com/lin-snow/Ech0/discussions)
-[![Last Commit](https://img.shields.io/github/last-commit/lin-snow/Ech0?logo=github&logoColor=white&labelColor=%20%238098F9&color=%20%23444CE7)](https://github.com/lin-snow/Ech0/commits/main)
-[![Contributors](https://img.shields.io/github/contributors/lin-snow/Ech0?logo=github&logoColor=white&labelColor=%20%23FDA29B&color=%20%23F04438)](https://github.com/lin-snow/Ech0/graphs/contributors)
-[![Sponsor](https://img.shields.io/badge/sponsor-Afdian-EE46BC?logo=githubsponsors&logoColor=white&labelColor=%20%23FD8FB8)](https://afdian.com/a/l1nsn0w)
+[Website](https://www.axoxe.com/) · [Documentation](./docs/README.md) · [Source](https://github.com/Versior/Ech0) · [Brand assets](./docs/brand/README.md)
 
-<br />
+[English](./README.md) · [简体中文](./README.zh.md) · [Deutsch](./README.de.md) · [日本語](./README.ja.md)
 
-<a href="https://hellogithub.com/repository/lin-snow/Ech0" target="_blank"><img src="https://api.hellogithub.com/v1/widgets/recommend.svg?rid=8f3cafdd6ef3445dbb1c0ed6dd34c8b5&claim_uid=swhbQfnJvKS0t7I&theme=neutral" alt="Featured｜HelloGitHub" width="250" height="54" /></a>
+[AGPL-3.0-or-later](./LICENSE)
 
 </div>
+
+AXOXE 是基于 [Ech0](https://github.com/lin-snow/Ech0) v5.9.8 二次开发的独立品牌版本，保留原作者版权、许可证和上游归属。
+
 
 
 
 > 自托管个人微博客：你的时间线可以被分享、讨论，同时数据完全由你掌控。
 
-像 Memos 这样的工具非常适合快速记录想法。Ech0 更关注“记录之后”的阶段：把内容发布到个人时间线，让更多人可以持续关注和互动。
+像 Memos 这样的工具非常适合快速记录想法。AXOXE 更关注“记录之后”的阶段：把内容发布到个人时间线，让更多人可以持续关注和互动。
 你可以在自己的服务器上托管内容，保留完整控制权，同时通过可选评论与分享保持轻连接，而不是变成复杂社交平台。
 它保持轻量、易部署、完全开源。
 
@@ -49,7 +38,7 @@
 - 团队优先的协作文档平台（例如 Notion 风格）
 - 纯备忘/笔记工具，完全不需要时间线与发布
 
-![界面预览](./docs/imgs/screenshot.png)
+![AXOXE 界面预览（合成演示数据）](./docs/imgs/screenshot.png)
 
 ---
 
@@ -62,7 +51,6 @@
 - [常见问题](#常见问题)
 - [反馈与社区](#反馈与社区)
 - [开源治理与开发](#开源治理与开发)
-- [赞助与致谢](#赞助与致谢)
 - [Star 增长曲线](#star-增长曲线)
 
 </details>
@@ -72,13 +60,11 @@
 ## 1 分钟上手
 
 ```shell
-docker run -d \
-  --name ech0 \
-  -p 6277:6277 \
-  -v /opt/ech0/data:/app/data \
-  -e JWT_SECRET="Hello Echos" \
-  sn0wl1n/ech0:latest
+docker build -f docker/build.Dockerfile --build-arg TARGETOS=linux --build-arg TARGETARCH=amd64 -t axoxe:local .
+docker run -d --name axoxe -p 6277:6277 -v /opt/axoxe/data:/app/data -e JWT_SECRET axoxe:local
 ```
+
+Set a persistent `JWT_SECRET` in your shell before starting. The `axoxe:local` image is built from this source checkout; the upstream Docker image does not include AXOXE branding.
 
 然后访问 `http://ip:6277`：
 
@@ -90,13 +76,15 @@ docker run -d \
 
 ### CLI
 
-安装 `ech0` 命令行客户端（macOS / Linux，独立于服务端二进制）：
+安装 `axoxe` 命令行客户端（macOS / Linux，独立于服务端二进制）：
 
 ```shell
-npm install -g @useech0/cli
+cd apps/cli
+bun install --frozen-lockfile
+bun run src/index.ts --help
 ```
 
-也可从 [Releases](https://github.com/lin-snow/Ech0/releases) 下载 `ech0-cli-<os>-<arch>.tar.gz`。用法与命令见 [`apps/cli`](./apps/cli)。
+源码构建需要 Bun 1.4.4 或更新版本。后续 AXOXE CLI 发布资产将在 [Releases](https://github.com/Versior/Ech0/releases) 使用 `axoxe-cli-<os>-<arch>.tar.gz` 命名，目前不能假定已上传。用法与命令见 [`apps/cli`](./apps/cli)。
 
 ## 完整能力清单
 
@@ -152,7 +140,7 @@ npm install -g @useech0/cli
 - 🧰 **CLI 工具链**：提供 CLI 工具，支持自动化管理与脚本集成。
 - 🔗 **开放 API 与 Webhook**：提供完整 API 与 Webhook，便于外部系统集成和自动化工作流。
 - 🤖 **MCP（模型上下文协议）**：内建 [MCP Server](./docs/usage/mcp-usage.md)，**近乎完整覆盖**核心功能，帖子、文件与统计等能力通过 **Streamable HTTP** 以 **Tools / Resources** 交给上层 AI 工作流，**Scoped JWT** 鉴权。
-- 🧠 **Ech0 Copilot（AI 副驾）**：内建于时间线的 AI 助手——**近况总结**一键把你最近的内容凝练成精炼摘要，**Chat** 让你直接与自己的内容对话、随问随答。底层基于**向量 RAG** 检索与**流式（SSE）**输出，每个回答都扎根于*你自己的*数据。
+- 🧠 **AXOXE Copilot（AI 副驾）**：内建于时间线的 AI 助手——**近况总结**一键把你最近的内容凝练成精炼摘要，**Chat** 让你直接与自己的内容对话、随问随答。底层基于**向量 RAG** 检索与**流式（SSE）**输出，每个回答都扎根于*你自己的*数据。
 
 ### Experience
 
@@ -182,26 +170,26 @@ npm install -g @useech0/cli
 <details>
 <summary><strong>点击展开 FAQ</strong></summary>
 
-1. **Ech0 是什么？**
-   Ech0 是一款轻量级的开源自托管平台，专为快速发布与分享个人想法、文字和链接而设计。它提供简洁的界面与零干扰体验，并确保数据始终由你自己掌控。
+1. **AXOXE 是什么？**
+   AXOXE 是一款轻量级的开源自托管平台，专为快速发布与分享个人想法、文字和链接而设计。它提供简洁的界面与零干扰体验，并确保数据始终由你自己掌控。
 
-2. **Ech0 不是什么？**
-   Ech0 不是传统的笔记软件，设计之初并不是为了专业的笔记管理和记录（如 Obsidian、Notion 等），Ech0 的核心功能类似朋友圈/说说。
+2. **AXOXE 不是什么？**
+   AXOXE 不是传统的笔记软件，设计之初并不是为了专业的笔记管理和记录（如 Obsidian、Notion 等），AXOXE 的核心功能类似朋友圈/说说。
 
-3. **Ech0 是免费的吗？**
-   是的，Ech0 完全免费且开源，遵循 AGPL-3.0 协议。它没有广告、追踪、订阅或服务依赖。
+3. **AXOXE 是免费的吗？**
+   是的，AXOXE 完全免费且开源，遵循 AGPL-3.0 协议。它没有广告、追踪、订阅或服务依赖。
 
 4. **如何进行备份和导入数据？**
-   Ech0 支持通过“快照导出 / 迁移导入”进行数据迁移与恢复。部署层面建议定期备份你映射的数据目录（如 `/opt/ech0/data`）。默认情况下核心数据位于本地数据库；若启用了对象存储，媒体文件会按存储配置写入对应后端。
+   AXOXE 支持通过“快照导出 / 迁移导入”进行数据迁移与恢复。部署层面建议定期备份你映射的数据目录（如 `/opt/axoxe/data`）。默认情况下核心数据位于本地数据库；若启用了对象存储，媒体文件会按存储配置写入对应后端。
 
-5. **Ech0 支持 RSS 吗？**
-   是的，Ech0 支持 RSS 订阅，您可以通过 RSS 阅读器订阅您的内容更新。
+5. **AXOXE 支持 RSS 吗？**
+   是的，AXOXE 支持 RSS 订阅，您可以通过 RSS 阅读器订阅您的内容更新。
 
 6. **为什么发布失败，提示联系管理员？**
    当前版本下，发布权限默认受限于高权限账号。初始化时创建的首个账号为 Owner（同时具备管理权限），普通用户默认不能发布，需要由高权限用户按实际策略授权。若是首次部署，请先对照 [1 分钟上手](#1-分钟上手) 确认首个账号是否为 Owner。
 
 7. **为什么没有明确的权限划分？**
-   Ech0 当前采用轻量权限模型（Owner / Admin / 普通用户），目标是降低管理复杂度并保持日常使用流畅。后续会根据社区反馈持续迭代。
+   AXOXE 当前采用轻量权限模型（Owner / Admin / 普通用户），目标是降低管理复杂度并保持日常使用流畅。后续会根据社区反馈持续迭代。
 
 8. **为什么别人无法显示自己的 Connect 头像？**
    要使别人显示自己的 Connect 头像需要在 `系统设置-服务地址` 中填入自己当前的实例地址，比如 `https://memo.sn0w.fyi/`（注意：这里填的链接需要带上 http 或 https）。
@@ -222,10 +210,10 @@ npm install -g @useech0/cli
       在 `SSO - Passkey` 页面先配置 `WebAuthn RP ID` 与 `WebAuthn Origins`，保存并显示“Passkey 就绪”后，再按浏览器提示绑定你常用的生物识别或安全密钥设备即可使用。
 
 14. **关于第三方集成平台的官方声明**
-      未经 Ech0 官方授权的第三方集成平台或服务，不属于官方支持范围。因使用此类平台或服务导致的安全事件、数据丢失、账号异常或其他风险与损失，由使用方及第三方自行承担，官方不承担相关责任。
+      未经 AXOXE 官方授权的第三方集成平台或服务，不属于官方支持范围。因使用此类平台或服务导致的安全事件、数据丢失、账号异常或其他风险与损失，由使用方及第三方自行承担，官方不承担相关责任。
 
 15. **如何通过第三方集成（AI / 自动化）发布评论？**
-      Ech0 提供专用集成评论接口 `POST /api/comments/integration`，无需通过验证码或表单 token。使用前需在「访问令牌」管理中创建一个包含 `comment:write` scope 和 `integration` audience 的 access token，并在请求头中附带 `Authorization: Bearer <token>`。请求体字段与响应说明请以你部署实例上的 OpenAPI 文档为准：在浏览器打开 `/swagger/index.html`（本地开发一般为 `http://localhost:6277/swagger/index.html`）。该接口具有独立的频控策略，评论来源会标记为 `integration`，可在后台评论管理中识别。
+      AXOXE 提供专用集成评论接口 `POST /api/comments/integration`，无需通过验证码或表单 token。使用前需在「访问令牌」管理中创建一个包含 `comment:write` scope 和 `integration` audience 的 access token，并在请求头中附带 `Authorization: Bearer <token>`。请求体字段与响应说明请以你部署实例上的 OpenAPI 文档为准：在浏览器打开 `/swagger/index.html`（本地开发一般为 `http://localhost:6277/swagger/index.html`）。该接口具有独立的频控策略，评论来源会标记为 `integration`，可在后台评论管理中识别。
 
 16. **想详细了解本地与对象存储的数据布局、`key` 映射规则，以及更换 S3 或本地 ⇄ 对象互迁时要注意什么？**
       请参阅仓库内文档：[存储迁移指南](./docs/usage/storage-migration.md)。文中说明扁平 `key` 与 `schema.Resolve`、`PathPrefix`、入库 `url` 快照的含义，前台 `/api/files` 静态访问与 `stream` 接口的差异，以及更换 S3 服务商与本地存储和对象存储之间迁移的操作要点与注意事项。
@@ -236,13 +224,13 @@ npm install -g @useech0/cli
 
 ## 反馈与社区
 
-- 若程序出现 bug，可在 [Issues](https://github.com/lin-snow/Ech0/issues) 中反馈。
-- 针对新增或改进的需求，欢迎前往 [Discussions](https://github.com/lin-snow/Ech0/discussions) 一起交流。
+- 若程序出现 bug，可在 [Issues](https://github.com/Versior/Ech0/issues) 中反馈。
+- 针对新增或改进的需求，欢迎前往 [Discussions](https://github.com/Versior/Ech0/discussions) 一起交流。
 - 官方 QQ 群号：`1065435773`
 
-### 加入 Ech0 Hub
+### 加入上游 Hub
 
-[Ech0 Hub](https://hub.ech0.app/) 会聚合已登记的公开实例时间线。如果希望**自己的公开实例**出现在 Hub 列表中，详细的登记步骤请参见 [`hub/README.md`](./hub/README.md)。
+[Upstream Hub](https://hub.ech0.app/) 会聚合已登记的公开实例时间线。如果希望**自己的公开实例**出现在 Hub 列表中，详细的登记步骤请参见 [`hub/README.md`](./hub/README.md)。
 
 | 官方 QQ 交流群                                                  | 其它交流群 |
 | --------------------------------------------------------------- | ---------- |
@@ -262,38 +250,10 @@ npm install -g @useech0/cli
 
 **开发**
 
-本地开发环境、依赖安装与前后端联调说明请见 **[docs/dev/development.md](./docs/dev/development.md)**。更高层的项目架构与代码规范请参考 [`AGENTS.md`](./AGENTS.md) 与 [`CONTRIBUTING.md`](./CONTRIBUTING.md)。交互式架构图见 **[ech0.app/arch](https://www.ech0.app/arch)**。
+本地开发环境、依赖安装与前后端联调说明请见 **[docs/dev/development.md](./docs/dev/development.md)**。更高层的项目架构与代码规范请参考 [`AGENTS.md`](./AGENTS.md) 与 [`CONTRIBUTING.md`](./CONTRIBUTING.md)。交互式架构图见 **[Architecture](./site/public/arch/index.html)**。
 
 ---
 
-## 赞助与致谢
+## Acknowledgements
 
-🌟 如果你觉得 **Ech0** 不错，欢迎为项目点个 Star！🚀
-
-**Ech0** 完全开源且免费，持续维护和优化离不开大家的支持。如果这个项目对你有所帮助，欢迎通过赞助支持项目的持续发展。你可以扫描下方二维码进行赞助，并在备注中附上你的 GitHub 名称，我们会将你的贡献展示在 [赞助墙](./SPONSOR.md) 上。
-
-|                  支持平台                  |                         二维码                         |
-| :----------------------------------------: | :----------------------------------------------------: |
-| [**爱发电**](https://afdian.com/a/l1nsn0w) | <img src="./docs/imgs/pay.jpeg" alt="Pay" width="200"> |
-
-衷心感谢每一位赞助者、贡献者与用户 — 完整赞助名单见 [SPONSOR.md](./SPONSOR.md)。
-
-特别感谢 [LinuxDO](https://linux.do/) 社区的认可与支持。
-
-[![Contributors](https://contrib.rocks/image?repo=lin-snow/Ech0)](https://contrib.rocks/image?repo=lin-snow/Ech0)
-
-![Repobeats analytics image](https://repobeats.axiom.co/api/embed/d69b9177e4a121e31aaed95354ff862c928ca22d.svg "Repobeats analytics image")
-
----
-
-
-```cpp
-
-███████╗     ██████╗    ██╗  ██╗     ██████╗
-██╔════╝    ██╔════╝    ██║  ██║    ██╔═████╗
-█████╗      ██║         ███████║    ██║██╔██║
-██╔══╝      ██║         ██╔══██║    ████╔╝██║
-███████╗    ╚██████╗    ██║  ██║    ╚██████╔╝
-╚══════╝     ╚═════╝    ╚═╝  ╚═╝     ╚═════╝
-
-```
+AXOXE builds on Ech0 by L1nSn0w and its contributors. The upstream project and its bundled libraries retain their original licenses and copyright notices. See [NOTICE](./NOTICE), [LICENSE](./LICENSE), and the [brand guide](./docs/brand/README.md).

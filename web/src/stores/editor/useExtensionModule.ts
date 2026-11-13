@@ -8,7 +8,7 @@ import { parseTweetUrl } from '@/utils/tweet'
 import type { ExtensionToAdd, LocationToAdd, Translate, TweetToAdd, WebsiteToAdd } from './types'
 
 type ExtensionModuleDeps = {
-  echoToAdd: Ref<App.Api.Ech0.EchoToAdd>
+  echoToAdd: Ref<App.Api.AXOXE.EchoToAdd>
   t: Translate
 }
 

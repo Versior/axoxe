@@ -27,10 +27,10 @@ export const useSettingStore = defineStore('settingStore', () => {
   const userStore = useUserStore()
 
   const SystemSetting = ref<App.Api.Setting.SystemSetting>({
-    site_title: import.meta.env.VITE_APP_TITLE,
-    server_logo: '/Ech0.svg',
+    site_title: import.meta.env.VITE_APP_TITLE || 'AXOXE',
+    server_logo: '/axoxe.svg',
     server_logo_file_id: '',
-    server_name: import.meta.env.VITE_APP_NAME,
+    server_name: import.meta.env.VITE_APP_NAME || 'AXOXE',
     server_url: '',
     allow_register: true,
     default_locale: 'zh-CN',
@@ -91,7 +91,7 @@ export const useSettingStore = defineStore('settingStore', () => {
     multimodal: false,
     context_window: 0,
   })
-  const hello = ref<App.Api.Ech0.HelloEch0>()
+  const hello = ref<App.Api.AXOXE.HelloEch0>()
   const loading = ref<boolean>(true)
   const snapshotStatus = ref<SnapshotUIStatus>('idle')
   const snapshotError = ref<string>('')

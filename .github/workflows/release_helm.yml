@@ -152,8 +152,8 @@ jobs:
                   continue
               published_at = r.get("publishedAt") or ""
               date = published_at[:10]
-              base = f"https://github.com/lin-snow/Ech0/releases/download/{tag}"
-              page = f"https://github.com/lin-snow/Ech0/releases/tag/{tag}"
+              base = f"https://github.com/Versior/Ech0/releases/download/{tag}"
+              page = f"https://github.com/Versior/Ech0/releases/tag/{tag}"
               rows.append(
                   f'<li><strong>{tag}</strong> <span class="muted">({date})</span> - '
                   f'<a href="{base}/ech0-linux-amd64.tar.gz">linux/amd64</a> | '

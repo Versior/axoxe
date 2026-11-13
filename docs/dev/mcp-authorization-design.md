@@ -5,11 +5,11 @@
 
 ## 1. 背景
 
-Ech0 的 `/mcp` 原先只接受后台手工创建的 Access Token（audience `mcp-remote`）。这对脚本和 curl 够用，但标准 MCP Host 的“连接 → 浏览器授权 → 自动拿到 token”链路走不通：没有 Protected Resource Metadata，没有授权服务器，客户端只能让用户手工粘贴令牌。
+AXOXE 的 `/mcp` 原先只接受后台手工创建的 Access Token（audience `mcp-remote`）。这对脚本和 curl 够用，但标准 MCP Host 的“连接 → 浏览器授权 → 自动拿到 token”链路走不通：没有 Protected Resource Metadata，没有授权服务器，客户端只能让用户手工粘贴令牌。
 
 MCP `2026-07-28` 把授权定义为 **OPTIONAL**，但一旦支持就必须按 OAuth 2.1 + RFC 9728 + RFC 8707 + RFC 9207 实现，并优先使用 Client ID Metadata Documents（CIMD）；Dynamic Client Registration（DCR）已 deprecated，仅作兼容保留。
 
-本设计在 Ech0 内实现一个**最小但完整**的授权服务器，复用现有 Access Token / scope / audience 体系，不引入第二套令牌格式。
+本设计在 AXOXE 内实现一个**最小但完整**的授权服务器，复用现有 Access Token / scope / audience 体系，不引入第二套令牌格式。
 
 ## 2. 角色与端点
 
@@ -98,23 +98,23 @@ GET /.well-known/oauth-authorization-server       (RFC 8414)
   "authorization_servers": ["https://ech0.example.com"],
   "scopes_supported": ["echo:read", "…"],
   "bearer_methods_supported": ["header"],
-  "resource_name": "Ech0 MCP"
+  "resource_name": "AXOXE MCP"
 }
 ```
 
-`/.well-known/oauth-authorization-server` 返回 RFC 8414 文档，声明 `client_id_metadata_document_supported: true`、`authorization_response_iss_parameter_supported: true`、`code_challenge_methods_supported: ["S256"]`，不使用 OIDC discovery（Ech0 不是 OIDC Provider）。
+`/.well-known/oauth-authorization-server` 返回 RFC 8414 文档，声明 `client_id_metadata_document_supported: true`、`authorization_response_iss_parameter_supported: true`、`code_challenge_methods_supported: ["S256"]`，不使用 OIDC discovery（AXOXE 不是 OIDC Provider）。
 
 两份文档的 `issuer` / `resource` / 端点都按请求 origin 推导（`internal/util/reqinfo` 统一读取 `TLS`、`X-Forwarded-Proto` 与 `X-Forwarded-Host`），因此响应带 `Vary: Host, X-Forwarded-Proto, X-Forwarded-Host`，避免共享缓存把某个 Host 的文档发给另一个 Host。
 
 ## 7. 安全决策
 
-- **管理员专属**：Ech0 的手工令牌签发本来就只允许管理员；OAuth 同意继承同一规则。非管理员看到 `access_denied`。
+- **管理员专属**：AXOXE 的手工令牌签发本来就只允许管理员；OAuth 同意继承同一规则。非管理员看到 `access_denied`。
 - **redirect_uri 精确匹配**：不做前缀/通配匹配；`client_id` 与 `redirect_uri` 校验通过之后出现的授权错误（非管理员、用户不存在）改为 redirect-with-error，与拒绝路径一致；校验通过前仍返回本地错误，避免向未验证的 redirect 泄漏信息。
 - **MRTR requestState**：HMAC 载荷包含 16 字节 nonce，同一秒内相同 principal/工具/参数的两个确认请求不会互相消费；服务端先读取 `inputResponses`，只有真正的批准才消费状态，未作答的重试不会烧掉批准。
 - **无 refresh token**：v1 只签发 30 天 access token，不实现 refresh/rotation，元数据只声明 `authorization_code`。令牌到期后重新走一次同意；撤销走后台。
 - **无客户端密钥**：只支持 public client + PKCE，避免在自托管场景引入密钥分发。
 - **不信任客户端自述**：同意页展示的 `client_name` 来自 CIMD 文档或注册表，不取 query。
-- **日志**：沿用 `mcp_request` 审计字段；授权服务器错误直接以 RFC 6749 `{error, error_description}` 返回，不套 Ech0 信封（consent 两个接口除外，便于前端复用统一请求层）。
+- **日志**：沿用 `mcp_request` 审计字段；授权服务器错误直接以 RFC 6749 `{error, error_description}` 返回，不套 AXOXE 信封（consent 两个接口除外，便于前端复用统一请求层）。
 
 ## 8. 与 MCP 2026-07-28 最佳实践的关系
 

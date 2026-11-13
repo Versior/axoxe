@@ -1,4 +1,4 @@
-// The real Ech0 Copilot chat (ChatPage → TheChatBox). The question is typed into the real
+// The real AXOXE Copilot chat (ChatPage → TheChatBox). The question is typed into the real
 // composer and sent with the real Send button; the answer arrives as real SSE frames
 // (searching → sources → coverage → delta… → done) released by film time from src/fake-api.js.
 import React from 'react';

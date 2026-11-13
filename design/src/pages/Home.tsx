@@ -93,7 +93,7 @@ export function Home({ onNavigate }: { onNavigate: (page: PageId, anchor?: strin
     <div className="page home">
       <header className="home-hero">
         <div className="page-kicker">
-          <span className="eyebrow">INDEX / ECH0 DESIGN</span>
+          <span className="eyebrow">INDEX / AXOXE DESIGN</span>
           <span className="eyebrow">
             {groups.length} GROUPS · {entryCount} ENTRIES · {tokenCount} TOKENS
           </span>

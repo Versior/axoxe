@@ -28,7 +28,7 @@ async function run(
     env: {
       ...base,
       ECH0_NO_KEYCHAIN: "1",
-      ECH0_CONFIG: join(temp("ech0-cli-skill-"), "config.json"),
+      ECH0_CONFIG: join(temp("axoxe-cli-skill-"), "config.json"),
       ...env,
     },
     stdout: "pipe",
@@ -44,12 +44,12 @@ async function run(
 
 describe("skill source", () => {
   test("a local folder is copied wholesale, replacing the previous install", () => {
-    const from = temp("ech0-skill-src-");
+    const from = temp("axoxe-skill-src-");
     mkdirSync(join(from, "references"), { recursive: true });
-    writeFileSync(join(from, SKILL_FILE), "---\nname: ech0\n---\n");
+    writeFileSync(join(from, SKILL_FILE), "---\nname: axoxe\n---\n");
     writeFileSync(join(from, "references", "setup.md"), "setup");
 
-    const root = temp("ech0-skill-root-");
+    const root = temp("axoxe-skill-root-");
     mkdirSync(join(root, SKILL_NAME, "stale"), { recursive: true });
     writeFileSync(join(root, SKILL_NAME, "stale", "old.md"), "old");
 
@@ -64,7 +64,7 @@ describe("skill source", () => {
   });
 
   test("a folder without SKILL.md is rejected", () => {
-    expect(() => openDir(temp("ech0-skill-empty-"))).toThrow("缺少 SKILL.md");
+    expect(() => openDir(temp("axoxe-skill-empty-"))).toThrow("缺少 SKILL.md");
   });
 
   test("the embedded skill ships the entry point and its references", () => {
@@ -77,13 +77,13 @@ describe("skill source", () => {
     expect(references).toContain("references/connect.md");
     expect(references).toContain("references/tags.md");
     expect(references).toContain("references/webhooks.md");
-    expect(new TextDecoder().decode(source.read(SKILL_FILE).bytes)).toContain("name: ech0");
+    expect(new TextDecoder().decode(source.read(SKILL_FILE).bytes)).toContain("name: axoxe");
   });
 });
 
 describe("install skills", () => {
   test("writes the embedded skill and reports every file", async () => {
-    const root = temp("ech0-skill-out-");
+    const root = temp("axoxe-skill-out-");
     const result = await run(["install", "skills", root, "--json"]);
     const parsed = JSON.parse(result.stdout) as { target: string; files: string[] };
 
@@ -92,11 +92,11 @@ describe("install skills", () => {
     expect(parsed.files).toContain(SKILL_FILE);
     expect(parsed.files).toContain("references/tags.md");
     expect(parsed.files).toContain("references/webhooks.md");
-    expect(readFileSync(join(root, SKILL_NAME, SKILL_FILE), "utf8")).toContain("name: ech0");
+    expect(readFileSync(join(root, SKILL_NAME, SKILL_FILE), "utf8")).toContain("name: axoxe");
   });
 
   test("expands ~ in the skills root", async () => {
-    const home = temp("ech0-skill-home-");
+    const home = temp("axoxe-skill-home-");
     const result = await run(["install", "skills", "~/agent-skills"], { HOME: home });
 
     expect(result.exitCode).toBe(0);
@@ -104,7 +104,7 @@ describe("install skills", () => {
   });
 
   test("--from needs a folder with SKILL.md", async () => {
-    const result = await run(["install", "skills", temp("ech0-skill-out-"), "--from", temp("ech0-skill-bad-")]);
+    const result = await run(["install", "skills", temp("axoxe-skill-out-"), "--from", temp("axoxe-skill-bad-")]);
 
     expect(result.exitCode).toBe(2);
     expect(result.stderr).toContain("缺少 SKILL.md");

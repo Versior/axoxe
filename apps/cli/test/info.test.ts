@@ -40,12 +40,12 @@ function routes(extra: Record<string, () => RouteReply> = {}): Record<string, ()
       body: {
         code: 1,
         data: {
-          hello: "Hello, Ech0! 👋",
+          hello: "Hello, AXOXE! 👋",
           version: "v1.4.2",
           commit: "abcdef123456",
           build_time: "2026-10-01T00:00:00Z",
           license: "AGPL-3.0-or-later",
-          repo_url: "https://github.com/lin-snow/Ech0",
+          repo_url: "https://github.com/Versior/Ech0",
         },
       },
       headers: { "X-Ech0-Catalog": fingerprint },
@@ -100,7 +100,7 @@ describe("info", () => {
   test("aggregates the public endpoints without a token", async () => {
     const api = startFakeApi(routes());
     try {
-      const dir = mkdtempSync(join(tmpdir(), "ech0-info-"));
+      const dir = mkdtempSync(join(tmpdir(), "axoxe-info-"));
       const result = await info(context(api.baseUrl, dir));
       const payload = JSON.parse(result.json) as {
         server: string;
@@ -141,7 +141,7 @@ describe("info", () => {
     const fingerprint = "f".repeat(64);
     const api = startFakeApi(routes({ "GET /api/hello": () => ({ body: { code: 1, data: {} }, headers: { "X-Ech0-Catalog": fingerprint } }) }));
     try {
-      const dir = mkdtempSync(join(tmpdir(), "ech0-info-"));
+      const dir = mkdtempSync(join(tmpdir(), "axoxe-info-"));
       const result = await info(context(api.baseUrl, dir));
       const payload = JSON.parse(result.json) as {
         catalog: { stale: boolean; server_fingerprint: string | null } | null;
@@ -149,7 +149,7 @@ describe("info", () => {
 
       expect(payload.catalog?.stale).toBe(true);
       expect(payload.catalog?.server_fingerprint).toBe(fingerprint);
-      expect(result.human).toContain("ech0 catalog refresh");
+      expect(result.human).toContain("axoxe catalog refresh");
     } finally {
       api.stop();
     }
@@ -158,7 +158,7 @@ describe("info", () => {
   test("reports an unreachable instance instead of failing", async () => {
     const api = startFakeApi({});
     try {
-      const dir = mkdtempSync(join(tmpdir(), "ech0-info-"));
+      const dir = mkdtempSync(join(tmpdir(), "axoxe-info-"));
       const result = await info(context(api.baseUrl, dir));
       const payload = JSON.parse(result.json) as { reachable: boolean; errors: string[] };
 
@@ -171,7 +171,7 @@ describe("info", () => {
   });
 
   test("prints local state when no instance is configured", async () => {
-    const dir = mkdtempSync(join(tmpdir(), "ech0-info-"));
+    const dir = mkdtempSync(join(tmpdir(), "axoxe-info-"));
     const result = await info(context(undefined, dir));
     const payload = JSON.parse(result.json) as { server: null; reachable: null; errors: string[] };
 

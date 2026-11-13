@@ -11,9 +11,9 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "ech0",
+	Use:   "axoxe",
 	Short: "A self-hosted, lightweight microblog platform for personal thoughts",
-	Long:  `Ech0 is a new-generation open-source, self-hosted, lightweight publishing platform focused on the flow of personal thoughts.`,
+	Long:  `AXOXE is a new-generation open-source, self-hosted, lightweight publishing platform focused on the flow of personal thoughts.`,
 
 	Run: func(cmd *cobra.Command, args []string) {
 		cli.DoTui()
@@ -22,7 +22,7 @@ var rootCmd = &cobra.Command{
 
 var tuiCmd = &cobra.Command{
 	Use:   "tui",
-	Short: "Launch the Ech0 TUI",
+	Short: "Launch the AXOXE TUI",
 	Run: func(cmd *cobra.Command, args []string) {
 		cli.DoTui()
 	},
@@ -38,7 +38,7 @@ var versionCmd = &cobra.Command{
 
 var helloCmd = &cobra.Command{
 	Use:   "hello",
-	Short: "Print the Ech0 logo",
+	Short: "Print the AXOXE logo",
 	Run: func(cmd *cobra.Command, args []string) {
 		cli.DoHello()
 	},

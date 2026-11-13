@@ -43,7 +43,7 @@ function emitSearch(
   }
   if (matches.length === 0) {
     const hints = suggestions(commandIds(root), words);
-    const hint = hints.length === 0 ? "" : `；是否想找：${hints.map((id) => `ech0 ${id.replaceAll(".", " ")}`).join("、")}`;
+    const hint = hints.length === 0 ? "" : `；是否想找：${hints.map((id) => `axoxe ${id.replaceAll(".", " ")}`).join("、")}`;
     printErr(`${colors().yellow("提示")} 没有匹配「${query}」的命令${hint}`);
     return;
   }
@@ -60,7 +60,7 @@ function emitFull(entries: readonly HelpEntry[], json: boolean, yaml: boolean): 
   process.stdout.write(entries.map((entry) => renderHelp(helpModel(entry.command))).join("\n"));
 }
 
-/** `ech0 help [words...]`: the map, one namespace, a search, or one command. */
+/** `axoxe help [words...]`: the map, one namespace, a search, or one command. */
 export function createHelpCommand(): Command {
   return new Command("help")
     .description("查看命令地图，按关键词搜索，或打印一条命令的完整说明")

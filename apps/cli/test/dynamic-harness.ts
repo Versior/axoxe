@@ -24,7 +24,7 @@ export function buildProgram(
   invocations: Invocation[];
 } {
   const invocations: Invocation[] = [];
-  const program = new Command("ech0")
+  const program = new Command("axoxe")
     .option("--json", "输出 JSON", false)
     .option("--yaml", "输出 YAML", false);
   const catalog = parseCatalog(new TextEncoder().encode(JSON.stringify(catalogJson)));

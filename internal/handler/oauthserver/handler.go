@@ -3,7 +3,7 @@
 
 // Package oauthserver serves the OAuth 2.1 authorization server used by MCP
 // clients. Protocol endpoints keep RFC wire formats; consent endpoints use
-// Ech0's result envelope because they are consumed by the SPA.
+// AXOXE's result envelope because they are consumed by the SPA.
 package oauthserver
 
 import (

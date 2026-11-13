@@ -1,4 +1,4 @@
-// The real Ech0 home view (HomeView → HomePage: editor, timeline, Status widgets), mounted once
+// The real AXOXE home view (HomeView → HomePage: editor, timeline, Status widgets), mounted once
 // through the Vue bridge and filmed through a camera wrapper. Product state is driven by real
 // interactions (typing, tag picker, Publish, sidebar Status link) and is a function of film time.
 import React from 'react';
@@ -20,7 +20,7 @@ const S = id => shot(id);
 const T = {};   // absolute action times, filled in buildHome from plan.json shot starts
 const MARKS = [
   // Each destination is lit by its own ring (index into the three reach rings), so they light in turn.
-  {id: 'connect', ring: 1, label: 'Connected Ech0 sites', sel: '.home-status-widgets > :nth-child(3) .widget'},
+  {id: 'connect', ring: 1, label: 'Connected AXOXE sites', sel: '.home-status-widgets > :nth-child(3) .widget'},
   {id: 'comment', ring: 2, label: 'Comments', sel: '.home-status-widgets > :nth-child(4) .widget'},
   {id: 'rss', ring: 0, label: 'RSS feed', sel: '.home-header a[aria-label="RSS"]'},
 ];

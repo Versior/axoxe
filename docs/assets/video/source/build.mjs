@@ -27,7 +27,7 @@ await writeFile('evidence/component-imports.json', JSON.stringify(result.metafil
 const bundle = await readFile('.build/client.js', 'utf8');
 if (!plan.demo && bundle.includes('data-skill-placeholder')) throw new Error('Technical fixture is still on screen. Connect the actual product feature components before production.');
 let css = '';
-// Ech0 is Vue: its real components + full stylesheet come from the bridge build (build-bridge.mjs).
+// AXOXE is Vue: its real components + full stylesheet come from the bridge build (build-bridge.mjs).
 const {execFileSync} = await import('node:child_process');
 execFileSync(process.execPath, ['build-bridge.mjs'], {stdio: 'inherit'});
 const bridgeCss = (await import('node:fs')).readdirSync('.build/bridge/assets').filter(f => f.endsWith('.css')).map(f => '.build/bridge/assets/' + f);
@@ -35,7 +35,7 @@ for (const f of ['assets/fallback/tokens.css', ...bridgeCss, 'src/product.css', 
 await writeFile('dist/index.html', `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${plan.product || 'film'}</title><style>${css}</style><body><div id="film-root"></div><script src="client.js"></script><script src="bridge.js"></script></body></html>`);
 await cp('.build/client.js', 'dist/client.js');
 await cp('.build/bridge/bridge.js', 'dist/bridge.js');
-await cp(path.join(repoDir, 'web/public'), 'dist', {recursive: true});   // product's public assets (/Ech0.svg, …)
+await cp(path.join(repoDir, 'web/public'), 'dist', {recursive: true});   // product's public assets (/axoxe.svg, …)
 if (existsSync('public')) await cp('public', 'dist', {recursive: true});
 if (existsSync('assets')) await cp('assets', 'dist/assets', {recursive: true});
 for (const file of Object.keys(result.metafile.outputs)) {

@@ -80,12 +80,12 @@ func TestGenerateRSS_NormalFeed(t *testing.T) {
 	atom := doc.Atom
 
 	assert.NotContains(t, atom, "xml-stylesheet", "浏览器已移除 XSLT，Feed 不应再引用样式表")
-	assert.Contains(t, atom, "<title>Ech0</title>")
+	assert.Contains(t, atom, "<title>AXOXE</title>")
 	assert.Contains(t, atom, "hello rss world")
 	assert.Contains(t, atom, "alice")
 	assert.Contains(t, atom, "http://example.com/echo/echo-1")
 
-	assert.Contains(t, doc.HTML, "<title>Ech0 · RSS</title>")
+	assert.Contains(t, doc.HTML, "<title>AXOXE · RSS</title>")
 	assert.Contains(t, doc.HTML, `rel="alternate" type="application/atom+xml" href="http://example.com/rss"`)
 	assert.Contains(t, doc.HTML, "共 1 条动态")
 	assert.Contains(t, doc.HTML, `datetime="2025-01-02T03:04:05Z"`)
@@ -302,7 +302,7 @@ func TestGenerateRSS_UsesSiteIdentity(t *testing.T) {
 	repo := commonmock.NewMockCommonRepository(t)
 	svc := newRSSService(t, repo, settingModel.SystemSetting{
 		SiteTitle:  "晨间笔记",
-		ServerName: "My Ech0",
+		ServerName: "My AXOXE",
 	})
 
 	echos := []echoModel.Echo{{ID: "e1", Username: "alice", Content: "hi", CreatedAt: time.Now().UTC().Unix()}}
@@ -314,8 +314,8 @@ func TestGenerateRSS_UsesSiteIdentity(t *testing.T) {
 	atom := doc.Atom
 
 	assert.Contains(t, atom, "<title>晨间笔记</title>")
-	assert.Contains(t, atom, "My Ech0")
-	assert.NotContains(t, atom, "<title>Ech0</title>")
+	assert.Contains(t, atom, "My AXOXE")
+	assert.NotContains(t, atom, "<title>AXOXE</title>")
 	assert.Contains(t, doc.HTML, "<title>晨间笔记 · RSS</title>")
 }
 

@@ -9,7 +9,7 @@ reviewing needs `comment:review`, and deleting needs `comment:delete`.
 ## Read
 
 ```bash
-ech0 comment list --echo-id <echo_id> --json     # approved comments under one Echo
+axoxe comment list --echo-id <echo_id> --json     # approved comments under one Echo
 ```
 
 `comment list` requires `--echo-id` and returns an array of comments:
@@ -20,8 +20,8 @@ through `comment panel list` (see Review).
 ## Create
 
 ```bash
-ech0 comment create --echo-id <echo_id> --content "写得真好"
-ech0 comment create --echo-id <echo_id> --content "来自流水线" --nickname "CI Bot" --metadata "run 42"
+axoxe comment create --echo-id <echo_id> --content "写得真好"
+axoxe comment create --echo-id <echo_id> --content "来自流水线" --nickname "CI Bot" --metadata "run 42"
 ```
 
 | Flag | Meaning |
@@ -51,11 +51,11 @@ The response is `{id, status}`.
 ## Review
 
 ```bash
-ech0 comment panel list --status pending --json
-ech0 comment panel list --keyword 广告 --page 1 --page-size 20 --json
-ech0 comment panel status --id <comment_id> --status approved
-ech0 comment panel status --id <comment_id> --status rejected
-ech0 comment panel delete --id <comment_id> --yes
+axoxe comment panel list --status pending --json
+axoxe comment panel list --keyword 广告 --page 1 --page-size 20 --json
+axoxe comment panel status --id <comment_id> --status approved
+axoxe comment panel status --id <comment_id> --status rejected
+axoxe comment panel delete --id <comment_id> --yes
 ```
 
 `comment panel list` requires `comment:review` and returns the panel page as

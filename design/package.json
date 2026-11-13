@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Ech0 design system: tokens, components, patterns and UX specs.",
+  "description": "AXOXE design system: tokens, components, patterns and UX specs.",
   "scripts": {
     "dev": "vite --port 5180",
     "dev:prototype": "vite prototype",

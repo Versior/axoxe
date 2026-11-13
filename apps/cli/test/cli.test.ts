@@ -9,7 +9,7 @@ import { join } from "node:path";
 const ENTRY = join(import.meta.dir, "..", "src", "index.ts");
 
 function runCli(args: string[]): { stdout: string; stderr: string; exitCode: number } {
-  const configPath = join(mkdtempSync(join(tmpdir(), "ech0-cli-spawn-")), "config.json");
+  const configPath = join(mkdtempSync(join(tmpdir(), "axoxe-cli-spawn-")), "config.json");
   const env: NodeJS.ProcessEnv = {
     ...process.env,
     ECH0_NO_KEYCHAIN: "1",
@@ -39,7 +39,7 @@ describe("cli wiring", () => {
   test("bare invocation prints help and exits 0", () => {
     const result = runCli([]);
     expect(result.exitCode).toBe(0);
-    expect(result.stdout).toMatch(/Usage: ech0|用法: ech0/);
+    expect(result.stdout).toMatch(/Usage: axoxe|用法: axoxe/);
   });
 
   test("unknown option exits with the usage code", () => {

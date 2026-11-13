@@ -3,7 +3,7 @@ title: Comments
 description: Built-in comments, moderation, captcha, and automation
 ---
 
-Ech0 uses a **built-in comment system** — no third-party comment hosting such as Twikoo or Waline is needed.
+AXOXE uses a **built-in comment system** — no third-party comment hosting such as Twikoo or Waline is needed.
 
 ---
 
@@ -39,7 +39,7 @@ Comments go through a flow like “pending → approved / rejected” (the exact
 - Approve, reject, or delete a single comment or a batch.
 - Mark standout comments as “hot” and the like (if your version provides it).
 
-Single comments can also be moderated from the terminal: `ech0 comment panel list --status pending` → `ech0 comment panel status --id <id> --status approved` → `ech0 comment panel delete --id <id> --yes`. See [CLI](/docs/guide/cli).
+Single comments can also be moderated from the terminal: `axoxe comment panel list --status pending` → `axoxe comment panel status --id <id> --status approved` → `axoxe comment panel delete --id <id> --yes`. See [CLI](/docs/guide/cli).
 
 ---
 

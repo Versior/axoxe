@@ -1,4 +1,4 @@
-"""Original score for the Ech0 film — code-synthesised, no samples or third-party audio.
+"""Original score for the AXOXE film — code-synthesised, no samples or third-party audio.
 96 BPM (beat 0.625s, bar 2.5s), F major, 97.5s. Arrangement follows plan.json shot boundaries:
   open 0–5      soft pad + one piano note on beat 1 (the dot), sparse notes
   echo 5–8.75   a 3-note motif with decaying delay repeats — a literal echo (the product's name)

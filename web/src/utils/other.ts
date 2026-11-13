@@ -26,16 +26,16 @@ const resolveFileUrlByPath = (rawUrl?: string, baseUrl?: string) => {
 }
 
 const resolveFileUrl = (
-  file: Pick<App.Api.Ech0.FileObject | App.Api.Ech0.FileToAdd, 'url'> & { image_url?: string },
+  file: Pick<App.Api.AXOXE.FileObject | App.Api.AXOXE.FileToAdd, 'url'> & { image_url?: string },
   baseUrl?: string,
 ) => resolveFileUrlByPath(file.url || file.image_url, baseUrl)
 
-export const getFileUrl = (file: App.Api.Ech0.FileObject) => resolveFileUrl(file)
+export const getFileUrl = (file: App.Api.AXOXE.FileObject) => resolveFileUrl(file)
 
-export const getFileToAddUrl = (file: App.Api.Ech0.FileToAdd) => resolveFileUrl(file)
+export const getFileToAddUrl = (file: App.Api.AXOXE.FileToAdd) => resolveFileUrl(file)
 
-export const getImageUrl = (image: App.Api.Ech0.FileObject) => getFileUrl(image)
-export const getImageToAddUrl = (image: App.Api.Ech0.FileToAdd) => getFileToAddUrl(image)
+export const getImageUrl = (image: App.Api.AXOXE.FileObject) => getFileUrl(image)
+export const getImageToAddUrl = (image: App.Api.AXOXE.FileToAdd) => getFileToAddUrl(image)
 
 export const formatDateTime = (dateInput: string | number | null | undefined) => {
   const ms = timeValueToMs(dateInput)
@@ -209,11 +209,11 @@ export const extractAndCleanMusicURL = (input: string): string | null => {
   }
 }
 
-export const getHubImageUrl = (image: App.Api.Ech0.FileObject, baseurl: string) => {
+export const getHubImageUrl = (image: App.Api.AXOXE.FileObject, baseurl: string) => {
   return resolveFileUrl(image, baseurl)
 }
 
-export const getHubFileUrl = (file: App.Api.Ech0.FileObject, baseurl: string) => {
+export const getHubFileUrl = (file: App.Api.AXOXE.FileObject, baseurl: string) => {
   return resolveFileUrl(file, baseurl)
 }
 

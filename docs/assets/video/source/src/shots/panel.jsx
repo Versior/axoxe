@@ -1,4 +1,4 @@
-// The real Ech0 admin panel (PanelView → PanelPage + child pages), mounted once through the Vue
+// The real AXOXE admin panel (PanelView → PanelPage + child pages), mounted once through the Vue
 // bridge and filmed through a camera wrapper. Pages are reached by real clicks on the panel nav,
 // the pages' segmented tabs and the file tree; the system log receives live lines by film time.
 import React from 'react';
