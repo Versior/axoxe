@@ -80,7 +80,7 @@ export const API_FIXTURES = {
   '/api/user': ok(USER),
   '/api/settings': ok(settings),
   '/api/agent/info': ok({enable: true, model: 'claude-sonnet-5', protocol: 'anthropic'}),
-  '/api/hello': ok({hello: 'Hello, AXOXE!', copyright: '', version: '5.7.0', commit: '', build_time: '', license: 'AGPL-3.0-or-later', author: 'lin-snow', repo_url: 'https://github.com/Versior/Ech0'}),
+  '/api/hello': ok({hello: 'Hello, AXOXE!', copyright: '', version: '5.7.0', commit: '', build_time: '', license: 'AGPL-3.0-or-later', author: 'lin-snow', repo_url: 'https://github.com/Versior/axoxe'}),
   '/api/oauth2/status': ok({enabled: false, provider: '', oauth_ready: false}),
   '/api/passkey/status': ok({passkey_ready: false}),
   '/api/tags': ok(TAGS),

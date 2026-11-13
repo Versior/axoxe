@@ -92,8 +92,8 @@ Every release commit updates [`CHANGELOG.md`](../../CHANGELOG.md) atomically wit
 2. Open a new empty `## [Unreleased]` section above it (with empty `### Added`, `### Changed`, `### Deprecated`, `### Removed`, `### Fixed`, `### Security` sub-headings as you need them — don't include empty sections in the published version, but keep the template at the top for the next dev cycle).
 3. Update the link references at the bottom:
    ```
-   [Unreleased]: https://github.com/Versior/Ech0/compare/v4.6.5...HEAD
-   [4.6.5]: https://github.com/Versior/Ech0/compare/v4.6.4...v4.6.5
+   [Unreleased]: https://github.com/Versior/axoxe/compare/v4.6.5...HEAD
+   [4.6.5]: https://github.com/Versior/axoxe/compare/v4.6.4...v4.6.5
    ```
 
 CHANGELOG entries should be written for **users / operators**, not developers. Prefer:
@@ -197,12 +197,12 @@ step with `EOTP`, which is why the workflow no longer reads a token. For each of
 publishing, or from the CLI (npm ≥ 11.15.0, account 2FA on, package already published):
 
 ```bash
-npm trust github @axoxe/cli --repo Versior/Ech0 --file release-cli.yml --allow-publish
+npm trust github @axoxe/cli --repo Versior/axoxe --file release-cli.yml --allow-publish
 # ...one call per platform package; `--allow-publish` is required — configurations created after
 # 2026-09-03 default to staged publishing only.
 ```
 
-The workflow's `release-cli.yml` name, the `Versior/Ech0` repository and the `id-token: write`
+The workflow's `release-cli.yml` name, the `Versior/axoxe` repository and the `id-token: write`
 permission must all match. A new trust configuration expires after 2 days unless the first publish
 succeeds, and provenance is then generated automatically.
 

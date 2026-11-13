@@ -1,256 +1,81 @@
 <div align="center">
 
-<img alt="AXOXE" src="./docs/brand/axoxe-logo.svg" width="420">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./docs/assets/readme/hero-dark.svg">
+  <img src="./docs/assets/readme/hero-light.svg" alt="Axoxe — Where moments stay. A self-hosted personal timeline." width="100%">
+</picture>
 
-# AXOXE
-
-**Where moments stay.**
-
-思考、日々の瞬間、振り返りのためのセルフホスト空間。
-
-[Website](https://www.axoxe.com/) · [Documentation](./docs/README.md) · [Source](https://github.com/Versior/Ech0) · [Brand assets](./docs/brand/README.md)
+<p>
+  <a href="https://github.com/Versior/axoxe/actions/workflows/test.yml"><img src="https://img.shields.io/github/actions/workflow/status/Versior/axoxe/test.yml?branch=main&amp;style=flat-square&amp;label=backend%20tests" alt="Backend tests"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0--or--later-191917?style=flat-square" alt="AGPL-3.0-or-later"></a>
+  <a href="./go.mod"><img src="https://img.shields.io/badge/Go-1.27+-007d9c?style=flat-square&amp;logo=go&amp;logoColor=white" alt="Go 1.27+"></a>
+  <a href="./web/package.json"><img src="https://img.shields.io/badge/Vue-3-29795b?style=flat-square&amp;logo=vuedotjs&amp;logoColor=white" alt="Vue 3"></a>
+</p>
 
 [English](./README.md) · [简体中文](./README.zh.md) · [Deutsch](./README.de.md) · [日本語](./README.ja.md)
 
-[AGPL-3.0-or-later](./LICENSE)
+**思いつきも、日々の瞬間も、自分の場所に。**
+
+[はじめる](#はじめる) · [ドキュメント](./docs/README.md) · [貢献する](https://github.com/Versior/axoxe/pulls)
 
 </div>
 
-AXOXE は [Ech0](https://github.com/lin-snow/Ech0) v5.9.8 を基にした独立ブランドのフォークです。元の著作権、ライセンス表記、上流プロジェクトへの帰属を保持しています。
+Axoxe は短い文章、写真、リンク、会話を残すためのセルフホスト型タイムラインです。[Ech0](https://github.com/lin-snow/Ech0) を基にした独立ブランドのフォークで、現在 **v5.9.9** と同期しています。上流の著作権表示、ライセンス、互換データ形式を維持しています。
 
+![Axoxe のデスクトップとモバイル画面](./docs/assets/readme/product-preview.png)
 
-> セルフホスト型のパーソナル・マイクロブログ。あなたのタイムラインを共有・議論しつつ、データの所有権はあなたの手に。
+<sub>本リポジトリからビルドした実際の画面です。記事とアカウントは合成デモデータです。</sub>
 
-Memos のようなツールは思いつきを素早く記録するのに最適です。AXOXE は「その先」のためのツールです — 個人のタイムラインに公開し、他の人がフォローしたり交流したりできるようにします。
-自分のサーバーで運用してコンテンツの完全なコントロールを保ちながら、任意のコメントや共有によってつながりを残せます。
-軽量で、デプロイが簡単、そして完全にオープンソースです。
+## 主な機能
 
-**こんな人にぴったり：**
-- 自分のドメインで公開・準公開のタイムラインを運用したい
-- 短い投稿、リンク、メディアをひとつのシンプルな UI から発信したい
-- データの所有権を保ちつつ、RSS や任意のコメントも欲しい
-- 重厚な SNS ではなく、軽い社会的つながりのある個人スペースが欲しい
+| 分野 | 機能 |
+| --- | --- |
+| 書く | Markdown、下書き、タグ、プレビュー、公開・非公開の投稿 |
+| メディア | 画像ギャラリー、音声、動画、拡張カード |
+| 交流 | コメント、モデレーション、リアクション、RSS、インスタンス間の接続 |
+| AI と連携 | Copilot、ベクトル検索、REST/OpenAPI、Webhook、MCP |
+| データ | スナップショット、定期エクスポート、Memos インポート、持ち運べる Capsule |
+| 認証 | パスキー、外部サービスでのログイン、役割、失効可能なアクセストークン |
+| 表示 | レスポンシブ UI、PWA、テーマ、4 言語 |
 
-**おそらく合わない：**
-- 双方向リンクのナレッジベース型ワークフロー（Obsidian 風 PKM など）
-- チーム前提の共同編集ドキュメント環境（Notion 風など）
-- タイムラインや公開機能を一切必要としない、純粋なメモ/ノート専用ツール
+## はじめる
 
-![AXOXE インターフェイス（合成デモデータ）](./docs/imgs/screenshot.png)
+Git、OpenSSL、Docker Compose を用意します。本リポジトリのソースからイメージをビルドします。
 
----
+```sh
+git clone https://github.com/Versior/axoxe.git
+cd axoxe
 
-<details>
-   <summary><strong>目次</strong></summary>
+# Create the session secret once. Keep this file for future starts and upgrades.
+umask 077
+[ -f docker/.env ] || openssl rand -hex 32 | sed 's/^/JWT_SECRET=/' > docker/.env
 
-- [60 秒で試す](#60-秒で試す)
-- [機能一覧](#機能一覧)
-- [デプロイとアップグレード](#デプロイとアップグレード)
-- [FAQ](#faq)
-- [フィードバックとコミュニティ](#フィードバックとコミュニティ)
-- [オープンソース運営と開発](#オープンソース運営と開発)
-- [Star ヒストリー](#star-ヒストリー)
-
-</details>
-
----
-
-## 60 秒で試す
-
-```shell
-docker build -f docker/build.Dockerfile --build-arg TARGETOS=linux --build-arg TARGETARCH=amd64 -t axoxe:local .
-docker run -d --name axoxe -p 6277:6277 -v /opt/axoxe/data:/app/data -e JWT_SECRET axoxe:local
+docker compose --env-file docker/.env -f docker/docker-compose.yml up -d --build
 ```
 
-Set a persistent `JWT_SECRET` in your shell before starting. The `axoxe:local` image is built from this source checkout; the upstream Docker image does not include AXOXE branding.
+**http://localhost:6277** を開きます。最初に登録したアカウントが Owner になります。アップグレード時は `docker/data/` と `docker/.env` を保持してください。ARM64 では Compose コマンドの前に `AXOXE_TARGETARCH=arm64` を追加します。
 
-その後 `http://ip:6277` を開きます：
+詳しくは[デプロイ](./DEPLOYMENT.md)、[設定](./docs/usage/configuration.md)、[開発ガイド](./docs/dev/development.md)を参照してください。
 
-1. 最初のアカウントを登録します。
-2. 最初のアカウントが Owner（管理者権限）になります。
-3. デフォルトでは、投稿は権限のあるアカウントに制限されます。
+## 技術構成
 
-Docker Compose や Helm を使った手順は [かんたんデプロイ](#かんたんデプロイ) を参照してください。
+<table>
+<tr>
+<td align="center" width="16%"><img src="./docs/assets/readme/icons/go.svg" width="40" height="40" alt="Go"><br><strong>Go 1.27</strong><br>Gin · Huma · Wire</td>
+<td align="center" width="16%"><img src="./docs/assets/readme/icons/vuedotjs.svg" width="40" height="40" alt="Vue"><br><strong>Vue 3</strong><br>Pinia · Vue Router</td>
+<td align="center" width="16%"><img src="./docs/assets/readme/icons/typescript.svg" width="40" height="40" alt="TypeScript"><br><strong>TypeScript 6</strong><br>Typed frontend</td>
+<td align="center" width="16%"><img src="./docs/assets/readme/icons/vite.svg" width="40" height="40" alt="Vite"><br><strong>Vite 8</strong><br>UnoCSS · Vitest</td>
+<td align="center" width="16%"><img src="./docs/assets/readme/icons/sqlite.svg" width="40" height="40" alt="SQLite"><br><strong>SQLite</strong><br>GORM · sqlite-vec</td>
+<td align="center" width="16%"><img src="./docs/assets/readme/icons/docker.svg" width="40" height="40" alt="Docker"><br><strong>Docker</strong><br>Compose · CGO</td>
+</tr>
+</table>
 
-### CLI
+![実行時のアーキテクチャ](./docs/assets/readme/architecture.svg)
 
-`axoxe` コマンドラインクライアントをインストールします（macOS / Linux のみ、サーバーバイナリとは別物）：
+単一の Go プロセスが API と埋め込み Vue SPA を提供します。Huma は Go 型から OpenAPI を生成し、Wire は依存関係を構築します。Busen はイベントを配信し、VireFS はローカルと S3 互換のファイルを扱います。SQLite と sqlite-vec は CGO を使用します。
 
-```shell
-cd apps/cli
-bun install --frozen-lockfile
-bun run src/index.ts --help
-```
+詳細は[アーキテクチャ解説](./docs/dev/architecture-overview.md)へ。ローカルビルドには Go 1.27.4+、C コンパイラ、Node.js 26+、pnpm 12.14.0、just が必要です。先に `pnpm -C web build`、続いて `just build` を実行します。
 
-ソースからのビルドには Bun 1.4.4 以降が必要です。今後の AXOXE CLI リリースは [Releases](https://github.com/Versior/Ech0/releases) で `axoxe-cli-<os>-<arch>.tar.gz` という名前を使用しますが、現時点では公開済みとは限りません。使い方とコマンドは [`apps/cli`](./apps/cli) を参照。
+## 謝辞とライセンス
 
-## 機能一覧
-
-<details>
-<summary><strong>クリックして全機能を表示</strong></summary>
-
-### ハイライト
-
-- ☁️ **軽量で効率的なアーキテクチャ**：低リソース・小サイズのイメージで、個人サーバーから ARM デバイスまで対応。
-- 🚀 **すばやいデプロイ**：すぐ使える Docker デプロイ。インストールから初回起動までコマンド 1 つ。
-- 📦 **自己完結したディストリビューション**：完全なバイナリとコンテナイメージ。追加のランタイム依存なし。
-- 💻 **クロスプラットフォーム**：Linux、Windows、ARM デバイス（例：Raspberry Pi）に対応。
-- 🧳 **持ち運べるコンテンツカプセル**：書いた内容を自己完結した[カプセル](./docs/usage/capsule.md)としてエクスポート。別のインスタンスへインポートしたり、コマンド 1 つで静的サイトにビルドして任意のホスティングへ配置できます。
-
-### ストレージとデータ
-
-- 🗂️ **VireFS 統合ストレージ層**：**VireFS** によりローカルストレージと S3 互換オブジェクトストレージを統一管理。
-- ☁️ **S3 オブジェクトストレージ対応**：S3 互換オブジェクトストレージをネイティブサポート。
-- 📦 **データ主権**：コンテンツとメタデータはユーザーの手元に。RSS 出力にも対応。
-- 🔄 **データ移行ワークフロー**：履歴データの移行インポートに加え、移行とアーカイブ向けのスナップショット/カプセルエクスポート。ダッシュボードと CLI の両方から利用可能。
-- 🔐 **自動バックアップ**：Web、CLI、TUI からのエクスポート/バックアップに加え、バックグラウンド自動バックアップ。
-
-### 執筆とコンテンツ
-
-- ✍️ **Markdown 執筆体験**：**markdown-it** ベースの編集/レンダリングエンジン。プラグイン拡張とライブプレビュー対応。
-- 🏷️ **タグ管理**：タグによる分類、絞り込み、検索。
-- 🃏 **リッチメディアカード**：ウェブサイトリンクや GitHub プロジェクトなどをカード表示。
-- 🎥 **動画コンテンツ解析**：Bilibili と YouTube の埋め込み再生。
-
-### メディアとアセット
-
-- 🎬 **マルチフォーマット・メディア添付**：各 Echo に画像・音声・動画を直接添付でき、ギャラリーと組み込みの音声/動画プレーヤーでインライン表示。
-- 📁 **ビジュアル・ファイルマネージャー**：ファイルアップロード、閲覧、アセット管理機能を内蔵。
-
-### ソーシャルと交流
-
-- 💬 **組み込みコメントシステム**：コメントとモデレーション設定。
-- 🃏 **コンテンツ・インタラクション**：いいねや共有などの社会的アクション。
-
-### 認証とセキュリティ
-
-- 🔑 **OAuth2 / OIDC 認証**：OAuth2 と OIDC による外部 ID 連携。
-- 🙈 **Passkey によるパスワードレスログイン**：生体認証またはハードウェアセキュリティキー。
-- 🔑 **アクセストークン管理**：スコープ付きトークンの発行と取り消し。API 呼び出しや外部連携に。
-- 👤 **マルチアカウント権限管理**：マルチユーザー協業と権限制御。
-
-### システムと開発
-
-- 🧱 **Busen データバスアーキテクチャ**：自社開発 Busen による疎結合なモジュール通信と確実なメッセージ配送。
-- 📊 **構造化ロギング**：システムログを統一的な構造化フォーマットで出力。
-- 🖥️ **リアルタイム・ログコンソール**：Web 上でログをリアルタイム表示し、デバッグ・障害調査に活用可能。
-- 📟 **TUI 管理画面**：サーバー運用に最適なターミナル UI。
-- 🧰 **CLI ツールチェーン**：自動化やスクリプト連携用の CLI。
-- 🔗 **オープン API と Webhook**：外部連携・自動化ワークフロー向けの完全な API と Webhook。
-- 🤖 **MCP（Model Context Protocol）**：内蔵 [MCP Server](./docs/usage/mcp-usage.md) が中核機能（投稿、ファイル、統計など）を **ほぼ全カバー**で AI レイヤーに公開。**Streamable HTTP**、**Tools & Resources**、**スコープ付き JWT** を採用。
-- 🧠 **AXOXE Copilot**：タイムラインに組み込まれた AI アシスタント——**近況まとめ**がワンクリックで最近の投稿を簡潔なダイジェストに凝縮し、**Chat** では自分のコンテンツに直接質問できます。**ベクトル RAG** 検索と**ストリーミング（SSE）**応答を採用し、すべての回答が*あなた自身の*データに基づきます。
-
-### エクスペリエンス
-
-- 🌍 **クロスデバイス対応**：レスポンシブデザインでデスクトップ、タブレット、モバイルに対応。
-- 🌐 **i18n 多言語対応**：UI の多言語切り替えに対応。
-- 👾 **PWA 対応**：Web アプリとしてインストールでき、ネイティブアプリ風の体験。
-- 🌗 **テーマとダークモード**：ダークモードとテーマ拡張に対応。
-
-### ライセンス
-
-- 🎉 **完全オープンソース**：**AGPL-3.0** で公開。トラッキング、サブスク、SaaS 依存はありません。
-
-</details>
-
----
-
-## デプロイとアップグレード
-
-**Docker Compose**、**スクリプトインストール**、**Kubernetes (Helm)** の詳細な手順、そして既存インスタンスの**アップグレード**手順は **[DEPLOYMENT.md](./DEPLOYMENT.md)** にまとめています。
-
-最短で起動したい場合は、上の [60 秒で試す](#60-秒で試す) のコマンド一つで十分です。
-
----
-
-## FAQ
-
-<details>
-<summary><strong>FAQ を展開</strong></summary>
-
-1. **AXOXE とは？**
-   AXOXE は、個人の思考、文章、リンクを素早く公開・共有するための軽量なオープンソース・セルフホスト・プラットフォームです。シンプルな UI と気が散らない体験を提供し、データは常にあなたの管理下に置かれます。
-
-2. **AXOXE は何ではない？**
-   AXOXE は伝統的なプロのノートアプリ（Obsidian や Notion など）ではありません。中心的なユースケースは、ソーシャルフィードやマイクロブログ・ストリームに近いものです。
-
-3. **AXOXE は無料？**
-   はい。AXOXE は AGPL-3.0 のもと完全に無料・オープンソースです。広告、トラッキング、サブスクリプション、サービスロックインはありません。
-
-4. **データのバックアップとインポートは？**
-   AXOXE は「スナップショット・エクスポート」と「マイグレーション・インポート」によるリストア／移行をサポートしています。デプロイ層では、マウントしたデータディレクトリ（例：`/opt/axoxe/data`）を定期的にバックアップしてください。デフォルトではコアデータはローカル DB に保存されます。オブジェクトストレージを有効化している場合、メディアアセットは設定したストレージバックエンドに書き込まれます。
-
-5. **AXOXE は RSS をサポート？**
-   はい。AXOXE は RSS 配信に対応しており、RSS リーダーから更新を購読できます。
-
-6. **「管理者に連絡してください」と表示されて投稿できないのは？**
-   投稿はデフォルトで権限のあるアカウントに制限されています。初期化時、最初のアカウントが Owner（管理権限あり）になります。一般ユーザーは権限のあるアカウントから明示的に許可されるまで投稿できません。初回セットアップであれば [60 秒で試す](#60-秒で試す) を参照し、Owner となっているアカウントを確認してください。
-
-7. **詳細な権限マトリクスがないのはなぜ？**
-   AXOXE は現在、運用をシンプルかつ予測可能に保つため、軽量なロールモデル（Owner / Admin / 一般ユーザー）を採用しています。権限モデルはコミュニティのフィードバックに基づき今後も進化します。
-
-8. **他の人の Connect アバターが表示されないのは？**
-   `システム設定 - サービス URL` に現在のインスタンス URL を設定してください。例：`https://memo.sn0w.fyi/`（`http://` または `https://` を含めること）。
-
-9. **設定の MetingAPI とは？**
-   音楽カードが再生用ストリーム情報を解決するために使う API エンドポイントです。自前または信頼できるエンドポイントを指定できます。空欄の場合は、AXOXE のデフォルト・リゾルバが使われます。本番環境では自前のエンドポイントを推奨します。
-
-10. **新たに追加した Connect の一部しか表示されないのは？**
-    バックエンドはすべての Connect エントリのインスタンス情報を取得しようとします。インスタンスがダウンしていたり到達不能だったりする場合は破棄され、有効でアクセス可能な Connect データのみがフロントエンドに返されます。
-
-11. **コメントを有効化するには？**
-    パネルのコメント管理でコメントを有効にし、必要に応じてモデレーションと CAPTCHA を設定してください。AXOXE は CAPTCHA 検証用に `gocap` を内蔵しているため、独立した CAPTCHA サービスのデプロイは不要です。
-
-12. **S3 ストレージの設定方法は？**
-    ストレージ設定でプロバイダー、Endpoint、Bucket、Access Key、Secret Key などを入力します。endpoint は `http://` や `https://` なしの形式を推奨します。ブラウザがメディアを直接取得する場合、選択したポリシー（public-read 相当、または同等の CDN/Gateway 構成）でオブジェクトが読み取り可能であることを確認してください。
-
-13. **Passkey ログインを有効化するには？**
-    `SSO - Passkey` で `WebAuthn RP ID` と `WebAuthn Origins` を設定し、保存して「Passkey 準備完了」と表示された後、ブラウザのプロンプトに従って生体認証またはセキュリティキーをバインドします。
-
-14. **サードパーティ統合に関する公式声明**
-    AXOXE が公式に承認していないサードパーティ統合プラットフォームやサービスは、公式サポートの対象外です。これらの利用に起因するセキュリティインシデント、データ損失、アカウントの問題、その他のリスクは、利用者およびサードパーティの責任となります。
-
-15. **サードパーティ統合（AI／自動化）からコメントを投稿するには？**
-    AXOXE は CAPTCHA とフォームトークン検証をバイパスする専用の統合用コメントエンドポイント `POST /api/comments/integration` を提供しています。「アクセストークン」管理から、scope `comment:write` と audience `integration` を持つアクセストークンを作成し、`Authorization: Bearer <token>` ヘッダーに付与してください。リクエストボディとレスポンスについては、インスタンスが提供する OpenAPI ドキュメント（`/swagger/index.html`、ローカル開発では通常 `http://localhost:6277/swagger/index.html`）を参照してください。このエンドポイントには独立したレートリミットが設定されており、コメントは `source=integration` でタグ付けされ、管理画面で識別できます。
-
-16. **ローカル／S3 ストレージのデータ配置、`key` のマッピング規則、S3 やローカル ⇄ オブジェクト間の移行についての詳細は？**
-    リポジトリ内ドキュメント [ストレージ移行ガイド](./docs/usage/storage-migration.md) を参照してください。フラットな `key` の値が、ディスク上のパスや S3 オブジェクトキーにどうマップされるか（`schema.Resolve` と `PathPrefix` を含む）、保存される `File.url` のスナップショットが UI とどう対応するか、静的な `/api/files` アクセスと認証付き `stream` ルートの違い、S3 プロバイダーの切り替えやローカル⇄オブジェクトストレージ間のデータ移行に関する実務的なガイダンスを記載しています。
-
-</details>
-
----
-
-## フィードバックとコミュニティ
-
-- バグを見つけた場合は [Issues](https://github.com/Versior/Ech0/issues) で報告してください。
-- 新機能や改善のアイデアは [Discussions](https://github.com/Versior/Ech0/discussions) で歓迎します。
-- 公式 QQ グループ：`1065435773`
-
-### 上流 Hub に参加する
-
-[Upstream Hub](https://hub.ech0.app/) は、登録された公開 AXOXE インスタンスのタイムラインを集約する公開ディレクトリです。**あなたの**公開インスタンスを登録する手順については、[`hub/README.md`](./hub/README.md) を参照してください。
-
-| 公式 QQ コミュニティ                                              | その他のグループ |
-| ----------------------------------------------------------------- | ---------------- |
-| <img src="./docs/imgs/qq.png" alt="QQ グループ" style="height:250px;"> | なし             |
-
----
-
-## オープンソース運営と開発
-
-**運営**
-
-- [コントリビューションガイド](./CONTRIBUTING.md)
-- [行動規範](./CODE_OF_CONDUCT.md)
-- [セキュリティポリシー](./SECURITY.md)
-- [ライセンス](./LICENSE)
-
-**開発**
-
-ローカル開発のセットアップ、環境要件、フロントエンド／バックエンド連携については **[docs/dev/development.md](./docs/dev/development.md)** を参照してください。より高レベルなアーキテクチャと規約については [`AGENTS.md`](./AGENTS.md) と [`CONTRIBUTING.md`](./CONTRIBUTING.md) をご覧ください。インタラクティブなアーキテクチャ図は **[Architecture](./site/public/arch/index.html)** で公開しています。
-
----
-
-## Acknowledgements
-
-AXOXE builds on Ech0 by L1nSn0w and its contributors. The upstream project and its bundled libraries retain their original licenses and copyright notices. See [NOTICE](./NOTICE), [LICENSE](./LICENSE), and the [brand guide](./docs/brand/README.md).
+Axoxe は L1nSn0w と貢献者による Ech0 を基にしています。ライセンスは **[AGPL-3.0-or-later](./LICENSE)** です。[NOTICE](./NOTICE) と[遵守ガイド](./docs/legal/agpl-compliance.md)を確認してください。機能と開発手順の詳細は[英語 README](./README.md)にあります。

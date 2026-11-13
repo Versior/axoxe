@@ -25,11 +25,11 @@ The application assets in `web/public/`, the documentation logo in `docs/imgs/`,
 ## Source and attribution
 
 - Website: <https://www.axoxe.com/>
-- AXOXE source: <https://github.com/Versior/Ech0>
-- Upstream: [Ech0](https://github.com/lin-snow/Ech0), based on v5.9.8.
+- AXOXE source: <https://github.com/Versior/axoxe>
+- Upstream: [Ech0](https://github.com/lin-snow/Ech0), based on v5.9.9.
 - License: AGPL-3.0-or-later. Existing copyright and third-party notices remain attached to their original authors.
 
-The GitHub repository still has the real name `Versior/Ech0`. Links must use that existing path until the repository is renamed.
+The GitHub repository is `Versior/axoxe`. Product source links use this canonical path.
 
 ## Compatibility
 
@@ -39,7 +39,7 @@ Current README, website and PWA screenshots are captured from the AXOXE UI with 
 
 ## Builds and exports
 
-Build the application with Node.js 26+, pnpm 12.14.0, Go 1.27.3+, and a C compiler. Build the CLI with Bun 1.4.4+. `@axoxe/cli` is the private source package and prepared distribution name; public npm publication is not assumed.
+Build the application with Node.js 26+, pnpm 12.14.0, Go 1.27.4+, and a C compiler. Build the CLI with Bun 1.4.4+. `@axoxe/cli` is the private source package and prepared distribution name; public npm publication is not assumed.
 
 The asset renderer uses FFmpeg for the JPEG cover; the optional SVG renderer can be installed outside the repository:
 

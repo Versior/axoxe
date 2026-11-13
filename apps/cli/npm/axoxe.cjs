@@ -26,7 +26,7 @@ if (!SUPPORTED[platform] || !SUPPORTED[platform].includes(arch)) {
     .join(", ");
   console.error(
     `axoxe: unsupported platform ${platform}/${arch}. Supported: ${list}. ` +
-      "Build from source: https://github.com/Versior/Ech0/tree/main/apps/cli",
+      "Build from source: https://github.com/Versior/axoxe/tree/main/apps/cli",
   );
   process.exit(1);
 }

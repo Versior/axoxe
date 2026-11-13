@@ -9,14 +9,14 @@ import (
 )
 
 const (
-	Version = "5.9.8"
+	Version = "5.9.9"
 
 	// License is the SPDX identifier of the project license.
 	License = "AGPL-3.0-or-later"
 
 	Author = "L1nSn0w"
 
-	RepoURL = "https://github.com/Versior/Ech0"
+	RepoURL = "https://github.com/Versior/axoxe"
 
 	StartYear = 2025
 )

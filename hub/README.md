@@ -7,7 +7,7 @@ Frontend for **[hub.ech0.app](https://hub.ech0.app)**: it loads a static **insta
 Want **your** public AXOXE instance to appear on [hub.ech0.app](https://hub.ech0.app)? Two steps:
 
 1. **Configure CORS on your instance.** Allow the Hub origin to call your instance API — set `Access-Control-Allow-Origin` (or the equivalent on your reverse proxy / CDN) to permit `https://hub.ech0.app`. If you also develop the Hub locally, additionally allow `http://localhost:5173`. If you cannot modify your instance, run a reverse proxy on the Hub domain so requests are same-origin.
-2. **Open the registration issue.** Submit via [**Register on AXOXE Hub**](https://github.com/Versior/Ech0/issues/new?template=register-hub-instance.yml) (GitHub sign-in required) and fill in:
+2. **Open the registration issue.** Submit via [**Register on AXOXE Hub**](https://github.com/Versior/axoxe/issues/new?template=register-hub-instance.yml) (GitHub sign-in required) and fill in:
    - **Instance ID** — lowercase letters, digits, and hyphens only; globally unique within Hub.
    - **Instance URL** — your deployment base URL, **no trailing slash** (e.g. `https://memo.example.com`).
 

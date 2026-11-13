@@ -78,7 +78,8 @@
               target="_blank"
               rel="noopener noreferrer"
               class="about-link"
-            >{{ t('about.upstreamAttribution') }}</a>
+              >{{ t('about.upstreamAttribution') }}</a
+            >
           </p>
           <p class="about-colophon__powered">{{ t('about.poweredBy') }}</p>
         </div>
@@ -128,7 +129,7 @@ const onPointerUp = (e: PointerEvent) => {
   } catch {}
 }
 
-const FALLBACK_REPO = 'https://github.com/Versior/Ech0'
+const FALLBACK_REPO = 'https://github.com/Versior/axoxe'
 const FALLBACK_AUTHOR = 'L1nSn0w'
 const FALLBACK_LICENSE = 'AGPL-3.0-or-later'
 

@@ -1,6 +1,6 @@
 # AXOXE — official site & documentation
 
-This package is the **official** landing page and **documentation site** for [AXOXE](https://github.com/Versior/Ech0). It is a **client-side SPA** (no SSR): React Router 7, React 19, Vite, Tailwind CSS v4, and Markdown-backed docs.
+This package is the **official** landing page and **documentation site** for [AXOXE](https://github.com/Versior/axoxe). It is a **client-side SPA** (no SSR): React Router 7, React 19, Vite, Tailwind CSS v4, and Markdown-backed docs.
 
 ## What lives here
 
@@ -58,4 +58,4 @@ When deploying to a custom domain, align `VITE_SITE_URL` and update `public/site
 
 ## License
 
-Content and code follow the same terms as the parent [AXOXE](https://github.com/Versior/Ech0) repository unless noted otherwise.
+Content and code follow the same terms as the parent [AXOXE](https://github.com/Versior/axoxe) repository unless noted otherwise.

@@ -8,7 +8,7 @@ description: Docker / Compose / 二进制 / Helm；端口、数据与安全要�
 Build this fork to get the AXOXE interface and icons. Upstream images do not include these changes.
 
 ```shell
-git clone https://github.com/Versior/Ech0.git AXOXE
+git clone https://github.com/Versior/axoxe.git AXOXE
 cd AXOXE
 pnpm -C web install --frozen-lockfile
 pnpm -C web build
@@ -39,4 +39,4 @@ The Compose example builds the local image and mounts `docker/data/`. Back up yo
 
 ## Further configuration
 
-Consult [the deployment guide](https://github.com/Versior/Ech0/blob/main/DEPLOYMENT.md) for upgrades and [the configuration reference](https://github.com/Versior/Ech0/blob/main/docs/usage/configuration.md) for `ECH0_*` variables.
+Consult [the deployment guide](https://github.com/Versior/axoxe/blob/main/DEPLOYMENT.md) for upgrades and [the configuration reference](https://github.com/Versior/axoxe/blob/main/docs/usage/configuration.md) for `ECH0_*` variables.

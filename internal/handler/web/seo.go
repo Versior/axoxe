@@ -594,7 +594,7 @@ func websiteJSONLD(siteTitle, description, origin string) string {
 			"url":   origin,
 			"logo":  origin + defaultLogoImage,
 		},
-		"sameAs": []string{"https://github.com/Versior/Ech0"},
+		"sameAs": []string{"https://github.com/Versior/axoxe"},
 	})
 }
 

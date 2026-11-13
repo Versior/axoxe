@@ -3,7 +3,7 @@ title: 常见问题
 description: 部署、权限、存储与集成问答
 ---
 
-若这里没有你的情况，可到 [GitHub Discussions](https://github.com/Versior/Ech0/discussions) 搜索或提问。
+若这里没有你的情况，可到 [GitHub Discussions](https://github.com/Versior/axoxe/discussions) 搜索或提问。
 
 ---
 

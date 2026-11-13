@@ -95,7 +95,7 @@ function packageName(target: Target): string {
 
 // Trusted publishing matches `repository.url` against the GitHub repository, so
 // the fallback keeps the real casing (GITHUB_REPOSITORY in CI).
-const repository = process.env.GITHUB_REPOSITORY ?? "Versior/Ech0";
+const repository = process.env.GITHUB_REPOSITORY ?? "Versior/axoxe";
 
 function repositoryField(): Record<string, string> {
   return {

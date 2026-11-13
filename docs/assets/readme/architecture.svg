@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">AXOXE architecture</title>
+  <desc id="desc">One Go process serves the Vue application and REST API. Requests flow through handlers, services, repositories and SQLite. Services publish events through Busen; VireFS handles local and S3 storage. MCP calls services and Copilot calls external LLM providers.</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="none" stroke="#b44f2f" stroke-width="1.5"/></marker></defs>
+  <rect width="1280" height="760" rx="18" fill="#f7f5f0"/>
+  <text x="56" y="54" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#b44f2f">UNDER THE SURFACE</text>
+  <text x="56" y="99" font-family="Arial, sans-serif" font-size="30" font-weight="600" fill="#191917">One binary. A complete personal timeline.</text>
+  <text x="56" y="134" font-family="Arial, sans-serif" font-size="15" font-weight="400" fill="#65645d">The SPA, API and background workers run together in a single Go process.</text>
+  <rect x="40" y="242" width="1200" height="412" rx="14" fill="none" stroke="#bcb8ad" stroke-dasharray="5 6"/>
+  <text x="56" y="268" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#65645d">GO PROCESS / WIRE DEPENDENCY INJECTION</text>
+  <rect x="56" y="165" width="346" height="86" rx="10" fill="#fff" stroke="#d9d6cd"/><text x="76" y="200" font-family="Arial, sans-serif" font-size="19" font-weight="600" fill="#191917">Browser / PWA</text><text x="76" y="227" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#65645d">Vue 3 · Pinia · Vue Router · UnoCSS</text>
+  <rect x="467" y="165" width="345" height="86" rx="10" fill="#fff" stroke="#d9d6cd"/><text x="487" y="200" font-family="Arial, sans-serif" font-size="19" font-weight="600" fill="#191917">API clients</text><text x="487" y="227" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#65645d">REST · OpenAPI · SSE</text>
+  <rect x="880" y="165" width="344" height="86" rx="10" fill="#fff" stroke="#d9d6cd"/><text x="900" y="200" font-family="Arial, sans-serif" font-size="19" font-weight="600" fill="#191917">External AI clients</text><text x="900" y="227" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#65645d">MCP · scoped access tokens</text>
+  <rect x="56" y="302" width="346" height="86" rx="10" fill="#fff" stroke="#d9d6cd"/><text x="76" y="337" font-family="Arial, sans-serif" font-size="19" font-weight="600" fill="#191917">HTTP &amp; handlers</text><text x="76" y="364" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#65645d">Gin · Huma · auth · scopes · rate limits</text>
+  <rect x="467" y="302" width="345" height="86" rx="10" fill="#fff" stroke="#d9d6cd"/><text x="487" y="337" font-family="Arial, sans-serif" font-size="19" font-weight="600" fill="#191917">Domain services</text><text x="487" y="364" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#65645d">Content · comments · auth · migration</text>
+  <rect x="880" y="302" width="344" height="86" rx="10" fill="#fff" stroke="#d9d6cd"/><text x="900" y="337" font-family="Arial, sans-serif" font-size="19" font-weight="600" fill="#191917">Repositories</text><text x="900" y="364" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#65645d">GORM · transactions · durable settings</text>
+  <rect x="56" y="445" width="346" height="86" rx="10" fill="#fff" stroke="#d9d6cd"/><text x="76" y="480" font-family="Arial, sans-serif" font-size="19" font-weight="600" fill="#191917">Storage / VireFS</text><text x="76" y="507" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#65645d">Local files · S3-compatible object stores</text>
+  <rect x="467" y="445" width="345" height="86" rx="10" fill="#fff" stroke="#d9d6cd"/><text x="487" y="480" font-family="Arial, sans-serif" font-size="19" font-weight="600" fill="#191917">Events / Busen</text><text x="487" y="507" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#65645d">Webhooks · indexing · cache invalidation</text>
+  <rect x="880" y="445" width="344" height="86" rx="10" fill="#fff" stroke="#d9d6cd"/><text x="900" y="480" font-family="Arial, sans-serif" font-size="19" font-weight="600" fill="#191917">Copilot / Agent</text><text x="900" y="507" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#65645d">RAG · tools · OpenAI / Anthropic providers</text>
+  <text x="56" y="585" font-family="Arial, sans-serif" font-size="15" font-weight="400" fill="#65645d">Scheduled snapshots</text>
+  <text x="467" y="585" font-family="Arial, sans-serif" font-size="15" font-weight="400" fill="#65645d">Job and task lifecycle</text>
+  <g stroke="#b44f2f" stroke-width="1.5" fill="none" marker-end="url(#arrow)">
+    <path d="M229 252V297"/><path d="M639 252V288H229V297"/>
+    <path d="M1052 252V288H639V297"/>
+    <path d="M403 345H458"/><path d="M813 345H871"/>
+    <path d="M639 389V436"/><path d="M611 389V414H229V436"/>
+    <path d="M668 389V414H1052V436"/>
+    <path d="M1224 345H1231V541H1052V550"/>
+  </g>
+  <rect x="880" y="554" width="344" height="86" rx="10" fill="#fff" stroke="#d9d6cd"/><text x="900" y="589" font-family="Arial, sans-serif" font-size="19" font-weight="600" fill="#191917">SQLite + sqlite-vec</text><text x="900" y="616" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#65645d">Embedded database · vector search</text>
+  <text x="56" y="680" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#65645d">Solid arrows show request / dependency flow.</text>
+  <text x="56" y="705" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#65645d">Busen subscribers handle asynchronous side effects.</text>
+</svg>

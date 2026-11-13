@@ -4,7 +4,7 @@
 import type { Plugin } from 'vite'
 
 export function fingerprintPlugin(): Plugin {
-  const banner = `/*! Powered by AXOXE — https://github.com/Versior/Ech0 | Based on Ech0, Copyright (C) 2025-2026 L1nSn0w and contributors | AGPL-3.0-or-later */`
+  const banner = `/*! Powered by AXOXE — https://github.com/Versior/axoxe | Based on Ech0, Copyright (C) 2025-2026 L1nSn0w and contributors | AGPL-3.0-or-later */`
 
   return {
     name: 'ech0-fingerprint',

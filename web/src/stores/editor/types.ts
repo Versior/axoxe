@@ -23,9 +23,11 @@ export type TweetToAdd = {
   statusId: string
 }
 
+export type EditorSession = { kind: 'compose' } | { kind: 'update'; echo: App.Api.AXOXE.Echo }
+
 export type EditorDraft = {
   savedAt: number
-  echoToAdd: Pick<App.Api.AXOXE.EchoToAdd, 'content' | 'private' | 'layout' | 'extension'>
+  echoToAdd: Pick<App.Api.AXOXE.EchoToAdd, 'content' | 'private' | 'layout'>
   filesToAdd: App.Api.AXOXE.FileToAdd[]
   websiteToAdd: WebsiteToAdd
   videoURL: string

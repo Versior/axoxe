@@ -17,7 +17,7 @@ Please do not disclose security vulnerability details in public Issues or Discus
 
 We recommend using GitHub’s private vulnerability reporting (Security Advisories):
 
-- https://github.com/Versior/Ech0/security/advisories/new
+- https://github.com/Versior/axoxe/security/advisories/new
 
 If you cannot use the link above, contact the maintainers through a private channel they control, and include:
 

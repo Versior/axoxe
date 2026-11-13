@@ -7,7 +7,7 @@ All notable user-visible changes to AXOXE are recorded here.
 
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html), and this file follows the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
 
-For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/Versior/Ech0/releases) — earlier release notes are not retroactively imported here.
+For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/Versior/axoxe/releases) — earlier release notes are not retroactively imported here.
 
 
 ## [Unreleased]
@@ -19,6 +19,34 @@ For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/
 - Use `axoxe` for the CLI and locally built server binary; retain the CLI's `ech0` alias and existing configuration, credential, integration, and data-format identifiers.
 - Point product source links to the AXOXE fork while preserving the upstream copyright, license, and attribution.
 - Pin frontend builds to the published pnpm 12.14.0 release; the CLI lockfile requires Bun 1.4.4 or newer.
+
+## [5.9.9] - 2026-11-11
+
+### Added
+
+- **The editor previews the post while it is written.** The media strip below the editor is now one framed preview area with Text, Files and Extension tabs: the text tab renders the draft as Markdown, the files tab reuses the timeline's image/audio/video players, and the extension tab renders the actual card (music, video, GitHub repo, website, tweet or location). The tab switch only lists the previews that exist, follows a newly added file or extension instead of staying on an empty tab, and the extension card waits 350 ms for the draft to settle and stays hidden until its payload can render, so a half-typed URL never leaves a stale card. An extension can be removed from the preview after confirmation; in update mode that removal is synced to the server immediately.
+
+### Changed
+
+- **Editing an Echo opens a draft loaded from the server.** Entering update mode now fetches the Echo by id before seeding the editor, so content, attachments, extension, tags, privacy and layout always come from the stored post rather than from the timeline card. Attachments that already belong to the Echo appear in the uploader list next to new uploads, can be reordered with them, and a reorder is synced right away, so leaving the editor cannot lose it. Removing an existing attachment asks for confirmation because it also deletes the file on the backend. The draft now lives in the editor store's session, so remounting the editor no longer clears it, and submitting builds the payload from the current drafts instead of mutating a shared `echoToAdd` object.
+
+### Fixed
+
+- **Batch uploads no longer drop finished files from the uploader list.** A completed batch is handed to the editor store one attachment at a time (image sizing is async), while the uploader pruned any item whose result id was missing from the current store snapshot — so several files uploaded together could disappear from the list before the store had received them. The uploader now only removes an item whose id was attached earlier and has since disappeared.
+
+- **Location cards show a real basemap again.** The CARTO raster tiles Ech0 used stopped being served without an API key on 25 September 2026, so every location map showed the "API KEY REQUIRED" watermark. Tiles now come from the keyless OpenStreetMap raster endpoint; dark mode filters the tile pane instead of loading a second tile style.
+
+### Security
+
+- **Go 1.27.4 closes twelve toolchain CVEs.** The release fixes an HTTP/1 server panic in `net/http`: when `MaxBytesReader`'s limit is exceeded, the automatic `Connection: close` header races with a header set by the handler (CVE-2026-97054). The other eleven harden `cmd/go`, `cmd/cgo`, `cmd/compile` and `cmd/link` so a malicious package cannot execute code or inject linker flags while building — split `-Wl,` flags, `#cgo` sysroot/target flags, GCC spec files, `.syso` files and `//go:cgo_*` directives (CVE-2026-97033 through CVE-2026-97043). No application code, API or schema changes; `govulncheck ./...` reports no reachable vulnerabilities.
+
+### Internal
+
+- **Go 1.27.4 is now required.** `go.mod`, the Docker builder image, CI workflows, the issue template example and the development docs target Go 1.27.4.
+
+- **The editor is an explicit session with derived payloads.** `stores/editor/index.ts` models compose/update as an `EditorSession` (fetch by id, draft seeding, payload merge on submit), `utils/extension.ts` owns `buildEchoExtension`/`isExtensionPreviewReady`, `useUpload.hydrate` turns stored attachments into queue items, and `TheEditorPreview.vue` owns preview tab selection. The duplicated `echoStore.echoToUpdate`, `updateDraftSeeded`, `currentExtensionType`, `syncEchoExtension` and `checkIsEmptyEcho` state is gone; editor payloads, update mode, extension preview and uploader queue behavior are covered by new vitest suites.
+
+- **Dependencies updated.** Go: `openai-go/v3` 3.90.0 → 3.96.0, AWS SDK v2 (S3, config, credentials, `smithy-go`, indirect packages) and `caarlos0/env/v11` 11.4.1 → 11.4.2. Web: `vue` 3.5.45, `vue-i18n` 11.4.18, `eslint` 10.14, `vite` 8.3.6, `vitest` 5.1.0, `sass-embedded` 1.108, `jsdom` 31. CI: `helm/chart-releaser-action` 1.8.0 → 1.9.0.
 
 ## [5.9.8] - 2026-11-09
 
@@ -235,7 +263,7 @@ For releases prior to v4.6.5, see the [GitHub releases page](https://github.com/
 
 ### Added
 
-* **The `em` manager script updates itself.** `em self-update` (menu option 10) replaces `/usr/local/sbin/em` with the current script and refreshes the `em` / `ech0` links, and `em update` now does the same on every run, even when the server binary is already current. Installs that still run the old script need one bootstrap: `curl -fsSL https://raw.githubusercontent.com/Versior/Ech0/main/scripts/ech0.sh | sudo bash -s -- self-update`.
+* **The `em` manager script updates itself.** `em self-update` (menu option 10) replaces `/usr/local/sbin/em` with the current script and refreshes the `em` / `ech0` links, and `em update` now does the same on every run, even when the server binary is already current. Installs that still run the old script need one bootstrap: `curl -fsSL https://raw.githubusercontent.com/Versior/axoxe/main/scripts/ech0.sh | sudo bash -s -- self-update`.
 
 * **`em logs`, `em help`, and `em update --force`.** Logs are one command away instead of a raw `journalctl` invocation, `help` lists every action, and `--force` reinstalls the current release when a normal update skips it.
 
@@ -499,8 +527,8 @@ A reliability release centered on the database and on leftover-data hygiene. SQL
 ### Fixed
 
 - **Deleting an Echo no longer strands its extension row.** `DeleteEchoById` relied on the schema's `ON DELETE CASCADE` to remove the Echo's extension (website card, video link, GitHub card, …) — which never fires, because SQLite connections default to `foreign_keys=OFF` — so every deleted Echo that carried an extension silently left an orphaned `echo_extensions` row behind. The extension is now deleted explicitly alongside the Echo's files, and a one-shot idempotent migration sweeps out the orphans accumulated by older versions on next startup.
-- **Direct-link attachments abandoned in a draft no longer linger in the database forever** ([#316](https://github.com/Versior/Ech0/issues/316)). Uploaded files get a temp-tracking row that the periodic orphan cleanup reaps if the Echo is never published — but direct-link (external URL) attachments never got one, so removing one from a draft with the ✕ button, or closing the browser mid-draft, left its `files` row behind permanently with nothing ever cleaning it up. New external records are now temp-tracked exactly like uploads: publishing the Echo confirms them, and the periodic cleanup reaps the unconfirmed rest. (When the same URL is deduplicated onto an existing record, that record is deliberately *not* re-tracked — it may already back published Echos.)
-- **Failed attachment-blob deletions are now visible in the logs** ([#316](https://github.com/Versior/Ech0/issues/316)). When deleting an Echo (or a single file) removed the database record but deleting the stored blob failed, the error was silently swallowed — the blob became an invisible orphan on disk or in the bucket. Both paths now warn-log the file key and storage type, so operators can spot and reclaim leftovers.
+- **Direct-link attachments abandoned in a draft no longer linger in the database forever** ([#316](https://github.com/Versior/axoxe/issues/316)). Uploaded files get a temp-tracking row that the periodic orphan cleanup reaps if the Echo is never published — but direct-link (external URL) attachments never got one, so removing one from a draft with the ✕ button, or closing the browser mid-draft, left its `files` row behind permanently with nothing ever cleaning it up. New external records are now temp-tracked exactly like uploads: publishing the Echo confirms them, and the periodic cleanup reaps the unconfirmed rest. (When the same URL is deduplicated onto an existing record, that record is deliberately *not* re-tracked — it may already back published Echos.)
+- **Failed attachment-blob deletions are now visible in the logs** ([#316](https://github.com/Versior/axoxe/issues/316)). When deleting an Echo (or a single file) removed the database record but deleting the stored blob failed, the error was silently swallowed — the blob became an invisible orphan on disk or in the bucket. Both paths now warn-log the file key and storage type, so operators can spot and reclaim leftovers.
 
 ### Internal
 
@@ -1064,40 +1092,40 @@ This is primarily a security release: six advisories disclosed since v4.7.2 are 
 
   Practical risk in this repo was negligible (the vulnerable code only runs at PWA build time on developer-controlled input), but the alerts are now resolved at the supply-chain level.
 
-[Unreleased]: https://github.com/Versior/Ech0/compare/v5.9.5...HEAD
-[5.9.5]: https://github.com/Versior/Ech0/compare/v5.9.4...v5.9.5
-[5.9.4]: https://github.com/Versior/Ech0/compare/v5.9.3...v5.9.4
-[5.9.3]: https://github.com/Versior/Ech0/compare/v5.9.2...v5.9.3
-[5.9.2]: https://github.com/Versior/Ech0/compare/v5.9.1...v5.9.2
-[5.9.1]: https://github.com/Versior/Ech0/compare/v5.9.0...v5.9.1
-[5.9.0]: https://github.com/Versior/Ech0/compare/v5.8.3...v5.9.0
-[5.8.3]: https://github.com/Versior/Ech0/compare/v5.8.2...v5.8.3
-[5.5.0]: https://github.com/Versior/Ech0/compare/v5.4.7...v5.5.0
-[5.4.7]: https://github.com/Versior/Ech0/compare/v5.4.6...v5.4.7
-[5.4.6]: https://github.com/Versior/Ech0/compare/v5.4.5...v5.4.6
-[5.4.5]: https://github.com/Versior/Ech0/compare/v5.4.4...v5.4.5
-[5.4.4]: https://github.com/Versior/Ech0/compare/v5.4.3...v5.4.4
-[5.4.3]: https://github.com/Versior/Ech0/compare/v5.4.2...v5.4.3
-[5.4.2]: https://github.com/Versior/Ech0/compare/v5.4.1...v5.4.2
-[5.4.1]: https://github.com/Versior/Ech0/compare/v5.4.0...v5.4.1
-[5.4.0]: https://github.com/Versior/Ech0/compare/v5.3.0...v5.4.0
-[5.3.0]: https://github.com/Versior/Ech0/compare/v5.2.5...v5.3.0
-[5.2.5]: https://github.com/Versior/Ech0/compare/v5.2.4...v5.2.5
-[5.2.4]: https://github.com/Versior/Ech0/compare/v5.2.3...v5.2.4
-[5.2.3]: https://github.com/Versior/Ech0/compare/v5.2.2...v5.2.3
-[5.2.2]: https://github.com/Versior/Ech0/compare/v5.2.1...v5.2.2
-[5.2.1]: https://github.com/Versior/Ech0/compare/v5.2.0...v5.2.1
-[5.2.0]: https://github.com/Versior/Ech0/compare/v5.1.0...v5.2.0
-[5.1.0]: https://github.com/Versior/Ech0/compare/v5.0.2...v5.1.0
-[5.0.2]: https://github.com/Versior/Ech0/compare/v5.0.0...v5.0.2
-[5.0.0]: https://github.com/Versior/Ech0/compare/v4.9.2...v5.0.0
-[4.9.2]: https://github.com/Versior/Ech0/compare/v4.9.0...v4.9.2
-[4.9.0]: https://github.com/Versior/Ech0/compare/v4.8.2...v4.9.0
-[4.8.2]: https://github.com/Versior/Ech0/compare/v4.8.1...v4.8.2
-[4.8.1]: https://github.com/Versior/Ech0/compare/v4.8.0...v4.8.1
-[4.8.0]: https://github.com/Versior/Ech0/compare/v4.7.5...v4.8.0
-[4.7.5]: https://github.com/Versior/Ech0/compare/v4.7.4...v4.7.5
-[4.7.4]: https://github.com/Versior/Ech0/compare/v4.7.3...v4.7.4
-[4.7.3]: https://github.com/Versior/Ech0/compare/v4.7.2...v4.7.3
-[4.7.2]: https://github.com/Versior/Ech0/compare/v4.7.1...v4.7.2
-[4.7.1]: https://github.com/Versior/Ech0/compare/v4.7.0...v4.7.1
+[Unreleased]: https://github.com/Versior/axoxe/compare/v5.9.5...HEAD
+[5.9.5]: https://github.com/Versior/axoxe/compare/v5.9.4...v5.9.5
+[5.9.4]: https://github.com/Versior/axoxe/compare/v5.9.3...v5.9.4
+[5.9.3]: https://github.com/Versior/axoxe/compare/v5.9.2...v5.9.3
+[5.9.2]: https://github.com/Versior/axoxe/compare/v5.9.1...v5.9.2
+[5.9.1]: https://github.com/Versior/axoxe/compare/v5.9.0...v5.9.1
+[5.9.0]: https://github.com/Versior/axoxe/compare/v5.8.3...v5.9.0
+[5.8.3]: https://github.com/Versior/axoxe/compare/v5.8.2...v5.8.3
+[5.5.0]: https://github.com/Versior/axoxe/compare/v5.4.7...v5.5.0
+[5.4.7]: https://github.com/Versior/axoxe/compare/v5.4.6...v5.4.7
+[5.4.6]: https://github.com/Versior/axoxe/compare/v5.4.5...v5.4.6
+[5.4.5]: https://github.com/Versior/axoxe/compare/v5.4.4...v5.4.5
+[5.4.4]: https://github.com/Versior/axoxe/compare/v5.4.3...v5.4.4
+[5.4.3]: https://github.com/Versior/axoxe/compare/v5.4.2...v5.4.3
+[5.4.2]: https://github.com/Versior/axoxe/compare/v5.4.1...v5.4.2
+[5.4.1]: https://github.com/Versior/axoxe/compare/v5.4.0...v5.4.1
+[5.4.0]: https://github.com/Versior/axoxe/compare/v5.3.0...v5.4.0
+[5.3.0]: https://github.com/Versior/axoxe/compare/v5.2.5...v5.3.0
+[5.2.5]: https://github.com/Versior/axoxe/compare/v5.2.4...v5.2.5
+[5.2.4]: https://github.com/Versior/axoxe/compare/v5.2.3...v5.2.4
+[5.2.3]: https://github.com/Versior/axoxe/compare/v5.2.2...v5.2.3
+[5.2.2]: https://github.com/Versior/axoxe/compare/v5.2.1...v5.2.2
+[5.2.1]: https://github.com/Versior/axoxe/compare/v5.2.0...v5.2.1
+[5.2.0]: https://github.com/Versior/axoxe/compare/v5.1.0...v5.2.0
+[5.1.0]: https://github.com/Versior/axoxe/compare/v5.0.2...v5.1.0
+[5.0.2]: https://github.com/Versior/axoxe/compare/v5.0.0...v5.0.2
+[5.0.0]: https://github.com/Versior/axoxe/compare/v4.9.2...v5.0.0
+[4.9.2]: https://github.com/Versior/axoxe/compare/v4.9.0...v4.9.2
+[4.9.0]: https://github.com/Versior/axoxe/compare/v4.8.2...v4.9.0
+[4.8.2]: https://github.com/Versior/axoxe/compare/v4.8.1...v4.8.2
+[4.8.1]: https://github.com/Versior/axoxe/compare/v4.8.0...v4.8.1
+[4.8.0]: https://github.com/Versior/axoxe/compare/v4.7.5...v4.8.0
+[4.7.5]: https://github.com/Versior/axoxe/compare/v4.7.4...v4.7.5
+[4.7.4]: https://github.com/Versior/axoxe/compare/v4.7.3...v4.7.4
+[4.7.3]: https://github.com/Versior/axoxe/compare/v4.7.2...v4.7.3
+[4.7.2]: https://github.com/Versior/axoxe/compare/v4.7.1...v4.7.2
+[4.7.1]: https://github.com/Versior/axoxe/compare/v4.7.0...v4.7.1

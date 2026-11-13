@@ -13,13 +13,13 @@ description: Post, moderate comments, and inspect your instance from the termina
 ## Installation
 
 ```bash
-git clone https://github.com/Versior/Ech0.git AXOXE
+git clone https://github.com/Versior/axoxe.git AXOXE
 cd AXOXE/apps/cli
 bun install --frozen-lockfile
 bun link
 ```
 
-The standalone build supports macOS / Linux (arm64 / x64), ships its own runtime, and needs no separate Node or Go install. Windows is not supported yet. Once AXOXE release assets are published, they will use the name `axoxe-cli-<os>-<arch>.tar.gz` on [GitHub Releases](https://github.com/Versior/Ech0/releases).
+The standalone build supports macOS / Linux (arm64 / x64), ships its own runtime, and needs no separate Node or Go install. Windows is not supported yet. Once AXOXE release assets are published, they will use the name `axoxe-cli-<os>-<arch>.tar.gz` on [GitHub Releases](https://github.com/Versior/axoxe/releases).
 
 ---
 

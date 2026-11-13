@@ -11,7 +11,7 @@ import (
 var nameSpaceDNS = uuid.MustParse("6ba7b810-9dad-11d1-80b4-00c04fd430c8")
 
 func TestNewV5Golden(t *testing.T) {
-	capsuleNS := NewV5(NameSpaceURL, []byte("https://github.com/Versior/Ech0/capsule/build"))
+	capsuleNS := NewV5(NameSpaceURL, []byte("https://github.com/lin-snow/Ech0/capsule/build"))
 
 	tests := []struct {
 		name      string
@@ -23,7 +23,7 @@ func TestNewV5Golden(t *testing.T) {
 		{
 			name:      "capsule build namespace",
 			namespace: NameSpaceURL,
-			input:     "https://github.com/Versior/Ech0/capsule/build",
+			input:     "https://github.com/lin-snow/Ech0/capsule/build",
 			want:      "d2d5a2f6-2044-58fb-b6d7-72a102a3a72d",
 		},
 		{name: "derived tag id", namespace: capsuleNS, input: "tag\x00hello", want: "e81d7a70-2b4e-526e-823e-b8eb3677de82"},

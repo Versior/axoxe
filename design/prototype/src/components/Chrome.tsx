@@ -92,7 +92,7 @@ function RailLinks() {
       <Tip label="GitHub">
         <a
           className={ui.iconButton}
-          href="https://github.com/Versior/Ech0"
+          href="https://github.com/Versior/axoxe"
           target="_blank"
           rel="noreferrer"
           aria-label="GitHub"

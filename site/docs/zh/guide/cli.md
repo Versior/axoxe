@@ -13,13 +13,13 @@ description: 在终端发帖、审核评论、查看实例
 ## 安装
 
 ```bash
-git clone https://github.com/Versior/Ech0.git AXOXE
+git clone https://github.com/Versior/axoxe.git AXOXE
 cd AXOXE/apps/cli
 bun install --frozen-lockfile
 bun link
 ```
 
-独立二进制支持 macOS / Linux（arm64 / x64），自带运行时，不需要额外装 Node 或 Go；暂不支持 Windows。AXOXE 发布资产上传后，将在 [GitHub Releases](https://github.com/Versior/Ech0/releases) 使用 `axoxe-cli-<os>-<arch>.tar.gz` 命名。
+独立二进制支持 macOS / Linux（arm64 / x64），自带运行时，不需要额外装 Node 或 Go；暂不支持 Windows。AXOXE 发布资产上传后，将在 [GitHub Releases](https://github.com/Versior/axoxe/releases) 使用 `axoxe-cli-<os>-<arch>.tar.gz` 命名。
 
 ---
 

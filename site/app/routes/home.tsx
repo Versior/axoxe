@@ -98,9 +98,9 @@ function buildHomeJsonLd() {
         screenshot: imageUrl,
         applicationCategory: "WebApplication",
         operatingSystem: "Linux, Docker, self-hosted",
-        license: "https://github.com/Versior/Ech0/blob/main/LICENSE",
-        codeRepository: "https://github.com/Versior/Ech0",
-        sameAs: ["https://github.com/Versior/Ech0"],
+        license: "https://github.com/Versior/axoxe/blob/main/LICENSE",
+        codeRepository: "https://github.com/Versior/axoxe",
+        sameAs: ["https://github.com/Versior/axoxe"],
         offers: {
           "@type": "Offer",
           price: "0",
@@ -282,7 +282,7 @@ export default function Home() {
           </a>
           <span className="mx-2 text-sand-6">·</span>
           <a
-            href="https://github.com/Versior/Ech0"
+            href="https://github.com/Versior/axoxe"
             className="font-medium underline-offset-4 transition-colors hover:text-sand-12"
           >
             GitHub

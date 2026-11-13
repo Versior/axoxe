@@ -45,7 +45,7 @@ function routes(extra: Record<string, () => RouteReply> = {}): Record<string, ()
           commit: "abcdef123456",
           build_time: "2026-10-01T00:00:00Z",
           license: "AGPL-3.0-or-later",
-          repo_url: "https://github.com/Versior/Ech0",
+          repo_url: "https://github.com/Versior/axoxe",
         },
       },
       headers: { "X-Ech0-Catalog": fingerprint },

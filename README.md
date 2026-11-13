@@ -1,275 +1,176 @@
 <div align="center">
 
-<img alt="AXOXE" src="./docs/brand/axoxe-logo.svg" width="420">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./docs/assets/readme/hero-dark.svg">
+  <img src="./docs/assets/readme/hero-light.svg" alt="Axoxe — Where moments stay. A self-hosted personal timeline." width="100%">
+</picture>
 
-# AXOXE
-
-**Where moments stay.**
-
-A self-hosted space for thoughts, moments, and reflection.
-
-[Website](https://www.axoxe.com/) · [Documentation](./docs/README.md) · [Source](https://github.com/Versior/Ech0) · [Brand assets](./docs/brand/README.md)
+<p>
+  <a href="https://github.com/Versior/axoxe/actions/workflows/test.yml"><img src="https://img.shields.io/github/actions/workflow/status/Versior/axoxe/test.yml?branch=main&amp;style=flat-square&amp;label=backend%20tests" alt="Backend tests"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0--or--later-191917?style=flat-square" alt="AGPL-3.0-or-later"></a>
+  <a href="./go.mod"><img src="https://img.shields.io/badge/Go-1.27+-007d9c?style=flat-square&amp;logo=go&amp;logoColor=white" alt="Go 1.27+"></a>
+  <a href="./web/package.json"><img src="https://img.shields.io/badge/Vue-3-29795b?style=flat-square&amp;logo=vuedotjs&amp;logoColor=white" alt="Vue 3"></a>
+</p>
 
 [English](./README.md) · [简体中文](./README.zh.md) · [Deutsch](./README.de.md) · [日本語](./README.ja.md)
 
-[AGPL-3.0-or-later](./LICENSE)
+**A self-hosted space for thoughts, moments, and reflection.**
+
+[Get started](#get-started) · [Features](#made-for-your-everyday) · [Architecture](#small-footprint-real-engineering) · [Documentation](./docs/README.md) · [Contribute](https://github.com/Versior/axoxe/pulls)
 
 </div>
 
-AXOXE is an independent branded fork of [Ech0](https://github.com/lin-snow/Ech0), based on v5.9.8. Original copyright, license notices, and upstream credits are preserved.
+Axoxe turns short notes, photographs, links, and small discoveries into a personal timeline. Publish it on your own server, invite a conversation, and keep your content in your hands.
 
+An independent branded fork of [Ech0](https://github.com/lin-snow/Ech0), currently synchronized with **v5.9.9**. The interface uses the Axoxe wordmark throughout; upstream copyright, licenses, and compatible data formats are preserved.
 
-> A self-hosted personal microblog where your timeline can be shared, discussed, and fully owned.
+![Axoxe on desktop and mobile](./docs/assets/readme/product-preview.png)
 
-Tools like Memos are great for capturing quick thoughts. AXOXE is built for what comes next: publishing those ideas to a personal timeline that others can follow and interact with.
-Run it on your own server, keep full control of your content, and keep a personal space that still feels connected through optional comments and sharing.
-It stays lightweight, easy to deploy, and fully open-source.
+<sub>Actual interface built from this repository. Posts and accounts in these images use synthetic demonstration data.</sub>
 
-**Great fit if you want to:**
-- run a personal public or semi-public timeline on your own domain
-- publish short posts, links, and media from one clean interface
-- keep data ownership while still getting RSS and optional comments
-- keep a personal space that supports lightweight social interaction without becoming a full social network
+## Made for your everyday
 
-**Probably not for you if you need:**
-- a bi-directional knowledge base workflow (for example Obsidian-style PKM)
-- a team-first collaborative docs workspace (for example Notion-style docs)
-- a pure note-taking / memo tool with no timeline or publishing at all
-
-![AXOXE interface preview with synthetic demo data](./docs/imgs/screenshot.png)
-
----
+| | Capability | What it gives you |
+| :---: | --- | --- |
+| ✍️ | **Write without ceremony** | Markdown, draft persistence, tags, live preview, and public or private posts. |
+| 🖼️ | **More than plain text** | Image galleries, audio, video, and extension cards for links, music, GitHub projects, and locations. |
+| 💬 | **A timeline with a conversation** | Comments, moderation, reactions, RSS, and connections to other instances. |
+| 🧠 | **Find meaning in your own words** | Copilot summaries and streaming chat, with vector retrieval and configurable LLM providers. |
+| 🔌 | **Connect your tools** | REST/OpenAPI, webhooks, and an authenticated MCP server with scoped tokens. |
+| 🧳 | **Take your content with you** | Snapshot import/export, scheduled snapshots, Memos import, and portable content capsules. |
+| 🔐 | **Choose how you sign in** | Passkeys, third-party sign-in, multi-account roles, and revocable access tokens. |
+| 🌗 | **Feel at home on every screen** | Responsive UI, PWA installation, themes, and Chinese, English, German, and Japanese. |
 
 <details>
-   <summary><strong>Table of Contents</strong></summary>
+<summary><strong>Explore the product in pictures</strong></summary>
 
-- [Try in 60 Seconds](#try-in-60-seconds)
-- [Full Feature List](#full-feature-list)
-- [Deployment & Upgrading](#deployment--upgrading)
-- [FAQ](#faq)
-- [Feedback & Community](#feedback--community)
-- [License Compliance](#license-compliance)
-- [Open Source & Development](#open-source--development)
+| Product idea | Capabilities |
+| --- | --- |
+| ![The idea behind AXOXE](./docs/assets/carousel/2.jpeg) | ![AXOXE capability overview](./docs/assets/carousel/4.jpeg) |
+
+[Watch the product film](./docs/assets/video/ech0-promo.mp4) · [Browse the brand assets](./docs/brand/README.md)
 
 </details>
 
----
+## Get started
 
-## Try in 60 Seconds
+### Docker Compose
 
-```shell
-docker build -f docker/build.Dockerfile --build-arg TARGETOS=linux --build-arg TARGETARCH=amd64 -t axoxe:local .
-docker run -d --name axoxe -p 6277:6277 -v /opt/axoxe/data:/app/data -e JWT_SECRET axoxe:local
+Build and run the branded application from source:
+
+```sh
+git clone https://github.com/Versior/axoxe.git
+cd axoxe
+
+# Create the session secret once. Keep this file for future starts and upgrades.
+umask 077
+[ -f docker/.env ] || openssl rand -hex 32 | sed 's/^/JWT_SECRET=/' > docker/.env
+
+docker compose --env-file docker/.env -f docker/docker-compose.yml up -d --build
 ```
 
-Set a persistent `JWT_SECRET` in your shell before starting. The `axoxe:local` image is built from this source checkout; the upstream Docker image does not include AXOXE branding.
+Open **http://localhost:6277** and create your first account. It becomes the **Owner** account with management privileges. Publishing is restricted to privileged accounts by default.
 
-Then open `http://ip:6277`:
+- Requires Git, OpenSSL, and Docker with Compose. The first run builds the image locally.
+- Data persists in `docker/data/`; the session secret stays in `docker/.env`. Keep both when upgrading.
+- On ARM64, prefix the Compose command with `AXOXE_TARGETARCH=arm64`.
+- The image name `axoxe:local` refers to this local build. See [deployment and upgrade instructions](./DEPLOYMENT.md) for binary builds, configuration, and rollback considerations.
 
-1. Register your first account.
-2. The first account becomes Owner (admin privileges).
-3. By default, publishing is restricted to privileged accounts.
+### Local development
 
-See [Quick Deployment](./DEPLOYMENT.md#quick-deployment) for Docker Compose and Helm options.
+Use **Go 1.27.4+**, a C compiler, **Node.js 26+**, **pnpm 12.14.0**, and [`just`](https://github.com/casey/just). SQLite and vector search use CGO.
 
-### CLI
+```sh
+pnpm -C web install --frozen-lockfile
+pnpm -C web build
+just build
+./bin/axoxe serve
+```
 
-Install the `axoxe` command-line client (macOS / Linux; separate from the server binary):
+Build the frontend before the Go binary: `template/dist/` is embedded into the executable. Configure a persistent `JWT_SECRET` for a persistent instance. For hot reload, proxies, and project-specific runtimes, follow the [development guide](./docs/dev/development.md).
 
-```shell
+<details>
+<summary><strong>Command-line client</strong></summary>
+
+The standalone client lives in [`apps/cli`](./apps/cli), separate from the Go server. It supports terminal access to an existing instance.
+
+```sh
 cd apps/cli
 bun install --frozen-lockfile
 bun run src/index.ts --help
 ```
 
-Use Bun 1.4.4 or later for the source build. Future AXOXE CLI releases will use `axoxe-cli-<os>-<arch>.tar.gz` on [Releases](https://github.com/Versior/Ech0/releases); published assets are not assumed yet. Usage and commands live in [`apps/cli`](./apps/cli).
-
-## Full Feature List
-
-<details>
-<summary><strong>Click to expand the full feature list</strong></summary>
-
-### Highlights
-
-- ☁️ **Lightweight, Efficient Architecture**: Low resource usage and compact images, suitable from personal servers to ARM devices.
-- 🚀 **Fast Deployment Experience**: Out-of-the-box Docker deployment from install to first run with a single command.
-- 📦 **Self-Contained Distribution**: Complete binaries and container images, with no extra runtime dependencies.
-- 💻 **Cross-Platform Support**: Supports Linux, Windows, and ARM devices (for example, Raspberry Pi).
-- 🧳 **Portable Content Capsules**: Export everything you have written as a self-contained [capsule](./docs/usage/capsule.md), import it into another instance, or compile it into a static site you can host anywhere.
-
-### Storage & Data
-
-- 🗂️ **VireFS Unified Storage Layer**: Uses **VireFS** to unify mounting and management for local storage and S3-compatible object storage.
-- ☁️ **S3 Object Storage Support**: Native support for S3-compatible object storage for cloud resource expansion.
-- 📦 **Data Sovereignty**: Content and metadata remain user-owned and user-controlled, with RSS output support.
-- 🔄 **Data Migration Workflow**: Supports migration import for historical data, plus snapshot and capsule export for migration and archiving, from both the dashboard and the CLI.
-- 🔐 **Automated Backup System**: Supports export/backup via Web, CLI, and TUI, plus background automatic backups.
-
-### Writing & Content
-
-- ✍️ **Markdown Writing Experience**: A **markdown-it** based editing/rendering engine with plugin extension and live preview.
-- 🏷️ **Tag Management System**: Supports tag organization, quick filtering, and precise retrieval.
-- 🃏 **Rich Media Cards**: Supports card rendering for website links, GitHub projects, and more.
-- 🎥 **Video Content Parsing**: Supports embedded parsing/display for Bilibili and YouTube videos.
-
-### Media & Assets
-
-- 🎬 **Multi-Format Media Attachments**: Attach images, audio, and video directly to each Echo, rendered inline with a gallery and built-in audio/video players.
-- 📁 **Visual File Manager**: Built-in capabilities for file upload, browsing, and asset management.
-
-### Social & Interaction
-
-- 💬 **Built-in Comment System**: Supports comments and moderation configuration.
-- 🃏 **Content Interaction**: Supports social interactions such as emoji reactions and sharing.
-
-### Auth & Security
-
-- 🔑 **OAuth2 / OIDC Authentication**: Supports OAuth2 and OIDC for third-party login integration.
-- 🙈 **Passkey Passwordless Login**: Supports biometric or hardware security key sign-in.
-- 🔑 **Access Token Management**: Supports generating and revoking scoped tokens for API calls and third-party integration.
-- 👤 **Multi-Account Permission Management**: Supports multi-user collaboration and permission control.
-
-### System & Developer
-
-- 🧱 **Busen Data Bus Architecture**: Uses in-house Busen to provide decoupled module communication and reliable message delivery.
-- 📊 **Structured Logging System**: System logs are standardized in structured format for readability and analysis.
-- 🖥️ **Real-Time System Log Console**: Built-in web console for live log streams, debugging, and troubleshooting.
-- 📟 **TUI Management Interface**: Provides a terminal UI, ideal for server-side administration.
-- 🧰 **CLI Toolchain**: CLI tools for automation and script integration.
-- 🔗 **Open API & Webhook**: Full API and Webhook support for external integration and automation workflows.
-- 🤖 **MCP (Model Context Protocol)**: Built-in [MCP Server](./docs/usage/mcp-usage.md) exposes **near-complete coverage** of core product features to the AI layer (posts, files, stats, and more)—**Streamable HTTP**, **Tools & Resources**, **scoped JWT**.
-- 🧠 **AXOXE Copilot**: An AI companion that lives inside your timeline—**Recap** distills your recent posts into a crisp digest in one click, and **Chat** lets you talk to your own content and ask anything. Powered by **vector RAG** retrieval with **streaming (SSE)** replies, every answer grounded in *your* data.
-
-### Experience
-
-- 🌍 **Cross-Device Adaptation**: Responsive design for desktop, tablet, and mobile browsers.
-- 🌐 **i18n Multi-Language Support**: Multi-language UI switching for different usage scenarios.
-- 👾 **PWA Support**: Installable as a web app for a more native-like experience.
-- 🌗 **Themes & Dark Mode**: Supports dark mode and theme extension.
-
-### License
-
-- 🎉 **Fully Open Source**: Released under **AGPL-3.0-or-later**, with no tracking, no subscription, and no SaaS dependency.
+Use the Bun version specified by that project. Source builds are available; downloadable binaries and npm packages depend on an actual published release.
 
 </details>
 
----
+## Small footprint, real engineering
 
-## Deployment & Upgrading
+<table>
+<tr>
+<td align="center" width="16%"><img src="./docs/assets/readme/icons/go.svg" width="40" height="40" alt="Go"><br><strong>Go 1.27</strong><br>Gin · Huma · Wire</td>
+<td align="center" width="16%"><img src="./docs/assets/readme/icons/vuedotjs.svg" width="40" height="40" alt="Vue"><br><strong>Vue 3</strong><br>Pinia · Vue Router</td>
+<td align="center" width="16%"><img src="./docs/assets/readme/icons/typescript.svg" width="40" height="40" alt="TypeScript"><br><strong>TypeScript 6</strong><br>Typed frontend</td>
+<td align="center" width="16%"><img src="./docs/assets/readme/icons/vite.svg" width="40" height="40" alt="Vite"><br><strong>Vite 8</strong><br>UnoCSS · Vitest</td>
+<td align="center" width="16%"><img src="./docs/assets/readme/icons/sqlite.svg" width="40" height="40" alt="SQLite"><br><strong>SQLite</strong><br>GORM · sqlite-vec</td>
+<td align="center" width="16%"><img src="./docs/assets/readme/icons/docker.svg" width="40" height="40" alt="Docker"><br><strong>Docker</strong><br>Compose · CGO</td>
+</tr>
+</table>
 
-Detailed instructions for **Docker Compose**, **script install**, **Kubernetes (Helm)**, and **upgrading** an existing instance live in **[DEPLOYMENT.md](./DEPLOYMENT.md)**.
+![Axoxe runtime architecture](./docs/assets/readme/architecture.svg)
 
-For the simplest path, the [Try in 60 Seconds](#try-in-60-seconds) snippet above is enough to get a single Docker container running.
+- **One Go process** serves the API and embedded Vue SPA, with job and task lifecycle management.
+- **Clear domain layers** separate handlers, services, repositories, and storage. Wire composes dependencies at build time; Huma derives OpenAPI from Go types.
+- **Busen** routes typed events to asynchronous subscribers for webhooks, indexing, and cache invalidation. **VireFS** unifies local files and S3-compatible storage.
+- **MCP and Agent face opposite directions**: external AI clients call authenticated domain tools through MCP; Copilot calls configurable LLM providers through the Agent loop.
+- **SQLite + sqlite-vec** keep the database and vector index in the same deployment. External object stores and LLM providers are optional integrations.
 
----
+Read the [architecture walkthrough](./docs/dev/architecture-overview.md), [Agent design](./docs/dev/agent-toolcall-design.md), or [interactive architecture atlas](./site/public/arch/index.html).
 
-## FAQ
+## Find your way
+
+| Run & maintain | Integrate & develop |
+| --- | --- |
+| [Deployment & upgrades](./DEPLOYMENT.md) | [Development setup](./docs/dev/development.md) |
+| [Configuration reference](./docs/usage/configuration.md) | [Architecture overview](./docs/dev/architecture-overview.md) |
+| [Storage migration](./docs/usage/storage-migration.md) | [MCP usage](./docs/usage/mcp-usage.md) |
+| [Snapshots](./docs/dev/snapshot-design.md) | [Webhooks](./docs/usage/webhook-usage.md) |
+| [Content capsules](./docs/usage/capsule.md) | [Access-token scopes](./docs/dev/access-token-scope-design.md) |
+
+Your instance exposes interactive API documentation at **`/api/docs`**, with OpenAPI at `/api/openapi.json` and `/api/openapi.yaml`.
 
 <details>
-<summary><strong>Click to expand FAQ</strong></summary>
+<summary><strong>Compatibility with existing Ech0 deployments</strong></summary>
 
-1. **What is AXOXE?**
-   AXOXE is a lightweight open-source self-hosted platform designed for quickly publishing and sharing personal thoughts, writing, and links. It provides a clean interface and distraction-free experience, with your data remaining under your control.
-
-2. **What is AXOXE not?**
-   AXOXE is not a traditional professional note-taking app (such as Obsidian or Notion). Its core usage is closer to a social feed / microblog stream.
-
-3. **Is AXOXE free?**
-   Yes. AXOXE is fully free and open source under AGPL-3.0, with no ads, tracking, subscriptions, or service lock-in.
-
-4. **How do I back up and import data?**
-   AXOXE supports data recovery/migration through "Snapshot Export" and "Migration Import". At deployment level, regularly back up your mapped data directory (for example `/opt/axoxe/data`). By default, core data is stored in the local database; if object storage is enabled, media assets are written to the configured storage backend.
-
-5. **Does AXOXE support RSS?**
-   Yes. AXOXE supports RSS subscriptions so you can follow updates in RSS readers.
-
-6. **Why does publishing fail with "contact administrator"?**
-   Publishing is restricted to privileged accounts by default. During initialization, the first account becomes Owner (with management privileges). Regular users cannot publish until explicitly granted permission by a privileged account. If this is your first setup, review [Try in 60 Seconds](#try-in-60-seconds) and confirm which account is Owner.
-
-7. **Why is there no detailed permission matrix?**
-   AXOXE currently uses a lightweight role model (Owner / Admin / regular user) to keep operation simple and predictable. The permission model will continue to evolve based on community feedback.
-
-8. **Why can't others see their Connect avatar?**
-   Set your current instance URL in `System Settings - Service URL`, for example `https://memo.sn0w.fyi/` (must include `http://` or `https://`).
-
-9. **What is the MetingAPI option in settings?**
-   It is the API endpoint used by music cards to resolve playable stream metadata. You can provide your own trusted endpoint; when left empty, AXOXE falls back to a default resolver endpoint. For production, a self-controlled endpoint is recommended.
-
-10. **Why does a newly added Connect show only partial results?**
-    The backend tries to fetch instance information for all Connect entries. If an instance is down or unreachable, it is discarded, and only valid/accessible Connect data is returned to the frontend.
-
-11. **How do I enable comments?**
-    Enable comments in the panel comment manager, then configure moderation and captcha toggles as needed. AXOXE now embeds `gocap` for captcha verification, so no standalone captcha service deployment is required.
-
-12. **How do I configure S3 storage?**
-    Fill in provider, endpoint, bucket, access key, secret key, and related fields in storage settings. It is recommended to provide endpoint without `http://` or `https://`. If media is accessed directly by browsers, ensure objects are readable through your chosen policy (for example public-read or equivalent CDN/gateway setup).
-
-13. **How do I enable passkey login?**
-    In `SSO - Passkey`, configure `WebAuthn RP ID` and `WebAuthn Origins`. After saving and seeing "Passkey ready", follow browser prompts to bind biometrics or a security key.
-
-14. **Official statement on third-party integrations**
-    Third-party integration platforms or services that are not officially authorized by AXOXE are outside the official support scope. Any security incidents, data loss, account issues, or other risks caused by using such services are the sole responsibility of the user and the third-party provider.
-
-15. **How do I post comments via a third-party integration (AI / automation)?**
-    AXOXE provides a dedicated integration comment endpoint at `POST /api/comments/integration` that bypasses captcha and form-token verification. Create an access token with the `comment:write` scope and `integration` audience from "Access Token" management, then include it in the `Authorization: Bearer <token>` header. Tokens minted by `axoxe auth login` (`audience=cli`) are accepted by the same route. For request body fields and responses, use the OpenAPI docs served by your instance at `/swagger/index.html` (for local development, typically `http://localhost:6277/swagger/index.html`). This endpoint has its own rate limits, and comments are tagged with `source=integration` so they are identifiable in the admin panel.
-
-16. **Where can I find detailed documentation on local vs S3 storage rules, object keys, and migration?**
-    See the in-repo [Storage migration guide](./docs/usage/storage-migration.md). It explains how flat `key` values map to on-disk paths and S3 object keys (including `schema.Resolve` and `PathPrefix`), how stored `File.url` snapshots relate to the UI, the difference between static `/api/files` access and authenticated `stream` routes, and practical guidance for switching S3 providers or moving data between local disk and object storage.
+Existing database and media paths, `ECH0_*` configuration keys, Go module imports, webhook contracts, and capsule identifiers retain their compatibility names. Export a snapshot before upgrading; keep your data directory and existing session secret. Saved instance titles and content are retained. Legacy logo URLs resolve to the Axoxe mark.
 
 </details>
 
----
+## Contribute
 
-## Feedback & Community
+Start with the [contribution guide](./CONTRIBUTING.md). Build the frontend, then run the required checks before submitting a change:
 
-- If you encounter bugs, report them in [Issues](https://github.com/Versior/Ech0/issues).
-- For feature ideas or improvements, join discussions in [Discussions](https://github.com/Versior/Ech0/discussions).
-- Official QQ Group: `1065435773`
+```sh
+just check          # SPDX, Go lint, OpenAPI, frontend formatting/lint/i18n
+just test           # Go tests; build web first for the embedded assets
+just web test       # Frontend tests
+just build          # bin/axoxe, with commit and build time
+```
 
-### Join the upstream Hub
+The independent [`site/`](./site) documentation site and [`hub/`](./hub) directory have their own dependency and build commands. Contribute fork changes through [pull requests](https://github.com/Versior/axoxe/pulls), or report upstream defects in [Ech0 Issues](https://github.com/lin-snow/Ech0/issues). Security reports follow the [security policy](./SECURITY.md).
 
-[Upstream Hub](https://hub.ech0.app/) is a public directory that merges timelines from listed AXOXE instances. For step-by-step instructions on registering **your** public instance, see [`hub/README.md`](./hub/README.md).
+## Origins & license
 
-| Official QQ Community                                          | Other Groups |
-| -------------------------------------------------------------- | ------------ |
-| <img src="./docs/imgs/qq.png" alt="QQ Group" style="height:250px;"> | N/A          |
+Axoxe builds on **Ech0 by L1nSn0w and its contributors**. Thanks to the upstream community and the open-source projects behind the stack. Technology icons are from [Simple Icons](./docs/assets/readme/icons/README.md); the wordmark uses [Fraunces](./docs/brand/FRAUNCES-OFL.txt).
 
----
+Licensed under **[AGPL-3.0-or-later](./LICENSE)**. When you distribute modifications or provide them as a network service, provide the corresponding source and preserve the required notices. Read [NOTICE](./NOTICE), the [compliance guide](./docs/legal/agpl-compliance.md), and the upstream [commercial licensing terms](./COMMERCIAL.md) for details.
 
-## License Compliance
+<div align="center">
 
-AXOXE is licensed under **AGPL-3.0-or-later**.
+<img src="./docs/brand/axoxe-mark.svg" width="88" alt="Axoxe">
 
-If you modify AXOXE and make it available to users over a network, including as a hosted service, you must provide the complete corresponding source code of your modified version under AGPL-3.0-or-later.
+**Where moments stay.**
 
-You must preserve copyright notices, license notices, and source-code access information in source and binary distributions, container images, hosted services, and modified deployments.
+[Source](https://github.com/Versior/axoxe) · [Documentation](./docs/README.md) · [Ech0 upstream](https://github.com/lin-snow/Ech0)
 
-- Compliance guide: [docs/legal/agpl-compliance.md](./docs/legal/agpl-compliance.md)
-- Project notice: [NOTICE](./NOTICE)
-- Commercial licensing: [COMMERCIAL.md](./COMMERCIAL.md)
-
-If you want to use AXOXE in a proprietary product, closed-source hosted service, white-label deployment, or any use case where you do not want to release your modifications, request a commercial license.
-
----
-
-## Open Source & Development
-
-**Governance**
-
-- [Contribution Guide](./CONTRIBUTING.md)
-- [Code of Conduct](./CODE_OF_CONDUCT.md)
-- [Security Policy](./SECURITY.md)
-- [License](./LICENSE)
-- [Notice](./NOTICE)
-- [AGPL Compliance Guide](./docs/legal/agpl-compliance.md)
-- [Commercial Licensing](./COMMERCIAL.md)
-
-**Development**
-
-Local setup, environment requirements, and front-/back-end integration are documented in **[docs/dev/development.md](./docs/dev/development.md)**. For higher-level architecture and conventions, see [`AGENTS.md`](./AGENTS.md) and [`CONTRIBUTING.md`](./CONTRIBUTING.md). An interactive architecture diagram is available at **[Architecture](./site/public/arch/index.html)**.
-
----
-
-## Acknowledgements
-
-AXOXE builds on Ech0 by L1nSn0w and its contributors. The upstream project and its bundled libraries retain their original licenses and copyright notices. See [NOTICE](./NOTICE), [LICENSE](./LICENSE), and the [brand guide](./docs/brand/README.md).
+</div>

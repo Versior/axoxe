@@ -13,7 +13,7 @@ if [ -n "${NO_COLOR:-}" ] || [ "${TERM:-}" = "dumb" ]; then
   RESET=''
 fi
 
-REPO="${ECH0_GITHUB_REPO:-Versior/Ech0}"
+REPO="${ECH0_GITHUB_REPO:-Versior/axoxe}"
 BRANCH="${ECH0_GITHUB_BRANCH:-main}"
 SCRIPT_URL="https://raw.githubusercontent.com/${REPO}/${BRANCH}/scripts/ech0.sh"
 SERVICE_NAME="ech0"

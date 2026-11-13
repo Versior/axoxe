@@ -19,7 +19,7 @@ const DEFAULT_OG_IMAGE = '/og-cover.jpg'
 const OG_IMAGE_WIDTH = 1200
 const OG_IMAGE_HEIGHT = 630
 const WEBSITE_JSONLD_ID = 'website-jsonld'
-const PROJECT_URL = 'https://github.com/Versior/Ech0'
+const PROJECT_URL = 'https://github.com/Versior/axoxe'
 
 const resolvePageTitle = (siteTitle: string, routeTitle: unknown) => {
   if (typeof routeTitle !== 'string') return siteTitle

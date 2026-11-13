@@ -1,7 +1,7 @@
 # AGPL Compliance Guide
 
 AXOXE inherits AGPL-3.0-or-later from Ech0. The original guidance below applies
-to this fork. AXOXE's corresponding source is <https://github.com/Versior/Ech0>.
+to this fork. AXOXE's corresponding source is <https://github.com/Versior/axoxe>.
 
 Ech0 is licensed under AGPL-3.0-or-later. This guide explains the practical
 requirements for using, modifying, and distributing Ech0.

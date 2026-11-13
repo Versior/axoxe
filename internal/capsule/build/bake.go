@@ -19,7 +19,7 @@ import (
 
 const heatmapDays = 30
 
-var idNamespace = uuidUtil.NewV5(uuidUtil.NameSpaceURL, []byte("https://github.com/Versior/Ech0/capsule/build"))
+var idNamespace = uuidUtil.NewV5(uuidUtil.NameSpaceURL, []byte("https://github.com/lin-snow/Ech0/capsule/build"))
 
 func derivedID(kind string, parts ...string) string {
 	name := kind + "\x00" + strings.Join(parts, "\x00")

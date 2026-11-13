@@ -17,7 +17,7 @@ Compared with tools like Memos that help you “jot down a thought quickly,” A
 
 1. **Just want it running**: follow [Getting started](/docs/start/getting-started) from Docker to your first login (about 10 minutes).
 2. **Want to deploy directly**: see [Installation](/docs/start/installation) (Docker / Compose / binary / Helm).
-3. **Hitting a problem**: check the [FAQ](/docs/start/faq) first, then search [GitHub Issues](https://github.com/Versior/Ech0/issues).
+3. **Hitting a problem**: check the [FAQ](/docs/start/faq) first, then search [GitHub Issues](https://github.com/Versior/axoxe/issues).
 
 ---
 

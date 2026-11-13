@@ -1,10 +1,10 @@
 # AXOXE deployment
 
-AXOXE is built from this fork, based on Ech0 v5.9.8. The upstream image does not contain AXOXE branding. Existing configuration keys and data formats remain compatible; see the [brand guide](./docs/brand/README.md).
+AXOXE is built from this fork, based on Ech0 v5.9.9. The upstream image does not contain AXOXE branding. Existing configuration keys and data formats remain compatible; see the [brand guide](./docs/brand/README.md).
 
 ## Build and run locally
 
-Requirements: Go 1.27.3+, a C compiler, Node.js 26+, and pnpm 12.14.0. SQLite and vector search use CGO.
+Requirements: Go 1.27.4+, a C compiler, Node.js 26+, and pnpm 12.14.0. SQLite and vector search use CGO.
 
 ```shell
 pnpm -C web install --frozen-lockfile
@@ -69,7 +69,7 @@ Runtime configuration still uses `ECH0_*` keys and the existing `JWT_SECRET` ali
 - [Development guide](./docs/dev/development.md)
 - [Storage migration](./docs/usage/storage-migration.md)
 - [AGPL requirements](./docs/legal/agpl-compliance.md)
-- [Source code](https://github.com/Versior/Ech0)
+- [Source code](https://github.com/Versior/axoxe)
 
 ## Distribution
 

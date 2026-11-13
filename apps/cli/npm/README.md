@@ -9,7 +9,7 @@ Webhook 配置。命令树由实例下发的 operation catalog 生成，服务�
 ## 安装
 
 ```bash
-git clone https://github.com/Versior/Ech0.git AXOXE
+git clone https://github.com/Versior/axoxe.git AXOXE
 cd AXOXE/apps/cli
 bun install --frozen-lockfile
 bun link
@@ -36,11 +36,11 @@ axoxe help
 
 ## 其他分发渠道
 
-独立二进制从 [GitHub Releases](https://github.com/Versior/Ech0/releases) 下载
+独立二进制从 [GitHub Releases](https://github.com/Versior/axoxe/releases) 下载
 `axoxe-cli-<os>-<arch>.tar.gz`，校验文件为同一页面的 `SHA256SUMS`。
 
 ## 链接
 
-- 文档：[`docs/dev/cli-design.md`](https://github.com/Versior/Ech0/blob/main/docs/dev/cli-design.md)
-- 源码：[`apps/cli`](https://github.com/Versior/Ech0/tree/main/apps/cli)
+- 文档：[`docs/dev/cli-design.md`](https://github.com/Versior/axoxe/blob/main/docs/dev/cli-design.md)
+- 源码：[`apps/cli`](https://github.com/Versior/axoxe/tree/main/apps/cli)
 - 许可：AGPL-3.0-or-later

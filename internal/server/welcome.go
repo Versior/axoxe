@@ -71,7 +71,7 @@ func PrintGreetings(port string) {
 			"👉 "+titleStyle().Render(
 				"GitHub",
 			)+": "+highlight().Render(
-				"https://github.com/Versior/Ech0",
+				"https://github.com/Versior/axoxe",
 			),
 		),
 	)

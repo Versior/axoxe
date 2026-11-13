@@ -3,7 +3,7 @@ title: FAQ
 description: Deployment, permissions, storage, and integration Q&A
 ---
 
-If your situation isn't covered here, search or ask in [GitHub Discussions](https://github.com/Versior/Ech0/discussions).
+If your situation isn't covered here, search or ask in [GitHub Discussions](https://github.com/Versior/axoxe/discussions).
 
 ---
 
