@@ -11,6 +11,7 @@ import { createRequire } from 'node:module'
 import { dirname, resolve, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { execFileSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const require = createRequire(join(process.env.AXOXE_BRAND_TOOLS || root, 'package.json'))
@@ -40,6 +41,8 @@ await write('web/public/axoxe.svg', mark)
 await write('web/public/axoxe-dark.svg', dark)
 await write('web/public/axoxe-wordmark.svg', logo)
 await write('web/public/axoxe-wordmark-dark.svg', darkLogo)
+await write('web/src/assets/brand/axoxe.svg', mark)
+await write('web/src/assets/brand/axoxe-wordmark.svg', logo)
 await write('web/public/axoxe.png', png(mark, 512))
 await write('web/public/axoxe-dark.png', png(dark, 512))
 // Compatibility URLs for saved settings and clients from the upstream project.
@@ -74,6 +77,9 @@ const sizes = {
 for (const [name, size] of Object.entries(sizes)) {
   const image = png(mark, size)
   await write(`web/public/${name}`, image)
+  if (['favicon-16x16.png', 'favicon-32x32.png', 'apple-touch-icon.png', 'android-chrome-192x192.png', 'android-chrome-512x512.png'].includes(name)) {
+    await write(`web/src/assets/brand/${name}`, image)
+  }
   await write(`hub/public/${name}`, image)
 }
 const maskable = mark.replace('x="4" y="91" width="248" height="74"', 'x="32" y="99" width="192" height="58"')
@@ -100,6 +106,15 @@ images.forEach((image, i) => {
 for (const path of ['web/public/favicon.ico', 'hub/public/favicon.ico', 'site/public/favicon.ico']) {
   await write(path, Buffer.concat([header, ...images]))
 }
+await write('web/src/assets/brand/favicon.ico', Buffer.concat([header, ...images]))
+
+const manifest = JSON.parse(await readFile(join(root, 'web/public/app.webmanifest'), 'utf8'))
+for (const icon of manifest.icons) {
+  const name = icon.src.split('?')[0]
+  const digest = createHash('sha256').update(await readFile(join(root, 'web/public', name))).digest('hex').slice(0, 12)
+  icon.src = `${name}?v=${digest}`
+}
+await write('web/public/app.webmanifest', `${JSON.stringify(manifest, null, 2)}\n`)
 
 const cover = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="#f7f5f0"/>

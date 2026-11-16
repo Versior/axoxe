@@ -51,3 +51,7 @@ AXOXE_BRAND_TOOLS=/tmp/axoxe-brand-tools node scripts/generate-brand-assets.mjs
 The generator exports the SVG, PNG, ICO, and both PNG/JPEG sharing covers, including the design library and prototype wordmarks. Keep legacy asset aliases paired with the new assets.
 
 Current promotional exports are separate from the icon generator: capture `docs/assets/social-preview/social-preview.html` at 1280×640, and the six cards in `docs/assets/carousel/AXOXE_carousel/index.html` at 1242×1656. Their PNG/JPEG files must be refreshed alongside the HTML sources. Architecture exports follow their HTML/SVG/Excalidraw sources; the PDF is a single-page static image export. The video source and final closing chapter use the shared wordmark.
+
+The main SPA imports its wordmark, default tile and browser icons from generated `web/src/assets/brand/` files. Vite gives them content-based URLs, so a new design does not reuse a browser’s cached logo URL. The public compatibility files remain available; PWA icon URLs carry content digests.
+
+Hub metadata uses its own deployment origin. Configure `VITE_HUB_SITE_ORIGIN` before publishing it; this fork does not advertise the upstream Hub as its own deployment. Cloudflare project names are `axoxe-site` and `axoxe-hub`.

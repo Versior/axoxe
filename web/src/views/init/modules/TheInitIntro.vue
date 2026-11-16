@@ -26,6 +26,6 @@ const { t } = useI18n()
   width: 11rem;
   height: 3.1rem;
   background-color: currentColor;
-  mask: url('/axoxe-wordmark.svg') center / contain no-repeat;
+  mask: url('@/assets/brand/axoxe-wordmark.svg') center / contain no-repeat;
 }
 </style>

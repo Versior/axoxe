@@ -4,7 +4,7 @@
 import type { RouteLocationNormalized } from 'vue-router'
 
 export const HUB_SITE_ORIGIN = (
-  import.meta.env.VITE_HUB_SITE_ORIGIN ?? 'https://hub.ech0.app'
+  import.meta.env.VITE_HUB_SITE_ORIGIN || window.location.origin
 ).replace(/\/+$/, '')
 
 const DEFAULT_DESCRIPTION =

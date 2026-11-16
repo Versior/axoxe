@@ -1,48 +1,22 @@
 ---
-title: Community & thanks
-description: Feedback channels, contributing, contributors, and sponsorship
+title: Community and credits
+description: AXOXE feedback, contributions, and upstream attribution
 ---
 
-# Community & thanks
+# Community and credits
 
----
+Report AXOXE bugs and propose improvements in [GitHub Issues](https://github.com/Versior/axoxe/issues). Include the version, deployment method, and reproducible steps. Never include credentials in logs or screenshots.
 
-## Community feedback
+Contribute code and documentation through [pull requests](https://github.com/Versior/axoxe/pulls). See the [development guide](/docs/dev/guide) and [CONTRIBUTING](https://github.com/Versior/axoxe/blob/main/CONTRIBUTING.md).
 
-Bug reports, usage questions, and contributions are all welcome. Below are the entry points grouped by **purpose**, so you can pick the most suitable channel.
+## AXOXE contributors
 
-### Where should I ask?
+[![Contributors](https://contrib.rocks/image?repo=Versior/axoxe)](https://github.com/Versior/axoxe/graphs/contributors)
 
-| Your situation                                       | Suggested channel                                                                                        |
-| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| Suspected bug, crash, failed deployment              | [GitHub Issues](https://github.com/Versior/axoxe/issues) (include version, environment, and repro steps) |
-| Feature ideas, usage discussions, experience sharing | [GitHub Discussions](https://github.com/Versior/axoxe/discussions)                                       |
-| Real-time chat, Chinese-speaking users               | **QQ group** (see below)                                                                                 |
+![Star History](https://api.star-history.com/svg?repos=Versior/axoxe&type=timeline&legend=top-left)
 
-Before opening an issue, search for an existing report of the same problem; including your **deployment method** (Docker / binary, etc.), **version**, and a **log excerpt** makes it much easier to pinpoint.
+## Upstream credits
 
-### Links
+AXOXE is based on [Ech0](https://github.com/lin-snow/Ech0) by L1nSn0w and its contributors. Upstream copyright and AGPL-3.0-or-later notices remain attached to their original authors. See [NOTICE](https://github.com/Versior/axoxe/blob/main/NOTICE).
 
-- **Bugs and defects**: [GitHub Issues](https://github.com/Versior/axoxe/issues)
-- **Discussions and Q&A**: [GitHub Discussions](https://github.com/Versior/axoxe/discussions)
-- **QQ group**: [1065435773](https://qm.qq.com/cgi-bin/qm/qr?group_code=1065435773)
-
-### Contributing
-
-Code and documentation repository: [Versior/axoxe](https://github.com/Versior/axoxe). If you have fixed a bug or improved the docs, pull requests are welcome; for large changes, it's best to float the direction in a Discussion first. For the developer setup, see [Developer guide](/docs/dev/guide).
-
----
-
-## Thanks & support
-
-Thanks to everyone who has filed issues, sent PRs, and shared feedback.
-
-[![Contributors](https://contrib.rocks/image?repo=lin-snow/Ech0)](https://github.com/Versior/axoxe/graphs/contributors)
-
-![Repobeats](https://repobeats.axiom.co/api/embed/d69b9177e4a121e31aaed95354ff862c928ca22d.svg)
-
-### Star trend
-
-![Star History](https://api.star-history.com/svg?repos=lin-snow/Ech0&type=timeline&legend=top-left)
-
-If you find it useful, a Star on [GitHub](https://github.com/Versior/axoxe) is appreciated; you can also support maintenance via [Afdian](https://afdian.com/a/l1nsn0w).
+The upstream project's community and [sponsorship page](https://afdian.com/a/l1nsn0w) belong to Ech0's maintainers.

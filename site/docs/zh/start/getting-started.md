@@ -3,7 +3,7 @@ title: 快速上手
 description: 第一次部署 AXOXE：从准备环境到能发帖的完整路径
 ---
 
-若你刚听说 AXOXE，建议先读 [产品概览](/zh/docs/guide/overview)，再按本页顺序操作。下面假设你有一台能装 Docker 的 Linux 服务器或本机，目标是在 **10 分钟内** 打开网页并完成首次登录。
+若你刚听说 AXOXE，建议先读 [产品概览](/zh/docs/guide/overview)，再按本页顺序操作。本页使用 Docker 构建二开镜像，然后打开网页完成首次登录。
 
 ---
 
@@ -32,22 +32,27 @@ description: 第一次部署 AXOXE：从准备环境到能发帖的完整路径
 
 ---
 
-## 第一步：一条命令启动（Docker）
+## 第一步：构建并启动 AXOXE（Docker）
 
-在终端执行（与 [安装部署](/zh/docs/start/installation) 一致）：
+先在终端配置持久的 `JWT_SECRET`，再执行以下命令（与 [安装部署](/zh/docs/start/installation) 一致）。ARM64 服务器使用 `TARGETARCH=arm64`：
 
 ```bash
-docker run -d \
-  --name ech0 \
+git clone https://github.com/Versior/axoxe.git
+cd axoxe
+docker build -f docker/build.Dockerfile \
+  --build-arg TARGETOS=linux \
+  --build-arg TARGETARCH=amd64 \
+  -t axoxe:local .
+docker run -d --name axoxe --restart unless-stopped \
   -p 6277:6277 \
-  -v /opt/ech0/data:/app/data \
-  -e JWT_SECRET="请改为随机长字符串" \
-  sn0wl1n/ech0:latest
+  -v /opt/axoxe/data:/app/data \
+  -e JWT_SECRET \
+  axoxe:local
 ```
 
-- `-v` 把数据存到宿主机 `/opt/ech0/data`，重装容器也不丢库；路径可按需修改。
+- `-v` 把数据存到宿主机 `/opt/axoxe/data`，重装容器也不丢库；路径可按需修改。
 - 若端口被占用，把左侧 `6277` 改成例如 `8080:6277`，浏览器则用新端口访问。
-- 命令里的 `JWT_SECRET` 是安全关键，请替换为随机长字符串，勿照抄示例。
+- `-e JWT_SECRET` 传入终端已配置的值。重启和升级时保留该值。
 
 **打不开的常见原因**：防火墙未放行、Docker 未启动、IP 填错（云服务器要用**公网 IP** 或绑定的域名）。
 
@@ -66,7 +71,7 @@ docker run -d \
 ## 第三步：建议你马上做的几件事
 
 1. **改强 `JWT_SECRET`**（若仍用示例值）：停容器 → 用新环境变量重建容器，数据卷勿删。
-2. **备份数据目录**：至少复制一份 `/opt/ech0/data`（或你的挂载路径）到别处。详见 [数据管理](/zh/docs/guide/datacontrol)。
+2. **备份数据目录**：至少复制一份 `/opt/axoxe/data`（或你的挂载路径）到别处。详见 [数据管理](/zh/docs/guide/datacontrol)。
 3. **填写「服务地址」**（若用 Connect / 头像显示）：在 **系统设置 → 服务地址** 填本站完整 URL（含 `http://` 或 `https://`），与浏览器地址栏一致。
 4. **规划 HTTPS**：公网站点建议用反代终止 TLS；仅内网可暂时 HTTP。
 
@@ -74,11 +79,11 @@ docker run -d \
 
 ## 名词与界面
 
-| 名词               | 含义                                                                                                    |
-| ------------------ | ------------------------------------------------------------------------------------------------------- |
-| **Echo**           | 一条时间线动态（类似一条微博），可含 Markdown、图片、链接卡片等。                                       |
+| 名词               | 含义                                                                                                     |
+| ------------------ | -------------------------------------------------------------------------------------------------------- |
+| **Echo**           | 一条时间线动态（类似一条微博），可含 Markdown、图片、链接卡片等。                                        |
 | **实例**           | 你部署的这一套 AXOXE 服务；多实例之间可用 Connect / Hub 互联，见 [互联聚合](/zh/docs/guide/federation)。 |
-| **Owner / 管理员** | 首个注册账号为 Owner；可在设置里管理用户与部分全站选项。                                                |
+| **Owner / 管理员** | 首个注册账号为 Owner；可在设置里管理用户与部分全站选项。                                                 |
 
 ---
 

@@ -32,7 +32,9 @@ ARG BUILD_TIME
 
 RUN COMMIT="${GIT_COMMIT:-$(git rev-parse --short HEAD 2>/dev/null || echo unknown)}" \
     && BUILD="${BUILD_TIME:-$(date -u +%Y-%m-%dT%H:%M:%SZ)}" \
-    && CGO_ENABLED=1 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build \
+    && mkdir -p /tmp/sqlite-include \
+    && cp "$(go list -m -f '{{.Dir}}' github.com/mattn/go-sqlite3)/sqlite3-binding.h" /tmp/sqlite-include/sqlite3.h \
+    && CGO_ENABLED=1 CGO_CFLAGS="-I/tmp/sqlite-include -Du_int8_t=uint8_t -Du_int16_t=uint16_t -Du_int64_t=uint64_t" GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build \
     -tags netgo \
     -ldflags="-linkmode external -extldflags '-static' -X github.com/lin-snow/ech0/internal/version.Commit=${COMMIT} -X github.com/lin-snow/ech0/internal/version.BuildTime=${BUILD}" \
     -o ech0 ./cmd/ech0/main.go

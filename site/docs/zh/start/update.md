@@ -1,71 +1,39 @@
 ---
-title: 版本更新
-description: 升级前备份；Docker、Compose、Helm 的具体命令
+title: 升级与更新
+description: 升级 AXOXE 二开源码构建，保留数据和配置
 ---
 
-升级前请**备份数据目录**（以及若启用对象存储，需按策略备份桶内对象与元数据）。小版本升级通常只需拉新镜像并重建容器；**大版本**（尤其跨主版本）务必读 Release 说明再动手。
-
-> **v3 → v4**：不能原地升级。请先在 v3 **导出快照**，再部署 v4，在 v4 面板做 **v3 迁移** 导入。详见 [数据管理](/zh/docs/guide/datacontrol)。
-
----
-
-## Docker
-
-```bash
-docker stop ech0
-docker rm ech0
-docker pull sn0wl1n/ech0:latest
-docker run -d \
-  --name ech0 \
-  -p 6277:6277 \
-  -v /opt/ech0/data:/app/data \
-  -e JWT_SECRET="Hello Echos" \
-  -e TZ=Asia/Shanghai \
-  sn0wl1n/ech0:latest
-```
-
-请把 `JWT_SECRET` 换成与你环境一致的值（与初次部署相同）；若初次部署已设置 **`TZ`**，升级命令中请一并保留。数据卷路径勿改错。若升级后无法启动，先回滚镜像标签并核对 Release 说明，不要清空数据目录试错。
-
----
+升级前导出快照并备份数据目录。启用对象存储时同时备份媒体。保留现有 `JWT_SECRET`、认证设置和数据挂载。
 
 ## Docker Compose
 
-```bash
-cd /path/to/compose
-docker compose pull && docker compose up -d --force-recreate
-```
-
-若使用旧命令 `docker-compose`，则：
+在 AXOXE 源码目录中更新到准备部署的版本，然后重新构建：
 
 ```bash
-docker-compose pull && docker-compose up -d --force-recreate
+git pull --ff-only
+docker compose -f docker/docker-compose.yml up -d --build
 ```
 
-可选清理悬空镜像：`docker image prune -f`
+该命令使用二开的 Compose 配置。已有实例继续使用原来的数据挂载，不要切换到空目录。
 
----
+## Docker
+
+按照 [安装指南](/zh/docs/start/installation) 重新构建 AXOXE 镜像。停止并替换原容器时，保留数据卷和环境配置。源码构建使用 `axoxe:local`；上游镜像不包含二开品牌。
 
 ## Kubernetes（Helm）
 
-1. 进入克隆下来的仓库目录，拉最新代码：`git pull`
-2. 升级 release：
+先构建并推送 AXOXE 镜像到集群可访问的仓库，再升级已有 Helm release：
 
 ```bash
-helm upgrade ech0 ./charts/ech0
+helm upgrade axoxe ./charts/ech0 \
+  --set image.repository=YOUR_REGISTRY/axoxe \
+  --set image.tag=YOUR_IMAGE_TAG
 ```
 
-若使用了自定义 release 名与命名空间：
+使用原来的 release 名、命名空间和 values 文件。源码目录 `charts/ech0` 保留用于兼容。
 
-```bash
-helm upgrade my-ech0 ./charts/ech0 --namespace my-namespace
-```
+## 验证与回滚
 
----
+启动后检查登录、时间线、媒体、RSS 和关于页。SQLite 会在启动时执行迁移。若旧版本需要旧数据库结构，应一同恢复升级前的快照和匹配的二进制。
 
-## 升级后建议
-
-1. 打开管理后台，确认版本号与健康状态（若有）。
-2. 快速浏览时间线、发一条测试 Echo、检查评论与附件是否正常。
-3. 若使用 Connect / Webhook，关注 Release 是否提及行为变更。
-
-更多排错思路见 [常见问题](/zh/docs/start/faq)。
+完整构建命令见 [部署指南](https://github.com/Versior/axoxe/blob/main/DEPLOYMENT.md)，排查见 [常见问题](/zh/docs/start/faq)。

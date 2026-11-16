@@ -1,7 +1,7 @@
 # release/
 
 This directory holds **source templates** used to generate the public-facing
-[GitHub Pages release site](https://lin-snow.github.io/Ech0/).  
+AXOXE release page (published to the fork’s `gh-pages` branch when GitHub Pages is enabled).
 It is **not** where compiled binaries or packaged artifacts are stored.
 
 ## Contents
@@ -21,7 +21,7 @@ The pipeline performs the following steps (in order):
 
 1. **Sync chart metadata** – Sets `version` and `appVersion` in `charts/ech0/Chart.yaml`
    from the release tag (or manual workflow input), then validates. Ensures each
-   app release gets a new `ech0-<semver>.tgz`.
+   app release gets a new `axoxe-<semver>.tgz`.
 2. **Chart Releaser** – Packages `charts/ech0/` and updates the Helm repository
    on `gh-pages` (`index.yaml` and chart `.tgz` artifacts).
 3. **Generate the release landing page** – Uses `gh release list` for published
@@ -31,14 +31,14 @@ The pipeline performs the following steps (in order):
    favicon (`web/public/favicon.svg`), and `.nojekyll` are copied into `_site/`.
 4. **Deploy static page to `gh-pages`** – Commits `index.html`, `logo.svg`,
    `favicon.svg`, and `.nojekyll` alongside the Helm artifacts. GitHub Pages
-   serves the site at `https://lin-snow.github.io/Ech0/`.
+   serves the site at the GitHub Pages URL configured for `Versior/axoxe`.
 
 ```
 release/index.html.tmpl          ─┐
                                    ├─ awk replace ──► _site/index.html ──► gh-pages branch
 GitHub Releases API (v4.4.0+)    ─┘                                         │
 docs/imgs/logo.svg, favicon      ─────────────────────────────────────────── ├─ index.html, logo.svg, favicon.svg, .nojekyll
-charts/ech0/ ─── Chart Releaser ─────────────────────────────────────────── ├─ index.yaml, ech0-*.tgz
+charts/ech0/ ─── Chart Releaser ─────────────────────────────────────────── ├─ index.yaml, axoxe-*.tgz
 ```
 
 ## Relationship to Other Directories
@@ -56,6 +56,6 @@ To change the layout, styles, or static content of the public release page,
 edit `index.html.tmpl` directly. The `<!-- RELEASES -->` comment must remain
 intact — the CI pipeline uses it as the injection point for dynamic release
 entries. Keep Docker / Compose install snippets aligned with the repository
-root `README.md` (including `JWT_SECRET` and `TZ`). After merging your changes,
+root `README.md` (including the source-built image and persistent `JWT_SECRET`). After merging your changes,
 the next published release (or a manual workflow dispatch) will regenerate and
 deploy the updated page.

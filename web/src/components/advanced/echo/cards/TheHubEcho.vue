@@ -36,7 +36,7 @@
         class="flex-none opacity-70 hover:opacity-100 transition-opacity"
       >
         <img
-          src="/axoxe.svg"
+          src="@/assets/brand/axoxe.svg"
           alt="AXOXE"
           loading="lazy"
           decoding="async"

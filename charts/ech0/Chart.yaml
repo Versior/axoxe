@@ -3,5 +3,5 @@ name: axoxe
 description: A Helm chart for AXOXE
 type: application
 version: 1.0.0
-appVersion: "4.4.4"
-icon: "https://github.com/Versior/axoxe/blob/main/docs/imgs/logo.svg"
+appVersion: "5.9.9"
+icon: "https://raw.githubusercontent.com/Versior/axoxe/main/docs/imgs/logo.svg"

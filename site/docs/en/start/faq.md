@@ -27,7 +27,7 @@ It is open source and free, under **AGPL-3.0**, with no ads and no subscription 
 
 ### How do I back up and import?
 
-Use **snapshot export / migration import** in the panel. In normal operation, back up your mapped **data directory** (for example Docker's `/opt/ech0/data`) on a regular schedule. If object storage is enabled, media lives in the storage backend and the database lives locally or wherever your deployment puts it. See [Data control](/docs/guide/datacontrol).
+Use **snapshot export / migration import** in the panel. In normal operation, back up your mapped **data directory** (for example Docker's `/opt/axoxe/data`) on a regular schedule. If object storage is enabled, media lives in the storage backend and the database lives locally or wherever your deployment puts it. See [Data control](/docs/guide/datacontrol).
 
 ### Storage layout, switching buckets, local ⇄ object storage migration?
 

@@ -25,7 +25,7 @@
           @pointerup="onPointerUp"
           @pointercancel="onPointerUp"
         >
-          <img class="about-sticker__img" src="/axoxe.svg" alt="" draggable="false" />
+          <img class="about-sticker__img" src="@/assets/brand/axoxe.svg" alt="" draggable="false" />
         </span>
 
         <div class="about-colophon__body">
@@ -254,7 +254,7 @@ const commitURL = computed(() => `${repoURL.value}/tree/${commit.value}`)
   max-width: 100%;
   height: 3.4rem;
   background-color: currentColor;
-  mask: url('/axoxe-wordmark.svg') center / contain no-repeat;
+  mask: url('@/assets/brand/axoxe-wordmark.svg') center / contain no-repeat;
 }
 
 .about-colophon__build {

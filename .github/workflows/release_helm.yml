@@ -69,7 +69,7 @@ jobs:
             echo "Chart version is empty in charts/ech0/Chart.yaml"
             exit 1
           fi
-          echo "Chart package will be ech0-${chart_version}.tgz"
+          echo "Chart package will be axoxe-${chart_version}.tgz"
 
       - name: Configure Git
         run: |
@@ -152,8 +152,8 @@ jobs:
                   continue
               published_at = r.get("publishedAt") or ""
               date = published_at[:10]
-              base = f"https://github.com/Versior/Ech0/releases/download/{tag}"
-              page = f"https://github.com/Versior/Ech0/releases/tag/{tag}"
+              base = f"https://github.com/Versior/axoxe/releases/download/{tag}"
+              page = f"https://github.com/Versior/axoxe/releases/tag/{tag}"
               rows.append(
                   f'<li><strong>{tag}</strong> <span class="muted">({date})</span> - '
                   f'<a href="{base}/ech0-linux-amd64.tar.gz">linux/amd64</a> | '
@@ -228,13 +228,11 @@ jobs:
           {
             echo "## Helm Repo validation checklist"
             echo ""
-            echo "- [ ] Verify release page is available at \`https://lin-snow.github.io/Ech0/\`"
+            echo "- [ ] Verify release page is available at \`https://github.com/Versior/axoxe/releases\`"
             echo "- [ ] Verify gh-pages branch contains \`.nojekyll\` and \`index.yaml\`"
-            echo "- [ ] Verify release has chart package \`ech0-<version>.tgz\`"
+            echo "- [ ] Verify release has chart package \`axoxe-<version>.tgz\`"
             echo "- [ ] Verify install works:"
             echo "  \`\`\`bash"
-            echo "  helm repo add ech0 https://lin-snow.github.io/Ech0"
-            echo "  helm repo update"
-            echo "  helm install ech0 ech0/ech0"
+            echo "  helm upgrade --install axoxe ./charts/ech0"
             echo "  \`\`\`"
           } >> "$GITHUB_STEP_SUMMARY"

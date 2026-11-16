@@ -3,7 +3,10 @@
   "short_name": "AXOXE",
   "lang": "zh-CN",
   "dir": "ltr",
-  "categories": ["social", "news"],
+  "categories": [
+    "social",
+    "news"
+  ],
   "description": "AXOXE is a new-generation open-source self-hosted platform designed for individual users. It is ultra-lightweight and low-cost, helping you easily publish and share ideas, writings, and links. With a clean, intuitive interface and powerful command-line tools, content management becomes simple and flexible. Your data is fully owned and controlled by you.",
   "start_url": "/",
   "id": "/",
@@ -13,43 +16,43 @@
   "theme_color": "#f4f1ec",
   "icons": [
     {
-      "src": "web-app-manifest-192x192.png",
+      "src": "web-app-manifest-192x192.png?v=c4a47d04ca9a",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "web-app-manifest-512x512.png",
+      "src": "web-app-manifest-512x512.png?v=7cc4b8ed1a7a",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "maskable-icon.png",
+      "src": "maskable-icon.png?v=56cfe2cf1d56",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "apple-touch-icon.png",
+      "src": "apple-touch-icon.png?v=595a73d39b91",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "favicon-16x16.png",
+      "src": "favicon-16x16.png?v=399ccead91ee",
       "sizes": "16x16",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "favicon-32x32.png",
+      "src": "favicon-32x32.png?v=0b1b4eef3050",
       "sizes": "32x32",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "favicon.ico",
+      "src": "favicon.ico?v=4dc6e883d8c5",
       "sizes": "16x16 32x32 48x48",
       "type": "image/x-icon",
       "purpose": "any"

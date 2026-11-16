@@ -37,7 +37,7 @@
           @click="goDetail"
         >
           <img
-            src="/axoxe.svg"
+            src="@/assets/brand/axoxe.svg"
             alt="AXOXE"
             loading="lazy"
             decoding="async"

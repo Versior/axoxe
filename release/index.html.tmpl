@@ -14,7 +14,7 @@
     />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#f4f1ec" />
-    <link rel="canonical" href="https://lin-snow.github.io/Ech0/" />
+    <link rel="canonical" href="https://github.com/Versior/axoxe/releases" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="AXOXE" />
@@ -23,8 +23,8 @@
       property="og:description"
       content="Self-host your timeline. Browse latest AXOXE releases and deploy with Docker or Helm."
     />
-    <meta property="og:url" content="https://lin-snow.github.io/Ech0/" />
-    <meta property="og:image" content="https://lin-snow.github.io/Ech0/logo.svg" />
+    <meta property="og:url" content="https://github.com/Versior/axoxe/releases" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/Versior/axoxe/main/docs/imgs/logo.svg" />
 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="AXOXE Releases" />
@@ -32,14 +32,14 @@
       name="twitter:description"
       content="Browse latest AXOXE releases and deploy in minutes with Docker or Helm."
     />
-    <meta name="twitter:image" content="https://lin-snow.github.io/Ech0/logo.svg" />
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/Versior/axoxe/main/docs/imgs/logo.svg" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "AXOXE Releases",
-        "url": "https://lin-snow.github.io/Ech0/",
+        "url": "https://github.com/Versior/axoxe/releases",
         "description": "Release center for AXOXE with downloads and deployment guides.",
         "publisher": {
           "@type": "Organization",
@@ -195,7 +195,7 @@
           <div class="muted">Self-host your timeline. Own your data. Ship fast.</div>
           <nav class="quick-links">
             <a href="https://www.axoxe.com" target="_blank" rel="noopener noreferrer">Official Website</a>
-            <a href="https://www.axoxe.com/docs" target="_blank" rel="noopener noreferrer">Documentation</a>
+            <a href="https://github.com/Versior/axoxe/tree/main/docs" target="_blank" rel="noopener noreferrer">Documentation</a>
           </nav>
         </div>
       </header>
@@ -212,35 +212,36 @@
         <h2>Deploy AXOXE Your Way</h2>
         <p class="muted">Choose the path that fits your stack.</p>
 
-        <h3>Docker Deployment (Recommended)</h3>
-        <pre><code>docker run -d \
-  --name ech0 \
+        <h3>Build the AXOXE Docker image</h3>
+        <pre><code>git clone https://github.com/Versior/axoxe.git
+cd axoxe
+docker build -f docker/build.Dockerfile \
+  --build-arg TARGETOS=linux \
+  --build-arg TARGETARCH=amd64 \
+  -t axoxe:local .
+# Set a persistent JWT_SECRET in your shell before starting.
+docker run -d --name axoxe --restart unless-stopped \
   -p 6277:6277 \
-  -v /opt/ech0/data:/app/data \
-  -e JWT_SECRET="Hello Echos" \
-  sn0wl1n/ech0:latest</code></pre>
+  -v /opt/axoxe/data:/app/data \
+  -e JWT_SECRET \
+  axoxe:local</code></pre>
+        <p class="muted">Use TARGETARCH=arm64 for ARM64 servers. This image is built from the fork source.</p>
 
         <h3>Docker Compose</h3>
-        <pre><code>docker-compose up -d</code></pre>
-        <p class="muted">In <code>docker-compose.yml</code>, set <code>JWT_SECRET</code> under <code>environment</code>.</p>
+        <pre><code>docker compose -f docker/docker-compose.yml up -d --build</code></pre>
+        <p class="muted">Set a persistent JWT_SECRET in your shell. Existing deployments must keep their current data mount and secret.</p>
 
         <details>
           <summary>More install options</summary>
-
-          <h3>Script Deployment</h3>
-          <pre><code>curl -fsSL "https://raw.githubusercontent.com/Versior/axoxe/main/scripts/ech0.sh" -o ech0.sh && bash ech0.sh
-# Custom install path:
-bash ech0.sh install /your/path/ech0</code></pre>
-
+          <h3>Binary releases</h3>
+          <p>Download a binary for your system from the releases above. The source installer retains the ech0 asset names for compatibility.</p>
+          <pre><code>curl -fsSL "https://raw.githubusercontent.com/Versior/axoxe/main/scripts/ech0.sh" -o ech0.sh
+bash ech0.sh</code></pre>
           <h3>Kubernetes (Helm)</h3>
-          <pre><code>helm repo add ech0 https://lin-snow.github.io/Ech0
-helm repo update
-helm install ech0 ech0/ech0</code></pre>
-
-          <pre><code># Local install from source
-git clone https://github.com/Versior/axoxe.git
-cd AXOXE
-helm install ech0 ./charts/ech0</code></pre>
+          <p>Build and push the AXOXE image to a registry accessible by your cluster, then install the local chart with that image.</p>
+          <pre><code>helm upgrade --install axoxe ./charts/ech0 \
+  --set image.repository=YOUR_REGISTRY/axoxe \
+  --set image.tag=YOUR_IMAGE_TAG</code></pre>
         </details>
       </section>
 

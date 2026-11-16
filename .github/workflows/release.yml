@@ -223,5 +223,5 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/axoxe:${{ github.ref_name }}
             ghcr.io/${{ github.repository_owner }}/axoxe:latest
-            docker.io/${{ vars.DOCKERHUB_USERNAME }}/ech0:${{ github.ref_name }}
-            docker.io/${{ vars.DOCKERHUB_USERNAME }}/ech0:latest
+            docker.io/${{ vars.DOCKERHUB_USERNAME }}/axoxe:${{ github.ref_name }}
+            docker.io/${{ vars.DOCKERHUB_USERNAME }}/axoxe:latest

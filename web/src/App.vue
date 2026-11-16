@@ -70,7 +70,7 @@ const toasterTheme = computed(() => (theme.value === 'dark' ? 'dark' : 'light'))
 const sunnyVideoSrc = ref('')
 let sunnyVideoLoading = false
 
-const DEFAULT_FAVICON = '/favicon.ico'
+const DEFAULT_FAVICON = new URL('./assets/brand/favicon.ico', import.meta.url).href
 const CUSTOM_STYLE_ID = 'ech0-custom-style'
 const CUSTOM_SCRIPT_ID = 'ech0-custom-script'
 useSeoHead(SystemSetting)

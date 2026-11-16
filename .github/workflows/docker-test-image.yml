@@ -85,7 +85,18 @@ jobs:
         run: |
           set -euo pipefail
           test -f cmd/ech0/main.go
-          STATIC_LDFLAGS="-linkmode external -extldflags '-static'"
+          if [ "${GOARCH}" = "arm64" ]; then
+            SQLITE_INC="${RUNNER_TEMP}/sqlite-include"
+            mkdir -p "${SQLITE_INC}"
+            go mod download github.com/mattn/go-sqlite3
+            MATTN_DIR="$(go list -m -f '{{.Dir}}' github.com/mattn/go-sqlite3)"
+            cp "${MATTN_DIR}/sqlite3-binding.h" "${SQLITE_INC}/sqlite3.h"
+            export CGO_CFLAGS="-I${SQLITE_INC} -Du_int8_t=uint8_t -Du_int16_t=uint16_t -Du_int64_t=uint64_t"
+          fi
+          GIT_COMMIT="$(git rev-parse --short HEAD)"
+          BUILD_TIME="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          VERSION_PKG="github.com/lin-snow/ech0/internal/version"
+          STATIC_LDFLAGS="-linkmode external -extldflags '-static' -X ${VERSION_PKG}.Commit=${GIT_COMMIT} -X ${VERSION_PKG}.BuildTime=${BUILD_TIME}"
           OUTPUT_NAME="ech0-linux-${{ matrix.goarch }}"
           go build -tags netgo -ldflags "$STATIC_LDFLAGS" -o "${OUTPUT_NAME}" ./cmd/ech0/main.go
 
@@ -116,7 +127,7 @@ jobs:
         run: |
           set -euo pipefail
           OWNER_LC="$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')"
-          IMAGE="ghcr.io/${OWNER_LC}/ech0"
+          IMAGE="ghcr.io/${OWNER_LC}/axoxe"
           if [ -n "${{ inputs.image_tag }}" ]; then
             TAG="${{ inputs.image_tag }}"
           else

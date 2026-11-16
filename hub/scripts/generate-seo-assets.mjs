@@ -6,7 +6,7 @@ const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url))
 const HUB_ROOT = join(SCRIPT_DIR, '..')
 const PUBLIC_DIR = join(HUB_ROOT, 'public')
 
-const SITE_URL = (process.env.VITE_HUB_SITE_ORIGIN ?? process.env.HUB_SITE_ORIGIN ?? 'https://hub.ech0.app').replace(
+const SITE_URL = (process.env.VITE_HUB_SITE_ORIGIN ?? process.env.HUB_SITE_ORIGIN ?? '').replace(
   /\/+$/,
   '',
 )
@@ -29,15 +29,15 @@ ${body}
 }
 
 async function main() {
-  const urls = [
+  const urls = SITE_URL ? [
     { loc: `${SITE_URL}/`, changefreq: 'weekly', priority: '1' },
     { loc: `${SITE_URL}/explore`, changefreq: 'daily', priority: '0.95' },
-  ]
+  ] : []
 
   await writeFile(join(PUBLIC_DIR, 'sitemap.xml'), sitemapXml(urls), 'utf8')
   await writeFile(
     join(PUBLIC_DIR, 'robots.txt'),
-    `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`,
+    `User-agent: *\nAllow: /\n${SITE_URL ? `\nSitemap: ${SITE_URL}/sitemap.xml\n` : ''}`,
     'utf8',
   )
 }

@@ -1,71 +1,39 @@
 ---
 title: Updating
-description: Back up before upgrading; concrete commands for Docker, Compose, and Helm
+description: Upgrade the AXOXE source build while retaining data and configuration
 ---
 
-Back up the **data directory** before upgrading (and, if object storage is enabled, back up bucket objects and metadata according to your policy). Minor upgrades usually just mean pulling the new image and recreating the container; for **major versions** (especially across major releases), read the release notes before you start.
-
-> **v3 → v4**: an in-place upgrade is not possible. First **export a snapshot** from v3, then deploy v4 and use **v3 migration** in the v4 admin panel to import it. See [Data control](/docs/guide/datacontrol).
-
----
-
-## Docker
-
-```bash
-docker stop ech0
-docker rm ech0
-docker pull sn0wl1n/ech0:latest
-docker run -d \
-  --name ech0 \
-  -p 6277:6277 \
-  -v /opt/ech0/data:/app/data \
-  -e JWT_SECRET="Hello Echos" \
-  -e TZ=Asia/Shanghai \
-  sn0wl1n/ech0:latest
-```
-
-Replace `JWT_SECRET` with the value used in your environment (the same as on first deployment); if **`TZ`** was set initially, keep it in the upgrade command as well. Make sure the data volume path is correct. If the instance fails to start after upgrading, roll the image tag back and check the release notes first — do not try to troubleshoot by wiping the data directory.
-
----
+Export a snapshot and back up the data directory before upgrading. Back up object storage too when enabled. Preserve the existing `JWT_SECRET`, authentication settings, and data mount.
 
 ## Docker Compose
 
-```bash
-cd /path/to/compose
-docker compose pull && docker compose up -d --force-recreate
-```
-
-If you use the older `docker-compose` command:
+From your AXOXE checkout, fetch the source version you intend to deploy, then rebuild:
 
 ```bash
-docker-compose pull && docker-compose up -d --force-recreate
+git pull --ff-only
+docker compose -f docker/docker-compose.yml up -d --build
 ```
 
-Optionally clean up dangling images: `docker image prune -f`
+This command uses the fork's Compose configuration. An existing deployment must continue to use its current data mount; do not switch it to an empty directory.
 
----
+## Docker
+
+Rebuild the branded image using the [installation guide](/docs/start/installation). Stop and replace your existing container with the new image, retaining its data volume and environment. Source builds use `axoxe:local`; the upstream image does not contain this fork's branding.
 
 ## Kubernetes (Helm)
 
-1. Enter the cloned repository directory and pull the latest code: `git pull`
-2. Upgrade the release:
+Build and publish the AXOXE image to your cluster's registry, then update the existing Helm release:
 
 ```bash
-helm upgrade ech0 ./charts/ech0
+helm upgrade axoxe ./charts/ech0 \
+  --set image.repository=YOUR_REGISTRY/axoxe \
+  --set image.tag=YOUR_IMAGE_TAG
 ```
 
-If you use a custom release name and namespace:
+Use your existing release name, namespace, and values file. The `charts/ech0` source path remains for compatibility.
 
-```bash
-helm upgrade my-ech0 ./charts/ech0 --namespace my-namespace
-```
+## Verify and roll back
 
----
+Check sign-in, the timeline, media, RSS, and the About page after startup. SQLite migrations run at startup. If a downgrade requires an older schema, restore the matching pre-upgrade snapshot and binary together.
 
-## Recommended after upgrading
-
-1. Open the admin panel and confirm the version number and health status (if shown).
-2. Skim the timeline, publish a test Echo, and check that comments and attachments work.
-3. If you use Connect or webhooks, check whether the release notes mention behavior changes.
-
-For more troubleshooting ideas, see [FAQ](/docs/start/faq).
+See the [deployment guide](https://github.com/Versior/axoxe/blob/main/DEPLOYMENT.md) for the full build commands and [FAQ](/docs/start/faq) for troubleshooting.

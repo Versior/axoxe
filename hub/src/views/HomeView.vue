@@ -124,6 +124,6 @@ onBeforeUnmount(() => {
   height: 44px;
   margin: 0 auto 1rem;
   background-color: currentColor;
-  mask: url('/wordmark.svg') center / contain no-repeat;
+  mask: url('@/assets/brand/axoxe-wordmark.svg') center / contain no-repeat;
 }
 </style>

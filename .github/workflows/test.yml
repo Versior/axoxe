@@ -45,7 +45,7 @@ jobs:
       - name: Provide placeholder embedded frontend
         run: |
           mkdir -p template/dist
-          [ -f template/dist/index.html ] || printf '<!doctype html><title>ech0 test</title>' > template/dist/index.html
+          [ -f template/dist/index.html ] || printf '<!doctype html><title>AXOXE test</title>' > template/dist/index.html
 
       - name: Verify generated mocks are up-to-date
         run: just mocks-check

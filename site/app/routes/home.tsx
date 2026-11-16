@@ -7,6 +7,10 @@ const PAGE_TITLE = `${SITE_NAME} — Self-hosted microblog & timeline`;
 const OG_IMAGE_PATH = "/screenshot.png";
 const OG_IMAGE_WIDTH = 1412;
 const OG_IMAGE_HEIGHT = 1131;
+const wordmarkUrl = new URL(
+  "../../../web/src/assets/brand/axoxe-wordmark.svg",
+  import.meta.url,
+).href;
 
 export function meta(_args: Route.MetaArgs) {
   const canonical = absoluteUrl("/");
@@ -125,7 +129,7 @@ export default function Home() {
           <span
             aria-hidden="true"
             className="block h-8 w-35 bg-current"
-            style={{ mask: "url(/wordmark.svg) center / contain no-repeat" }}
+            style={{ mask: `url(${wordmarkUrl}) center / contain no-repeat` }}
           />
         </a>
         <Link
@@ -275,7 +279,7 @@ export default function Home() {
           </Link>
           <span className="mx-2 text-sand-6">·</span>
           <a
-            href="https://hub.ech0.app"
+            href="https://github.com/Versior/axoxe/tree/main/hub"
             className="font-medium underline-offset-4 transition-colors hover:text-sand-12"
           >
             Hub

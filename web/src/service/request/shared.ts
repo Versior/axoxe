@@ -5,6 +5,7 @@ import { localStg } from '@/utils/storage'
 import { useAuthStore } from '@/stores/auth'
 import { i18n } from '@/locales'
 import { getVisitorId } from '@/utils/visitor'
+import defaultLogo from '@/assets/brand/axoxe.svg'
 
 export function buildCommonHeaders(): Record<string, string> {
   const headers: Record<string, string> = {
@@ -47,7 +48,7 @@ const getServiceBaseUrl = () => {
   return baseUrl.replace(/\/+$/, '')
 }
 
-export const resolveAvatarUrl = (rawUrl?: string, fallback = '/axoxe.svg') => {
+export const resolveAvatarUrl = (rawUrl?: string, fallback = defaultLogo) => {
   const value = (rawUrl || '').trim()
   if (
     !value ||

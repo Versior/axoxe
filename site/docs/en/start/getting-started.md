@@ -3,7 +3,7 @@ title: Getting started
 description: Your first AXOXE deployment — from preparing the environment to publishing a post
 ---
 
-If you have just heard of AXOXE, read the [Product overview](/docs/guide/overview) first, then work through this page in order. The following assumes you have a Linux server or a local machine that can run Docker, and the goal is to open the web page and finish your first login **within 10 minutes**.
+If you have just heard of AXOXE, read the [Product overview](/docs/guide/overview) first, then work through this page in order. The following assumes you have a Linux server or a local machine that can run Docker, and the goal is to open the web page and finish your first login after building the AXOXE image.
 
 ---
 
@@ -28,26 +28,31 @@ If you care more about **concepts** than commands, jump straight to [Terms & int
 | A domain (optional) | You can use the IP without a domain; for HTTPS, configure certificates in a reverse proxy (Nginx, Caddy, etc.). See [Installation](/docs/start/installation). |
 | `JWT_SECRET`        | **Must** be changed to a long random string; it signs sessions. Do not use the example values from the docs in production.                                    |
 
-You **do not** need to know Go or frontend development beforehand; self-hosted users just run the container as described.
+This fork builds its Docker image from source. A Go or frontend development setup on the host is not required for the Docker build.
 
 ---
 
-## Step 1: Start it with one command (Docker)
+## Step 1: Build and start AXOXE (Docker)
 
-Run this in a terminal (identical to [Installation](/docs/start/installation)):
+Set a persistent `JWT_SECRET` in your shell, then build and run the fork source (see [Installation](/docs/start/installation)). Use `TARGETARCH=arm64` for an ARM64 server:
 
 ```bash
-docker run -d \
-  --name ech0 \
+git clone https://github.com/Versior/axoxe.git
+cd axoxe
+docker build -f docker/build.Dockerfile \
+  --build-arg TARGETOS=linux \
+  --build-arg TARGETARCH=amd64 \
+  -t axoxe:local .
+docker run -d --name axoxe --restart unless-stopped \
   -p 6277:6277 \
-  -v /opt/ech0/data:/app/data \
-  -e JWT_SECRET="change-me-to-a-long-random-string" \
-  sn0wl1n/ech0:latest
+  -v /opt/axoxe/data:/app/data \
+  -e JWT_SECRET \
+  axoxe:local
 ```
 
-- `-v` stores data on the host at `/opt/ech0/data`, so recreating the container does not lose the database; change the path as needed.
+- `-v` stores data on the host at `/opt/axoxe/data`, so recreating the container does not lose the database; change the path as needed.
 - If the port is taken, change the left-hand `6277` to something like `8080:6277`, then use the new port in the browser.
-- `JWT_SECRET` in the command is security-critical — replace it with a long random string and do not copy the example.
+- `-e JWT_SECRET` passes the value already set in your shell. Keep it for subsequent restarts and upgrades.
 
 **Common reasons it will not open**: the firewall does not allow the port, Docker is not running, or the IP is wrong (cloud servers need the **public IP** or the bound domain).
 
@@ -66,7 +71,7 @@ In the current version, **posting permission is usually granted only to high-pri
 ## Step 3: A few things to do right away
 
 1. **Change `JWT_SECRET` to something strong** (if you are still using the example value): stop the container → recreate it with the new environment variable, without deleting the data volume.
-2. **Back up the data directory**: copy at least one copy of `/opt/ech0/data` (or your mount path) somewhere else. See [Data control](/docs/guide/datacontrol).
+2. **Back up the data directory**: copy at least one copy of `/opt/axoxe/data` (or your mount path) somewhere else. See [Data control](/docs/guide/datacontrol).
 3. **Fill in the “service address”** (if you use Connect or avatars): in **System settings → Service address**, enter the full URL of this site (including `http://` or `https://`), matching the browser address bar.
 4. **Plan for HTTPS**: for public sites, terminate TLS in a reverse proxy; internal-only deployments can stay on HTTP for now.
 
@@ -74,11 +79,11 @@ In the current version, **posting permission is usually granted only to high-pri
 
 ## Terms & interface
 
-| Term                      | Meaning                                                                                                                                         |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Echo**                  | One timeline post (like a single social media update); it may contain Markdown, images, link cards, and so on.                                  |
+| Term                      | Meaning                                                                                                                                          |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Echo**                  | One timeline post (like a single social media update); it may contain Markdown, images, link cards, and so on.                                   |
 | **Instance**              | This AXOXE service that you deployed; multiple instances can federate via Connect / Hub, see [Federation & aggregation](/docs/guide/federation). |
-| **Owner / administrator** | The first registered account is the Owner; it can manage users and some site-wide options in settings.                                          |
+| **Owner / administrator** | The first registered account is the Owner; it can manage users and some site-wide options in settings.                                           |
 
 ---
 

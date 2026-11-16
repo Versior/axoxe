@@ -3,10 +3,8 @@
 <template>
   <div class="flex justify-center items-center h-screen">
     <div class="h-1/2 w-[min(86vw,12rem)] sm:w-[min(82vw,18rem)] md:w-[15rem]">
-      <h1
-        class="text-6xl italic font-bold text-center text-[var(--color-text-muted)] mb-4 font-serif"
-      >
-        AXOXE
+      <h1 class="text-[var(--color-text-muted)] mb-4">
+        <span class="auth-wordmark" role="img" aria-label="Axoxe" />
       </h1>
       <div v-if="AuthMode === 'login'">
         <div class="flex items-center justify-between gap-3 mb-3">
@@ -290,3 +288,13 @@ onMounted(async () => {
   await Promise.all([getOAuth2Status(), getPasskeyStatus()])
 })
 </script>
+
+<style scoped>
+.auth-wordmark {
+  display: block;
+  width: 100%;
+  height: 4rem;
+  background-color: currentColor;
+  mask: url('@/assets/brand/axoxe-wordmark.svg') center / contain no-repeat;
+}
+</style>

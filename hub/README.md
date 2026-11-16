@@ -1,12 +1,12 @@
 # AXOXE Hub
 
-Frontend for **[hub.ech0.app](https://hub.ech0.app)**: it loads a static **instance registry JSON**, fetches each AXOXE deployment’s posts API in parallel in the browser, and merges results into a **single unified timeline**.
+The AXOXE public-instance directory frontend: it loads a static **instance registry JSON**, fetches each AXOXE deployment’s posts API in parallel in the browser, and merges results into a **single unified timeline**.
 
 ## How to join AXOXE Hub
 
-Want **your** public AXOXE instance to appear on [hub.ech0.app](https://hub.ech0.app)? Two steps:
+To register a public AXOXE instance with a deployed AXOXE Hub:
 
-1. **Configure CORS on your instance.** Allow the Hub origin to call your instance API — set `Access-Control-Allow-Origin` (or the equivalent on your reverse proxy / CDN) to permit `https://hub.ech0.app`. If you also develop the Hub locally, additionally allow `http://localhost:5173`. If you cannot modify your instance, run a reverse proxy on the Hub domain so requests are same-origin.
+1. **Configure CORS on your instance.** Allow the Hub origin to call your instance API — set `Access-Control-Allow-Origin` (or the equivalent on your reverse proxy / CDN) to permit the origin of your deployed Hub. If you also develop the Hub locally, additionally allow `http://localhost:5193`. If you cannot modify your instance, run a reverse proxy on the Hub domain so requests are same-origin.
 2. **Open the registration issue.** Submit via [**Register on AXOXE Hub**](https://github.com/Versior/axoxe/issues/new?template=register-hub-instance.yml) (GitHub sign-in required) and fill in:
    - **Instance ID** — lowercase letters, digits, and hyphens only; globally unique within Hub.
    - **Instance URL** — your deployment base URL, **no trailing slash** (e.g. `https://memo.example.com`).
@@ -54,7 +54,7 @@ At runtime Hub requests `/hub.json` from the same origin (in dev, Vite serves it
 ```json
 {
   "instances": [
-    { "id": "my-instance", "url": "https://your-ech0-origin.example.com" }
+    { "id": "my-instance", "url": "https://your-axoxe-origin.example.com" }
   ]
 }
 ```
@@ -76,7 +76,7 @@ At runtime Hub requests `/hub.json` from the same origin (in dev, Vite serves it
 
 ## Cross-origin (CORS)
 
-When the browser on `hub.ech0.app` calls each instance, `**/api/`* and `/healthz`** (among others) must allow the Hub origin (e.g. `Access-Control-Allow-Origin: https://hub.ech0.app`). If you cannot change the instance, use a **reverse proxy** on the Hub domain (same-origin avoids CORS).
+When the browser on the deployed Hub calls each instance, `**/api/`* and `/healthz`** (among others) must allow the Hub origin (e.g. `Access-Control-Allow-Origin: https://hub.example.com`). If you cannot change the instance, use a **reverse proxy** on the Hub domain (same-origin avoids CORS).
 
 ## Development & build
 
@@ -87,7 +87,7 @@ pnpm build
 pnpm preview
 ```
 
-- Local dev defaults to `http://localhost:5173`; add that origin to instance CORS for debugging.
+- Local dev defaults to `http://localhost:5193`; add that origin to instance CORS for debugging.
 
 ## Stack
 
@@ -103,3 +103,6 @@ Vue 3, TypeScript, Vite, `vue-router`, `vite-plugin-pwa`, `vue-i18n`, UnoCSS; sh
 ## Repository layout
 
 This directory is the `hub/` package in the monorepo. It shares Git history with the main AXOXE (Go backend) project but builds and deploys independently.
+## Deployment origin
+
+Set `VITE_HUB_SITE_ORIGIN` to your actual Hub origin before building. Browser metadata uses the current origin when this is unset; the sitemap stays empty until an origin is configured. The fork does not redirect visitors to the upstream Hub.
