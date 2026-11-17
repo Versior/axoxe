@@ -177,7 +177,9 @@
           style="vertical-align: middle"
         >
           {{
-            SystemSetting.meting_api.length === 0 ? t('commonUi.none') : SystemSetting.meting_api
+            SystemSetting.meting_api.length === 0
+              ? t('systemSetting.metingApiAuto')
+              : SystemSetting.meting_api
           }}
         </span>
         <BaseInput
@@ -188,6 +190,9 @@
           class="w-full py-1!"
         />
       </div>
+      <p class="text-sm text-[var(--color-text-muted)] mb-3">
+        {{ t('systemSetting.metingApiHint') }}
+      </p>
       <div class="flex flex-row justify-start text-[var(--color-text-secondary)] gap-2 mb-1">
         <h2 class="font-semibold min-w-28 md:min-w-32 shrink-0 break-words leading-5">
           {{ t('systemSetting.customCss') }}:

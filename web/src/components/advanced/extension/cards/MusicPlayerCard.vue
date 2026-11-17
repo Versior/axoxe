@@ -130,7 +130,6 @@
             isPlaybackActive ? t('extensionCard.musicPause') : t('extensionCard.musicPlay')
           "
           :title="isPlaybackActive ? t('extensionCard.musicPause') : t('extensionCard.musicPlay')"
-          :disabled="audioFailed"
           @click="togglePlayback"
         >
           <span v-if="isAudioLoading" class="loading-dot" aria-hidden="true"></span>
@@ -160,12 +159,8 @@ import Play from '@/components/icons/play.vue'
 import { ExtensionType, MusicProvider } from '@/enums/enums'
 import { useSettingStore } from '@/stores'
 import { parseMusicURL } from '@/utils/other'
-import {
-  normalizeMetingTrack,
-  parseLyrics,
-  type LyricLine,
-  type MusicTrack,
-} from '@/utils/musicPlayer'
+import { loadMetingTrack } from '@/utils/meting'
+import { parseLyrics, type LyricLine, type MusicTrack } from '@/utils/musicPlayer'
 import ExtensionCardShell from '../shared/ExtensionCardShell.vue'
 import ExtensionCardSkeleton from '../shared/ExtensionCardSkeleton.vue'
 
@@ -202,11 +197,12 @@ const isPlaying = ref(false)
 const isHovered = ref(false)
 const showTrackInfo = ref(true)
 const loadFailed = ref(false)
-const audioFailed = ref(false)
 const isAppleReady = ref(false)
 let requestController: AbortController | null = null
 let lyricController: AbortController | null = null
 let trackInfoTimer: ReturnType<typeof setTimeout> | null = null
+let currentEndpoint = ''
+const failedEndpoints = new Set<string>()
 
 const musicURL = computed(() => {
   if (props.echo.extension?.type !== ExtensionType.MUSIC) return ''
@@ -219,7 +215,7 @@ const metingAPI = computed(() => {
   if (!settingsLoading.value && SystemSetting.value?.meting_api?.length) {
     return SystemSetting.value.meting_api
   }
-  return 'https://meting.soopy.cn/api'
+  return ''
 })
 
 const musicSourceKey = computed(() => {
@@ -252,40 +248,16 @@ const progressPercent = computed(() =>
   duration.value > 0 ? Math.min(100, (currentTime.value / duration.value) * 100) : 0,
 )
 
-function buildMetingURL() {
-  const info = musicInfo.value
-  if (!info || info.server === MusicProvider.APPLE) return ''
-
-  const params: Record<string, string> = {
-    server: info.server,
-    type: info.type,
-    id: info.id,
-    auth: '',
-    r: String(Math.random()),
-  }
-  const base = metingAPI.value.trim()
-
-  if (/:(server|type|id|auth|r)\b/.test(base)) {
-    return Object.entries(params).reduce(
-      (url, [key, value]) => url.replaceAll(`:${key}`, encodeURIComponent(value)),
-      base,
-    )
-  }
-
-  const separator = base.includes('?') ? '&' : '?'
-  return `${base}${separator}${new URLSearchParams(params).toString()}`
-}
-
 async function loadTrack() {
   requestController?.abort()
   lyricController?.abort()
   pause()
   track.value = null
+  currentEndpoint = ''
   lyrics.value = []
   currentTime.value = 0
   duration.value = 0
   loadFailed.value = false
-  audioFailed.value = false
   isAppleReady.value = false
 
   const info = musicInfo.value
@@ -295,22 +267,19 @@ async function loadTrack() {
   requestController = controller
   isLoading.value = true
   try {
-    const response = await fetch(buildMetingURL(), {
-      headers: { Accept: 'application/json' },
-      signal: controller.signal,
-    })
-    if (!response.ok) throw new Error(`Meting API returned ${response.status}`)
-
-    const payload = await response.json()
+    const resolved = await loadMetingTrack(
+      info,
+      metingAPI.value,
+      controller.signal,
+      failedEndpoints,
+    )
     if (requestController !== controller) return
-
-    const resolvedTrack = normalizeMetingTrack(payload)
-    if (!resolvedTrack) throw new Error('Meting API returned no playable track')
-    track.value = resolvedTrack
+    track.value = resolved.track
+    currentEndpoint = resolved.endpoint
     await nextTick()
     applyVolume()
     revealTrackInfo()
-    void loadLyrics(resolvedTrack.lrc)
+    void loadLyrics(resolved.track.lrc)
   } catch (error) {
     if (!isAbortError(error)) loadFailed.value = true
   } finally {
@@ -353,7 +322,7 @@ function applyVolume() {
 
 async function play() {
   const audio = audioRef.value
-  if (!audio || !track.value || audioFailed.value) return
+  if (!audio || !track.value) return
 
   window.dispatchEvent(new CustomEvent(PLAYER_EVENT, { detail: playerToken }))
   isAudioLoading.value = true
@@ -364,7 +333,7 @@ async function play() {
     if (!(
       error instanceof DOMException && ['AbortError', 'NotAllowedError'].includes(error.name)
     )) {
-      audioFailed.value = true
+      handleAudioError()
     }
   }
 }
@@ -398,7 +367,8 @@ function handleEnded() {
 
 function handleAudioError() {
   pause()
-  audioFailed.value = true
+  failedEndpoints.add(currentEndpoint)
+  void loadTrack()
 }
 
 function handleLoadedMetadata() {
@@ -517,7 +487,14 @@ function handleOtherPlayer(event: Event) {
   if ((event as CustomEvent<object>).detail !== playerToken) pause()
 }
 
-watch(musicSourceKey, loadTrack, { immediate: true })
+watch(
+  musicSourceKey,
+  () => {
+    failedEndpoints.clear()
+    void loadTrack()
+  },
+  { immediate: true },
+)
 watch(isPlaying, updateMediaPlaybackState)
 
 onMounted(() => {

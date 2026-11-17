@@ -4,25 +4,20 @@
   <div class="editor-actions">
     <div class="editor-actions__left">
       <BaseButton
-        :icon="currentMode === Mode.ECH0 ? Advance : Back"
-        @click="handleChangeMode"
-        :class="['w-8 h-8 sm:w-9 sm:h-9 rounded-xs'].join(' ')"
-        :tooltip="currentMode === Mode.ECH0 ? t('editor.more') : t('editor.backToEditor')"
-      />
-      <BaseButton
-        v-if="currentMode === Mode.ECH0"
-        :icon="AttachmentIcon"
-        @click="handleAddMediaMode"
+        v-if="currentMode === Mode.TagManage"
+        :icon="Back"
         class="w-8 h-8 sm:w-9 sm:h-9 rounded-xs"
-        :tooltip="t('editor.addImage')"
+        :tooltip="t('editor.backToEditor')"
+        @click="editorStore.setMode(Mode.ECH0)"
       />
-      <div v-if="currentMode === Mode.ECH0" class="editor-actions__tag">
+      <div v-if="currentMode !== Mode.TagManage" class="editor-actions__tag">
         <Popover>
-          <PopoverButton
-            :aria-label="tagTriggerTooltip"
-            class="cursor-pointer p-1.5 w-8 h-8 sm:w-9 sm:h-9 rounded-xs ring-inset ring-1 ring-[var(--btn-ring-color)] text-[var(--btn-text-color)] outline-none shadow-[var(--btn-shadow)] bg-[var(--btn-bg-color)] hover:bg-[var(--btn-hover-bg-color)] hover:ring-[var(--btn-hover-border-color)] focus-visible:ring-2 focus-visible:ring-[var(--btn-focus-ring-color)] transition-colors duration-200 relative inline-flex items-center justify-center"
-          >
-            <TagSetting class="w-full h-full" />
+          <PopoverButton :aria-label="tagTriggerTooltip" class="editor-actions__tag-trigger">
+            <TagSetting class="w-4 h-4" />
+            <span>{{ t('editor.tagPickerTooltip') }}</span>
+            <span v-if="tagToAdd.length" class="editor-actions__tag-count">{{
+              tagToAdd.length
+            }}</span>
           </PopoverButton>
 
           <transition
@@ -102,13 +97,12 @@
           :aria-label="publishTriggerTooltip"
           :disabled="isSubmitting"
           :class="[
-            'cursor-pointer p-1.5 w-8 h-8 sm:w-9 sm:h-9 rounded-xs ring-inset ring-1 ring-[var(--btn-ring-color)] text-[var(--btn-text-color)] outline-none shadow-[var(--btn-shadow)] bg-[var(--btn-bg-color)] transition-colors duration-200 relative inline-flex items-center justify-center editor-actions__cta',
-            isSubmitting
-              ? 'cursor-not-allowed opacity-70'
-              : 'hover:bg-[var(--btn-hover-bg-color)] hover:ring-[var(--btn-hover-border-color)] focus-visible:ring-2 focus-visible:ring-[var(--btn-focus-ring-color)]',
+            'editor-actions__publish-trigger',
+            isSubmitting ? 'cursor-not-allowed opacity-70' : '',
           ]"
         >
-          <component :is="isUpdateMode ? Update : Publish" class="w-full h-full" />
+          <component :is="isUpdateMode ? Update : Publish" class="w-4 h-4" />
+          <span>{{ publishTriggerTooltip }}</span>
         </PopoverButton>
 
         <transition
@@ -144,8 +138,6 @@
 </template>
 
 <script setup lang="ts">
-import Advance from '@/components/icons/advance.vue'
-import AttachmentIcon from '@/components/icons/attachment.vue'
 import ImageIcon from '@/components/icons/image.vue'
 import Public from '@/components/icons/public.vue'
 import Private from '@/components/icons/private.vue'
@@ -165,11 +157,9 @@ import BaseButton from '@/components/common/BaseButton.vue'
 import TagSetting from '@/components/icons/tagsetting.vue'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { Mode, ExtensionType } from '@/enums/enums'
-import { FILE_STORAGE_TYPE } from '@/constants/file'
 import { storeToRefs } from 'pinia'
 import { useEditorStore, useEchoStore } from '@/stores'
 import { theToast } from '@/utils/toast'
-import { localStg } from '@/utils/storage'
 import { computed, onMounted, type Component } from 'vue'
 import { useI18n } from 'vue-i18n'
 
@@ -178,7 +168,6 @@ const {
   currentMode,
   isUpdateMode,
   echoToAdd,
-  fileToAdd,
   tagToAdd,
   hasContent,
   hasFile,
@@ -236,21 +225,6 @@ const publishTriggerTooltip = computed(() =>
   isUpdateMode.value ? t('editor.updateEcho') : t('editor.publishEcho'),
 )
 
-const handleChangeMode = () => {
-  editorStore.toggleMode()
-}
-
-const handleAddMediaMode = () => {
-  fileToAdd.value.storage_type = FILE_STORAGE_TYPE.LOCAL
-
-  const rememberedSource = localStg.getItem<App.Api.File.StorageType>('file_storage_type')
-  if (rememberedSource) {
-    fileToAdd.value.storage_type = rememberedSource
-  }
-
-  editorStore.setMode(Mode.Media)
-}
-
 const handleExitUpdateMode = () => {
   editorStore.handleExitUpdateMode()
 }
@@ -300,7 +274,63 @@ const goToTagManager = () => {
   flex-wrap: nowrap;
   gap: 0.6rem;
   align-items: center;
-  padding: 0.3rem 0.35rem 0.1rem;
+  padding: 0.65rem 0 0;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.editor-actions :deep(.editor-actions__tag-trigger),
+.editor-actions :deep(.editor-actions__publish-trigger) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.25rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 0.6rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.editor-actions :deep(.editor-actions__tag-trigger) {
+  background: transparent;
+  color: var(--color-text-muted);
+}
+
+.editor-actions :deep(.editor-actions__tag-trigger:hover) {
+  background: var(--color-bg-muted);
+  color: var(--color-text-primary);
+}
+
+.editor-actions__tag-count {
+  color: var(--color-accent);
+  font-size: 0.7rem;
+}
+
+.editor-actions :deep(.editor-actions__publish-trigger) {
+  background: var(--color-text-primary);
+  color: var(--color-bg-surface);
+}
+
+.editor-actions :deep(.editor-actions__publish-trigger:hover:not(:disabled)) {
+  background: var(--color-text-secondary);
+}
+
+.editor-actions :deep(.editor-actions__tag-trigger:focus-visible),
+.editor-actions :deep(.editor-actions__publish-trigger:focus-visible) {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.editor-actions :deep(.editor-actions__publish-trigger path) {
+  fill: currentcolor;
+}
+
+@media (width <= 380px) {
+  .editor-actions :deep(.editor-actions__tag-trigger > span:not(.editor-actions__tag-count)) {
+    display: none;
+  }
 }
 
 .editor-actions__left {

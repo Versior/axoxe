@@ -29,6 +29,8 @@
     "none": "なし"
   },
   "editor": {
+    "attachments": "添付",
+    "share": "共有",
     "tagPickerTooltip": "タグを選択",
     "tagPickerEmpty": "選択できるタグがありません",
     "tagPickerGoToManage": "タグ管理へ移動",
@@ -125,7 +127,6 @@
     "locationZoomIn": "拡大",
     "locationZoomOut": "縮小",
     "extLocation": "位置情報",
-    "more": "もっと見る",
     "backToEditor": "エディターに戻る",
     "addImage": "添付ファイルを追加",
     "publishEcho": "Echoを公開",
@@ -135,6 +136,7 @@
     "updateEcho": "Echoを更新",
     "extMusic": "音楽",
     "extVideo": "動画",
+    "extVideoLink": "動画リンク",
     "extGithubProject": "GitHub プロジェクト",
     "extWebsiteLink": "サイトリンク",
     "extTweet": "X 投稿",
@@ -607,6 +609,8 @@
     "footerLinkPlaceholder": "任意、http(s) 付き",
     "metingApi": "Meting API",
     "metingApiPlaceholder": "Meting API の URL（http(s) 付き）",
+    "metingApiAuto": "利用可能な公開 API を自動選択",
+    "metingApiHint": "接続先が利用できない場合だけ候補を更新し、別の接続先に切り替えます。正常時の定期更新はありません。URL を入力すると独自の API を優先します。",
     "customCss": "カスタム CSS",
     "customCssPlaceholder": "カスタム CSS を入力してください",
     "customJs": "カスタム JS",

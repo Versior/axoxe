@@ -29,6 +29,8 @@
     "none": "暂无"
   },
   "editor": {
+    "attachments": "附件",
+    "share": "分享",
     "tagPickerTooltip": "选择标签",
     "tagPickerEmpty": "暂无可选标签",
     "tagPickerGoToManage": "前往标签管理",
@@ -125,7 +127,6 @@
     "locationZoomIn": "放大",
     "locationZoomOut": "缩小",
     "extLocation": "位置",
-    "more": "更多",
     "backToEditor": "返回编辑器",
     "addImage": "添加附件",
     "publishEcho": "发布Echo",
@@ -135,6 +136,7 @@
     "updateEcho": "更新Echo",
     "extMusic": "音乐",
     "extVideo": "视频",
+    "extVideoLink": "视频链接",
     "extGithubProject": "GitHub 项目",
     "extWebsiteLink": "网站链接",
     "extTweet": "X 推文",
@@ -607,6 +609,8 @@
     "footerLinkPlaceholder": "可选，带 http(s)",
     "metingApi": "Meting API",
     "metingApiPlaceholder": "Meting API地址,带http(s)",
+    "metingApiAuto": "自动选择可用公共接口",
+    "metingApiHint": "当前接口不可用时，自动更新候选并换源；正常播放不会定时刷新。填写地址可优先使用自定义接口。",
     "customCss": "自定义 CSS",
     "customCssPlaceholder": "请输入自定义 CSS",
     "customJs": "自定义 JS",

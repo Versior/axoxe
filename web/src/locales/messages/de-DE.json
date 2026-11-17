@@ -29,6 +29,8 @@
     "none": "Keine"
   },
   "editor": {
+    "attachments": "Dateien",
+    "share": "Teilen",
     "tagPickerTooltip": "Tags auswählen",
     "tagPickerEmpty": "Noch keine Tags verfügbar",
     "tagPickerGoToManage": "Zur Tag-Verwaltung",
@@ -125,7 +127,6 @@
     "locationZoomIn": "Vergrößern",
     "locationZoomOut": "Verkleinern",
     "extLocation": "Ort",
-    "more": "Mehr",
     "backToEditor": "Zurück zum Editor",
     "addImage": "Anhang hinzufügen",
     "publishEcho": "Echo veröffentlichen",
@@ -135,6 +136,7 @@
     "updateEcho": "Echo aktualisieren",
     "extMusic": "Musik",
     "extVideo": "Video",
+    "extVideoLink": "Videolink",
     "extGithubProject": "GitHub-Projekt",
     "extWebsiteLink": "Website-Link",
     "extTweet": "X-Beitrag",
@@ -607,6 +609,8 @@
     "footerLinkPlaceholder": "Optional, mit http(s)",
     "metingApi": "Meting API",
     "metingApiPlaceholder": "Meting-API-URL mit http(s)",
+    "metingApiAuto": "Öffentliche API automatisch auswählen",
+    "metingApiHint": "Bei einem Ausfall werden die Kandidaten aktualisiert und die Quelle gewechselt. Keine geplante Aktualisierung bei normaler Wiedergabe. Eine URL bevorzugt Ihre eigene API.",
     "customCss": "Eigenes CSS",
     "customCssPlaceholder": "Eigenes CSS eingeben",
     "customJs": "Eigenes JS",

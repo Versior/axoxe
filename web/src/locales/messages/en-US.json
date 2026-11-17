@@ -29,6 +29,8 @@
     "none": "N/A"
   },
   "editor": {
+    "attachments": "Files",
+    "share": "Share",
     "tagPickerTooltip": "Pick tags",
     "tagPickerEmpty": "No tags available yet.",
     "tagPickerGoToManage": "Go to Tag Manager",
@@ -125,7 +127,6 @@
     "locationZoomIn": "Zoom in",
     "locationZoomOut": "Zoom out",
     "extLocation": "Location",
-    "more": "More",
     "backToEditor": "Back to editor",
     "addImage": "Add attachment",
     "publishEcho": "Publish Echo",
@@ -135,6 +136,7 @@
     "updateEcho": "Update Echo",
     "extMusic": "Music",
     "extVideo": "Video",
+    "extVideoLink": "Video link",
     "extGithubProject": "GitHub Project",
     "extWebsiteLink": "Website Link",
     "extTweet": "X Post",
@@ -607,6 +609,8 @@
     "footerLinkPlaceholder": "Optional, with http(s)",
     "metingApi": "Meting API",
     "metingApiPlaceholder": "Meting API URL with http(s)",
+    "metingApiAuto": "Automatically select a public API",
+    "metingApiHint": "If the current API fails, refresh the candidates and switch sources. No scheduled refresh runs during normal playback. Enter a URL to prefer your own API.",
     "customCss": "Custom CSS",
     "customCssPlaceholder": "Enter custom CSS",
     "customJs": "Custom JS",
