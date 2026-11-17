@@ -29,8 +29,6 @@
     "none": "暂无"
   },
   "editor": {
-    "attachments": "附件",
-    "share": "分享",
     "tagPickerTooltip": "选择标签",
     "tagPickerEmpty": "暂无可选标签",
     "tagPickerGoToManage": "前往标签管理",
@@ -49,9 +47,9 @@
     "mediaTypeImage": "图片",
     "mediaTypeAudio": "音频",
     "mediaTypeVideo": "视频",
-    "mixedCategoryRejected": "一条 Echo 只能包含同一类型的文件",
+    "mixedCategoryRejected": "一条记录只能包含同一类型的文件",
     "categoryLockedHint": "已有文件，需先移除后才能切换类型",
-    "singleMediaLimit": "音频 / 视频每条 Echo 只能有一个，替换前请先移除当前文件",
+    "singleMediaLimit": "音频 / 视频每条记录只能有一个，替换前请先移除当前文件",
     "imageAddMethod": "选择存储方式：",
     "imageSourceExternal": "直链",
     "imageSourceLocal": "本地存储",
@@ -129,11 +127,11 @@
     "extLocation": "位置",
     "backToEditor": "返回编辑器",
     "addImage": "添加附件",
-    "publishEcho": "发布Echo",
+    "publishEcho": "发布",
     "publishEchoPublic": "公开发布",
     "publishEchoPrivate": "私密发布",
     "exitUpdateMode": "退出更新模式",
-    "updateEcho": "更新Echo",
+    "updateEcho": "更新",
     "extMusic": "音乐",
     "extVideo": "视频",
     "extVideoLink": "视频链接",
@@ -157,16 +155,16 @@
     "uploadNoPreviewUrl": "上传完成但未拿到可预览地址，请重试",
     "fileUploadingWait": "附件仍在上传中，请等待上传完成后再发布",
     "attachmentMissingFileId": "存在未绑定 file_id 的附件",
-    "updateEchoEmpty": "待更新的Echo不能为空！",
-    "addEchoEmpty": "待添加的Echo不能为空！",
+    "updateEchoEmpty": "待更新的记录不能为空！",
+    "addEchoEmpty": "待发布的记录不能为空！",
     "publishing": "🚀发布中...",
     "publishSuccess": "🎉发布成功！",
     "publishFailed": "😭发布失败，请稍后再试！",
-    "noEchoToUpdate": "没有待更新的Echo！",
+    "noEchoToUpdate": "没有待更新的记录！",
     "syncingFiles": "🔁同步附件中...",
     "updating": "🚀更新中...",
     "updateSuccess": "🎉更新成功！",
-    "updateSuccessWithSync": "🔁发现附件更改，已自动更新同步Echo！",
+    "updateSuccessWithSync": "🔁附件已更改，记录已自动同步！",
     "updateFailed": "😭更新失败，请稍后再试！",
     "websiteUrlRequired": "网站链接不能为空！",
     "externalLink": "外部链接",
@@ -308,7 +306,7 @@
   },
   "onboarding": {
     "title": "让你的实例准备就绪",
-    "publishTitle": "写下第一条 Echo",
+    "publishTitle": "写下第一条记录",
     "publishDesc": "记录一个想法，让你的时间线从这里开始。",
     "siteTitleTitle": "为站点取个名字",
     "siteTitleDesc": "给你的站点一个名字，它将显示在浏览器标题和分享卡片中。",
@@ -316,8 +314,8 @@
     "siteURLDesc": "配置你的公开地址，让 RSS、分享链接和内容快照都能正确访问。",
     "done": "已完成",
     "hide": "不再提示",
-    "firstEchoTitle": "第一条 Echo 已发布",
-    "firstEchoDesc": "你的时间线有了新的开始。点击日期即可查看 Echo 详情。",
+    "firstEchoTitle": "第一条记录已发布",
+    "firstEchoDesc": "你的时间线有了新的开始。点击日期即可查看记录详情。",
     "dismiss": "稍后再说",
     "actionPublish": "立即发布",
     "actionSiteTitle": "填写名称",
@@ -325,11 +323,11 @@
   },
   "hub": {
     "emptyList": "Hub列表为空，请到设置中添加Connect吧~",
-    "emptyListGuest": "这里还没有连接其他 AXOXE，暂时探测不到别人的 Echo～",
+    "emptyListGuest": "这里还没有连接其他 AXOXE，暂时探测不到别人的记录～",
     "noAvailableInstance": "当前Hub暂无可连接的实例。",
-    "connectedCount": "成功连接 {count} 个实例，开始加载 Echos",
+    "connectedCount": "成功连接 {count} 个实例，开始加载记录",
     "loading": "加载中...",
-    "noEchoes": "暂时没有可探索的 Echo",
+    "noEchoes": "暂时没有可探索的记录",
     "noMoreData": "没有更多数据了"
   },
   "systemLog": {
@@ -351,7 +349,7 @@
     "rawLine": "查看原始日志行"
   },
   "dashboard": {
-    "echoTotal": "Echo 总数",
+    "echoTotal": "记录总数",
     "connectedNodes": "已连接节点",
     "todayEchoCount": "今日发布",
     "currentVersion": "当前版本",
@@ -490,7 +488,7 @@
     "tooltipTotal": "共有",
     "tooltipToday": "今日",
     "tooltipVersion": "版本",
-    "jumpToEchoDetail": "查看对应 Echo 详情",
+    "jumpToEchoDetail": "查看对应记录详情",
     "randomCommentLoading": "正在挑选一条精选评论...",
     "noFeaturedComment": "暂无精选评论可展示。"
   },
@@ -553,14 +551,14 @@
   },
   "echoCard": {
     "privateStatus": "私密状态",
-    "moreActions": "Echo 操作",
+    "moreActions": "记录操作",
     "delete": "删除",
     "update": "更新",
     "deleteConfirmTitle": "确定要删除吗？",
     "deleteConfirmDesc": "删除后将无法恢复，请谨慎操作",
     "deleteSuccess": "删除成功！",
-    "editAnotherEchoTitle": "编辑另一条 Echo？",
-    "editAnotherEchoDesc": "你正在编辑另一条 Echo。放弃当前修改并编辑这条吗？",
+    "editAnotherEchoTitle": "编辑另一条记录？",
+    "editAnotherEchoDesc": "你正在编辑另一条记录。放弃当前修改并编辑这条吗？",
     "openDetail": "查看详情"
   },
   "userSetting": {
@@ -758,7 +756,7 @@
     "promptPlaceholder": "输入自定义 Prompt",
     "promptHint": "自定义 Prompt 仅作用于「近期总结」，Chat 对话不会使用它",
     "multimodal": "多模态支持",
-    "multimodalHint": "开启后，Chat 检索命中带图片的 Echo 时会把配图一并交给模型理解（需所配模型支持图片输入）",
+    "multimodalHint": "开启后，Chat 检索命中带图片的记录时会把配图一并交给模型理解（需所配模型支持图片输入）",
     "contextWindow": "上下文窗口",
     "contextWindowPlaceholder": "如 128k、1m，留空按 64k 保守处理",
     "contextWindowHint": "窗口越大越倾向一次性读入全部内容，越小越早转为分层总结。支持 k / m 单位（256k=256000、1m=1000000），留空按 64k 保守处理——建议填写模型的真实窗口，填大了会因超长请求报错。",
@@ -843,10 +841,10 @@
     "scopeGroupProfile": "资料权限",
     "scopeGroupAdmin": "管理权限",
     "scopeGroupMcp": "MCP 权限",
-    "scopeEchoRead": "查看 Echo",
-    "scopeEchoWrite": "创建/编辑 Echo",
-    "scopeEchoDelete": "删除 Echo",
-    "scopeEchoPrivate": "查看私密 Echo",
+    "scopeEchoRead": "查看记录",
+    "scopeEchoWrite": "创建/编辑记录",
+    "scopeEchoDelete": "删除记录",
+    "scopeEchoPrivate": "查看私密记录",
     "scopeCommentRead": "查看评论",
     "scopeCommentWrite": "发表评论",
     "scopeCommentReview": "评论审核",
@@ -1056,7 +1054,7 @@
     "fileTooLarge": "{name} 超过单文件 {max} 上限，已跳过",
     "uploadError": "上传文件时发生错误 😢",
     "loginRequired": "请先登录再上传 😢",
-    "missingFileIdentifier": "上传响应缺少文件标识，无法绑定到 Echo，请重试",
+    "missingFileIdentifier": "上传响应缺少文件标识，无法绑定到记录，请重试",
     "fileMetaFillbackFailed": "文件元数据回填失败"
   },
   "markdown": {
@@ -1083,13 +1081,13 @@
     "upstreamAttribution": "Based on Ech0 by L1nSn0w and contributors"
   },
   "echoPage": {
-    "loadingDetail": "正在加载 Echo 详情..."
+    "loadingDetail": "正在加载记录详情..."
   },
   "notFound": {
     "pageNotFound": "页面不存在"
   },
   "hubEcho": {
-    "jumpToEcho": "跳转至该 Echo"
+    "jumpToEcho": "跳转至该记录"
   },
   "imageGallery": {
     "previewImage": "预览图片{index}",
@@ -1187,7 +1185,7 @@
   },
   "embeddingSetting": {
     "title": "向量索引",
-    "optionalHint": "（可选）向量索引用于让 Copilot 检索历史 Echo 的语义内容，不配置也能正常对话。",
+    "optionalHint": "（可选）向量索引用于让 Copilot 检索历史记录的语义内容，不配置也能正常对话。",
     "enable": "启用索引",
     "modelName": "Embedding 模型",
     "modelPlaceholder": "如 text-embedding-3-small",
@@ -1203,7 +1201,7 @@
     "batchSizeHint": "重建索引时每次请求向量化的文本条数。部分提供商限制单次最多 64 或 25 条，超限会报错；填 0 使用默认值 64。",
     "batchSizeDefault": "默认（64）",
     "reindex": "重建索引",
-    "reindexHint": "为全部历史 Echo 重新生成向量。更换模型或维度后需执行一次。",
+    "reindexHint": "为全部历史记录重新生成向量。更换模型或维度后需执行一次。",
     "reindexAction": "开始重建",
     "reindexResult": "已索引 {indexed}/{total} 条，失败 {failed} 条。",
     "reindexCancel": "取消重建",
@@ -1212,14 +1210,14 @@
     "reindexFailed": "重建失败：{error}",
     "reindexCancelled": "已取消重建。",
     "reindexConfirmTitle": "重建向量索引？",
-    "reindexConfirmDesc": "模型或维度已变更，历史索引已失效，需要为全部历史 Echo 重新生成向量。是否立即重建？"
+    "reindexConfirmDesc": "模型或维度已变更，历史索引已失效，需要为全部历史记录重新生成向量。是否立即重建？"
   },
   "chatPanel": {
     "suggestionsTitle": "试试这样问：",
     "suggestion1": "总结我最近一段时间在关注和思考什么",
     "suggestion2": "我这段时间的心情有什么变化",
     "suggestion3": "把我记过的零散想法汇总一下",
-    "inputPlaceholder": "和你的 Echo 对话",
+    "inputPlaceholder": "和你的记录对话",
     "send": "发送",
     "clear": "清空",
     "clearConfirmTitle": "清除所有对话？",
@@ -1228,10 +1226,10 @@
     "waiting": "工作中",
     "reasoningThinking": "深度思考中",
     "reasoningDone": "已深度思考",
-    "retrievalActive": "正在检索 Echo",
+    "retrievalActive": "正在检索记录",
     "retrievalDone": "检索了 {count} 次",
-    "coverage": "已覆盖该区间 {total} 条 Echo",
-    "coverageTruncated": "条数较多，已覆盖最近 {returned} 条 Echo",
+    "coverage": "已覆盖该区间 {total} 条记录",
+    "coverageTruncated": "条数较多，已覆盖最近 {returned} 条记录",
     "errorGeneric": "对话出错了，请稍后再试或检查模型与索引设置。",
     "noResponse": "这次没有得到回复",
     "retry": "重新发送",

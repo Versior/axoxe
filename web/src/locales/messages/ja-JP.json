@@ -29,8 +29,6 @@
     "none": "なし"
   },
   "editor": {
-    "attachments": "添付",
-    "share": "共有",
     "tagPickerTooltip": "タグを選択",
     "tagPickerEmpty": "選択できるタグがありません",
     "tagPickerGoToManage": "タグ管理へ移動",
@@ -49,9 +47,9 @@
     "mediaTypeImage": "画像",
     "mediaTypeAudio": "音声",
     "mediaTypeVideo": "動画",
-    "mixedCategoryRejected": "1 つの Echo には同じ種類のファイルしか含められません",
+    "mixedCategoryRejected": "1 つの 記録 には同じ種類のファイルしか含められません",
     "categoryLockedHint": "種別を切り替えるには既存のファイルを削除してください",
-    "singleMediaLimit": "音声 / 動画は 1 つの Echo につき 1 つまで。差し替えるには現在のファイルを削除してください",
+    "singleMediaLimit": "音声 / 動画は 1 つの 記録 につき 1 つまで。差し替えるには現在のファイルを削除してください",
     "imageAddMethod": "保存方式を選択：",
     "imageSourceExternal": "外部URL",
     "imageSourceLocal": "ローカル",
@@ -129,11 +127,11 @@
     "extLocation": "位置情報",
     "backToEditor": "エディターに戻る",
     "addImage": "添付ファイルを追加",
-    "publishEcho": "Echoを公開",
+    "publishEcho": "公開",
     "publishEchoPublic": "公開として投稿",
     "publishEchoPrivate": "非公開として投稿",
     "exitUpdateMode": "更新モードを終了",
-    "updateEcho": "Echoを更新",
+    "updateEcho": "更新",
     "extMusic": "音楽",
     "extVideo": "動画",
     "extVideoLink": "動画リンク",
@@ -157,16 +155,16 @@
     "uploadNoPreviewUrl": "アップロードは完了しましたが、プレビューURLを取得できませんでした。再試行してください",
     "fileUploadingWait": "添付ファイルのアップロード中です。完了を待ってから公開してください",
     "attachmentMissingFileId": "file_id が紐付いていない添付ファイルがあります",
-    "updateEchoEmpty": "更新するEchoが空です！",
-    "addEchoEmpty": "追加するEchoが空です！",
+    "updateEchoEmpty": "更新する記録が空です！",
+    "addEchoEmpty": "追加する記録が空です！",
     "publishing": "🚀公開中...",
     "publishSuccess": "🎉公開に成功しました！",
     "publishFailed": "😭公開に失敗しました。しばらくしてから再試行してください！",
-    "noEchoToUpdate": "更新するEchoがありません！",
+    "noEchoToUpdate": "更新する記録がありません！",
     "syncingFiles": "🔁添付ファイルを同期中...",
     "updating": "🚀更新中...",
     "updateSuccess": "🎉更新に成功しました！",
-    "updateSuccessWithSync": "🔁添付の変更を検出し、Echoを自動で同期更新しました！",
+    "updateSuccessWithSync": "🔁添付の変更を検出し、記録を自動で同期更新しました！",
     "updateFailed": "😭更新に失敗しました。しばらくしてから再試行してください！",
     "websiteUrlRequired": "サイトURLを空にはできません！",
     "externalLink": "外部リンク",
@@ -308,7 +306,7 @@
   },
   "onboarding": {
     "title": "インスタンスの準備をしましょう",
-    "publishTitle": "最初の Echo を書く",
+    "publishTitle": "最初の 記録 を書く",
     "publishDesc": "ひらめきをひとつ記録しましょう。ここからタイムラインが始まります。",
     "siteTitleTitle": "サイトに名前を付ける",
     "siteTitleDesc": "サイトの名前を決めましょう。ブラウザのタイトルや共有カードに表示されます。",
@@ -316,8 +314,8 @@
     "siteURLDesc": "公開アドレスを設定すると、RSS・共有リンク・スナップショットが正しく開けます。",
     "done": "完了",
     "hide": "非表示",
-    "firstEchoTitle": "最初の Echo を公開しました",
-    "firstEchoDesc": "タイムラインに新しい始まりができました。日付をクリックすると Echo の詳細を開けます。",
+    "firstEchoTitle": "最初の 記録 を公開しました",
+    "firstEchoDesc": "タイムラインに新しい始まりができました。日付をクリックすると 記録 の詳細を開けます。",
     "dismiss": "あとで",
     "actionPublish": "今すぐ投稿",
     "actionSiteTitle": "名前を付ける",
@@ -325,11 +323,11 @@
   },
   "hub": {
     "emptyList": "Hub一覧は空です。設定から Connect を追加してください～",
-    "emptyListGuest": "まだ他の AXOXE とつながっていないので、他の Echo は探せません～",
+    "emptyListGuest": "まだ他の AXOXE とつながっていないので、他の 記録 は探せません～",
     "noAvailableInstance": "現在 Hub に接続可能なインスタンスはありません。",
-    "connectedCount": "{count} 個のインスタンスに接続しました。Echo の読み込みを開始します",
+    "connectedCount": "{count} 個のインスタンスに接続しました。記録 の読み込みを開始します",
     "loading": "読み込み中...",
-    "noEchoes": "今は探索できる Echo がありません。",
+    "noEchoes": "今は探索できる 記録 がありません。",
     "noMoreData": "これ以上データはありません"
   },
   "systemLog": {
@@ -351,7 +349,7 @@
     "rawLine": "元のログ行を表示"
   },
   "dashboard": {
-    "echoTotal": "Echo 総数",
+    "echoTotal": "記録 総数",
     "connectedNodes": "接続済みノード",
     "todayEchoCount": "本日の投稿",
     "currentVersion": "現在のバージョン",
@@ -490,7 +488,7 @@
     "tooltipTotal": "合計",
     "tooltipToday": "本日",
     "tooltipVersion": "バージョン",
-    "jumpToEchoDetail": "対応する Echo の詳細を表示",
+    "jumpToEchoDetail": "対応する 記録 の詳細を表示",
     "randomCommentLoading": "おすすめコメントを選んでいます...",
     "noFeaturedComment": "表示できるおすすめコメントはありません。"
   },
@@ -553,14 +551,14 @@
   },
   "echoCard": {
     "privateStatus": "非公開",
-    "moreActions": "Echo 操作",
+    "moreActions": "記録 操作",
     "delete": "削除",
     "update": "更新",
     "deleteConfirmTitle": "削除しますか？",
     "deleteConfirmDesc": "削除すると復元できません。慎重に操作してください",
     "deleteSuccess": "削除しました！",
-    "editAnotherEchoTitle": "別の Echo を編集しますか？",
-    "editAnotherEchoDesc": "すでに別の Echo を編集中です。現在の変更を破棄してこの Echo を編集しますか？",
+    "editAnotherEchoTitle": "別の 記録 を編集しますか？",
+    "editAnotherEchoDesc": "すでに別の 記録 を編集中です。現在の変更を破棄してこの 記録 を編集しますか？",
     "openDetail": "詳細を開く"
   },
   "userSetting": {
@@ -758,10 +756,10 @@
     "promptPlaceholder": "カスタム Prompt を入力",
     "promptHint": "カスタム Prompt は「最近のまとめ」にのみ適用され、チャットでは使用されません",
     "multimodal": "マルチモーダル対応",
-    "multimodalHint": "有効にすると、検索でヒットした画像付き Echo の画像もモデルに渡して理解させます（画像入力対応モデルが必要）",
+    "multimodalHint": "有効にすると、検索でヒットした画像付き 記録 の画像もモデルに渡して理解させます（画像入力対応モデルが必要）",
     "contextWindow": "コンテキストウィンドウ",
     "contextWindowPlaceholder": "例: 128k、1m（空欄なら控えめに 64k）",
-    "contextWindowHint": "「年末・月次まとめ」で Echo を期間集計する際の取得予算です。ウィンドウが大きいほど一度に全件を読み込み、小さいほど早めに月ごとの階層要約へ切り替えます。k / m 単位対応（256k=256000、1m=1000000）、空欄は控えめに 64k として扱います。モデルの実際のウィンドウを設定してください。大きすぎるとリクエストが長すぎて失敗します。",
+    "contextWindowHint": "「年末・月次まとめ」で 記録 を期間集計する際の取得予算です。ウィンドウが大きいほど一度に全件を読み込み、小さいほど早めに月ごとの階層要約へ切り替えます。k / m 単位対応（256k=256000、1m=1000000）、空欄は控えめに 64k として扱います。モデルの実際のウィンドウを設定してください。大きすぎるとリクエストが長すぎて失敗します。",
     "temperature": "温度（Temperature）",
     "temperaturePlaceholder": "空欄（推奨）",
     "temperatureHint": "空欄の場合は送信せず、モデルの既定値を使います（推奨）。範囲は 0–2 で、低いほど回答が安定します。このパラメータに対応していないモデルもあるため、モデルの公式ドキュメントに従い、保存前に「接続テスト」で確認してください。",
@@ -843,10 +841,10 @@
     "scopeGroupProfile": "プロフィール権限",
     "scopeGroupAdmin": "管理権限",
     "scopeGroupMcp": "MCP 権限",
-    "scopeEchoRead": "Echo の閲覧",
-    "scopeEchoWrite": "Echo の作成 / 編集",
-    "scopeEchoDelete": "Echo の削除",
-    "scopeEchoPrivate": "非公開 Echo の閲覧",
+    "scopeEchoRead": "記録 の閲覧",
+    "scopeEchoWrite": "記録 の作成 / 編集",
+    "scopeEchoDelete": "記録 の削除",
+    "scopeEchoPrivate": "非公開 記録 の閲覧",
     "scopeCommentRead": "コメントの閲覧",
     "scopeCommentWrite": "コメントの投稿",
     "scopeCommentReview": "コメントの審査",
@@ -1056,7 +1054,7 @@
     "fileTooLarge": "{name} はファイルサイズ上限 {max} を超えたためスキップしました",
     "uploadError": "アップロード中にエラーが発生しました 😢",
     "loginRequired": "アップロードするには先にログインしてください 😢",
-    "missingFileIdentifier": "アップロード応答にファイル識別子が含まれていません。Echo に紐付けできないため再試行してください",
+    "missingFileIdentifier": "アップロード応答にファイル識別子が含まれていません。記録 に紐付けできないため再試行してください",
     "fileMetaFillbackFailed": "ファイルメタデータのバックフィルに失敗しました"
   },
   "markdown": {
@@ -1083,13 +1081,13 @@
     "upstreamAttribution": "Based on Ech0 by L1nSn0w and contributors"
   },
   "echoPage": {
-    "loadingDetail": "Echo の詳細を読み込み中..."
+    "loadingDetail": "記録 の詳細を読み込み中..."
   },
   "notFound": {
     "pageNotFound": "ページが存在しません"
   },
   "hubEcho": {
-    "jumpToEcho": "この Echo へ移動"
+    "jumpToEcho": "この 記録 へ移動"
   },
   "imageGallery": {
     "previewImage": "画像 {index} をプレビュー",
@@ -1187,7 +1185,7 @@
   },
   "embeddingSetting": {
     "title": "ベクトルインデックス",
-    "optionalHint": "（任意）ベクトルインデックスは Copilot が過去の Echo を意味的に検索するための機能です。設定しなくても会話は利用できます。",
+    "optionalHint": "（任意）ベクトルインデックスは Copilot が過去の 記録 を意味的に検索するための機能です。設定しなくても会話は利用できます。",
     "enable": "インデックスを有効化",
     "modelName": "Embedding モデル",
     "modelPlaceholder": "例: text-embedding-3-small",
@@ -1203,7 +1201,7 @@
     "batchSizeHint": "再構築時に 1 リクエストでベクトル化するテキスト件数。一部のプロバイダーは 1 回あたり 64 または 25 件に制限し、超過するとエラーになります。0 を指定するとデフォルトの 64 を使用します。",
     "batchSizeDefault": "デフォルト（64）",
     "reindex": "インデックス再構築",
-    "reindexHint": "すべての過去の Echo のベクトルを再生成します。モデルや次元の変更後に一度実行してください。",
+    "reindexHint": "すべての過去の 記録 のベクトルを再生成します。モデルや次元の変更後に一度実行してください。",
     "reindexAction": "再構築を開始",
     "reindexResult": "{indexed}/{total} 件をインデックス化、{failed} 件失敗。",
     "reindexCancel": "再構築を中止",
@@ -1212,14 +1210,14 @@
     "reindexFailed": "再構築に失敗しました：{error}",
     "reindexCancelled": "再構築をキャンセルしました。",
     "reindexConfirmTitle": "ベクトルインデックスを再構築しますか？",
-    "reindexConfirmDesc": "モデルまたは次元が変更されたため、既存のインデックスは無効になりました。すべての過去の Echo のベクトルを再生成する必要があります。今すぐ再構築しますか？"
+    "reindexConfirmDesc": "モデルまたは次元が変更されたため、既存のインデックスは無効になりました。すべての過去の 記録 のベクトルを再生成する必要があります。今すぐ再構築しますか？"
   },
   "chatPanel": {
     "suggestionsTitle": "こう聞いてみましょう：",
     "suggestion1": "最近わたしが注目し考えていたことをまとめて",
     "suggestion2": "この期間の気分の変化は？",
     "suggestion3": "書き留めた断片的なアイデアをまとめて",
-    "inputPlaceholder": "あなたの Echo と対話",
+    "inputPlaceholder": "あなたの 記録 と対話",
     "send": "送信",
     "clear": "クリア",
     "clearConfirmTitle": "すべての会話を消去しますか？",
@@ -1228,10 +1226,10 @@
     "waiting": "処理中",
     "reasoningThinking": "思考中",
     "reasoningDone": "思考しました",
-    "retrievalActive": "Echo を検索中",
+    "retrievalActive": "記録 を検索中",
     "retrievalDone": "{count} 回検索しました",
-    "coverage": "この期間の Echo を {total} 件カバーしました",
-    "coverageTruncated": "件数が多いため、直近 {returned} 件の Echo をカバーしました",
+    "coverage": "この期間の 記録 を {total} 件カバーしました",
+    "coverageTruncated": "件数が多いため、直近 {returned} 件の 記録 をカバーしました",
     "errorGeneric": "エラーが発生しました。後でもう一度お試しいただくか、モデルとインデックス設定をご確認ください。",
     "noResponse": "今回は応答がありませんでした",
     "retry": "再送信",

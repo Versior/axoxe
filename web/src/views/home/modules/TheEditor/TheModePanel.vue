@@ -2,47 +2,37 @@
 <!-- Copyright (C) 2025-2026 lin-snow -->
 <template>
   <div class="editor-mode-panel" role="group" :aria-label="t('editor.extraContent')">
-    <div class="editor-mode-panel__group">
-      <span class="editor-mode-panel__label">{{ t('editor.attachments') }}</span>
-      <div class="editor-mode-panel__media">
-        <button
-          v-for="option in mediaOptions"
-          :key="option.value"
-          type="button"
-          class="editor-mode-panel__option"
-          v-tooltip="option.tooltip"
-          :aria-label="option.tooltip"
-          :aria-pressed="
-            editorStore.currentMode === Mode.Media && editorStore.effectiveCategory === option.value
-          "
-          @click="handleAddMedia(option.value)"
-        >
-          <component :is="option.icon" aria-hidden="true" />
-          <span>{{ option.label }}</span>
-        </button>
-      </div>
-    </div>
-    <div class="editor-mode-panel__group">
-      <span class="editor-mode-panel__label">{{ t('editor.share') }}</span>
-      <div class="editor-mode-panel__extensions">
-        <button
-          v-for="option in extensionOptions"
-          :key="option.value"
-          type="button"
-          class="editor-mode-panel__option"
-          v-tooltip="option.tooltip"
-          :aria-label="option.tooltip"
-          :aria-pressed="
-            editorStore.currentMode === Mode.EXTEN &&
-            editorStore.extensionToAdd.extension_type === option.value
-          "
-          @click="handleAddExtension(option.value)"
-        >
-          <component :is="option.icon" aria-hidden="true" />
-          <span>{{ option.label }}</span>
-        </button>
-      </div>
-    </div>
+    <button
+      v-for="option in mediaOptions"
+      :key="option.value"
+      type="button"
+      class="editor-mode-panel__option"
+      v-tooltip="option.tooltip"
+      :aria-label="option.tooltip"
+      :aria-pressed="
+        editorStore.currentMode === Mode.Media && editorStore.effectiveCategory === option.value
+      "
+      @click="handleAddMedia(option.value)"
+    >
+      <component :is="option.icon" aria-hidden="true" />
+      <span>{{ option.label }}</span>
+    </button>
+    <button
+      v-for="option in extensionOptions"
+      :key="option.value"
+      type="button"
+      class="editor-mode-panel__option"
+      v-tooltip="option.tooltip"
+      :aria-label="option.tooltip"
+      :aria-pressed="
+        editorStore.currentMode === Mode.EXTEN &&
+        editorStore.extensionToAdd.extension_type === option.value
+      "
+      @click="handleAddExtension(option.value)"
+    >
+      <component :is="option.icon" aria-hidden="true" />
+      <span>{{ option.label }}</span>
+    </button>
   </div>
 </template>
 
@@ -152,29 +142,11 @@ const handleAddExtension = (extensiontype: ExtensionType) => {
 
 <style scoped>
 .editor-mode-panel {
-  display: grid;
-  gap: 0.65rem;
-  padding: 0.9rem 0 0.75rem;
-}
-
-.editor-mode-panel__group {
-  display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
-  align-items: baseline;
-  gap: 0.65rem;
-}
-
-.editor-mode-panel__label {
-  color: var(--color-text-muted);
-  font-size: 0.7rem;
-  line-height: 2.2rem;
-}
-
-.editor-mode-panel__media,
-.editor-mode-panel__extensions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.2rem;
+  padding: 0.55rem 0;
+  border-top: 1px solid var(--color-border-subtle);
 }
 
 .editor-mode-panel__option {
@@ -182,12 +154,12 @@ const handleAddExtension = (extensiontype: ExtensionType) => {
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  min-height: 2.2rem;
-  padding: 0.35rem 0.6rem;
+  min-height: 1.9rem;
+  padding: 0.3rem 0.45rem;
   border: 1px solid transparent;
-  border-radius: 0.6rem;
-  background: var(--color-bg-muted);
-  color: var(--color-text-secondary);
+  border-radius: 0.3rem;
+  background: transparent;
+  color: var(--color-text-muted);
   font-size: 0.75rem;
   text-align: center;
   white-space: nowrap;
@@ -205,8 +177,8 @@ const handleAddExtension = (extensiontype: ExtensionType) => {
 }
 
 .editor-mode-panel__option:hover {
-  border-color: var(--color-border-subtle);
-  background: var(--md-editor-actions-hover-bg);
+  background: var(--color-bg-muted);
+  color: var(--color-text-primary);
 }
 
 .editor-mode-panel__option:focus-visible {
@@ -215,19 +187,7 @@ const handleAddExtension = (extensiontype: ExtensionType) => {
 }
 
 .editor-mode-panel__option[aria-pressed='true'] {
-  border-color: var(--color-accent);
   background: var(--color-accent-soft);
   color: var(--color-accent);
-}
-
-@media (width <= 380px) {
-  .editor-mode-panel__group {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.15rem;
-  }
-
-  .editor-mode-panel__label {
-    line-height: 1.5;
-  }
 }
 </style>

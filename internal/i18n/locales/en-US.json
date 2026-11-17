@@ -5,7 +5,7 @@
   { "id": "common.invalid_query_params", "translation": "Invalid query parameters" },
   { "id": "setting.update_success", "translation": "Settings updated successfully!" },
   { "id": "agent.model_missing", "translation": "Agent model name is not configured or is empty" },
-  { "id": "echo.mixed_file_categories", "translation": "An Echo can only contain files of a single type" },
+  { "id": "echo.mixed_file_categories", "translation": "An entry can only contain files of a single type" },
   { "id": "echo.invalid_cursor", "translation": "Invalid pagination cursor" },
   { "id": "echo.cursor_sort_unsupported", "translation": "Cursor pagination does not support reaction sorting" },
   { "id": "auth.token_missing", "translation": "Missing token. Please sign in first." },

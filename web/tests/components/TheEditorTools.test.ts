@@ -9,6 +9,8 @@ import { useEditorStore } from '@/stores/editor'
 import { useEchoStore } from '@/stores/echo'
 import { ExtensionType, Mode } from '@/enums/enums'
 import { FILE_CATEGORY } from '@/constants/file'
+import { createI18n } from 'vue-i18n'
+import zhCN from '@/locales/messages/zh-CN.json'
 
 vi.mock('@/service/api', () => ({
   fetchAddEcho: vi.fn(),
@@ -18,15 +20,13 @@ vi.mock('@/service/api', () => ({
   fetchQueryEchos: vi.fn(),
 }))
 
-vi.mock('vue-i18n', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('vue-i18n')>()),
-  useI18n: () => ({ t: (key: string) => key }),
-}))
+const i18n = createI18n({ legacy: false, locale: 'zh-CN', messages: { 'zh-CN': zhCN } })
 
 let wrapper: VueWrapper
 const mountEditor = async () => {
   wrapper = mount(TheEditor, {
     global: {
+      plugins: [i18n],
       directives: { tooltip: {} },
       stubs: {
         TheMdEditor: { template: '<textarea data-test="text-editor" />' },
@@ -47,14 +47,14 @@ describe('Always-visible editor tools', () => {
   it('shows all nine labeled tools before opening a panel', async () => {
     await mountEditor()
     expect(wrapper.findAll('.editor-mode-panel button')).toHaveLength(9)
-    expect(wrapper.text()).toContain('editor.extMusic')
-    expect(wrapper.text()).toContain('editor.mediaTypeAudio')
+    expect(wrapper.text()).toContain(zhCN.editor.extMusic)
+    expect(wrapper.text()).toContain(zhCN.editor.mediaTypeAudio)
     expect(wrapper.find('[data-test="text-editor"]').exists()).toBe(true)
   })
 
   it('opens music directly, preserves the text editor and toggles the panel closed', async () => {
     await mountEditor()
-    const music = wrapper.find('button[aria-label="editor.addMusic"]')
+    const music = wrapper.find(`button[aria-label="${zhCN.editor.addMusic}"]`)
     await music.trigger('click')
     await flushPromises()
 
@@ -70,7 +70,7 @@ describe('Always-visible editor tools', () => {
 
   it('opens audio attachments directly while the text editor stays visible', async () => {
     await mountEditor()
-    await wrapper.find('button[aria-label="editor.mediaTypeAudio"]').trigger('click')
+    await wrapper.find(`button[aria-label="${zhCN.editor.mediaTypeAudio}"]`).trigger('click')
     await flushPromises()
 
     expect(useEditorStore().currentMode).toBe(Mode.Media)
@@ -82,9 +82,20 @@ describe('Always-visible editor tools', () => {
   it('retains the way back from tag management', async () => {
     useEditorStore().setMode(Mode.TagManage)
     useEchoStore().tagList = [{ id: 'tag-1', name: 'Tag', usage_count: 1, created_at: 1 }]
-    wrapper = mount(TheEditorButtons, { global: { directives: { tooltip: {} } } })
-    await wrapper.find('button[aria-label="editor.backToEditor"]').trigger('click')
+    wrapper = mount(TheEditorButtons, {
+      global: { plugins: [i18n], directives: { tooltip: {} } },
+    })
+    await wrapper.find(`button[aria-label="${zhCN.editor.backToEditor}"]`).trigger('click')
 
     expect(useEditorStore().currentMode).toBe(Mode.ECH0)
+  })
+
+  it('renders the publish action with the actual locale and no upstream content name', () => {
+    wrapper = mount(TheEditorButtons, {
+      global: { plugins: [i18n], directives: { tooltip: {} } },
+    })
+
+    expect(wrapper.find('button[aria-label="发布"]').text()).toBe('发布')
+    expect(wrapper.text()).not.toMatch(/Echo/i)
   })
 })

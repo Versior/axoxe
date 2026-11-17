@@ -101,7 +101,6 @@
             isSubmitting ? 'cursor-not-allowed opacity-70' : '',
           ]"
         >
-          <component :is="isUpdateMode ? Update : Publish" class="w-4 h-4" />
           <span>{{ publishTriggerTooltip }}</span>
         </PopoverButton>
 
@@ -141,8 +140,6 @@
 import ImageIcon from '@/components/icons/image.vue'
 import Public from '@/components/icons/public.vue'
 import Private from '@/components/icons/private.vue'
-import Publish from '@/components/icons/publish.vue'
-import Update from '@/components/icons/update.vue'
 import ExitUpdate from '@/components/icons/exitupdate.vue'
 import Back from '@/components/icons/back.vue'
 import Info from '@/components/icons/info.vue'
@@ -274,7 +271,7 @@ const goToTagManager = () => {
   flex-wrap: nowrap;
   gap: 0.6rem;
   align-items: center;
-  padding: 0.65rem 0 0;
+  padding: 0.5rem 0 0;
   border-top: 1px solid var(--color-border-subtle);
 }
 
@@ -284,10 +281,10 @@ const goToTagManager = () => {
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  min-height: 2.25rem;
-  padding: 0.4rem 0.75rem;
+  min-height: 2rem;
+  padding: 0.35rem 0.7rem;
   border: 1px solid transparent;
-  border-radius: 0.6rem;
+  border-radius: 0.35rem;
   font-size: 0.8rem;
   cursor: pointer;
   transition: background-color 0.15s ease;
@@ -309,22 +306,19 @@ const goToTagManager = () => {
 }
 
 .editor-actions :deep(.editor-actions__publish-trigger) {
-  background: var(--color-text-primary);
+  min-width: 4rem;
+  background: var(--color-accent);
   color: var(--color-bg-surface);
 }
 
 .editor-actions :deep(.editor-actions__publish-trigger:hover:not(:disabled)) {
-  background: var(--color-text-secondary);
+  background: color-mix(in srgb, var(--color-accent) 85%, var(--color-text-primary));
 }
 
 .editor-actions :deep(.editor-actions__tag-trigger:focus-visible),
 .editor-actions :deep(.editor-actions__publish-trigger:focus-visible) {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
-}
-
-.editor-actions :deep(.editor-actions__publish-trigger path) {
-  fill: currentcolor;
 }
 
 @media (width <= 380px) {

@@ -67,42 +67,52 @@ watch(
   z-index: 24;
   isolation: isolate;
   margin: 0 auto;
-  border-radius: 1rem;
+  border-radius: 0.75rem;
   border: 1px solid var(--color-border-subtle);
   background: var(--color-bg-surface);
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
 }
 
 .editor-shell__inner {
   width: 100%;
-  padding: 0.85rem;
+  padding: 0.75rem;
 }
 
 .editor-shell__body {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.15rem;
 }
 
 .editor-shell__body :deep(.markdown-editor:not(.is-full)) {
-  border-radius: 0.75rem;
+  border-radius: 0.4rem;
   border-color: transparent;
-  background: var(--color-bg-muted);
+  background: transparent;
   box-shadow: none;
 }
 
-.editor-shell__body :deep(.markdown-editor:not(.is-full):focus-within) {
-  border-color: var(--color-border-strong);
+.editor-shell__body :deep(.markdown-editor:not(.is-full) .editor-input) {
+  min-height: 7.5rem;
+  padding-left: 0.45rem;
+}
+
+.editor-shell__body :deep(.markdown-editor:not(.is-full) .editor-content) {
+  min-height: 0;
+}
+
+.editor-shell__body :deep(.markdown-editor:not(.is-full) .mode-toggle-btn) {
+  border: 0;
+  background: transparent;
 }
 
 .editor-shell__panel {
-  padding: 0.85rem;
-  border: 1px solid var(--color-border-subtle);
-  border-radius: 0.75rem;
+  padding: 0.75rem;
+  border: 0;
+  border-radius: 0.4rem;
   background: var(--color-bg-muted);
 }
 
 @media (width >= 640px) {
   .editor-shell__inner {
-    padding: 1rem;
+    padding: 0.85rem;
   }
 }
 </style>
