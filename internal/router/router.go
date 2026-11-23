@@ -15,9 +15,11 @@ import (
 	"github.com/lin-snow/ech0/internal/handler"
 	"github.com/lin-snow/ech0/internal/mcp"
 	"github.com/lin-snow/ech0/internal/middleware"
+	authModel "github.com/lin-snow/ech0/internal/model/auth"
 	fileModel "github.com/lin-snow/ech0/internal/model/file"
 	openapiCatalog "github.com/lin-snow/ech0/internal/openapi/catalog"
 	authService "github.com/lin-snow/ech0/internal/service/auth"
+	"github.com/lin-snow/ech0/internal/storage"
 	"github.com/lin-snow/ech0/pkg/viewer"
 )
 
@@ -37,7 +39,7 @@ func SetupRouter(r *gin.Engine, h *handler.Bundle, mwDeps *middleware.Deps) {
 	catalogState := newCatalogState()
 	r.Use(catalogState.middleware())
 	groups := setupRouterGroup(r, mwDeps)
-	api := setupHumaAPI(r)
+	api := setupHumaAPI(r, mwDeps.Limiter)
 
 	revoker := revokerOf(mwDeps)
 	setupResourceRoutes(groups, h)
@@ -55,36 +57,43 @@ func SetupRouter(r *gin.Engine, h *handler.Bundle, mwDeps *middleware.Deps) {
 	r.GET("/api"+openapiCatalog.RoutePath, catalogState.handle)
 }
 
+// setupStaticFiles serves uploaded media straight off disk. It is deliberately
+// registered outside every API group and without the request budget: media
+// delivery is bandwidth-bounded by the object itself, and the route only
+// exposes the media prefixes (never artifacts, never listings).
 func setupStaticFiles(r *gin.Engine, mwDeps *middleware.Deps) {
 	root := config.Config().Storage.DataRoot
 	if root == "" {
 		root = "data/files"
 	}
-	revoker := revokerOf(mwDeps)
-	r.Group("api/files", middleware.OptionalAuth(revoker), protectedStaticFile(), middleware.StaticFileSecurity()).StaticFS("/", http.Dir(root))
+	registerStaticFiles(r, root, mwDeps)
 }
 
+// registerStaticFiles mounts the unauthenticated media route. Only the storage
+// schema's category directories are served; directories themselves and any
+// other path under the root answer 404.
+func registerStaticFiles(r *gin.Engine, root string, mwDeps ...*middleware.Deps) {
+	group := r.Group("api/files")
+	if len(mwDeps) > 0 {
+		group.Use(middleware.OptionalAuth(revokerOf(mwDeps[0])), protectedStaticFile())
+	}
+	group.Use(middleware.StaticFileSecurity()).StaticFS("/", storage.NewPublicFS(root))
+}
+
+// protectedStaticFile keeps local attachments referenced only by private
+// echoes behind the same viewer boundary as the echo itself. Public echoes
+// sharing a file keep it readable, and external object-store URLs do not pass
+// through this local route.
 func protectedStaticFile() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		if strings.HasSuffix(ctx.Request.URL.Path, "/") {
-			ctx.Status(http.StatusNotFound)
-			ctx.Abort()
-			return
-		}
 		name := strings.Trim(strings.TrimPrefix(path.Clean(ctx.Request.URL.Path), "/api/files"), "/")
-		for _, privateDir := range []string{"snapshots", "capsules", "tmp", "backups"} {
-			if name == privateDir || strings.HasPrefix(name, privateDir+"/") {
-				ctx.Status(http.StatusNotFound)
-				ctx.Abort()
-				return
+		key := name
+		for _, prefix := range storage.PublicPathPrefixes() {
+			if strings.HasPrefix(key, prefix) {
+				key = strings.TrimPrefix(key, prefix)
+				break
 			}
 		}
-
-		key := strings.TrimPrefix(name, "images/")
-		key = strings.TrimPrefix(key, "audios/")
-		key = strings.TrimPrefix(key, "videos/")
-		key = strings.TrimPrefix(key, "documents/")
-		key = strings.TrimPrefix(key, "files/")
 		if key == "" || database.GetDB() == nil {
 			ctx.Next()
 			return
@@ -92,11 +101,11 @@ func protectedStaticFile() gin.HandlerFunc {
 
 		var privateCount, publicCount int64
 		db := database.GetDB()
-		if err := db.Model(&fileModel.EchoFile{}).
+		query := db.Model(&fileModel.EchoFile{}).
 			Joins("JOIN echos ON echos.id = echo_files.echo_id").
 			Joins("JOIN files ON files.id = echo_files.file_id").
-			Where("files.storage_type = ? AND files.key = ? AND echos.private = ?", "local", key, true).
-			Count(&privateCount).Error; err != nil {
+			Where("files.storage_type = ? AND files.key = ?", storage.StorageTypeLocal, key)
+		if err := query.Where("echos.private = ?", true).Count(&privateCount).Error; err != nil {
 			ctx.Status(http.StatusNotFound)
 			ctx.Abort()
 			return
@@ -105,11 +114,7 @@ func protectedStaticFile() gin.HandlerFunc {
 			ctx.Next()
 			return
 		}
-		if err := db.Model(&fileModel.EchoFile{}).
-			Joins("JOIN echos ON echos.id = echo_files.echo_id").
-			Joins("JOIN files ON files.id = echo_files.file_id").
-			Where("files.storage_type = ? AND files.key = ? AND echos.private = ?", "local", key, false).
-			Count(&publicCount).Error; err != nil {
+		if err := query.Where("echos.private = ?", false).Count(&publicCount).Error; err != nil {
 			ctx.Status(http.StatusNotFound)
 			ctx.Abort()
 			return
@@ -120,7 +125,7 @@ func protectedStaticFile() gin.HandlerFunc {
 		}
 
 		v := viewer.MustFromContext(ctx.Request.Context())
-		if v.IsAdmin() || authz.Allows(v.Scopes(), []string{authz.ScopeEchoPrivate}) {
+		if v.IsAdmin() || v.TokenType() == authModel.TokenTypeSession || authz.Has(v.Scopes(), authz.ScopeEchoPrivate) {
 			ctx.Next()
 			return
 		}
@@ -139,12 +144,15 @@ func revokerOf(mwDeps *middleware.Deps) authService.TokenRevoker {
 func setupRouterGroup(r *gin.Engine, mwDeps *middleware.Deps) *AppRouterGroup {
 	revoker := revokerOf(mwDeps)
 
+	budget := middleware.Budget(mwDeps.Limiter)
+
 	resource := r.Group("/")
 	public := r.Group("/api")
+	public.Use(budget)
 	auth := r.Group("/api")
-	auth.Use(middleware.NoCache(), middleware.RequireAuth(revoker))
+	auth.Use(middleware.NoCache(), middleware.RequireAuth(revoker), budget)
 	optionalAuth := r.Group("/api")
-	optionalAuth.Use(middleware.NoCache(), middleware.OptionalAuth(revoker))
+	optionalAuth.Use(middleware.NoCache(), middleware.OptionalAuth(revoker), budget)
 	ws := r.Group("/ws")
 	mcpGroup := r.Group(mcp.MCPEndpointPath)
 	mcpGroup.Use(
@@ -153,6 +161,7 @@ func setupRouterGroup(r *gin.Engine, mwDeps *middleware.Deps) *AppRouterGroup {
 			revoker,
 			middleware.ResourceMetadataChallenge("/.well-known/oauth-protected-resource/mcp"),
 		),
+		budget,
 	)
 	return &AppRouterGroup{
 		ResourceGroup:           resource,

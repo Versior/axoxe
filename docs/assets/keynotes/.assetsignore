@@ -1,0 +1,6 @@
+# Cloudflare Worker 上传白名单的反面：这些不进包
+_template/
+*.md
+**/*.md
+wrangler.jsonc
+.assetsignore

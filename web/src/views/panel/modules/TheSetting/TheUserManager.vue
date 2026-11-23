@@ -9,8 +9,8 @@
       <div class="flex flex-row items-center justify-end gap-2 w-14"></div>
     </div>
 
-    <div v-if="loading" class="flex justify-center py-4 text-[var(--color-text-muted)]">
-      {{ t('userManager.loading') }}
+    <div v-if="loading" class="flex justify-center py-4">
+      <TheLoadingIndicator :label="t('userManager.loading')" />
     </div>
 
     <div v-else>
@@ -22,20 +22,23 @@
         v-else
         class="mt-2 x-scrollbar overflow-x-auto border border-[var(--color-border-subtle)] rounded-lg"
       >
-        <table class="w-full min-w-[640px] table-fixed text-sm">
+        <table class="w-full min-w-[700px] table-fixed text-sm">
           <thead>
             <tr class="bg-[var(--color-bg-muted)]/70 text-left text-[var(--color-text-muted)]">
-              <th class="w-[40px] px-2 py-2 whitespace-nowrap">#</th>
-              <th class="w-[120px] px-2 py-2 whitespace-nowrap">
+              <th class="w-[36px] px-2 py-2 whitespace-nowrap">#</th>
+              <th class="w-[100px] px-2 py-2 whitespace-nowrap">
                 {{ t('userManager.username') }}
               </th>
               <th class="px-2 py-2 whitespace-nowrap">
                 {{ t('userManager.email') }}
               </th>
-              <th class="w-[94px] px-2 py-2 text-center whitespace-nowrap">
+              <th class="w-[72px] px-2 py-2 text-center whitespace-nowrap">
                 {{ t('userManager.isAdmin') }}
               </th>
-              <th class="w-[86px] px-2 py-2 text-right whitespace-nowrap">
+              <th class="w-[104px] px-2 py-2 text-center whitespace-nowrap">
+                {{ t('userManager.status') }}
+              </th>
+              <th class="w-[64px] px-2 py-2 text-right whitespace-nowrap">
                 {{ t('commonUi.actions') }}
               </th>
             </tr>
@@ -56,11 +59,30 @@
               <td class="px-2 py-2 text-center">
                 <BaseSwitch v-model="user.is_admin" @click="handleUpdateUserPermission(user.id)" />
               </td>
+              <td class="px-2 py-2 text-center">
+                <BaseSwitch
+                  :model-value="user.status === 'ACTIVE'"
+                  :title="
+                    user.status === 'ACTIVE'
+                      ? t('userManager.disableUser')
+                      : t('userManager.enableUser')
+                  "
+                  @update:model-value="(active) => handleUpdateUserStatus(user, active)"
+                >
+                  <span class="text-xs text-[var(--color-text-muted)]">
+                    {{
+                      user.status === 'ACTIVE'
+                        ? t('userManager.statusActive')
+                        : t('userManager.statusDisabled')
+                    }}
+                  </span>
+                </BaseSwitch>
+              </td>
               <td class="px-2 py-2 text-right">
                 <BaseButton
                   class="h-8 w-8 !p-1.5"
                   :icon="Deluser"
-                  @click="handleDeleteUser(user.id)"
+                  @click="handleDeleteUser(user)"
                   :tooltip="t('userManager.deleteUser')"
                 />
               </td>
@@ -77,6 +99,7 @@ import PanelCard from '@/layout/PanelCard.vue'
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import BaseButton from '@/components/common/BaseButton.vue'
+import TheLoadingIndicator from '@/components/common/TheLoadingIndicator.vue'
 import BaseSwitch from '@/components/common/BaseSwitch.vue'
 import Deluser from '@/components/icons/deluser.vue'
 import { theToast } from '@/utils/toast'
@@ -86,22 +109,42 @@ const { t } = useI18n()
 
 const loading = ref<boolean>(true)
 
-import { fetchGetAllUsers, fetchUpdateUserPermission, fetchDeleteUser } from '@/service/api'
+import {
+  fetchGetAllUsers,
+  fetchUpdateUserPermission,
+  fetchUpdateUserStatus,
+  fetchDeleteUser,
+} from '@/service/api'
 
 const allusers = ref<App.Api.User.User[]>([])
 
-const handleDeleteUser = async (userId: string) => {
+const handleDeleteUser = async (user: App.Api.User.User) => {
   openConfirm({
     title: String(t('userManager.deleteConfirmTitle')),
     description: String(t('userManager.deleteConfirmDesc')),
+    requireText: user.username,
+    requireTextHint: String(t('userManager.deleteConfirmHint', { username: user.username })),
     onConfirm: () => {
-      fetchDeleteUser(userId).then((res) => {
+      fetchDeleteUser(user.id).then((res) => {
         if (res.code === 1) {
           getAllUsers()
         }
       })
     },
   })
+}
+
+const handleUpdateUserStatus = async (user: App.Api.User.User, active: boolean) => {
+  if (active === (user.status === 'ACTIVE')) return
+  fetchUpdateUserStatus(user.id, active ? 'ACTIVE' : 'DISABLED')
+    .then((res) => {
+      if (res.code === 1) {
+        theToast.success(res.msg)
+      }
+    })
+    .finally(() => {
+      getAllUsers()
+    })
 }
 
 const handleUpdateUserPermission = async (userId: string) => {

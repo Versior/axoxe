@@ -225,11 +225,11 @@ func TestGetConnect_LogoDerivation(t *testing.T) {
 				Once()
 
 			cs := commonmock.NewMockService(t)
-			cs.EXPECT().GetOwner().Return(userModel.User{Username: "owner"}, nil).Once()
+			cs.EXPECT().GetPrimaryAdmin().Return(userModel.User{Username: "owner"}, nil).Once()
 
 			echoRepo := connectmock.NewMockEchoRepository(t)
-			echoRepo.EXPECT().GetTodayEchos(true, "UTC").Return([]echoModel.Echo{}).Once()
-			echoRepo.EXPECT().GetEchosByPage(1, 1, "", true).Return(nil, int64(0)).Once()
+			echoRepo.EXPECT().GetTodayEchos(echoModel.PrivateScope{All: true}, "UTC").Return([]echoModel.Echo{}).Once()
+			echoRepo.EXPECT().GetEchosByPage(1, 1, "", echoModel.PrivateScope{All: true}).Return(nil, int64(0)).Once()
 
 			svc := connectService.NewConnectService(nil, nil, echoRepo, cs, kv)
 			got, err := svc.GetConnect()
@@ -248,11 +248,11 @@ func TestGetConnect_PopulatesMetrics(t *testing.T) {
 		Once()
 
 	cs := commonmock.NewMockService(t)
-	cs.EXPECT().GetOwner().Return(userModel.User{Username: "alice"}, nil).Once()
+	cs.EXPECT().GetPrimaryAdmin().Return(userModel.User{Username: "alice"}, nil).Once()
 
 	echoRepo := connectmock.NewMockEchoRepository(t)
-	echoRepo.EXPECT().GetTodayEchos(true, "UTC").Return(make([]echoModel.Echo, 3)).Once()
-	echoRepo.EXPECT().GetEchosByPage(1, 1, "", true).Return(nil, int64(42)).Once()
+	echoRepo.EXPECT().GetTodayEchos(echoModel.PrivateScope{All: true}, "UTC").Return(make([]echoModel.Echo, 3)).Once()
+	echoRepo.EXPECT().GetEchosByPage(1, 1, "", echoModel.PrivateScope{All: true}).Return(nil, int64(42)).Once()
 
 	svc := connectService.NewConnectService(nil, nil, echoRepo, cs, kv)
 	got, err := svc.GetConnect()
@@ -291,7 +291,7 @@ func TestGetConnect_OwnerErrorShortCircuits(t *testing.T) {
 		Once()
 
 	cs := commonmock.NewMockService(t)
-	cs.EXPECT().GetOwner().Return(userModel.User{}, wantErr).Once()
+	cs.EXPECT().GetPrimaryAdmin().Return(userModel.User{}, wantErr).Once()
 
 	echoRepo := connectmock.NewMockEchoRepository(t)
 

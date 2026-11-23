@@ -149,9 +149,12 @@
           </div>
         </form>
 
-        <div v-if="loading" class="text-sm text-[var(--color-text-muted)]">
-          {{ t('commentSection.loading') }}
-        </div>
+        <TheLoadingIndicator
+          v-if="loading"
+          size="sm"
+          :center="false"
+          :label="t('commentSection.loading')"
+        />
         <div
           v-else-if="comments.length === 0 && !commentFormExpanded"
           class="text-sm text-[var(--color-text-muted)]"
@@ -178,10 +181,10 @@
                 <div class="comment-meta">
                   <span class="comment-floor-no">#{{ numberOf(item) }}</span>
                   <a
-                    v-if="item.website"
-                    :href="item.website"
+                    v-if="authorHref(item)"
+                    :href="authorHref(item)"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     class="comment-author-link"
                   >
                     {{ item.nickname }}
@@ -225,10 +228,10 @@
                   <div class="comment-meta">
                     <span class="comment-floor-no">#{{ numberOf(reply) }}</span>
                     <a
-                      v-if="reply.website"
-                      :href="reply.website"
+                      v-if="authorHref(reply)"
+                      :href="authorHref(reply)"
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       class="comment-author-link"
                     >
                       {{ reply.nickname }}
@@ -295,8 +298,9 @@ import { useRoute } from 'vue-router'
 import { fetchCreateComment, fetchGetCommentFormMeta, fetchGetComments } from '@/service/api'
 import { useUserStore } from '@/stores'
 import { theToast } from '@/utils/toast'
-import { formatDate } from '@/utils/other'
+import { formatDate, safeExternalUrl } from '@/utils/other'
 import BaseAvatar from '@/components/common/BaseAvatar.vue'
+import TheLoadingIndicator from '@/components/common/TheLoadingIndicator.vue'
 import { TheMdPreview } from '@/components/advanced/md'
 import Verified from '../icons/verified.vue'
 import MarkdownIcon from '../icons/markdown.vue'
@@ -393,6 +397,10 @@ const commentNumbers = computed(() => {
 
 const numberOf = (item: App.Api.Comment.CommentItem) => commentNumbers.value.get(item.id) ?? 0
 
+// Website is guest-supplied: only http(s) may reach an href, so a stored
+// javascript:/data: value can never run in this origin.
+const authorHref = (item: App.Api.Comment.CommentItem) => safeExternalUrl(item.website)
+
 const parentNumberOf = (reply: App.Api.Comment.CommentItem) =>
   reply.parent_id ? (commentNumbers.value.get(reply.parent_id) ?? 0) : 0
 
@@ -434,7 +442,7 @@ const cancelReply = () => {
 
 const isPrivilegedUser = computed(() => {
   const user = userStore.user
-  return Boolean(user && (user.is_admin || user.is_owner))
+  return Boolean(user && user.is_admin)
 })
 
 const canSubmit = computed(() => {

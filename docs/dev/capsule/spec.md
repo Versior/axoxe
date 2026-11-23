@@ -52,11 +52,13 @@
 | `site.footer_content` / `site.footer_link` | string | 可选 | 自定义页脚 |
 | `site.meting_api` | string(URL) | 可选 | 音乐扩展渲染所需 |
 | `site.custom_css` / `site.custom_js` | string | 可选 | 非空时 `check` **应当**告警（第三方胶囊 = 执行对方代码） |
+| `site.privacy_policy` | string | 可选 | 隐私政策正文（Markdown），公开页 `/privacy` 的渲染源；空串 = 页面未配置 |
+| `site.show_privacy_footer` | bool | 可选 | 页脚隐私政策入口开关；import 仅在接收方仍为默认 `false` 时置 `true` |
 | `owner.username` | string | **必须** | 归属兜底：Echo 未标 `username` 时的默认作者 |
 | `connects` | list | 可选 | 互联实例快照，元素为 `{url: string}` |
 | `files` | list | 可选 | **未挂在任何 Echo 上的文件行**，元素形状与 §4.2 的 `files[]` 完全一致。见下 |
 
-- `site.*` 子集遵循「渲染所需皆入，运维行为皆弃」：`AllowRegister` 等行为开关**禁止**入胶囊。
+- `site.*` 子集遵循「渲染所需皆入，运维行为皆弃」：`AllowRegister`、`DisableAgentDiscovery` 等运维开关**禁止**入胶囊；纯渲染开关（如 `show_privacy_footer`）随内容入胶囊。
 - `site.*` 键名 = `SystemSetting` 的 json tag **原样**（`site_title`/`server_logo`/`ICP_number`…）：import 时整块直接反序列化进 `SystemSetting`，零映射代码（「导出即转储」原则，见 §11）。
 - 凭据（密码哈希、token、OAuth/Passkey、S3 密钥、SMTP、Agent 配置）**禁止**出现在胶囊任何位置。
 - **`files` 块的存在理由**：库中 `files` 是独立表，而 frontmatter 只能表达「挂在这条 Echo 上的文件」。站点 logo、以及上传后没用上的附件，其字节会随记录驱动导出进 `files/`，元数据却无处安放——没有这个块，导入侧就还原不出这些行，最直接的后果是**搬家之后 `site.server_logo` 变成死链**。生产者**必须**把这类行写入 `files`；消费者**必须**为其建行并落字节，但**禁止**建立任何 Echo 关联。归属跟随执行导入的 owner（胶囊不携带 `user_id`）。
@@ -133,7 +135,7 @@
 
 - 内部结构 = 本地存储 `DataRoot`（默认 `data/files`）的**原样 mirror**：相对路径 = `files/ + schema.Resolve(key)`（`internal/storage/schema.go`）。
 - 子目录固定五类：`images/ audios/ videos/ documents/ files/`（对应 `RouteByExt` 四类 + `DefaultRoute("files/")` 兜底；`files/files/` 即兜底类别的 mirror，属预期布局）。
-- 生产者**必须**按 `files` 表记录驱动写入（`Resolve(key)` 落位），**禁止**盲目拷贝 `DataRoot`：`data/files/snapshots/` 等非托管产物不得进入胶囊。「目录拷贝」仅是近似心智模型。
+- 生产者**必须**按 `files` 表记录驱动写入（`Resolve(key)` 落位），**禁止**盲目拷贝 `DataRoot`：`data/artifacts/` 等非托管产物不得进入胶囊。「目录拷贝」仅是近似心智模型。
 - 胶囊**必须**自包含：所有 `files[].key` 对应 `files/ + Resolve(key)` 的字节都在胶囊内；S3 托管文件由生产者下载入胶囊。外链（`url`）文件除外。
 - 既不被任何 Echo 的 `files[]`、也不被清单 `files` 块声明的字节：合法，`check` **应当**告警（悬空文件）。真实导出不会产生这种情况——未挂 Echo 的文件行都会进清单 `files` 块；它只在手写胶囊里出现。
 
@@ -197,8 +199,8 @@ axoxe build            [<path>=./capsule] [-o ./dist] [--base-url /]
 | `POST /migration/start` | `source_type: "capsule"` 时，`source_payload.include_private` 控制是否导入私密条目 |
 
 - 未知 `format` **必须**拒绝，**禁止**静默回落到快照——悄悄给出另一种产物会让用户拿错东西。
-- 胶囊产物落在 `data/files/capsules/`，与快照的 `data/files/snapshots/` 分居两个槽位，各自只保留最新
-  一份。两个目录都**必须**排除在快照打包之外（`internal/migrator/artifact` 收口）。
+- 胶囊产物落在 `data/artifacts/capsules/`，与快照的 `data/artifacts/snapshots/` 分居两个槽位，各自只保留最新
+  一份。两个目录都**必须**排除在快照打包之外（`internal/migrator/artifact` 收口），且都不在 `/api/files` 的匿名可读范围内。
 - Web 导入与 CLI 一样把校验作为硬前置：有错误级发现即拒绝落库，错误摘要回填进作业的 `error_message`。
 - 导出胶囊**禁止**发布 `SystemSnapshot` 事件：webhook 订阅它来确认「备份已完成」，而胶囊不是备份。
 
@@ -249,7 +251,7 @@ DB ↔ 胶囊字段映射（权威表见 design §4.3）；往返保真度：
 ### 11.3 import 落地语义（其余）
 
 - **幂等按 `id`**：目标库已存在同 `id` 的 Echo → 跳过并报告，不覆盖不合并；无 `--overwrite`（重复执行安全）。
-- **原样导入原则**：胶囊字段值 1:1 写入对应 DB 列，**禁止**数值转换——`username` 逐字入库不改写、`status`/正文原样。唯一例外是补全胶囊不携带的**内部必填外键** `Echo.UserID`：同名用户存在则挂接，否则挂到执行导入的 owner（权限归属）；展示归属始终以原样保留的 `username` 为准。
+- **原样导入原则**：胶囊字段值 1:1 写入对应 DB 列，**禁止**数值转换——`username` 逐字入库不改写、`status`/正文原样。唯一例外是补全胶囊不携带的**内部必填外键** `Echo.UserID`：同名用户存在则挂接，否则挂到执行导入的主管理员（权限归属）；展示归属始终以原样保留的 `username` 为准。
 - **站点设置**：`site` 子集仅填「未配置项」，**禁止**覆盖已配置项。「未配置」= 当前值为空串**或**逐字等于 `setting.System.Default()`（config 派生）的对应值——不能只判空串：全新实例的 `site_title`/`server_logo`/`server_url` 等在 KV 缺键时本就返回非空默认值，只判空串会让站点身份在「搬站到新实例」这个头号用例里永远导不进去。
 - **评论归属**：以「落库后目标 `echo_id` 在 `echos` 表中是否存在」为准——本轮新建的与此前已导入的同等对待。往既有 Echo 追加评论不构成对该 Echo 的修改，故不受「幂等跳过」牵连；幂等由评论自身 `id` 保证。宿主不存在（含因 `private` 被排除）→ 记为孤儿并跳过。
 - **不发布事件**：导入不触发事件总线（webhook/embedding/agent 订阅者不响应）；报告末尾提示可在后台触发索引重建覆盖导入内容。

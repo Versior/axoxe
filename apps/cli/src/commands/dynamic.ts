@@ -140,16 +140,16 @@ function composeExamples(id: string): string[] {
   const update = id === "echo.update";
   if (update) {
     return [
-      "axoxe echo update --id <echo_id> --content \"改过的正文\"",
-      "axoxe echo update --id <echo_id> --content \"改过的正文\" --tag daily --tag work",
-      "axoxe echo update --id <echo_id> --from echo.json",
+      "ech0 echo update --id <echo_id> --content \"改过的正文\"",
+      "ech0 echo update --id <echo_id> --content \"改过的正文\" --tag daily --tag work",
+      "ech0 echo update --id <echo_id> --from echo.json",
     ];
   }
   return [
-    "axoxe echo create --content \"今天的想法\" --tag daily",
-    "axoxe file upload --file photo.png",
-    "axoxe echo create --content \"配图\" --file-id <file_id>",
-    "axoxe echo create --from echo.json",
+    "ech0 echo create --content \"今天的想法\" --tag daily",
+    "ech0 file upload --file photo.png",
+    "ech0 echo create --content \"配图\" --file-id <file_id>",
+    "ech0 echo create --from echo.json",
   ];
 }
 
@@ -159,17 +159,20 @@ function composeHints(id: string, op: CatalogOp): string[] {
   const hints: string[] = [];
 
   if (id === "echo.update") {
-    hints.push("更新是整体覆盖：--content / --echo-files / --extension / --tags 没传的部分会被清空；先用 axoxe echo get --id <id> 取回再改");
-    hints.push("--id 必填，且需要管理员账号");
+    hints.push("更新是整体覆盖：--content / --echo-files / --extension / --tags 没传的部分会被清空；先用 ech0 echo get --id <id> 取回再改");
+    hints.push("--id 必填；只有作者本人或管理员能改");
   }
   if (fields.has("tags")) {
     hints.push('--tag 追加标签（可重复）；--tags 接收 JSON 数组：[{"name":"daily"}]');
   }
   if (fields.has("echo_files")) {
-    hints.push('--file-id 引用已上传文件（先运行 axoxe file upload）；--echo-files 接收 JSON：[{"file_id":"<id>","sort_order":0}]');
+    hints.push('--file-id 引用已上传文件（先运行 ech0 file upload）；--echo-files 接收 JSON：[{"file_id":"<id>","sort_order":0}]');
   }
   if (fields.has("extension")) {
     hints.push('--extension 接收 JSON 对象：{"type":"weather","payload":{...}}，用于渲染扩展卡片');
+  }
+  if (id === "echo.create" && fields.has("private")) {
+    hints.push("--private 只对未登录访客隐藏；所有登录用户都能看到");
   }
   hints.push("--from/--edit 提交完整 payload：同名逐项参数被 payload 覆盖，tags 与 echo_files 累加");
   return hints;
@@ -180,21 +183,22 @@ function echoQueryExamples(id: string): string[] | undefined {
   switch (id) {
     case "echo.list":
       return [
-        "axoxe echo list --page 1 --page-size 20",
-        'axoxe echo list --cursor "" --page-size 50',
-        "axoxe echo list --search daily --tag-ids <tag_id>",
-        "axoxe echo list --sort-by reactions --json",
+        "ech0 echo list --page 1 --page-size 20",
+        "ech0 echo list --mine --page-size 20",
+        'ech0 echo list --cursor "" --page-size 50',
+        "ech0 echo list --search daily --tag-ids <tag_id>",
+        "ech0 echo list --sort-by reactions --json",
       ];
     case "echo.get":
-      return ["axoxe echo get --id <echo_id>", "axoxe echo get --id <echo_id> --json"];
+      return ["ech0 echo get --id <echo_id>", "ech0 echo get --id <echo_id> --json"];
     case "echo.hot":
-      return ["axoxe echo hot --limit 10"];
+      return ["ech0 echo hot --limit 10"];
     case "echo.today":
-      return ["axoxe echo today"];
+      return ["ech0 echo today"];
     case "echo.random":
-      return ["axoxe echo random"];
+      return ["ech0 echo random"];
     case "echo.onthisday":
-      return ["axoxe echo onthisday"];
+      return ["ech0 echo onthisday"];
     default:
       return undefined;
   }
@@ -203,21 +207,22 @@ function echoQueryExamples(id: string): string[] | undefined {
 function echoQueryHints(id: string): string[] {
   if (id === "echo.list") {
     return [
-      "标签 ID 来自 axoxe tag list；多个 ID 命中任意一个即可",
-      "私密可见性由账号决定：管理员可用 --private / --no-private 过滤，其他账号只看公开",
+      "标签 ID 来自 ech0 tag list；多个 ID 命中任意一个即可",
+      "私密是受众标记：未登录只看公开，登录后（token 需 echo:private）看到完整时间线",
+      "--private / --no-private 只筛选私密/公开；--mine 只看自己发布的（需登录）",
       '游标翻页：--cursor "" 取第一页，之后回传上一页的 nextCursor；只支持 --sort-by created_at，忽略 --page',
     ];
   }
   if (id === "echo.hot" || id === "echo.today" || id === "echo.random" || id === "echo.onthisday") {
-    return ["只返回公开 Echo；管理员 token 会包含私密"];
+    return ["未登录只返回公开 Echo；登录后（token 带 echo:private）会包含私密"];
   }
   return [];
 }
 
 /** Server schemas stay generic; these distinctions are command-level UX. */
 function fileHints(id: string): string[] {
-  if (id === "file.upload") return ["只上传本地字节；已有 URL 的资源用 axoxe file external 登记，不下载不复制"];
-  if (id === "file.external") return ["只登记 URL，不上传字节；本地文件用 axoxe file upload"];
+  if (id === "file.upload") return ["只上传本地字节；已有 URL 的资源用 ech0 file external 登记，不下载不复制"];
+  if (id === "file.external") return ["只登记 URL，不上传字节；本地文件用 ech0 file upload"];
   if (id === "file.list") return ["--storage-type 取 local / s3 / object；不传时包含 external 记录"];
   if (id === "file.tree") return ["--storage-type 取 local / s3 / object，需与实例存储配置一致"];
   return [];
@@ -231,24 +236,24 @@ function fileHints(id: string): string[] {
 function commentExamples(id: string): string[] | undefined {
   if (id === "comment.create.integration") {
     return [
-      'axoxe comment create --echo-id <echo_id> --content "写得好"',
-      'axoxe comment create --echo-id <echo_id> --content "来自流水线" --nickname "CI Bot"',
+      'ech0 comment create --echo-id <echo_id> --content "写得好"',
+      'ech0 comment create --echo-id <echo_id> --content "来自流水线" --nickname "CI Bot"',
     ];
   }
-  if (id === "comment.list.by.echo") return ["axoxe comment list --echo-id <echo_id>"];
+  if (id === "comment.list.by.echo") return ["ech0 comment list --echo-id <echo_id>"];
   if (id === "comment.panel.list") {
     return [
-      "axoxe comment panel list --status pending",
-      "axoxe comment panel list --keyword 广告 --page 1 --page-size 20",
+      "ech0 comment panel list --status pending",
+      "ech0 comment panel list --keyword 广告 --page 1 --page-size 20",
     ];
   }
   if (id === "comment.panel.status") {
     return [
-      "axoxe comment panel status --id <comment_id> --status approved",
-      "axoxe comment panel status --id <comment_id> --status rejected",
+      "ech0 comment panel status --id <comment_id> --status approved",
+      "ech0 comment panel status --id <comment_id> --status rejected",
     ];
   }
-  if (id === "comment.panel.delete") return ["axoxe comment panel delete --id <comment_id> --yes"];
+  if (id === "comment.panel.delete") return ["ech0 comment panel delete --id <comment_id> --yes"];
   return undefined;
 }
 
@@ -257,11 +262,11 @@ function commentHints(id: string): string[] {
     return [
       "走可信集成入口 /comments/integration：不需要 form token 或验证码，评论标记为 source=integration",
       "默认昵称是 Integration；人类评论建议显式传 --nickname",
-      "实例开启审核时返回 pending；用 axoxe comment panel list --status pending 处理",
+      "实例开启审核时返回 pending；用 ech0 comment panel list --status pending 处理",
     ];
   }
   if (id === "comment.list.by.echo") {
-    return ["只返回 approved 评论；pending / rejected 用 axoxe comment panel list 查看"];
+    return ["只返回 approved 评论；pending / rejected 用 ech0 comment panel list 查看"];
   }
   if (id === "comment.panel.list") {
     return [
@@ -272,7 +277,7 @@ function commentHints(id: string): string[] {
   if (id === "comment.panel.status") {
     return [
       "--status 取 pending / approved / rejected；只改状态，不动正文",
-      "需要 comment:review scope；审核前先用 axoxe comment panel list --status pending 拿 id",
+      "需要 comment:review scope；审核前先用 ech0 comment panel list --status pending 拿 id",
     ];
   }
   if (id === "comment.panel.delete") {
@@ -286,17 +291,17 @@ function commentHints(id: string): string[] {
 
 /** Connect commands: peer list/info/add/delete plus the read-only health probe. */
 function connectExamples(id: string): string[] | undefined {
-  if (id === "connect.list") return ["axoxe connect list", "axoxe connect list --json"];
-  if (id === "connect.info") return ["axoxe connect info --json"];
-  if (id === "connect.health") return ["axoxe connect health", "axoxe connect health --json"];
-  if (id === "connect.add") return ["axoxe connect add --connect-url https://peer.example"];
-  if (id === "connect.delete") return ["axoxe connect delete --id <uuid> --yes"];
+  if (id === "connect.list") return ["ech0 connect list", "ech0 connect list --json"];
+  if (id === "connect.info") return ["ech0 connect info --json"];
+  if (id === "connect.health") return ["ech0 connect health", "ech0 connect health --json"];
+  if (id === "connect.add") return ["ech0 connect add --connect-url https://peer.example"];
+  if (id === "connect.delete") return ["ech0 connect delete --id <uuid> --yes"];
   return undefined;
 }
 
 function connectHints(id: string): string[] {
   if (id === "connect.list") {
-    return ["只返回本地保存的 {id, connect_url}；id 用于 axoxe connect delete"];
+    return ["只返回本地保存的 {id, connect_url}；id 用于 ech0 connect delete"];
   }
   if (id === "connect.info") {
     return ["对端公开卡片（名称 / logo / 帖子统计 / 版本）；服务端缓存 30 分钟，首次可能较慢"];
@@ -319,31 +324,31 @@ function connectHints(id: string): string[] {
 
 /** Tags are auto-created by `echo create/update --tag`; the CLI only needs lookup and cleanup. */
 function tagExamples(id: string): string[] | undefined {
-  if (id === "tag.list") return ["axoxe tag list", "axoxe tag list --json"];
-  if (id === "tag.delete") return ["axoxe tag delete --id <tag_id> --yes"];
+  if (id === "tag.list") return ["ech0 tag list", "ech0 tag list --json"];
+  if (id === "tag.delete") return ["ech0 tag delete --id <tag_id> --yes"];
   return undefined;
 }
 
 function tagHints(id: string): string[] {
-  if (id === "tag.list") return ["返回 id / name / usage_count；id 用于 axoxe echo list --tag-ids"];
+  if (id === "tag.list") return ["返回 id / name / usage_count；id 用于 ech0 echo list --tag-ids"];
   if (id === "tag.delete") return ["需要管理员账号；会同时移除所有 Echo 上的该标签"];
   return [];
 }
 
 /** Webhooks mirror the MCP tools: list, create, update, delete and test. */
 function webhookExamples(id: string): string[] | undefined {
-  if (id === "webhook.list") return ["axoxe webhook list", "axoxe webhook list --json"];
+  if (id === "webhook.list") return ["ech0 webhook list", "ech0 webhook list --json"];
   if (id === "webhook.create") {
     return [
-      "axoxe webhook create --name ci --url https://example.com/hook --is-active",
-      "axoxe webhook create --name ci --url https://example.com/hook --secret <secret> --is-active",
+      "ech0 webhook create --name ci --url https://example.com/hook --is-active",
+      "ech0 webhook create --name ci --url https://example.com/hook --secret <secret> --is-active",
     ];
   }
   if (id === "webhook.update") {
-    return ["axoxe webhook update --id <webhook_id> --name ci --url https://example.com/hook --is-active"];
+    return ["ech0 webhook update --id <webhook_id> --name ci --url https://example.com/hook --is-active"];
   }
-  if (id === "webhook.delete") return ["axoxe webhook delete --id <webhook_id> --yes"];
-  if (id === "webhook.test") return ["axoxe webhook test --id <webhook_id>"];
+  if (id === "webhook.delete") return ["ech0 webhook delete --id <webhook_id> --yes"];
+  if (id === "webhook.test") return ["ech0 webhook test --id <webhook_id>"];
   return undefined;
 }
 
@@ -377,7 +382,7 @@ function withCommandHint(error: unknown, command: Command): unknown {
   if (error.details.status === 400 || error.details.status === 422) {
     return new Ech0Error(error.message, {
       ...error.details,
-      hint: `请求参数未被服务端接受：运行 \`axoxe ${pathOf(command).join(" ")} --help\` 核对字段与取值`,
+      hint: `请求参数未被服务端接受：运行 \`ech0 ${pathOf(command).join(" ")} --help\` 核对字段与取值`,
     });
   }
   return error;
@@ -403,7 +408,7 @@ export interface DynamicOptions {
 
 /**
  * Turns every catalog operation into a command: `echo.create` becomes
- * `axoxe echo create`, and the operation's input schema becomes its flags.
+ * `ech0 echo create`, and the operation's input schema becomes its flags.
  */
 export function registerCatalogCommands(program: Command, catalog: Catalog, options: DynamicOptions): void {
   const groups = new Map<string, Command>();
@@ -418,7 +423,7 @@ export function registerCatalogCommands(program: Command, catalog: Catalog, opti
       let next = existing;
       if (!next) {
         // A group is a pure container: the help renderer counts its operations,
-        // and the built-in `help` child would shadow `axoxe help <group>`.
+        // and the built-in `help` child would shadow `ech0 help <group>`.
         next = current.command(segment).addHelpCommand(false);
         groups.set(key, next);
       }
@@ -454,7 +459,7 @@ export function registerCatalogCommands(program: Command, catalog: Catalog, opti
     // A callable command cannot also be a namespace: commander would parse the
     // parent's flags out of the child's argv. Such a child moves up a level and
     // joins its remaining segments (`comment.create.integration` becomes
-    // `axoxe comment create-integration`), so a leaf never has subcommands.
+    // `ech0 comment create-integration`), so a leaf never has subcommands.
     const conflict = callablePrefix(pathSegments);
     const parentSegments = conflict > 0 ? segments.slice(0, conflict - 1) : segments.slice(0, -1);
     const name = segments.slice(parentSegments.length).join("-");
@@ -511,7 +516,7 @@ export function registerCatalogCommands(program: Command, catalog: Catalog, opti
         if (value !== undefined) values[field.field] = value;
       }
       // The upload API infers a category from the filename when none is given;
-      // do the same here so `axoxe file upload --file a.png` just works.
+      // do the same here so `ech0 file upload --file a.png` just works.
       if (id === UPLOAD_OPERATION) {
         if (values.category === undefined && typeof values.file === "string") {
           values.category = categoryForFile(values.file);
@@ -529,7 +534,7 @@ export function registerCatalogCommands(program: Command, catalog: Catalog, opti
           `缺少必填参数 ${missing.join(", ")}`,
           usage === undefined
             ? undefined
-            : `用法：${usage}（运行 \`axoxe help ${pathOf(command).join(" ")}\` 查看完整说明）`,
+            : `用法：${usage}（运行 \`ech0 help ${pathOf(command).join(" ")}\` 查看完整说明）`,
         );
       }
 

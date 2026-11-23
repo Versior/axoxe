@@ -15,7 +15,13 @@
   "common": {
     "requestFailed": "Anfrage fehlgeschlagen",
     "save": "Speichern",
-    "saving": "Wird gespeichert…"
+    "saving": "Wird gespeichert…",
+    "noPermission": {
+      "title": "Kein Zugriff",
+      "description": "Diese Seite ist nur für Administratoren. Du kannst weiterhin veröffentlichen und dein Profil sowie deine Dateien verwalten.",
+      "backHome": "Zurück zur Startseite",
+      "accountSettings": "Kontoeinstellungen"
+    }
   },
   "commonUi": {
     "apply": "Übernehmen",
@@ -68,6 +74,8 @@
     "musicShare": "Musik teilen",
     "musicSupportHint": "NetEase/QQ Music/Apple Music werden unterstützt",
     "musicVipHint": "Hinweis: VIP-Songs werden nicht unterstützt; eine selbst gehostete API wird empfohlen.",
+    "musicSourceMissing": "Keine Musikquelle konfiguriert – trage zuerst die Meting-API in den Systemeinstellungen ein",
+    "musicSourceGoToSettings": "Einstellungen öffnen",
     "parseResult": "Ergebnis",
     "parseSuccess": "Erfolgreich",
     "parseFailed": "Fehlgeschlagen",
@@ -90,7 +98,7 @@
     "fetchTitleSuccess": "Seitentitel abgerufen",
     "fetchTitleFailed": "Seitentitel konnte nicht abgerufen werden",
     "tagManagerTitle": "Tag-Verwaltung",
-    "tagManagerHint": "Tipp: Klicke auf einen Tag, um danach zu filtern oder ihn zu löschen",
+    "tagManagerHint": "Tipp: Klicke auf einen Tag, um danach zu filtern",
     "tagManagerEmpty": "Noch keine Tags",
     "filterByTag": "Nach diesem Tag filtern",
     "deleteTag": "Tag löschen",
@@ -129,7 +137,7 @@
     "addImage": "Anhang hinzufügen",
     "publishEcho": "Veröffentlichen",
     "publishEchoPublic": "Öffentlich veröffentlichen",
-    "publishEchoPrivate": "Privat veröffentlichen",
+    "publishEchoPrivate": "Nur für Angemeldete",
     "exitUpdateMode": "Bearbeitungsmodus verlassen",
     "updateEcho": "Aktualisieren",
     "extMusic": "Musik",
@@ -197,7 +205,6 @@
     "enableCaptchaDesc": "Bei Aktivierung wird der integrierte gocap-Dienst genutzt, ohne separate Bereitstellung.",
     "searchPlaceholder": "Nickname, E-Mail oder Inhalt suchen",
     "statusAll": "Alle Status",
-    "status": "Status",
     "statusPending": "Ausstehend",
     "statusApproved": "Freigegeben",
     "statusRejected": "Abgelehnt",
@@ -239,7 +246,7 @@
     "testEmailSending": "Wird gesendet...",
     "testEmailSuccess": "Test-E-Mail gesendet",
     "emailNotifyTitle": "E-Mail-Benachrichtigungen",
-    "emailNotifyDesc": "Benachrichtigt nur den Owner über neue Kommentare, Moderationsänderungen und Hot-Markierungen.",
+    "emailNotifyDesc": "Benachrichtigt nur Admins über neue Kommentare, Moderationsänderungen und Hot-Markierungen.",
     "emailNotifyEnableFirst": "Bitte zuerst E-Mail-Benachrichtigungen aktivieren",
     "smtpHostPlaceholder": "SMTP-Host",
     "smtpPortPlaceholder": "SMTP-Port",
@@ -273,6 +280,7 @@
   },
   "auth": {
     "loginSuccess": "Anmeldung erfolgreich – willkommen zurück! 🎉",
+    "account_disabled": "Dieses Konto wurde deaktiviert. Bitte wenden Sie sich an einen Administrator.",
     "signupSuccess": "Registrierung erfolgreich, bitte anmelden."
   },
   "authPage": {
@@ -291,9 +299,6 @@
     "passkeyLoginFailed": "Passkey-Anmeldung fehlgeschlagen"
   },
   "init": {
-    "ownerEmailPlaceholder": "Owner-E-Mail",
-    "ownerUsernamePlaceholder": "Owner-Benutzername",
-    "ownerPasswordPlaceholder": "Owner-Passwort",
     "initializing": "Wird initialisiert…",
     "initialize": "Initialisieren",
     "initDone": "Initialisierung abgeschlossen",
@@ -302,7 +307,10 @@
     "introHeading": "Mit AXOXE loslegen",
     "introDescription": "Erstelle das Owner-Konto, schließe die Grundeinrichtung der Seite ab und eröffne deinen persönlichen Aufzeichnungsraum.",
     "siteTitlePlaceholder": "Seitenname (optional)",
-    "autoLoginFailed": "Owner erstellt. Bitte anmelden."
+    "autoLoginFailed": "Admin erstellt. Bitte anmelden.",
+    "adminEmailPlaceholder": "Admin-E-Mail",
+    "adminUsernamePlaceholder": "Admin-Benutzername",
+    "adminPasswordPlaceholder": "Admin-Passwort"
   },
   "onboarding": {
     "title": "Mach deine Instanz fertig",
@@ -433,8 +441,12 @@
     "visibilityLabel": "Sichtbarkeit",
     "visibilityAll": "Alle",
     "visibilityPublic": "Nur öffentlich",
-    "visibilityPrivate": "Nur privat",
+    "visibilityPrivate": "Nur für Angemeldete",
     "activeChipVisibilityPrefix": "Sichtbarkeit",
+    "authorLabel": "Autor",
+    "authorAll": "Alle Mitglieder",
+    "authorMine": "Nur meine",
+    "activeChipAuthorPrefix": "Autor",
     "tagsLabel": "Tags",
     "tagsHint": "Beliebiges passt",
     "tagsEmpty": "Noch keine Tags",
@@ -484,13 +496,13 @@
   "connectWidget": {
     "noConnections": "Keine aktiven Verbindungen",
     "loading": "Wird geladen…",
-    "tooltipOwner": "Owner",
     "tooltipTotal": "Gesamt",
     "tooltipToday": "Heute",
     "tooltipVersion": "Version",
     "jumpToEchoDetail": "Zum zugehörigen Eintrag",
     "randomCommentLoading": "Ein hervorgehobener Kommentar wird ausgewählt…",
-    "noFeaturedComment": "Keine hervorgehobenen Kommentare vorhanden."
+    "noFeaturedComment": "Keine hervorgehobenen Kommentare vorhanden.",
+    "tooltipAdmin": "Admin"
   },
   "heatmap": {
     "tooltip": "{date}: {count} Einträge"
@@ -506,7 +518,7 @@
     "shareCopyFailed": "Kopieren fehlgeschlagen, bitte erneut versuchen.",
     "shareMarkdownCopied": "Markdown in die Zwischenablage kopiert!",
     "metaWordCountValue": "{count} Wörter",
-    "metaPrivate": "Privat"
+    "metaPrivate": "Nur für Angemeldete"
   },
   "commentSection": {
     "disabled": "Kommentare sind deaktiviert.",
@@ -559,7 +571,8 @@
     "deleteSuccess": "Gelöscht",
     "editAnotherEchoTitle": "Einen anderen Eintrag bearbeiten?",
     "editAnotherEchoDesc": "Du bearbeitest bereits einen Eintrag. Aktuelle Änderungen verwerfen und diesen Eintrag bearbeiten?",
-    "openDetail": "Detail öffnen"
+    "openDetail": "Detail öffnen",
+    "manageOwnOnlyHint": "Du kannst nur deine eigenen Echo-Einträge bearbeiten oder löschen"
   },
   "userSetting": {
     "title": "Benutzerverwaltung",
@@ -576,7 +589,6 @@
     "avatarUploadSuccess": "Avatar hochgeladen!",
     "uploadFailed": "Upload fehlgeschlagen, bitte später erneut versuchen",
     "role": "Rolle",
-    "roleOwner": "Inhaber",
     "roleAdmin": "Admin",
     "roleMember": "Mitglied"
   },
@@ -588,8 +600,14 @@
     "email": "E-Mail",
     "isAdmin": "Admin",
     "deleteUser": "Benutzer löschen",
-    "deleteConfirmTitle": "Diesen Benutzer wirklich löschen?",
-    "deleteConfirmDesc": "Diese Aktion kann nicht rückgängig gemacht werden."
+    "deleteConfirmTitle": "Benutzer endgültig löschen?",
+    "deleteConfirmDesc": "Diese Aktion kann nicht rückgängig gemacht werden. Alle von diesem Benutzer erstellten Echos samt Anhängen, alle Kommentare unter diesen Echos (auch von anderen Benutzern) sowie seine Kommentare unter fremden Echos werden dauerhaft gelöscht. Echos anderer Benutzer bleiben unberührt.",
+    "status": "Status",
+    "statusActive": "Aktiv",
+    "statusDisabled": "Deaktiviert",
+    "disableUser": "Benutzer deaktivieren",
+    "enableUser": "Benutzer aktivieren",
+    "deleteConfirmHint": "Benutzernamen {username} zur Bestätigung eingeben"
   },
   "systemSetting": {
     "title": "Systemeinstellungen",
@@ -613,6 +631,10 @@
     "customCssPlaceholder": "Eigenes CSS eingeben",
     "customJs": "Eigenes JS",
     "customJsPlaceholder": "Eigenes Script eingeben",
+    "privacyPolicy": "Datenschutzerklärung",
+    "privacyPolicyPlaceholder": "Datenschutzerklärung in Markdown verfassen. Leer lassen, um die Seite /privacy zu schließen.",
+    "privacyPolicyHint": "Wird unter /privacy veröffentlicht. Bei leerem Inhalt antwortet die Seite mit 404.",
+    "showPrivacyFooter": "Link im Footer anzeigen",
     "allowRegister": "Registrierung erlauben",
     "agentDiscovery": "Agent-Erkennung",
     "agentDiscoveryHint": "Veröffentlicht /llms.txt, den AI-Katalog und die MCP-Server-Card, damit KI-Agenten die Feeds, die API und den MCP-Endpunkt dieser Instanz finden",
@@ -729,7 +751,7 @@
     "formatSnapshotDesc": "Vollständige Sicherung, mit Konten und Zugangsdaten",
     "formatCapsuleTitle": "Kapsel",
     "formatCapsuleDesc": "Nur Inhalte, zum Teilen oder für statische Seiten",
-    "includePrivate": "Private Inhalte einbeziehen",
+    "includePrivate": "Nur für Angemeldete Inhalte einbeziehen",
     "loginRequired": "Bitte zuerst anmelden",
     "exporting": "Wird exportiert… bitte warten",
     "exportStarted": "Export gestartet!",
@@ -965,7 +987,7 @@
     "sourceCapsuleTitle": "AXOXE-Kapsel",
     "sourceCapsule": "Unterstützt Import aus AXOXE-Kapseln",
     "capsuleNote": "Ergänzt Inhalte, per ID dedupliziert, überschreibt nichts",
-    "capsuleIncludePrivate": "Private Inhalte einschließen",
+    "capsuleIncludePrivate": "Nur für Angemeldete Inhalte einschließen",
     "statusIdle": "Bereit",
     "statusPending": "Wartend",
     "statusRunning": "Läuft",
@@ -1080,6 +1102,9 @@
     "poweredBy": "Powered by AXOXE",
     "upstreamAttribution": "Based on Ech0 by L1nSn0w and contributors"
   },
+  "privacy": {
+    "footerLink": "Datenschutzerklärung"
+  },
   "echoPage": {
     "loadingDetail": "Eintrag-Details werden geladen…"
   },
@@ -1123,6 +1148,8 @@
     "musicCoverAlt": "Cover von {title}",
     "musicUnavailable": "Diese Musikquelle ist vorübergehend nicht verfügbar",
     "musicUnavailableHint": "Musik-URL oder Meting-API-Konfiguration prüfen",
+    "musicSourceMissing": "Keine Musikquelle verfügbar",
+    "musicSourceMissingHint": "Wird abspielbar, sobald ein Administrator die Meting-API konfiguriert",
     "github": "GitHub",
     "website": "Webseite",
     "location": "Ort",

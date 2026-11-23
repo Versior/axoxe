@@ -1670,8 +1670,8 @@ func (_c *MockRepository_GetEchosById_Call) RunAndReturn(run func(ctx context.Co
 }
 
 // GetEchosByPage provides a mock function for the type MockRepository
-func (_mock *MockRepository) GetEchosByPage(page int, pageSize int, search string, showPrivate bool) ([]model.Echo, int64) {
-	ret := _mock.Called(page, pageSize, search, showPrivate)
+func (_mock *MockRepository) GetEchosByPage(page int, pageSize int, search string, scope model.PrivateScope) ([]model.Echo, int64) {
+	ret := _mock.Called(page, pageSize, search, scope)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetEchosByPage")
@@ -1679,18 +1679,18 @@ func (_mock *MockRepository) GetEchosByPage(page int, pageSize int, search strin
 
 	var r0 []model.Echo
 	var r1 int64
-	if returnFunc, ok := ret.Get(0).(func(int, int, string, bool) ([]model.Echo, int64)); ok {
-		return returnFunc(page, pageSize, search, showPrivate)
+	if returnFunc, ok := ret.Get(0).(func(int, int, string, model.PrivateScope) ([]model.Echo, int64)); ok {
+		return returnFunc(page, pageSize, search, scope)
 	}
-	if returnFunc, ok := ret.Get(0).(func(int, int, string, bool) []model.Echo); ok {
-		r0 = returnFunc(page, pageSize, search, showPrivate)
+	if returnFunc, ok := ret.Get(0).(func(int, int, string, model.PrivateScope) []model.Echo); ok {
+		r0 = returnFunc(page, pageSize, search, scope)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).([]model.Echo)
 		}
 	}
-	if returnFunc, ok := ret.Get(1).(func(int, int, string, bool) int64); ok {
-		r1 = returnFunc(page, pageSize, search, showPrivate)
+	if returnFunc, ok := ret.Get(1).(func(int, int, string, model.PrivateScope) int64); ok {
+		r1 = returnFunc(page, pageSize, search, scope)
 	} else {
 		r1 = ret.Get(1).(int64)
 	}
@@ -1706,12 +1706,12 @@ type MockRepository_GetEchosByPage_Call struct {
 //   - page int
 //   - pageSize int
 //   - search string
-//   - showPrivate bool
-func (_e *MockRepository_Expecter) GetEchosByPage(page any, pageSize any, search any, showPrivate any) *MockRepository_GetEchosByPage_Call {
-	return &MockRepository_GetEchosByPage_Call{Call: _e.mock.On("GetEchosByPage", page, pageSize, search, showPrivate)}
+//   - scope model.PrivateScope
+func (_e *MockRepository_Expecter) GetEchosByPage(page any, pageSize any, search any, scope any) *MockRepository_GetEchosByPage_Call {
+	return &MockRepository_GetEchosByPage_Call{Call: _e.mock.On("GetEchosByPage", page, pageSize, search, scope)}
 }
 
-func (_c *MockRepository_GetEchosByPage_Call) Run(run func(page int, pageSize int, search string, showPrivate bool)) *MockRepository_GetEchosByPage_Call {
+func (_c *MockRepository_GetEchosByPage_Call) Run(run func(page int, pageSize int, search string, scope model.PrivateScope)) *MockRepository_GetEchosByPage_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		var arg0 int
 		if args[0] != nil {
@@ -1725,9 +1725,9 @@ func (_c *MockRepository_GetEchosByPage_Call) Run(run func(page int, pageSize in
 		if args[2] != nil {
 			arg2 = args[2].(string)
 		}
-		var arg3 bool
+		var arg3 model.PrivateScope
 		if args[3] != nil {
-			arg3 = args[3].(bool)
+			arg3 = args[3].(model.PrivateScope)
 		}
 		run(
 			arg0,
@@ -1744,14 +1744,14 @@ func (_c *MockRepository_GetEchosByPage_Call) Return(echos []model.Echo, n int64
 	return _c
 }
 
-func (_c *MockRepository_GetEchosByPage_Call) RunAndReturn(run func(page int, pageSize int, search string, showPrivate bool) ([]model.Echo, int64)) *MockRepository_GetEchosByPage_Call {
+func (_c *MockRepository_GetEchosByPage_Call) RunAndReturn(run func(page int, pageSize int, search string, scope model.PrivateScope) ([]model.Echo, int64)) *MockRepository_GetEchosByPage_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetEchosByTagId provides a mock function for the type MockRepository
-func (_mock *MockRepository) GetEchosByTagId(tagID string, page int, pageSize int, search string, showPrivate bool) ([]model.Echo, int64, error) {
-	ret := _mock.Called(tagID, page, pageSize, search, showPrivate)
+func (_mock *MockRepository) GetEchosByTagId(tagID string, page int, pageSize int, search string, scope model.PrivateScope) ([]model.Echo, int64, error) {
+	ret := _mock.Called(tagID, page, pageSize, search, scope)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetEchosByTagId")
@@ -1760,23 +1760,23 @@ func (_mock *MockRepository) GetEchosByTagId(tagID string, page int, pageSize in
 	var r0 []model.Echo
 	var r1 int64
 	var r2 error
-	if returnFunc, ok := ret.Get(0).(func(string, int, int, string, bool) ([]model.Echo, int64, error)); ok {
-		return returnFunc(tagID, page, pageSize, search, showPrivate)
+	if returnFunc, ok := ret.Get(0).(func(string, int, int, string, model.PrivateScope) ([]model.Echo, int64, error)); ok {
+		return returnFunc(tagID, page, pageSize, search, scope)
 	}
-	if returnFunc, ok := ret.Get(0).(func(string, int, int, string, bool) []model.Echo); ok {
-		r0 = returnFunc(tagID, page, pageSize, search, showPrivate)
+	if returnFunc, ok := ret.Get(0).(func(string, int, int, string, model.PrivateScope) []model.Echo); ok {
+		r0 = returnFunc(tagID, page, pageSize, search, scope)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).([]model.Echo)
 		}
 	}
-	if returnFunc, ok := ret.Get(1).(func(string, int, int, string, bool) int64); ok {
-		r1 = returnFunc(tagID, page, pageSize, search, showPrivate)
+	if returnFunc, ok := ret.Get(1).(func(string, int, int, string, model.PrivateScope) int64); ok {
+		r1 = returnFunc(tagID, page, pageSize, search, scope)
 	} else {
 		r1 = ret.Get(1).(int64)
 	}
-	if returnFunc, ok := ret.Get(2).(func(string, int, int, string, bool) error); ok {
-		r2 = returnFunc(tagID, page, pageSize, search, showPrivate)
+	if returnFunc, ok := ret.Get(2).(func(string, int, int, string, model.PrivateScope) error); ok {
+		r2 = returnFunc(tagID, page, pageSize, search, scope)
 	} else {
 		r2 = ret.Error(2)
 	}
@@ -1793,12 +1793,12 @@ type MockRepository_GetEchosByTagId_Call struct {
 //   - page int
 //   - pageSize int
 //   - search string
-//   - showPrivate bool
-func (_e *MockRepository_Expecter) GetEchosByTagId(tagID any, page any, pageSize any, search any, showPrivate any) *MockRepository_GetEchosByTagId_Call {
-	return &MockRepository_GetEchosByTagId_Call{Call: _e.mock.On("GetEchosByTagId", tagID, page, pageSize, search, showPrivate)}
+//   - scope model.PrivateScope
+func (_e *MockRepository_Expecter) GetEchosByTagId(tagID any, page any, pageSize any, search any, scope any) *MockRepository_GetEchosByTagId_Call {
+	return &MockRepository_GetEchosByTagId_Call{Call: _e.mock.On("GetEchosByTagId", tagID, page, pageSize, search, scope)}
 }
 
-func (_c *MockRepository_GetEchosByTagId_Call) Run(run func(tagID string, page int, pageSize int, search string, showPrivate bool)) *MockRepository_GetEchosByTagId_Call {
+func (_c *MockRepository_GetEchosByTagId_Call) Run(run func(tagID string, page int, pageSize int, search string, scope model.PrivateScope)) *MockRepository_GetEchosByTagId_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		var arg0 string
 		if args[0] != nil {
@@ -1816,9 +1816,9 @@ func (_c *MockRepository_GetEchosByTagId_Call) Run(run func(tagID string, page i
 		if args[3] != nil {
 			arg3 = args[3].(string)
 		}
-		var arg4 bool
+		var arg4 model.PrivateScope
 		if args[4] != nil {
-			arg4 = args[4].(bool)
+			arg4 = args[4].(model.PrivateScope)
 		}
 		run(
 			arg0,
@@ -1836,14 +1836,14 @@ func (_c *MockRepository_GetEchosByTagId_Call) Return(echos []model.Echo, n int6
 	return _c
 }
 
-func (_c *MockRepository_GetEchosByTagId_Call) RunAndReturn(run func(tagID string, page int, pageSize int, search string, showPrivate bool) ([]model.Echo, int64, error)) *MockRepository_GetEchosByTagId_Call {
+func (_c *MockRepository_GetEchosByTagId_Call) RunAndReturn(run func(tagID string, page int, pageSize int, search string, scope model.PrivateScope) ([]model.Echo, int64, error)) *MockRepository_GetEchosByTagId_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetHotEchos provides a mock function for the type MockRepository
-func (_mock *MockRepository) GetHotEchos(limit int, showPrivate bool) ([]model.Echo, error) {
-	ret := _mock.Called(limit, showPrivate)
+func (_mock *MockRepository) GetHotEchos(limit int, scope model.PrivateScope) ([]model.Echo, error) {
+	ret := _mock.Called(limit, scope)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetHotEchos")
@@ -1851,18 +1851,18 @@ func (_mock *MockRepository) GetHotEchos(limit int, showPrivate bool) ([]model.E
 
 	var r0 []model.Echo
 	var r1 error
-	if returnFunc, ok := ret.Get(0).(func(int, bool) ([]model.Echo, error)); ok {
-		return returnFunc(limit, showPrivate)
+	if returnFunc, ok := ret.Get(0).(func(int, model.PrivateScope) ([]model.Echo, error)); ok {
+		return returnFunc(limit, scope)
 	}
-	if returnFunc, ok := ret.Get(0).(func(int, bool) []model.Echo); ok {
-		r0 = returnFunc(limit, showPrivate)
+	if returnFunc, ok := ret.Get(0).(func(int, model.PrivateScope) []model.Echo); ok {
+		r0 = returnFunc(limit, scope)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).([]model.Echo)
 		}
 	}
-	if returnFunc, ok := ret.Get(1).(func(int, bool) error); ok {
-		r1 = returnFunc(limit, showPrivate)
+	if returnFunc, ok := ret.Get(1).(func(int, model.PrivateScope) error); ok {
+		r1 = returnFunc(limit, scope)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -1876,20 +1876,20 @@ type MockRepository_GetHotEchos_Call struct {
 
 // GetHotEchos is a helper method to define mock.On call
 //   - limit int
-//   - showPrivate bool
-func (_e *MockRepository_Expecter) GetHotEchos(limit any, showPrivate any) *MockRepository_GetHotEchos_Call {
-	return &MockRepository_GetHotEchos_Call{Call: _e.mock.On("GetHotEchos", limit, showPrivate)}
+//   - scope model.PrivateScope
+func (_e *MockRepository_Expecter) GetHotEchos(limit any, scope any) *MockRepository_GetHotEchos_Call {
+	return &MockRepository_GetHotEchos_Call{Call: _e.mock.On("GetHotEchos", limit, scope)}
 }
 
-func (_c *MockRepository_GetHotEchos_Call) Run(run func(limit int, showPrivate bool)) *MockRepository_GetHotEchos_Call {
+func (_c *MockRepository_GetHotEchos_Call) Run(run func(limit int, scope model.PrivateScope)) *MockRepository_GetHotEchos_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		var arg0 int
 		if args[0] != nil {
 			arg0 = args[0].(int)
 		}
-		var arg1 bool
+		var arg1 model.PrivateScope
 		if args[1] != nil {
-			arg1 = args[1].(bool)
+			arg1 = args[1].(model.PrivateScope)
 		}
 		run(
 			arg0,
@@ -1904,22 +1904,22 @@ func (_c *MockRepository_GetHotEchos_Call) Return(echos []model.Echo, err error)
 	return _c
 }
 
-func (_c *MockRepository_GetHotEchos_Call) RunAndReturn(run func(limit int, showPrivate bool) ([]model.Echo, error)) *MockRepository_GetHotEchos_Call {
+func (_c *MockRepository_GetHotEchos_Call) RunAndReturn(run func(limit int, scope model.PrivateScope) ([]model.Echo, error)) *MockRepository_GetHotEchos_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetOnThisDayEchos provides a mock function for the type MockRepository
-func (_mock *MockRepository) GetOnThisDayEchos(showPrivate bool, timezone string) []model.Echo {
-	ret := _mock.Called(showPrivate, timezone)
+func (_mock *MockRepository) GetOnThisDayEchos(scope model.PrivateScope, timezone string) []model.Echo {
+	ret := _mock.Called(scope, timezone)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetOnThisDayEchos")
 	}
 
 	var r0 []model.Echo
-	if returnFunc, ok := ret.Get(0).(func(bool, string) []model.Echo); ok {
-		r0 = returnFunc(showPrivate, timezone)
+	if returnFunc, ok := ret.Get(0).(func(model.PrivateScope, string) []model.Echo); ok {
+		r0 = returnFunc(scope, timezone)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).([]model.Echo)
@@ -1934,17 +1934,17 @@ type MockRepository_GetOnThisDayEchos_Call struct {
 }
 
 // GetOnThisDayEchos is a helper method to define mock.On call
-//   - showPrivate bool
+//   - scope model.PrivateScope
 //   - timezone string
-func (_e *MockRepository_Expecter) GetOnThisDayEchos(showPrivate any, timezone any) *MockRepository_GetOnThisDayEchos_Call {
-	return &MockRepository_GetOnThisDayEchos_Call{Call: _e.mock.On("GetOnThisDayEchos", showPrivate, timezone)}
+func (_e *MockRepository_Expecter) GetOnThisDayEchos(scope any, timezone any) *MockRepository_GetOnThisDayEchos_Call {
+	return &MockRepository_GetOnThisDayEchos_Call{Call: _e.mock.On("GetOnThisDayEchos", scope, timezone)}
 }
 
-func (_c *MockRepository_GetOnThisDayEchos_Call) Run(run func(showPrivate bool, timezone string)) *MockRepository_GetOnThisDayEchos_Call {
+func (_c *MockRepository_GetOnThisDayEchos_Call) Run(run func(scope model.PrivateScope, timezone string)) *MockRepository_GetOnThisDayEchos_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 bool
+		var arg0 model.PrivateScope
 		if args[0] != nil {
-			arg0 = args[0].(bool)
+			arg0 = args[0].(model.PrivateScope)
 		}
 		var arg1 string
 		if args[1] != nil {
@@ -1963,14 +1963,14 @@ func (_c *MockRepository_GetOnThisDayEchos_Call) Return(echos []model.Echo) *Moc
 	return _c
 }
 
-func (_c *MockRepository_GetOnThisDayEchos_Call) RunAndReturn(run func(showPrivate bool, timezone string) []model.Echo) *MockRepository_GetOnThisDayEchos_Call {
+func (_c *MockRepository_GetOnThisDayEchos_Call) RunAndReturn(run func(scope model.PrivateScope, timezone string) []model.Echo) *MockRepository_GetOnThisDayEchos_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetRandomEcho provides a mock function for the type MockRepository
-func (_mock *MockRepository) GetRandomEcho(showPrivate bool) (*model.Echo, error) {
-	ret := _mock.Called(showPrivate)
+func (_mock *MockRepository) GetRandomEcho(scope model.PrivateScope) (*model.Echo, error) {
+	ret := _mock.Called(scope)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetRandomEcho")
@@ -1978,18 +1978,18 @@ func (_mock *MockRepository) GetRandomEcho(showPrivate bool) (*model.Echo, error
 
 	var r0 *model.Echo
 	var r1 error
-	if returnFunc, ok := ret.Get(0).(func(bool) (*model.Echo, error)); ok {
-		return returnFunc(showPrivate)
+	if returnFunc, ok := ret.Get(0).(func(model.PrivateScope) (*model.Echo, error)); ok {
+		return returnFunc(scope)
 	}
-	if returnFunc, ok := ret.Get(0).(func(bool) *model.Echo); ok {
-		r0 = returnFunc(showPrivate)
+	if returnFunc, ok := ret.Get(0).(func(model.PrivateScope) *model.Echo); ok {
+		r0 = returnFunc(scope)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*model.Echo)
 		}
 	}
-	if returnFunc, ok := ret.Get(1).(func(bool) error); ok {
-		r1 = returnFunc(showPrivate)
+	if returnFunc, ok := ret.Get(1).(func(model.PrivateScope) error); ok {
+		r1 = returnFunc(scope)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -2002,16 +2002,16 @@ type MockRepository_GetRandomEcho_Call struct {
 }
 
 // GetRandomEcho is a helper method to define mock.On call
-//   - showPrivate bool
-func (_e *MockRepository_Expecter) GetRandomEcho(showPrivate any) *MockRepository_GetRandomEcho_Call {
-	return &MockRepository_GetRandomEcho_Call{Call: _e.mock.On("GetRandomEcho", showPrivate)}
+//   - scope model.PrivateScope
+func (_e *MockRepository_Expecter) GetRandomEcho(scope any) *MockRepository_GetRandomEcho_Call {
+	return &MockRepository_GetRandomEcho_Call{Call: _e.mock.On("GetRandomEcho", scope)}
 }
 
-func (_c *MockRepository_GetRandomEcho_Call) Run(run func(showPrivate bool)) *MockRepository_GetRandomEcho_Call {
+func (_c *MockRepository_GetRandomEcho_Call) Run(run func(scope model.PrivateScope)) *MockRepository_GetRandomEcho_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 bool
+		var arg0 model.PrivateScope
 		if args[0] != nil {
-			arg0 = args[0].(bool)
+			arg0 = args[0].(model.PrivateScope)
 		}
 		run(
 			arg0,
@@ -2025,7 +2025,7 @@ func (_c *MockRepository_GetRandomEcho_Call) Return(echo *model.Echo, err error)
 	return _c
 }
 
-func (_c *MockRepository_GetRandomEcho_Call) RunAndReturn(run func(showPrivate bool) (*model.Echo, error)) *MockRepository_GetRandomEcho_Call {
+func (_c *MockRepository_GetRandomEcho_Call) RunAndReturn(run func(scope model.PrivateScope) (*model.Echo, error)) *MockRepository_GetRandomEcho_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -2099,16 +2099,16 @@ func (_c *MockRepository_GetTagsByNames_Call) RunAndReturn(run func(ctx context.
 }
 
 // GetTodayEchos provides a mock function for the type MockRepository
-func (_mock *MockRepository) GetTodayEchos(showPrivate bool, timezone string) []model.Echo {
-	ret := _mock.Called(showPrivate, timezone)
+func (_mock *MockRepository) GetTodayEchos(scope model.PrivateScope, timezone string) []model.Echo {
+	ret := _mock.Called(scope, timezone)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetTodayEchos")
 	}
 
 	var r0 []model.Echo
-	if returnFunc, ok := ret.Get(0).(func(bool, string) []model.Echo); ok {
-		r0 = returnFunc(showPrivate, timezone)
+	if returnFunc, ok := ret.Get(0).(func(model.PrivateScope, string) []model.Echo); ok {
+		r0 = returnFunc(scope, timezone)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).([]model.Echo)
@@ -2123,17 +2123,17 @@ type MockRepository_GetTodayEchos_Call struct {
 }
 
 // GetTodayEchos is a helper method to define mock.On call
-//   - showPrivate bool
+//   - scope model.PrivateScope
 //   - timezone string
-func (_e *MockRepository_Expecter) GetTodayEchos(showPrivate any, timezone any) *MockRepository_GetTodayEchos_Call {
-	return &MockRepository_GetTodayEchos_Call{Call: _e.mock.On("GetTodayEchos", showPrivate, timezone)}
+func (_e *MockRepository_Expecter) GetTodayEchos(scope any, timezone any) *MockRepository_GetTodayEchos_Call {
+	return &MockRepository_GetTodayEchos_Call{Call: _e.mock.On("GetTodayEchos", scope, timezone)}
 }
 
-func (_c *MockRepository_GetTodayEchos_Call) Run(run func(showPrivate bool, timezone string)) *MockRepository_GetTodayEchos_Call {
+func (_c *MockRepository_GetTodayEchos_Call) Run(run func(scope model.PrivateScope, timezone string)) *MockRepository_GetTodayEchos_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 bool
+		var arg0 model.PrivateScope
 		if args[0] != nil {
-			arg0 = args[0].(bool)
+			arg0 = args[0].(model.PrivateScope)
 		}
 		var arg1 string
 		if args[1] != nil {
@@ -2152,7 +2152,7 @@ func (_c *MockRepository_GetTodayEchos_Call) Return(echos []model.Echo) *MockRep
 	return _c
 }
 
-func (_c *MockRepository_GetTodayEchos_Call) RunAndReturn(run func(showPrivate bool, timezone string) []model.Echo) *MockRepository_GetTodayEchos_Call {
+func (_c *MockRepository_GetTodayEchos_Call) RunAndReturn(run func(scope model.PrivateScope, timezone string) []model.Echo) *MockRepository_GetTodayEchos_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -2341,8 +2341,8 @@ func (_c *MockRepository_ListReactions_Call) RunAndReturn(run func(ctx context.C
 }
 
 // QueryEchos provides a mock function for the type MockRepository
-func (_mock *MockRepository) QueryEchos(queryDto model0.EchoQueryDto, showPrivate bool) ([]model.Echo, int64, error) {
-	ret := _mock.Called(queryDto, showPrivate)
+func (_mock *MockRepository) QueryEchos(queryDto model0.EchoQueryDto, scope model.PrivateScope) ([]model.Echo, int64, error) {
+	ret := _mock.Called(queryDto, scope)
 
 	if len(ret) == 0 {
 		panic("no return value specified for QueryEchos")
@@ -2351,23 +2351,23 @@ func (_mock *MockRepository) QueryEchos(queryDto model0.EchoQueryDto, showPrivat
 	var r0 []model.Echo
 	var r1 int64
 	var r2 error
-	if returnFunc, ok := ret.Get(0).(func(model0.EchoQueryDto, bool) ([]model.Echo, int64, error)); ok {
-		return returnFunc(queryDto, showPrivate)
+	if returnFunc, ok := ret.Get(0).(func(model0.EchoQueryDto, model.PrivateScope) ([]model.Echo, int64, error)); ok {
+		return returnFunc(queryDto, scope)
 	}
-	if returnFunc, ok := ret.Get(0).(func(model0.EchoQueryDto, bool) []model.Echo); ok {
-		r0 = returnFunc(queryDto, showPrivate)
+	if returnFunc, ok := ret.Get(0).(func(model0.EchoQueryDto, model.PrivateScope) []model.Echo); ok {
+		r0 = returnFunc(queryDto, scope)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).([]model.Echo)
 		}
 	}
-	if returnFunc, ok := ret.Get(1).(func(model0.EchoQueryDto, bool) int64); ok {
-		r1 = returnFunc(queryDto, showPrivate)
+	if returnFunc, ok := ret.Get(1).(func(model0.EchoQueryDto, model.PrivateScope) int64); ok {
+		r1 = returnFunc(queryDto, scope)
 	} else {
 		r1 = ret.Get(1).(int64)
 	}
-	if returnFunc, ok := ret.Get(2).(func(model0.EchoQueryDto, bool) error); ok {
-		r2 = returnFunc(queryDto, showPrivate)
+	if returnFunc, ok := ret.Get(2).(func(model0.EchoQueryDto, model.PrivateScope) error); ok {
+		r2 = returnFunc(queryDto, scope)
 	} else {
 		r2 = ret.Error(2)
 	}
@@ -2381,20 +2381,20 @@ type MockRepository_QueryEchos_Call struct {
 
 // QueryEchos is a helper method to define mock.On call
 //   - queryDto model0.EchoQueryDto
-//   - showPrivate bool
-func (_e *MockRepository_Expecter) QueryEchos(queryDto any, showPrivate any) *MockRepository_QueryEchos_Call {
-	return &MockRepository_QueryEchos_Call{Call: _e.mock.On("QueryEchos", queryDto, showPrivate)}
+//   - scope model.PrivateScope
+func (_e *MockRepository_Expecter) QueryEchos(queryDto any, scope any) *MockRepository_QueryEchos_Call {
+	return &MockRepository_QueryEchos_Call{Call: _e.mock.On("QueryEchos", queryDto, scope)}
 }
 
-func (_c *MockRepository_QueryEchos_Call) Run(run func(queryDto model0.EchoQueryDto, showPrivate bool)) *MockRepository_QueryEchos_Call {
+func (_c *MockRepository_QueryEchos_Call) Run(run func(queryDto model0.EchoQueryDto, scope model.PrivateScope)) *MockRepository_QueryEchos_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		var arg0 model0.EchoQueryDto
 		if args[0] != nil {
 			arg0 = args[0].(model0.EchoQueryDto)
 		}
-		var arg1 bool
+		var arg1 model.PrivateScope
 		if args[1] != nil {
-			arg1 = args[1].(bool)
+			arg1 = args[1].(model.PrivateScope)
 		}
 		run(
 			arg0,
@@ -2409,7 +2409,7 @@ func (_c *MockRepository_QueryEchos_Call) Return(echos []model.Echo, n int64, er
 	return _c
 }
 
-func (_c *MockRepository_QueryEchos_Call) RunAndReturn(run func(queryDto model0.EchoQueryDto, showPrivate bool) ([]model.Echo, int64, error)) *MockRepository_QueryEchos_Call {
+func (_c *MockRepository_QueryEchos_Call) RunAndReturn(run func(queryDto model0.EchoQueryDto, scope model.PrivateScope) ([]model.Echo, int64, error)) *MockRepository_QueryEchos_Call {
 	_c.Call.Return(run)
 	return _c
 }

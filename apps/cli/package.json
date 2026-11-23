@@ -1,11 +1,10 @@
 {
-  "name": "@axoxe/cli",
-  "version": "0.1.8",
+  "name": "@useech0/cli",
+  "version": "0.1.9",
   "private": true,
   "type": "module",
-  "description": "AXOXE command line client for accessing and managing your AXOXE instance.",
+  "description": "Ech0 command line client for accessing and managing your Ech0 instance.",
   "bin": {
-    "axoxe": "./src/index.ts",
     "ech0": "./src/index.ts"
   },
   "scripts": {
@@ -17,7 +16,7 @@
     "dist": "bun run scripts/dist.ts"
   },
   "engines": {
-    "bun": ">=1.4.4"
+    "bun": ">=1.3"
   },
   "dependencies": {
     "commander": "^15.0.0",

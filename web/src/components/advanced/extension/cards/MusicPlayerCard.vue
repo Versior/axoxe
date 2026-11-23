@@ -23,8 +23,26 @@
     </div>
   </ExtensionCardShell>
 
+  <div
+    v-else-if="
+      musicInfo && musicInfo.server !== MusicProvider.APPLE && !settingsLoading && !metingAPI
+    "
+    class="extension-card-invalid"
+  >
+    <Music class="invalid-icon" />
+    <div class="invalid-copy">
+      <p class="invalid-title">{{ t('extensionCard.musicSourceMissing') }}</p>
+      <p class="invalid-subtitle">{{ t('extensionCard.musicSourceMissingHint') }}</p>
+    </div>
+  </div>
+
   <ExtensionCardShell
-    v-else-if="musicInfo && musicInfo.server !== MusicProvider.APPLE && !loadFailed"
+    v-else-if="
+      musicInfo &&
+      musicInfo.server !== MusicProvider.APPLE &&
+      !loadFailed &&
+      (settingsLoading || metingAPI)
+    "
     size="wide"
     padding="compact"
     :header-label="t('extensionCard.music')"
@@ -130,9 +148,15 @@
             isPlaybackActive ? t('extensionCard.musicPause') : t('extensionCard.musicPlay')
           "
           :title="isPlaybackActive ? t('extensionCard.musicPause') : t('extensionCard.musicPlay')"
+          :disabled="audioFailed"
           @click="togglePlayback"
         >
-          <span v-if="isAudioLoading" class="loading-dot" aria-hidden="true"></span>
+          <TheLoadingIndicator
+            v-if="isAudioLoading"
+            class="loading-dot"
+            size="sm"
+            aria-hidden="true"
+          />
           <Pause v-else-if="isPlaying" color="currentColor" />
           <Play v-else color="currentColor" />
         </button>
@@ -156,11 +180,16 @@ import { useI18n } from 'vue-i18n'
 import Music from '@/components/icons/music.vue'
 import Pause from '@/components/icons/pause.vue'
 import Play from '@/components/icons/play.vue'
+import TheLoadingIndicator from '@/components/common/TheLoadingIndicator.vue'
 import { ExtensionType, MusicProvider } from '@/enums/enums'
 import { useSettingStore } from '@/stores'
 import { parseMusicURL } from '@/utils/other'
-import { loadMetingTrack } from '@/utils/meting'
-import { parseLyrics, type LyricLine, type MusicTrack } from '@/utils/musicPlayer'
+import {
+  normalizeMetingTrack,
+  parseLyrics,
+  type LyricLine,
+  type MusicTrack,
+} from '@/utils/musicPlayer'
 import ExtensionCardShell from '../shared/ExtensionCardShell.vue'
 import ExtensionCardSkeleton from '../shared/ExtensionCardSkeleton.vue'
 
@@ -197,12 +226,11 @@ const isPlaying = ref(false)
 const isHovered = ref(false)
 const showTrackInfo = ref(true)
 const loadFailed = ref(false)
+const audioFailed = ref(false)
 const isAppleReady = ref(false)
 let requestController: AbortController | null = null
 let lyricController: AbortController | null = null
 let trackInfoTimer: ReturnType<typeof setTimeout> | null = null
-let currentEndpoint = ''
-const failedEndpoints = new Set<string>()
 
 const musicURL = computed(() => {
   if (props.echo.extension?.type !== ExtensionType.MUSIC) return ''
@@ -211,12 +239,8 @@ const musicURL = computed(() => {
 
 const musicInfo = computed(() => parseMusicURL(musicURL.value))
 
-const metingAPI = computed(() => {
-  if (!settingsLoading.value && SystemSetting.value?.meting_api?.length) {
-    return SystemSetting.value.meting_api
-  }
-  return ''
-})
+// No built-in resolver: music cards only play when the operator configured one.
+const metingAPI = computed(() => SystemSetting.value?.meting_api?.trim() ?? '')
 
 const musicSourceKey = computed(() => {
   const info = musicInfo.value
@@ -248,38 +272,66 @@ const progressPercent = computed(() =>
   duration.value > 0 ? Math.min(100, (currentTime.value / duration.value) * 100) : 0,
 )
 
+function buildMetingURL() {
+  const info = musicInfo.value
+  if (!info || info.server === MusicProvider.APPLE) return ''
+
+  const params: Record<string, string> = {
+    server: info.server,
+    type: info.type,
+    id: info.id,
+    auth: '',
+    r: String(Math.random()),
+  }
+  const base = metingAPI.value.trim()
+
+  if (/:(server|type|id|auth|r)\b/.test(base)) {
+    return Object.entries(params).reduce(
+      (url, [key, value]) => url.replaceAll(`:${key}`, encodeURIComponent(value)),
+      base,
+    )
+  }
+
+  const separator = base.includes('?') ? '&' : '?'
+  return `${base}${separator}${new URLSearchParams(params).toString()}`
+}
+
 async function loadTrack() {
   requestController?.abort()
   lyricController?.abort()
   pause()
   track.value = null
-  currentEndpoint = ''
   lyrics.value = []
   currentTime.value = 0
   duration.value = 0
   loadFailed.value = false
+  audioFailed.value = false
   isAppleReady.value = false
 
   const info = musicInfo.value
   if (!info || info.server === MusicProvider.APPLE) return
+  if (!metingAPI.value) return
 
   const controller = new AbortController()
   requestController = controller
   isLoading.value = true
   try {
-    const resolved = await loadMetingTrack(
-      info,
-      metingAPI.value,
-      controller.signal,
-      failedEndpoints,
-    )
+    const response = await fetch(buildMetingURL(), {
+      headers: { Accept: 'application/json' },
+      signal: controller.signal,
+    })
+    if (!response.ok) throw new Error(`Meting API returned ${response.status}`)
+
+    const payload = await response.json()
     if (requestController !== controller) return
-    track.value = resolved.track
-    currentEndpoint = resolved.endpoint
+
+    const resolvedTrack = normalizeMetingTrack(payload)
+    if (!resolvedTrack) throw new Error('Meting API returned no playable track')
+    track.value = resolvedTrack
     await nextTick()
     applyVolume()
     revealTrackInfo()
-    void loadLyrics(resolved.track.lrc)
+    void loadLyrics(resolvedTrack.lrc)
   } catch (error) {
     if (!isAbortError(error)) loadFailed.value = true
   } finally {
@@ -322,7 +374,7 @@ function applyVolume() {
 
 async function play() {
   const audio = audioRef.value
-  if (!audio || !track.value) return
+  if (!audio || !track.value || audioFailed.value) return
 
   window.dispatchEvent(new CustomEvent(PLAYER_EVENT, { detail: playerToken }))
   isAudioLoading.value = true
@@ -333,7 +385,7 @@ async function play() {
     if (!(
       error instanceof DOMException && ['AbortError', 'NotAllowedError'].includes(error.name)
     )) {
-      handleAudioError()
+      audioFailed.value = true
     }
   }
 }
@@ -367,8 +419,7 @@ function handleEnded() {
 
 function handleAudioError() {
   pause()
-  failedEndpoints.add(currentEndpoint)
-  void loadTrack()
+  audioFailed.value = true
 }
 
 function handleLoadedMetadata() {
@@ -487,14 +538,7 @@ function handleOtherPlayer(event: Event) {
   if ((event as CustomEvent<object>).detail !== playerToken) pause()
 }
 
-watch(
-  musicSourceKey,
-  () => {
-    failedEndpoints.clear()
-    void loadTrack()
-  },
-  { immediate: true },
-)
+watch(musicSourceKey, loadTrack, { immediate: true })
 watch(isPlaying, updateMediaPlaybackState)
 
 onMounted(() => {
@@ -773,12 +817,8 @@ onBeforeUnmount(() => {
 }
 
 .loading-dot {
-  width: 0.95rem;
-  height: 0.95rem;
-  border: 2px solid var(--color-border-subtle);
-  border-top-color: var(--color-accent);
-  border-radius: 50%;
-  animation: music-loading 0.8s linear infinite;
+  --spinner-size: 0.75rem;
+  --spinner-color: currentColor;
 }
 
 .extension-card-invalid {
@@ -851,12 +891,6 @@ onBeforeUnmount(() => {
   transform: translateY(-100%);
 }
 
-@keyframes music-loading {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 @media (width <= 420px) {
   .music-player {
     gap: 0.55rem;
@@ -881,10 +915,6 @@ onBeforeUnmount(() => {
   .lyric-scroll-enter-active,
   .lyric-scroll-leave-active {
     transition: none;
-  }
-
-  .loading-dot {
-    animation: none;
   }
 }
 </style>
