@@ -72,7 +72,7 @@ jobs:
         working-directory: ./web
         run: |
           set -euo pipefail
-          pnpm install --frozen-lockfile || pnpm install --fix-lockfile --no-frozen-lockfile
+          pnpm install --frozen-lockfile
           pnpm build --mode production
 
       - name: Verify embedded template assets

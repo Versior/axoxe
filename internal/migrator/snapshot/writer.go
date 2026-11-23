@@ -11,8 +11,10 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 	"time"
 
+	"github.com/lin-snow/ech0/internal/config"
 	"github.com/lin-snow/ech0/internal/migrator/artifact"
 	logUtil "github.com/lin-snow/ech0/pkg/log"
 	"github.com/lin-snow/ech0/pkg/virefs"
@@ -38,7 +40,10 @@ type CreateOption func(*createConfig)
 
 type createConfig struct {
 	dbCopy func(dstPath string) error
+	ctx    context.Context
 }
+
+var createMu sync.Mutex
 
 func WithConsistentDB(copyFn func(dstPath string) error) CreateOption {
 	return func(cfg *createConfig) {
@@ -46,14 +51,26 @@ func WithConsistentDB(copyFn func(dstPath string) error) CreateOption {
 	}
 }
 
+func WithContext(ctx context.Context) CreateOption {
+	return func(cfg *createConfig) {
+		if ctx != nil {
+			cfg.ctx = ctx
+		}
+	}
+}
+
 func Create(opts ...CreateOption) (string, string, error) {
+	createMu.Lock()
+	defer createMu.Unlock()
+
 	var cfg createConfig
+	cfg.ctx = context.Background()
 	for _, opt := range opts {
 		opt(&cfg)
 	}
 
 	slot := Slot()
-	fileName := slot.Name(time.Now().UTC())
+	fileName := fmt.Sprintf("%s_%d.zip", strings.TrimSuffix(slot.Name(time.Now().UTC()), ".zip"), time.Now().UTC().UnixNano())
 	snapshotDir := slot.Dir()
 	snapshotPath := slot.Path(fileName)
 	tempPath := slot.Path("." + fileName + ".tmp")
@@ -68,18 +85,36 @@ func Create(opts ...CreateOption) (string, string, error) {
 	}
 
 	packFS := virefs.FS(dataFS)
+	storageRoot := strings.TrimSpace(config.Config().Storage.DataRoot)
+	if storageRoot == "" {
+		storageRoot = filepath.Join(dataDir, "files")
+	}
+	defaultStorageRoot := filepath.Clean(filepath.Join(dataDir, "files"))
+	if filepath.Clean(storageRoot) != defaultStorageRoot {
+		storageFS, storageErr := virefs.NewLocalFS(storageRoot)
+		if storageErr != nil {
+			return "", "", fmt.Errorf("open storage data root: %w", storageErr)
+		}
+		packFS = &mappedStorageFS{FS: dataFS, storage: storageFS}
+	}
 	if cfg.dbCopy != nil {
 		stageFS, cleanup, stageErr := stageConsistentDB(cfg.dbCopy)
 		if stageErr != nil {
 			return "", "", stageErr
 		}
 		defer cleanup()
-		packFS = &dbOverlayFS{FS: dataFS, stage: stageFS}
+		packFS = &dbOverlayFS{FS: packFS, stage: stageFS}
 	}
 
-	ctx := context.Background()
+	ctx := cfg.ctx
+	if err := ctx.Err(); err != nil {
+		return "", "", err
+	}
 	var keys []string
 	if err := virefs.Walk(ctx, dataFS, "", func(key string, info virefs.FileInfo, walkErr error) error {
+		if err := ctx.Err(); err != nil {
+			return err
+		}
 		if walkErr != nil {
 			return walkErr
 		}
@@ -93,6 +128,9 @@ func Create(opts ...CreateOption) (string, string, error) {
 		if shouldExcludeFromSnapshot(cleanKey) {
 			return nil
 		}
+		if filepath.Clean(storageRoot) != defaultStorageRoot && (cleanKey == "files" || strings.HasPrefix(cleanKey, "files/")) {
+			return nil
+		}
 		if cfg.dbCopy != nil && isDBArtifact(cleanKey) {
 			return nil
 		}
@@ -100,6 +138,28 @@ func Create(opts ...CreateOption) (string, string, error) {
 		return nil
 	}); err != nil {
 		return "", "", fmt.Errorf("walk data dir: %w", err)
+	}
+	if filepath.Clean(storageRoot) != defaultStorageRoot {
+		storageFS, storageErr := virefs.NewLocalFS(storageRoot)
+		if storageErr != nil {
+			return "", "", fmt.Errorf("open storage data root: %w", storageErr)
+		}
+		if err := virefs.Walk(ctx, storageFS, "", func(key string, info virefs.FileInfo, walkErr error) error {
+			if walkErr != nil {
+				return walkErr
+			}
+			if info.IsDir {
+				return nil
+			}
+			cleanKey := strings.Trim(strings.TrimSpace(key), "/")
+			if cleanKey == "" || shouldExcludeFromSnapshot(cleanKey) {
+				return nil
+			}
+			keys = append(keys, "files/"+cleanKey)
+			return nil
+		}); err != nil {
+			return "", "", fmt.Errorf("walk storage data root: %w", err)
+		}
 	}
 	if cfg.dbCopy != nil {
 		keys = append(keys, dbFileName)
@@ -165,11 +225,12 @@ func Unpack(zipPath, destDir string) error {
 }
 
 func stageConsistentDB(copyFn func(dstPath string) error) (virefs.FS, func(), error) {
-	stagingDir := filepath.Join(dataDir, dbStagingRelativeDir)
-	if err := os.RemoveAll(stagingDir); err != nil {
-		return nil, nil, fmt.Errorf("clean db staging dir: %w", err)
+	parentDir := filepath.Join(dataDir, tmpRelativeDir)
+	if err := os.MkdirAll(parentDir, 0o755); err != nil {
+		return nil, nil, fmt.Errorf("create db staging dir: %w", err)
 	}
-	if err := os.MkdirAll(stagingDir, 0o755); err != nil {
+	stagingDir, err := os.MkdirTemp(parentDir, "db-export-")
+	if err != nil {
 		return nil, nil, fmt.Errorf("create db staging dir: %w", err)
 	}
 	cleanup := func() { _ = os.RemoveAll(stagingDir) }
@@ -198,6 +259,25 @@ func isDBArtifact(cleanKey string) bool {
 type dbOverlayFS struct {
 	virefs.FS
 	stage virefs.FS
+}
+
+type mappedStorageFS struct {
+	virefs.FS
+	storage virefs.FS
+}
+
+func (o *mappedStorageFS) Get(ctx context.Context, key string) (io.ReadCloser, error) {
+	if strings.HasPrefix(key, "files/") {
+		return o.storage.Get(ctx, strings.TrimPrefix(key, "files/"))
+	}
+	return o.FS.Get(ctx, key)
+}
+
+func (o *mappedStorageFS) Stat(ctx context.Context, key string) (*virefs.FileInfo, error) {
+	if strings.HasPrefix(key, "files/") {
+		return o.storage.Stat(ctx, strings.TrimPrefix(key, "files/"))
+	}
+	return o.FS.Stat(ctx, key)
 }
 
 func (o *dbOverlayFS) Get(ctx context.Context, key string) (io.ReadCloser, error) {

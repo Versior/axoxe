@@ -1375,6 +1375,63 @@ func (_c *MockRepository_CreateTag_Call) RunAndReturn(run func(ctx context.Conte
 	return _c
 }
 
+// DecrementTagUsageCount provides a mock function for the type MockRepository
+func (_mock *MockRepository) DecrementTagUsageCount(ctx context.Context, tagID string) error {
+	ret := _mock.Called(ctx, tagID)
+
+	if len(ret) == 0 {
+		panic("no return value specified for DecrementTagUsageCount")
+	}
+
+	var r0 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string) error); ok {
+		r0 = returnFunc(ctx, tagID)
+	} else {
+		r0 = ret.Error(0)
+	}
+	return r0
+}
+
+// MockRepository_DecrementTagUsageCount_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'DecrementTagUsageCount'
+type MockRepository_DecrementTagUsageCount_Call struct {
+	*mock.Call
+}
+
+// DecrementTagUsageCount is a helper method to define mock.On call
+//   - ctx context.Context
+//   - tagID string
+func (_e *MockRepository_Expecter) DecrementTagUsageCount(ctx any, tagID any) *MockRepository_DecrementTagUsageCount_Call {
+	return &MockRepository_DecrementTagUsageCount_Call{Call: _e.mock.On("DecrementTagUsageCount", ctx, tagID)}
+}
+
+func (_c *MockRepository_DecrementTagUsageCount_Call) Run(run func(ctx context.Context, tagID string)) *MockRepository_DecrementTagUsageCount_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
+	})
+	return _c
+}
+
+func (_c *MockRepository_DecrementTagUsageCount_Call) Return(err error) *MockRepository_DecrementTagUsageCount_Call {
+	_c.Call.Return(err)
+	return _c
+}
+
+func (_c *MockRepository_DecrementTagUsageCount_Call) RunAndReturn(run func(ctx context.Context, tagID string) error) *MockRepository_DecrementTagUsageCount_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // DeleteEchoById provides a mock function for the type MockRepository
 func (_mock *MockRepository) DeleteEchoById(ctx context.Context, id string) error {
 	ret := _mock.Called(ctx, id)

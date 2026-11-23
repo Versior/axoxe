@@ -55,7 +55,9 @@ tolerations: []
 affinity: {}
 
 config:
-  JWT_SECRET: "Hello Echos"
+  JWT_SECRET: ""
+  existingSecret: ""
+  existingSecretKey: JWT_SECRET
 
 extraEnv: []
 

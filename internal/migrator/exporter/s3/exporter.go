@@ -28,9 +28,9 @@ func New(storageManager *storage.Manager) *Exporter {
 	return &Exporter{storageManager: storageManager}
 }
 
-func (e *Exporter) Export(_ context.Context, req spec.ExportRequest) (spec.ExportResult, error) {
+func (e *Exporter) Export(ctx context.Context, req spec.ExportRequest) (spec.ExportResult, error) {
 	emit(req, migratorModel.ExportPhasePacking)
-	path, fileName, err := snapshot.Create(snapshot.WithConsistentDB(database.SnapshotTo))
+	path, fileName, err := snapshot.Create(snapshot.WithContext(ctx), snapshot.WithConsistentDB(database.SnapshotTo))
 	if err != nil {
 		return spec.ExportResult{}, err
 	}
@@ -40,22 +40,24 @@ func (e *Exporter) Export(_ context.Context, req spec.ExportRequest) (spec.Expor
 		size = info.Size()
 	}
 
-	go e.uploadToS3(path, fileName)
+	if err := e.uploadToS3(ctx, path, fileName); err != nil {
+		return spec.ExportResult{}, err
+	}
 
 	emit(req, migratorModel.ExportPhaseCompleted)
 	return spec.ExportResult{ArtifactPath: path, FileName: fileName, Size: size}, nil
 }
 
-func (e *Exporter) uploadToS3(artifactPath, fileName string) {
+func (e *Exporter) uploadToS3(ctx context.Context, artifactPath, fileName string) error {
 	if e.storageManager == nil {
-		return
+		return nil
 	}
 	selector := e.storageManager.GetSelector()
 	if selector == nil || !selector.ObjectEnabled() {
-		return
+		return nil
 	}
 
-	uploadCtx, cancel := context.WithTimeout(context.Background(), uploadTimeout)
+	uploadCtx, cancel := context.WithTimeout(ctx, uploadTimeout)
 	defer cancel()
 
 	cfg := e.storageManager.GetStorageConfig(uploadCtx)
@@ -69,7 +71,9 @@ func (e *Exporter) uploadToS3(artifactPath, fileName string) {
 		default:
 			logUtil.GetLogger().Warn("Failed to upload snapshot to S3", logUtil.Err(err))
 		}
+		return err
 	}
+	return nil
 }
 
 func emit(req spec.ExportRequest, phase string) {

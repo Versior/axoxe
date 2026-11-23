@@ -2,6 +2,7 @@
 // Copyright (C) 2025-2026 lin-snow
 
 import { getApiUrl, buildCommonHeaders } from './shared'
+import { useAuthStore } from '@/stores/auth'
 
 export interface SSEStreamOptions {
   path: string
@@ -35,7 +36,7 @@ export function sseStream(opts: SSEStreamOptions): () => void {
     opts.onEvent(eventName, payload)
   }
 
-  const run = async () => {
+  const run = async (attempt = 0): Promise<void> => {
     let resp: Response
     try {
       resp = await fetch(`${getApiUrl()}${opts.path}`, {
@@ -56,7 +57,16 @@ export function sseStream(opts: SSEStreamOptions): () => void {
     }
 
     if (!resp.ok || !resp.body) {
-      opts.onError?.(await failureMessage(resp))
+      const failed = await failureDetails(resp)
+      const tokenError =
+        failed.errorCode === 'TOKEN_MISSING' ||
+        failed.errorCode === 'TOKEN_INVALID' ||
+        failed.errorCode === 'TOKEN_PARSE_ERROR' ||
+        failed.errorCode === 'TOKEN_REVOKED'
+      if (attempt === 0 && tokenError && (await useAuthStore().silentRefresh())) {
+        return run(1)
+      }
+      opts.onError?.(failed.message)
       return
     }
 
@@ -87,7 +97,7 @@ export function sseStream(opts: SSEStreamOptions): () => void {
     }
   }
 
-  run()
+  void run()
 
   return () => controller.abort()
 }
@@ -96,15 +106,18 @@ export function sseStream(opts: SSEStreamOptions): () => void {
  * A request refused before the stream opened comes back as the usual JSON
  * envelope; its localized `msg` says why, where a bare status code would not.
  */
-async function failureMessage(resp: Response): Promise<string> {
+async function failureDetails(resp: Response): Promise<{ message: string; errorCode?: string }> {
   try {
     const body: unknown = await resp.json()
     if (body !== null && typeof body === 'object') {
       const msg = (body as Record<string, unknown>).msg
-      if (typeof msg === 'string' && msg.length > 0) return msg
+      const errorCode = (body as Record<string, unknown>).error_code
+      if (typeof msg === 'string' && msg.length > 0) {
+        return { message: msg, errorCode: typeof errorCode === 'string' ? errorCode : undefined }
+      }
     }
   } catch {
     // Not JSON: fall back to the status line.
   }
-  return `HTTP ${resp.status}`
+  return { message: `HTTP ${resp.status}` }
 }

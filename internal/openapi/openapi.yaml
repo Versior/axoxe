@@ -486,6 +486,17 @@ components:
           format: int64
           type: integer
       type: object
+    EchoFileInput:
+      additionalProperties: true
+      properties:
+        file_id:
+          description: Uploaded file ID
+          type: string
+        sort_order:
+          description: Order within the Echo
+          format: int64
+          type: integer
+      type: object
     EchoQueryDto:
       additionalProperties: true
       properties:
@@ -547,7 +558,7 @@ components:
         echo_files:
           description: Attachments as {file_id, sort_order}; upload files first to get file_id
           items:
-            $ref: "#/components/schemas/EchoFile"
+            $ref: "#/components/schemas/EchoFileInput"
           type:
             - array
             - "null"

@@ -58,8 +58,13 @@ export function useDraftModule(deps: DraftModuleDeps) {
   const hasBoundDraftFlushListeners = ref<boolean>(false)
   let draftTimer: ReturnType<typeof setTimeout> | null = null
 
+  const draftStorageKey = () => {
+    const userID = localStg.getItem<string>('current_user_id') || 'anonymous'
+    return `${EDITOR_DRAFT_STORAGE_KEY}:${userID}`
+  }
+
   const clearLocalDraft = () => {
-    localStg.removeItem(EDITOR_DRAFT_STORAGE_KEY)
+    localStg.removeItem(draftStorageKey())
   }
 
   const hasDraftContent = () => {
@@ -138,7 +143,7 @@ export function useDraftModule(deps: DraftModuleDeps) {
       },
       tagToAdd: Array.isArray(tagToAdd.value) ? [...tagToAdd.value] : [],
     }
-    localStg.setItem(EDITOR_DRAFT_STORAGE_KEY, draft)
+    localStg.setItem(draftStorageKey(), draft)
   }
 
   const scheduleSaveDraft = () => {
@@ -153,7 +158,7 @@ export function useDraftModule(deps: DraftModuleDeps) {
   }
 
   const restoreDraftIfNeeded = () => {
-    const draft = localStg.getItem<EditorDraft>(EDITOR_DRAFT_STORAGE_KEY)
+    const draft = localStg.getItem<EditorDraft>(draftStorageKey())
     if (!draft) return
     if (typeof draft.savedAt !== 'number' || Date.now() - draft.savedAt > EDITOR_DRAFT_TTL_MS) {
       clearLocalDraft()

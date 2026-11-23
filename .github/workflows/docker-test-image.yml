@@ -20,7 +20,7 @@ permissions:
 env:
   MUSL_TOOLCHAIN_VERSION: "2025-6-20"
   MUSL_TOOLCHAIN_ARCHIVE: "aarch64-linux-musl-cross.tgz"
-  MUSL_TOOLCHAIN_SHA256: ""
+  MUSL_TOOLCHAIN_SHA256: "c909817856d6ceda86aa510894fa3527eac7989f0ef6e87b5721c58737a06c38"
 
 jobs:
   build:
@@ -50,7 +50,7 @@ jobs:
         working-directory: ./web
         run: |
           set -euo pipefail
-          pnpm install --frozen-lockfile || pnpm install --fix-lockfile --no-frozen-lockfile
+          pnpm install --frozen-lockfile
           pnpm build --mode production
 
       - name: Verify embedded template assets

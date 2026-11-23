@@ -52,6 +52,7 @@ type Repository interface {
 	GetAllTags() ([]model.Tag, error)
 	GetTagsByNames(ctx context.Context, names []string) ([]*model.Tag, error)
 	IncrementTagUsageCount(ctx context.Context, tagID string) error
+	DecrementTagUsageCount(ctx context.Context, tagID string) error
 	DeleteTagById(ctx context.Context, id string) error
 	GetEchosByTagId(tagID string, page, pageSize int, search string, showPrivate bool) ([]model.Echo, int64, error)
 	QueryEchos(queryDto commonModel.EchoQueryDto, showPrivate bool) ([]model.Echo, int64, error)

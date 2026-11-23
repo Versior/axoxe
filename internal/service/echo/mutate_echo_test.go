@@ -102,7 +102,9 @@ func TestDeleteEchoById_Success(t *testing.T) {
 		}
 	})
 	repo.EXPECT().GetEchosById(mock.Anything, echoID).Return(&stored, nil).Once()
+	file.EXPECT().CountEchoFileReferences(mock.Anything, "f-local").Return(int64(1), nil).Once()
 	file.EXPECT().DeleteFileRecord(mock.Anything, "f-local").Return(nil).Once()
+	file.EXPECT().CountEchoFileReferences(mock.Anything, "f-ext").Return(int64(1), nil).Once()
 	file.EXPECT().DeleteFileRecord(mock.Anything, "f-ext").Return(nil).Once()
 	repo.EXPECT().DeleteEchoById(mock.Anything, echoID).Return(nil).Once()
 	repo.EXPECT().InvalidateEchoCaches(echoID).Once()
@@ -143,10 +145,31 @@ func TestDeleteEchoById_DeleteFileRecordError(t *testing.T) {
 		e.EchoFiles = []fileModel.EchoFile{{File: fileModel.File{ID: "f-1", Key: "k-1", StorageType: "local"}}}
 	})
 	repo.EXPECT().GetEchosById(mock.Anything, echoID).Return(&stored, nil).Once()
+	file.EXPECT().CountEchoFileReferences(mock.Anything, "f-1").Return(int64(1), nil).Once()
 	file.EXPECT().DeleteFileRecord(mock.Anything, "f-1").Return(boom).Once()
 
 	svc := echoService.NewEchoService(tx, common, file, repo, nilBus)
 	require.ErrorIs(t, svc.DeleteEchoById(helpers.CtxAsUser(adminID), echoID), boom)
+}
+
+func TestDeleteEchoById_KeepsSharedFile(t *testing.T) {
+	repo := newEchoRepoMock(t)
+	common := commonmock.NewMockService(t)
+	file := filemock.NewMockService(t)
+	tx := txmock.NewMockTransactor(t)
+	common.EXPECT().CommonGetUserByUserId(mock.Anything, adminID).Return(helpers.NewUser(helpers.AsAdmin), nil).Once()
+	tx.EXPECT().Run(mock.Anything, mock.Anything).RunAndReturn(runTx).Once()
+	stored := helpers.NewEcho(func(e *echoModel.Echo) {
+		e.ID = echoID
+		e.EchoFiles = []fileModel.EchoFile{{File: fileModel.File{ID: "shared", Key: "shared.png", StorageType: "local"}}}
+	})
+	repo.EXPECT().GetEchosById(mock.Anything, echoID).Return(&stored, nil).Once()
+	file.EXPECT().CountEchoFileReferences(mock.Anything, "shared").Return(int64(2), nil).Once()
+	repo.EXPECT().DeleteEchoById(mock.Anything, echoID).Return(nil).Once()
+	repo.EXPECT().InvalidateEchoCaches(echoID).Once()
+
+	svc := echoService.NewEchoService(tx, common, file, repo, nilBus)
+	require.NoError(t, svc.DeleteEchoById(helpers.CtxAsUser(adminID), echoID))
 }
 
 func TestUpdateEcho_Guards(t *testing.T) {

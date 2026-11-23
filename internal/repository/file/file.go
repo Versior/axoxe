@@ -155,6 +155,31 @@ func (r *FileRepository) Delete(ctx context.Context, id string) error {
 	return r.getDB(ctx).Where("id = ?", id).Delete(&model.File{}).Error
 }
 
+func (r *FileRepository) CountEchoFileReferences(ctx context.Context, fileID string) (int64, error) {
+	var count int64
+	err := r.getDB(ctx).Table("echo_files").Where("file_id = ?", fileID).Count(&count).Error
+	return count, err
+}
+
+func (r *FileRepository) GetEchoFileVisibility(ctx context.Context, fileID string) (hasPrivate, hasPublic bool, err error) {
+	type visibilityRow struct{ Private bool }
+	var rows []visibilityRow
+	err = r.getDB(ctx).Table("echo_files").Select("echos.private").
+		Joins("JOIN echos ON echos.id = echo_files.echo_id").
+		Where("echo_files.file_id = ?", fileID).Scan(&rows).Error
+	if err != nil {
+		return false, false, err
+	}
+	for _, row := range rows {
+		if row.Private {
+			hasPrivate = true
+		} else {
+			hasPublic = true
+		}
+	}
+	return hasPrivate, hasPublic, nil
+}
+
 func (r *FileRepository) DeleteByRoute(
 	ctx context.Context,
 	storageType, provider, bucket, key string,

@@ -14,6 +14,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/lin-snow/ech0/internal/config"
 	"github.com/lin-snow/ech0/internal/database"
 	"github.com/lin-snow/ech0/internal/migrator/spec"
 	commentModel "github.com/lin-snow/ech0/internal/model/comment"
@@ -389,6 +390,9 @@ func migrateFiles(ctx context.Context, tx *gorm.DB, sourceDB *gorm.DB, sourceRoo
 			continue
 		}
 	}
+	if localCopyFailed > 0 {
+		return fmt.Errorf("migrate files: %d local files could not be copied", localCopyFailed)
+	}
 	logUtil.GetLogger().Info("migration ech0 phase completed",
 		slog.String("module", "migration"),
 		slog.String("phase", "files"),
@@ -455,7 +459,10 @@ func copySourceLocalFileToTargetRoot(sourceRoot string, key string) error {
 		return errors.New("empty local file path")
 	}
 
-	targetRoot := filepath.Join("data", "files")
+	targetRoot := strings.TrimSpace(config.Config().Storage.DataRoot)
+	if targetRoot == "" {
+		targetRoot = filepath.Join("data", "files")
+	}
 	targetPath := filepath.Join(targetRoot, filepath.FromSlash(relativePath))
 	if info, err := os.Stat(targetPath); err == nil && !info.IsDir() {
 		return nil

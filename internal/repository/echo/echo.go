@@ -157,20 +157,36 @@ func (echoRepository *EchoRepository) GetEchosById(ctx context.Context, id strin
 }
 
 func (echoRepository *EchoRepository) DeleteEchoById(ctx context.Context, id string) error {
-	var echo model.Echo
-	echoRepository.getDB(ctx).Where("echo_id = ?", id).Delete(&fileModel.EchoFile{})
+	db := echoRepository.getDB(ctx)
+	var tagIDs []string
+	if err := db.Model(&model.EchoTag{}).Where("echo_id = ?", id).Pluck("tag_id", &tagIDs).Error; err != nil {
+		return err
+	}
+	for _, tagID := range tagIDs {
+		if err := echoRepository.DecrementTagUsageCount(ctx, tagID); err != nil {
+			return err
+		}
+	}
+	if err := db.Where("echo_id = ?", id).Delete(&model.EchoTag{}).Error; err != nil {
+		return err
+	}
 
-	if err := echoRepository.getDB(ctx).Where("echo_id = ?", id).Delete(&model.EchoExtension{}).Error; err != nil {
+	var echo model.Echo
+	if err := db.Where("echo_id = ?", id).Delete(&fileModel.EchoFile{}).Error; err != nil {
+		return err
+	}
+
+	if err := db.Where("echo_id = ?", id).Delete(&model.EchoExtension{}).Error; err != nil {
 		return err
 	}
 
 	// Reactions reference the echo by id only; without this they would linger
 	// as unreachable rows forever.
-	if err := echoRepository.getDB(ctx).Where("echo_id = ?", id).Delete(&model.Reaction{}).Error; err != nil {
+	if err := db.Where("echo_id = ?", id).Delete(&model.Reaction{}).Error; err != nil {
 		return err
 	}
 
-	result := echoRepository.getDB(ctx).Where("id = ?", id).Delete(&echo)
+	result := db.Where("id = ?", id).Delete(&echo)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -235,7 +251,13 @@ func (echoRepository *EchoRepository) GetTodayEchos(showPrivate bool, timezone s
 }
 
 func (echoRepository *EchoRepository) UpdateEcho(ctx context.Context, echo *model.Echo) error {
-	if err := echoRepository.getDB(ctx).Where("echo_id = ?", echo.ID).Delete(&fileModel.EchoFile{}).Error; err != nil {
+	db := echoRepository.getDB(ctx)
+	var oldTagIDs []string
+	if err := db.Model(&model.EchoTag{}).Where("echo_id = ?", echo.ID).Pluck("tag_id", &oldTagIDs).Error; err != nil {
+		return err
+	}
+
+	if err := db.Where("echo_id = ?", echo.ID).Delete(&fileModel.EchoFile{}).Error; err != nil {
 		return err
 	}
 
@@ -247,18 +269,22 @@ func (echoRepository *EchoRepository) UpdateEcho(ctx context.Context, echo *mode
 	if echo.CreatedAt != 0 {
 		updates["created_at"] = echo.CreatedAt
 	}
-	if err := echoRepository.getDB(ctx).Model(&model.Echo{}).
+	result := db.Model(&model.Echo{}).
 		Where("id = ?", echo.ID).
-		Updates(updates).Error; err != nil {
-		return err
+		Updates(updates)
+	if result.Error != nil {
+		return result.Error
+	}
+	if result.RowsAffected == 0 {
+		return gorm.ErrRecordNotFound
 	}
 
-	if err := echoRepository.getDB(ctx).Where("echo_id = ?", echo.ID).Delete(&model.EchoExtension{}).Error; err != nil {
+	if err := db.Where("echo_id = ?", echo.ID).Delete(&model.EchoExtension{}).Error; err != nil {
 		return err
 	}
 	if echo.Extension != nil {
 		echo.Extension.EchoID = echo.ID
-		if err := echoRepository.getDB(ctx).Create(echo.Extension).Error; err != nil {
+		if err := db.Create(echo.Extension).Error; err != nil {
 			return err
 		}
 	}
@@ -269,13 +295,18 @@ func (echoRepository *EchoRepository) UpdateEcho(ctx context.Context, echo *mode
 			ef.EchoID = echo.ID
 			echoFiles = append(echoFiles, ef)
 		}
-		if err := echoRepository.getDB(ctx).Create(&echoFiles).Error; err != nil {
+		if err := db.Create(&echoFiles).Error; err != nil {
 			return err
 		}
 	}
 
-	if err := echoRepository.getDB(ctx).Model(echo).Association("Tags").Replace(echo.Tags); err != nil {
+	if err := db.Model(echo).Association("Tags").Replace(echo.Tags); err != nil {
 		return err
+	}
+	for _, tagID := range oldTagIDs {
+		if err := echoRepository.DecrementTagUsageCount(ctx, tagID); err != nil {
+			return err
+		}
 	}
 
 	return nil
@@ -350,6 +381,15 @@ func (echoRepository *EchoRepository) IncrementTagUsageCount(
 	return echoRepository.getDB(ctx).Model(&model.Tag{}).
 		Where("id = ?", tagID).
 		UpdateColumn("usage_count", gorm.Expr("usage_count + ?", 1)).Error
+}
+
+func (echoRepository *EchoRepository) DecrementTagUsageCount(
+	ctx context.Context,
+	tagID string,
+) error {
+	return echoRepository.getDB(ctx).Model(&model.Tag{}).
+		Where("id = ? AND usage_count > 0", tagID).
+		UpdateColumn("usage_count", gorm.Expr("usage_count - ?", 1)).Error
 }
 
 func (echoRepository *EchoRepository) QueryEchos(

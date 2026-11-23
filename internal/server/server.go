@@ -55,8 +55,10 @@ func (s *Server) Start(context.Context) error {
 	PrintGreetings(port)
 
 	s.httpServer = &http.Server{
-		Addr:    listenAddr(config.Config().Server.Host, port),
-		Handler: s.GinEngine,
+		Addr:              listenAddr(config.Config().Server.Host, port),
+		Handler:           s.GinEngine,
+		ReadHeaderTimeout: 10 * time.Second,
+		IdleTimeout:       120 * time.Second,
 	}
 
 	listener, err := net.Listen("tcp", s.httpServer.Addr)

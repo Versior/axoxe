@@ -5,6 +5,7 @@ package handler
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	res "github.com/lin-snow/ech0/internal/handler/response"
@@ -117,6 +118,8 @@ func (fileHandler *FileHandler) GetFilePresignURL(ctx context.Context, in *GetFi
 
 func (fileHandler *FileHandler) UploadFile() gin.HandlerFunc {
 	return res.Execute(func(ctx *gin.Context) res.Response {
+		// Keep multipart parsing bounded before FormFile allocates temporary files.
+		ctx.Request.Body = http.MaxBytesReader(ctx.Writer, ctx.Request.Body, 128<<20)
 		file, err := ctx.FormFile("file")
 		if err != nil {
 			return res.Response{Msg: commonModel.INVALID_REQUEST_BODY, Err: err}

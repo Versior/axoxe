@@ -26,6 +26,17 @@ func tagNames(tags []echoModel.Tag) []string {
 }
 
 func TestProcessEchoTags(t *testing.T) {
+	t.Run("deduplicates repeated names before counting", func(t *testing.T) {
+		repo := newEchoRepoMock(t)
+		repo.EXPECT().GetTagsByNames(mock.Anything, []string{"same"}).Return([]*echoModel.Tag{{ID: "tag-same", Name: "same"}}, nil).Once()
+		repo.EXPECT().IncrementTagUsageCount(mock.Anything, "tag-same").Return(nil).Once()
+
+		svc := echoService.NewEchoService(nil, nil, nil, repo, nilBus)
+		echo := &echoModel.Echo{Tags: []echoModel.Tag{{Name: "same"}, {Name: "#same"}}}
+		require.NoError(t, svc.ProcessEchoTags(helpers.CtxAnonymous(), echo))
+		require.Len(t, echo.Tags, 1)
+	})
+
 	t.Run("trims whitespace strips hash and routes existing vs new", func(t *testing.T) {
 		repo := newEchoRepoMock(t)
 

@@ -15,7 +15,7 @@ type CreateTagDto struct {
 type EchoUpsertDto struct {
 	ID        string            `json:"id,omitempty" doc:"Echo ID to update; ignored on create"`
 	Content   string            `json:"content" doc:"Markdown body; supply at least one of content, files, or extension"`
-	EchoFiles []EchoFile        `json:"echo_files,omitempty" swaggertype:"array,object" doc:"Attachments as {file_id, sort_order}; upload files first to get file_id"`
+	EchoFiles []EchoFileInput   `json:"echo_files,omitempty" swaggertype:"array,object" doc:"Attachments as {file_id, sort_order}; upload files first to get file_id"`
 	Layout    string            `json:"layout,omitempty" doc:"Layout: waterfall / grid / horizontal / carousel / stack / none"`
 	Private   bool              `json:"private" doc:"Visible only to the owner"`
 	Extension *EchoExtensionDto `json:"extension,omitempty" doc:"Card payload: {type, payload}"`
@@ -23,11 +23,16 @@ type EchoUpsertDto struct {
 	CreatedAt *int64            `json:"created_at,omitempty" doc:"Publish time in Unix seconds; defaults to now"`
 }
 
+type EchoFileInput struct {
+	FileID    string `json:"file_id" doc:"Uploaded file ID"`
+	SortOrder int    `json:"sort_order" doc:"Order within the Echo"`
+}
+
 func (dto *EchoUpsertDto) ToModel() *Echo {
 	echo := &Echo{
 		ID:        dto.ID,
 		Content:   dto.Content,
-		EchoFiles: dto.EchoFiles,
+		EchoFiles: makeEchoFiles(dto.EchoFiles),
 		Layout:    dto.Layout,
 		Private:   dto.Private,
 		Tags:      dto.Tags,
@@ -42,4 +47,15 @@ func (dto *EchoUpsertDto) ToModel() *Echo {
 		}
 	}
 	return echo
+}
+
+func makeEchoFiles(inputs []EchoFileInput) []EchoFile {
+	if len(inputs) == 0 {
+		return nil
+	}
+	files := make([]EchoFile, len(inputs))
+	for i, input := range inputs {
+		files[i] = EchoFile{FileID: input.FileID, SortOrder: input.SortOrder}
+	}
+	return files
 }

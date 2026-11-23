@@ -30,7 +30,12 @@ export const useAuthStore = defineStore('authStore', () => {
       try {
         const res = await ofetch<App.Api.Response<App.Api.Auth.TokenPairResponse>>(
           `${getApiUrl()}/auth/refresh`,
-          { method: 'POST', credentials: 'include', ignoreResponseError: true },
+          {
+            method: 'POST',
+            credentials: 'include',
+            ignoreResponseError: true,
+            timeout: 10000,
+          },
         )
         if (res.code === 1 && res.data?.access_token) {
           setToken(res.data.access_token)
@@ -54,6 +59,7 @@ export const useAuthStore = defineStore('authStore', () => {
         method: 'POST',
         credentials: 'include',
         ignoreResponseError: true,
+        timeout: 10000,
         headers: authHeader.value ? { Authorization: authHeader.value } : {},
       })
     } finally {

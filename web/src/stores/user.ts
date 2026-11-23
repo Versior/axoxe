@@ -9,6 +9,7 @@ import { theToast } from '@/utils/toast'
 import router from '@/router'
 import { useAuthStore } from './auth'
 import { useEchoStore } from './echo'
+import { useEditorStore } from './editor'
 import { i18n, setI18nLocale } from '@/locales'
 import {
   HOME_TIMELINE_ANCHOR_KEY,
@@ -84,6 +85,8 @@ export const useUserStore = defineStore('userStore', () => {
     await authStore.logout()
 
     user.value = null
+    localStg.removeItem('current_user_id')
+    useEditorStore().clearEditor()
 
     // The timeline is about to reload as anonymous; a restored anchor/count
     // belongs to the previous session and must not seed that feed.
@@ -112,12 +115,14 @@ export const useUserStore = defineStore('userStore', () => {
     const res = await fetchGetCurrentUser()
     if (res.code === 1) {
       user.value = res.data
+      localStg.setItem('current_user_id', res.data.id)
       if (res.data.locale) {
         await setI18nLocale(res.data.locale)
       }
     } else {
       user.value = null
       authStore.clearToken()
+      localStg.removeItem('current_user_id')
     }
   }
 

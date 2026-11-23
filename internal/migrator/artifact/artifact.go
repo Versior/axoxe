@@ -87,7 +87,10 @@ func (s Slot) KeepOnly(keep string) error {
 	}
 	for _, entry := range entries {
 		name := entry.Name()
-		if name == keep {
+		// A concurrent export may still be writing a hidden temporary file.
+		// KeepOnly only owns finalized zip artifacts; touching other entries
+		// would make concurrent exports race with cleanup.
+		if name == keep || entry.IsDir() || !strings.HasSuffix(name, ".zip") {
 			continue
 		}
 		if err := os.RemoveAll(filepath.Join(s.dir, name)); err != nil {

@@ -40,8 +40,8 @@ spec:
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "ech0.fullname" . }}
-                  key: JWT_SECRET
+                  name: {{ .Values.config.existingSecret | default (include "ech0.fullname" .) }}
+                  key: {{ .Values.config.existingSecretKey | default "JWT_SECRET" }}
             {{- with .Values.extraEnv }}
             {{- toYaml . | nindent 12 }}
             {{- end }}

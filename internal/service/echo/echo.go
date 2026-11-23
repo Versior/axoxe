@@ -24,6 +24,7 @@ import (
 	"github.com/lin-snow/ech0/pkg/busen"
 	logUtil "github.com/lin-snow/ech0/pkg/log"
 	"github.com/lin-snow/ech0/pkg/viewer"
+	"gorm.io/gorm"
 )
 
 type EchoService struct {
@@ -156,15 +157,21 @@ func (echoService *EchoService) DeleteEchoById(ctx context.Context, id string) e
 		}
 
 		for _, ef := range echo.EchoFiles {
-			if ef.File.Key != "" && storage.NormalizeStorageType(ef.File.StorageType) != storage.StorageTypeExternal {
-				deletableFiles = append(deletableFiles, deletableFileRef{
-					key:         ef.File.Key,
-					storageType: ef.File.StorageType,
-				})
-			}
 			if ef.File.ID != "" {
-				if err := echoService.fileService.DeleteFileRecord(txCtx, ef.File.ID); err != nil {
+				refs, err := echoService.fileService.CountEchoFileReferences(txCtx, ef.File.ID)
+				if err != nil {
 					return err
+				}
+				if refs <= 1 {
+					if ef.File.Key != "" && storage.NormalizeStorageType(ef.File.StorageType) != storage.StorageTypeExternal {
+						deletableFiles = append(deletableFiles, deletableFileRef{
+							key:         ef.File.Key,
+							storageType: ef.File.StorageType,
+						})
+					}
+					if err := echoService.fileService.DeleteFileRecord(txCtx, ef.File.ID); err != nil {
+						return err
+					}
 				}
 			}
 		}
@@ -263,7 +270,6 @@ func (echoService *EchoService) UpdateEcho(ctx context.Context, echo *model.Echo
 	if !user.IsAdmin {
 		return nil, errors.New(commonModel.NO_PERMISSION_DENIED)
 	}
-
 	layout := strings.TrimSpace(echo.Layout)
 	if layout == "" || (layout != model.LayoutWaterfall &&
 		layout != model.LayoutGrid &&
@@ -291,13 +297,15 @@ func (echoService *EchoService) UpdateEcho(ctx context.Context, echo *model.Echo
 	if err := echoService.validateSingleFileCategory(ctx, echo); err != nil {
 		return nil, err
 	}
-
 	if err := echoService.transactor.Run(ctx, func(txCtx context.Context) error {
 		if err := echoService.ProcessEchoTags(txCtx, echo); err != nil {
 			return err
 		}
 		return echoService.echoRepository.UpdateEcho(txCtx, echo)
 	}); err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errors.New(commonModel.ECHO_NOT_FOUND)
+		}
 		return nil, err
 	}
 
@@ -398,6 +406,7 @@ func (echoService *EchoService) ProcessEchoTags(ctx context.Context, echo *model
 	var processedTags []model.Tag
 
 	var names []string
+	seenNames := make(map[string]struct{}, len(echo.Tags))
 	for _, tag := range echo.Tags {
 		name := strings.TrimSpace(strings.TrimPrefix(tag.Name, "#"))
 		if name == "" {
@@ -406,6 +415,10 @@ func (echoService *EchoService) ProcessEchoTags(ctx context.Context, echo *model
 		if !isSafeTagName(name) {
 			return errors.New(commonModel.INVALID_PARAMS)
 		}
+		if _, seen := seenNames[name]; seen {
+			continue
+		}
+		seenNames[name] = struct{}{}
 		names = append(names, name)
 	}
 

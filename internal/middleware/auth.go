@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/lin-snow/ech0/internal/authz"
 	i18nUtil "github.com/lin-snow/ech0/internal/i18n"
+	authModel "github.com/lin-snow/ech0/internal/model/auth"
 	commonModel "github.com/lin-snow/ech0/internal/model/common"
 	authService "github.com/lin-snow/ech0/internal/service/auth"
 	errUtil "github.com/lin-snow/ech0/internal/util/err"
@@ -50,7 +51,7 @@ func resolveViewer(ctx *gin.Context, tokenBlacklist authService.TokenRevoker) (r
 		return &rejection{http.StatusUnauthorized, commonModel.ErrCodeTokenParse, commonModel.MsgKeyAuthTokenParse, commonModel.TOKEN_PARSE_ERROR}, false
 	}
 
-	if tokenBlacklist != nil && mc.ID != "" && tokenBlacklist.IsTokenRevoked(mc.ID) {
+	if tokenBlacklist != nil && mc.ID != "" && tokenRevoked(tokenBlacklist, mc.Type, mc.ID) {
 		return &rejection{http.StatusUnauthorized, commonModel.ErrCodeTokenRevoked, commonModel.MsgKeyAuthTokenRevoked, commonModel.TOKEN_REVOKED}, false
 	}
 
@@ -66,6 +67,19 @@ func resolveViewer(ctx *gin.Context, tokenBlacklist authService.TokenRevoker) (r
 	)
 	i18nUtil.ApplyUserLocaleFromUserID(ctx, mc.Userid)
 	return nil, false
+}
+
+type accessTokenRevoker interface {
+	IsAccessTokenRevoked(jti string) bool
+}
+
+func tokenRevoked(revoker authService.TokenRevoker, tokenType, jti string) bool {
+	if tokenType == authModel.TokenTypeAccess {
+		if accessRevoker, ok := revoker.(accessTokenRevoker); ok {
+			return accessRevoker.IsAccessTokenRevoked(jti)
+		}
+	}
+	return revoker.IsTokenRevoked(jti)
 }
 
 func writeRejection(ctx *gin.Context, rej *rejection) {

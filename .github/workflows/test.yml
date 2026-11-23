@@ -2,16 +2,30 @@ name: Backend Tests
 
 on:
   pull_request:
-    paths: &backend-paths
+    paths:
       - "**.go"
       - "go.mod"
       - "go.sum"
       - ".mockery.yaml"
       - "justfile"
       - ".github/workflows/test.yml"
+      - "web/**"
+      - "hub/**"
+      - "site/**"
+      - "charts/**"
   push:
     branches: [main]
-    paths: *backend-paths
+    paths:
+      - "**.go"
+      - "go.mod"
+      - "go.sum"
+      - ".mockery.yaml"
+      - "justfile"
+      - ".github/workflows/test.yml"
+      - "web/**"
+      - "hub/**"
+      - "site/**"
+      - "charts/**"
   workflow_dispatch:
 
 concurrency:
@@ -54,6 +68,39 @@ jobs:
         env:
           CGO_ENABLED: "1"
         run: go test -race -coverprofile=coverage.out -covermode=atomic ./...
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 12.14.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+
+      - name: Verify web
+        working-directory: web
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm run type-check
+          pnpm run build-only
+          pnpm run i18n:check
+
+      - name: Verify hub
+        working-directory: hub
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm run build
+
+      - name: Verify site
+        working-directory: site
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm run typecheck
+          pnpm run build
 
       - name: Coverage summary
         if: always()

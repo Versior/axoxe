@@ -156,6 +156,72 @@ func (_c *MockService_ConfirmTempFiles_Call) RunAndReturn(run func(ctx context.C
 	return _c
 }
 
+// CountEchoFileReferences provides a mock function for the type MockService
+func (_mock *MockService) CountEchoFileReferences(ctx context.Context, fileID string) (int64, error) {
+	ret := _mock.Called(ctx, fileID)
+
+	if len(ret) == 0 {
+		panic("no return value specified for CountEchoFileReferences")
+	}
+
+	var r0 int64
+	var r1 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string) (int64, error)); ok {
+		return returnFunc(ctx, fileID)
+	}
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string) int64); ok {
+		r0 = returnFunc(ctx, fileID)
+	} else {
+		r0 = ret.Get(0).(int64)
+	}
+	if returnFunc, ok := ret.Get(1).(func(context.Context, string) error); ok {
+		r1 = returnFunc(ctx, fileID)
+	} else {
+		r1 = ret.Error(1)
+	}
+	return r0, r1
+}
+
+// MockService_CountEchoFileReferences_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'CountEchoFileReferences'
+type MockService_CountEchoFileReferences_Call struct {
+	*mock.Call
+}
+
+// CountEchoFileReferences is a helper method to define mock.On call
+//   - ctx context.Context
+//   - fileID string
+func (_e *MockService_Expecter) CountEchoFileReferences(ctx any, fileID any) *MockService_CountEchoFileReferences_Call {
+	return &MockService_CountEchoFileReferences_Call{Call: _e.mock.On("CountEchoFileReferences", ctx, fileID)}
+}
+
+func (_c *MockService_CountEchoFileReferences_Call) Run(run func(ctx context.Context, fileID string)) *MockService_CountEchoFileReferences_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
+	})
+	return _c
+}
+
+func (_c *MockService_CountEchoFileReferences_Call) Return(n int64, err error) *MockService_CountEchoFileReferences_Call {
+	_c.Call.Return(n, err)
+	return _c
+}
+
+func (_c *MockService_CountEchoFileReferences_Call) RunAndReturn(run func(ctx context.Context, fileID string) (int64, error)) *MockService_CountEchoFileReferences_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // CreateExternalFile provides a mock function for the type MockService
 func (_mock *MockService) CreateExternalFile(ctx context.Context, dto model.CreateExternalFileDto) (model.FileDto, error) {
 	ret := _mock.Called(ctx, dto)
@@ -389,6 +455,78 @@ func (_c *MockService_DeleteStoredFile_Call) Return(err error) *MockService_Dele
 }
 
 func (_c *MockService_DeleteStoredFile_Call) RunAndReturn(run func(storageType string, key string) error) *MockService_DeleteStoredFile_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// GetEchoFileVisibility provides a mock function for the type MockService
+func (_mock *MockService) GetEchoFileVisibility(ctx context.Context, fileID string) (bool, bool, error) {
+	ret := _mock.Called(ctx, fileID)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetEchoFileVisibility")
+	}
+
+	var r0 bool
+	var r1 bool
+	var r2 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string) (bool, bool, error)); ok {
+		return returnFunc(ctx, fileID)
+	}
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string) bool); ok {
+		r0 = returnFunc(ctx, fileID)
+	} else {
+		r0 = ret.Get(0).(bool)
+	}
+	if returnFunc, ok := ret.Get(1).(func(context.Context, string) bool); ok {
+		r1 = returnFunc(ctx, fileID)
+	} else {
+		r1 = ret.Get(1).(bool)
+	}
+	if returnFunc, ok := ret.Get(2).(func(context.Context, string) error); ok {
+		r2 = returnFunc(ctx, fileID)
+	} else {
+		r2 = ret.Error(2)
+	}
+	return r0, r1, r2
+}
+
+// MockService_GetEchoFileVisibility_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetEchoFileVisibility'
+type MockService_GetEchoFileVisibility_Call struct {
+	*mock.Call
+}
+
+// GetEchoFileVisibility is a helper method to define mock.On call
+//   - ctx context.Context
+//   - fileID string
+func (_e *MockService_Expecter) GetEchoFileVisibility(ctx any, fileID any) *MockService_GetEchoFileVisibility_Call {
+	return &MockService_GetEchoFileVisibility_Call{Call: _e.mock.On("GetEchoFileVisibility", ctx, fileID)}
+}
+
+func (_c *MockService_GetEchoFileVisibility_Call) Run(run func(ctx context.Context, fileID string)) *MockService_GetEchoFileVisibility_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
+	})
+	return _c
+}
+
+func (_c *MockService_GetEchoFileVisibility_Call) Return(hasPrivate bool, hasPublic bool, err error) *MockService_GetEchoFileVisibility_Call {
+	_c.Call.Return(hasPrivate, hasPublic, err)
+	return _c
+}
+
+func (_c *MockService_GetEchoFileVisibility_Call) RunAndReturn(run func(ctx context.Context, fileID string) (bool, bool, error)) *MockService_GetEchoFileVisibility_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -1105,6 +1243,72 @@ func (_m *MockFileRepository) EXPECT() *MockFileRepository_Expecter {
 	return &MockFileRepository_Expecter{mock: &_m.Mock}
 }
 
+// CountEchoFileReferences provides a mock function for the type MockFileRepository
+func (_mock *MockFileRepository) CountEchoFileReferences(ctx context.Context, fileID string) (int64, error) {
+	ret := _mock.Called(ctx, fileID)
+
+	if len(ret) == 0 {
+		panic("no return value specified for CountEchoFileReferences")
+	}
+
+	var r0 int64
+	var r1 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string) (int64, error)); ok {
+		return returnFunc(ctx, fileID)
+	}
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string) int64); ok {
+		r0 = returnFunc(ctx, fileID)
+	} else {
+		r0 = ret.Get(0).(int64)
+	}
+	if returnFunc, ok := ret.Get(1).(func(context.Context, string) error); ok {
+		r1 = returnFunc(ctx, fileID)
+	} else {
+		r1 = ret.Error(1)
+	}
+	return r0, r1
+}
+
+// MockFileRepository_CountEchoFileReferences_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'CountEchoFileReferences'
+type MockFileRepository_CountEchoFileReferences_Call struct {
+	*mock.Call
+}
+
+// CountEchoFileReferences is a helper method to define mock.On call
+//   - ctx context.Context
+//   - fileID string
+func (_e *MockFileRepository_Expecter) CountEchoFileReferences(ctx any, fileID any) *MockFileRepository_CountEchoFileReferences_Call {
+	return &MockFileRepository_CountEchoFileReferences_Call{Call: _e.mock.On("CountEchoFileReferences", ctx, fileID)}
+}
+
+func (_c *MockFileRepository_CountEchoFileReferences_Call) Run(run func(ctx context.Context, fileID string)) *MockFileRepository_CountEchoFileReferences_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
+	})
+	return _c
+}
+
+func (_c *MockFileRepository_CountEchoFileReferences_Call) Return(n int64, err error) *MockFileRepository_CountEchoFileReferences_Call {
+	_c.Call.Return(n, err)
+	return _c
+}
+
+func (_c *MockFileRepository_CountEchoFileReferences_Call) RunAndReturn(run func(ctx context.Context, fileID string) (int64, error)) *MockFileRepository_CountEchoFileReferences_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Create provides a mock function for the type MockFileRepository
 func (_mock *MockFileRepository) Create(ctx context.Context, file *model1.File) error {
 	ret := _mock.Called(ctx, file)
@@ -1683,6 +1887,78 @@ func (_c *MockFileRepository_GetByRoute_Call) Return(file *model1.File, err erro
 }
 
 func (_c *MockFileRepository_GetByRoute_Call) RunAndReturn(run func(ctx context.Context, storageType string, provider string, bucket string, key string) (*model1.File, error)) *MockFileRepository_GetByRoute_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// GetEchoFileVisibility provides a mock function for the type MockFileRepository
+func (_mock *MockFileRepository) GetEchoFileVisibility(ctx context.Context, fileID string) (bool, bool, error) {
+	ret := _mock.Called(ctx, fileID)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetEchoFileVisibility")
+	}
+
+	var r0 bool
+	var r1 bool
+	var r2 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string) (bool, bool, error)); ok {
+		return returnFunc(ctx, fileID)
+	}
+	if returnFunc, ok := ret.Get(0).(func(context.Context, string) bool); ok {
+		r0 = returnFunc(ctx, fileID)
+	} else {
+		r0 = ret.Get(0).(bool)
+	}
+	if returnFunc, ok := ret.Get(1).(func(context.Context, string) bool); ok {
+		r1 = returnFunc(ctx, fileID)
+	} else {
+		r1 = ret.Get(1).(bool)
+	}
+	if returnFunc, ok := ret.Get(2).(func(context.Context, string) error); ok {
+		r2 = returnFunc(ctx, fileID)
+	} else {
+		r2 = ret.Error(2)
+	}
+	return r0, r1, r2
+}
+
+// MockFileRepository_GetEchoFileVisibility_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetEchoFileVisibility'
+type MockFileRepository_GetEchoFileVisibility_Call struct {
+	*mock.Call
+}
+
+// GetEchoFileVisibility is a helper method to define mock.On call
+//   - ctx context.Context
+//   - fileID string
+func (_e *MockFileRepository_Expecter) GetEchoFileVisibility(ctx any, fileID any) *MockFileRepository_GetEchoFileVisibility_Call {
+	return &MockFileRepository_GetEchoFileVisibility_Call{Call: _e.mock.On("GetEchoFileVisibility", ctx, fileID)}
+}
+
+func (_c *MockFileRepository_GetEchoFileVisibility_Call) Run(run func(ctx context.Context, fileID string)) *MockFileRepository_GetEchoFileVisibility_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
+	})
+	return _c
+}
+
+func (_c *MockFileRepository_GetEchoFileVisibility_Call) Return(hasPrivate bool, hasPublic bool, err error) *MockFileRepository_GetEchoFileVisibility_Call {
+	_c.Call.Return(hasPrivate, hasPublic, err)
+	return _c
+}
+
+func (_c *MockFileRepository_GetEchoFileVisibility_Call) RunAndReturn(run func(ctx context.Context, fileID string) (bool, bool, error)) *MockFileRepository_GetEchoFileVisibility_Call {
 	_c.Call.Return(run)
 	return _c
 }

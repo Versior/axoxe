@@ -15,9 +15,8 @@ inputs:
     required: false
     default: "https://github.com/lin-snow/musl-compilers/releases/download"
   archive-sha256:
-    description: Expected sha256 checksum for archive (optional)
-    required: false
-    default: ""
+    description: Expected sha256 checksum for archive
+    required: true
 
 runs:
   using: composite
@@ -55,11 +54,8 @@ runs:
         curl -fL --retry 5 --retry-all-errors --connect-timeout 15 --max-time 300 \
           -o "${archive_name}" "${archive_url}"
 
-        if [ -n "${{ inputs.archive-sha256 }}" ]; then
-          echo "${{ inputs.archive-sha256 }}  ${archive_name}" | sha256sum -c -
-        else
-          echo "archive-sha256 is empty, skipping checksum verification"
-        fi
+        test -n "${{ inputs.archive-sha256 }}"
+        echo "${{ inputs.archive-sha256 }}  ${archive_name}" | sha256sum -c -
 
         tar -xzf "${archive_name}"
         rm -f "${archive_name}"

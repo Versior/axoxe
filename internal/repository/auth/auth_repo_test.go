@@ -11,6 +11,7 @@ import (
 	"github.com/lin-snow/ech0/internal/cache"
 	authModel "github.com/lin-snow/ech0/internal/model/auth"
 	commonModel "github.com/lin-snow/ech0/internal/model/common"
+	settingModel "github.com/lin-snow/ech0/internal/model/setting"
 	userModel "github.com/lin-snow/ech0/internal/model/user"
 	"github.com/lin-snow/ech0/internal/test/helpers"
 	"github.com/stretchr/testify/assert"
@@ -363,6 +364,18 @@ func TestAuthRepository_RevokeToken(t *testing.T) {
 		repo.RevokeToken("jti-zero", 0)
 		assert.False(t, repo.IsTokenRevoked("jti-zero"))
 	})
+}
+
+func TestAuthRepository_IsAccessTokenRevokedPersistsAcrossRepositoryInstances(t *testing.T) {
+	repo, db, _ := newAuthRepo(t)
+	token := &settingModel.AccessTokenSetting{ID: "at-persist", UserID: "u1", Token: "opaque", TokenType: authModel.TokenTypeAccess, JTI: "jti-persist"}
+	require.NoError(t, db.Create(token).Error)
+	assert.False(t, repo.IsAccessTokenRevoked(token.JTI))
+
+	require.NoError(t, db.Delete(&settingModel.AccessTokenSetting{}, "id = ?", token.ID).Error)
+	repoAfterRestart := NewAuthRepository(func() *gorm.DB { return db }, helpers.NewTestCache())
+	assert.True(t, repoAfterRestart.IsAccessTokenRevoked(token.JTI))
+	assert.True(t, repoAfterRestart.IsAccessTokenRevoked(""))
 }
 
 func TestAuthRepository_OAuthCode_SingleUse(t *testing.T) {

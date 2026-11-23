@@ -13,6 +13,7 @@ import (
 	"github.com/lin-snow/ech0/internal/cache"
 	authModel "github.com/lin-snow/ech0/internal/model/auth"
 	commonModel "github.com/lin-snow/ech0/internal/model/common"
+	settingModel "github.com/lin-snow/ech0/internal/model/setting"
 	model "github.com/lin-snow/ech0/internal/model/user"
 	"github.com/lin-snow/ech0/internal/transaction"
 	"gorm.io/gorm"
@@ -58,6 +59,18 @@ func (authRepository *AuthRepository) IsTokenRevoked(jti string) bool {
 	}
 	_, found, _ := authRepository.cache.Get(fmt.Sprintf("%s%s", blacklistPrefix, jti))
 	return found
+}
+
+func (authRepository *AuthRepository) IsAccessTokenRevoked(jti string) bool {
+	if jti == "" {
+		return true
+	}
+	var token settingModel.AccessTokenSetting
+	result := authRepository.db().Where("jti = ?", jti).First(&token)
+	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+		return true
+	}
+	return result.Error != nil
 }
 
 func (authRepository *AuthRepository) StoreOAuthCode(code string, pair *authModel.TokenPair, ttl time.Duration) {

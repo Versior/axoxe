@@ -23,9 +23,11 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/lin-snow/ech0/internal/authz"
 	"github.com/lin-snow/ech0/internal/config"
 	"github.com/lin-snow/ech0/internal/event"
 	eventbus "github.com/lin-snow/ech0/internal/event/bus"
+	authModel "github.com/lin-snow/ech0/internal/model/auth"
 	commonModel "github.com/lin-snow/ech0/internal/model/common"
 	fileModel "github.com/lin-snow/ech0/internal/model/file"
 	"github.com/lin-snow/ech0/internal/storage"
@@ -693,10 +695,28 @@ func (s *FileService) ListFileTree(
 }
 
 func (s *FileService) StreamFileByID(ctx *gin.Context, id string) {
-	fileRecord, err := s.fileRepository.GetByID(context.Background(), id)
+	requestCtx := ctx.Request.Context()
+	fileRecord, err := s.fileRepository.GetByID(requestCtx, id)
 	if err != nil {
 		ctx.String(http.StatusNotFound, "文件不存在")
 		return
+	}
+	hasPrivate, hasPublic, err := s.fileRepository.GetEchoFileVisibility(requestCtx, id)
+	if err != nil {
+		ctx.String(http.StatusNotFound, "文件不存在")
+		return
+	}
+	if hasPrivate && !hasPublic {
+		v := viewer.MustFromContext(requestCtx)
+		allowed := v.IsAdmin() || authz.Allows(v.Scopes(), []string{authz.ScopeEchoPrivate})
+		if !allowed && v.TokenType() == authModel.TokenTypeSession {
+			user, userErr := s.commonRepository.GetUserByUserId(requestCtx, v.UserID())
+			allowed = userErr == nil && user.IsAdmin
+		}
+		if !allowed {
+			ctx.String(http.StatusNotFound, "文件不存在")
+			return
+		}
 	}
 
 	contentType := fileRecord.ContentType
@@ -1007,6 +1027,14 @@ func (s *FileService) ConfirmTempFiles(ctx context.Context, fileIDs []string) er
 
 func (s *FileService) DeleteFileRecord(ctx context.Context, id string) error {
 	return s.fileRepository.Delete(ctx, id)
+}
+
+func (s *FileService) CountEchoFileReferences(ctx context.Context, fileID string) (int64, error) {
+	return s.fileRepository.CountEchoFileReferences(ctx, fileID)
+}
+
+func (s *FileService) GetEchoFileVisibility(ctx context.Context, fileID string) (bool, bool, error) {
+	return s.fileRepository.GetEchoFileVisibility(ctx, fileID)
 }
 
 func (s *FileService) DeleteStoredFile(storageType string, key string) error {

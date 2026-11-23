@@ -33,6 +33,8 @@ type Service interface {
 	GetFilePresignURL(ctx context.Context, dto *commonModel.GetPresignURLDto) (commonModel.PresignDto, error)
 	CleanupOrphanFiles() error
 	ConfirmTempFiles(ctx context.Context, fileIDs []string) error
+	CountEchoFileReferences(ctx context.Context, fileID string) (int64, error)
+	GetEchoFileVisibility(ctx context.Context, fileID string) (hasPrivate, hasPublic bool, err error)
 	DeleteFileRecord(ctx context.Context, id string) error
 	DeleteStoredFile(storageType string, key string) error
 }
@@ -69,5 +71,7 @@ type FileRepository interface {
 	DeleteTempByID(ctx context.Context, id string) error
 	ListExpiredTemps(ctx context.Context, before int64) ([]fileModel.TempFile, error)
 	Delete(ctx context.Context, id string) error
+	CountEchoFileReferences(ctx context.Context, fileID string) (int64, error)
+	GetEchoFileVisibility(ctx context.Context, fileID string) (hasPrivate, hasPublic bool, err error)
 	DeleteByRoute(ctx context.Context, storageType, provider, bucket, key string) error
 }

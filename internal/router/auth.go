@@ -17,9 +17,9 @@ func setupAuthRoutes(appRouterGroup *AppRouterGroup, h *handler.Bundle) {
 	appRouterGroup.ResourceGroup.GET("/oauth/:provider/login", middleware.NoCache(), h.AuthHandler.OAuthLogin())
 	appRouterGroup.ResourceGroup.GET("/oauth/:provider/callback", middleware.NoCache(), h.AuthHandler.OAuthCallback())
 
-	appRouterGroup.PublicRouterGroup.POST("/login", middleware.NoCache(), h.AuthHandler.Login())
-	appRouterGroup.PublicRouterGroup.POST("/passkey/login/begin", middleware.NoCache(), h.AuthHandler.PasskeyLoginBeginV2())
-	appRouterGroup.PublicRouterGroup.POST("/passkey/login/finish", middleware.NoCache(), h.AuthHandler.PasskeyLoginFinishV2())
+	appRouterGroup.PublicRouterGroup.POST("/login", middleware.NoCache(), middleware.RateLimit(5, 10), h.AuthHandler.Login())
+	appRouterGroup.PublicRouterGroup.POST("/passkey/login/begin", middleware.NoCache(), middleware.RateLimit(5, 10), h.AuthHandler.PasskeyLoginBeginV2())
+	appRouterGroup.PublicRouterGroup.POST("/passkey/login/finish", middleware.NoCache(), middleware.RateLimit(5, 10), h.AuthHandler.PasskeyLoginFinishV2())
 	appRouterGroup.PublicRouterGroup.POST("/auth/refresh", middleware.NoCache(), h.AuthHandler.Refresh())
 	appRouterGroup.PublicRouterGroup.POST("/auth/logout", middleware.NoCache(), h.AuthHandler.Logout())
 	appRouterGroup.PublicRouterGroup.POST("/auth/exchange", middleware.NoCache(), h.AuthHandler.Exchange())
