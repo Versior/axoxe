@@ -80,6 +80,23 @@ func TestSetupRouter_RegistersKeyRoutes(t *testing.T) {
 	}
 }
 
+func TestProtectedStaticFile_HidesArtifactDirectories(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	initTestDatabase(t)
+	engine := gin.New()
+	engine.Use(protectedStaticFile())
+	engine.GET("/api/files/*path", func(ctx *gin.Context) { ctx.Status(http.StatusOK) })
+
+	for _, artifactPath := range []string{"snapshots/archive.zip", "capsules/export.zip", "tmp/ech0.db", "backups/legacy.zip"} {
+		req := httptest.NewRequest(http.MethodGet, "/api/files/"+artifactPath, nil)
+		rec := httptest.NewRecorder()
+		engine.ServeHTTP(rec, req)
+		if rec.Code != http.StatusNotFound {
+			t.Fatalf("artifact path %q returned %d, want 404", artifactPath, rec.Code)
+		}
+	}
+}
+
 func TestSetupRouter_EnvelopeContract(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	initTestDatabase(t)

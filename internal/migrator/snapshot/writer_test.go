@@ -219,6 +219,7 @@ func TestShouldExcludeFromSnapshot(t *testing.T) {
 		{key: "files/tmp", expected: true},
 		{key: "files/tmp/a.zip", expected: true},
 		{key: "files/capsules", expected: true},
+		{key: "files/backups", expected: true},
 		{key: "files/capsules/ech0_capsule_2026-08-02_10-00-00.zip", expected: true},
 		{key: "files/images/a.png", expected: false},
 		{key: "ech0.db", expected: false},

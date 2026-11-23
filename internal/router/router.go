@@ -72,7 +72,7 @@ func protectedStaticFile() gin.HandlerFunc {
 			return
 		}
 		name := strings.Trim(strings.TrimPrefix(path.Clean(ctx.Request.URL.Path), "/api/files"), "/")
-		for _, privateDir := range []string{"snapshots", "capsules", "tmp"} {
+		for _, privateDir := range []string{"snapshots", "capsules", "tmp", "backups"} {
 			if name == privateDir || strings.HasPrefix(name, privateDir+"/") {
 				ctx.Status(http.StatusNotFound)
 				ctx.Abort()

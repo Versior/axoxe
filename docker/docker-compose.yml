@@ -9,6 +9,8 @@ services:
         TARGETARCH: ${AXOXE_TARGETARCH:-amd64}
     container_name: axoxe
     restart: unless-stopped
+    mem_limit: 96m
+    memswap_limit: 96m
     ports:
       - "6277:6277"
     volumes:

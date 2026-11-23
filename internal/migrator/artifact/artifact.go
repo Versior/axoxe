@@ -32,7 +32,9 @@ func Capsules() Slot {
 }
 
 func Excluded() []string {
-	return []string{SnapshotDir, CapsuleDir, TmpDir}
+	// backups is a legacy artifact directory. Keep excluding it so an upgrade
+	// cannot copy old publicly reachable exports into a new snapshot.
+	return []string{SnapshotDir, CapsuleDir, TmpDir, "files/backups"}
 }
 
 type Slot struct {
