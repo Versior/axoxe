@@ -10,6 +10,7 @@ import { useEchoStore } from '@/stores/echo'
 import { ExtensionType, Mode } from '@/enums/enums'
 import { FILE_CATEGORY } from '@/constants/file'
 import { createI18n } from 'vue-i18n'
+import { createMemoryHistory, createRouter } from 'vue-router'
 import zhCN from '@/locales/messages/zh-CN.json'
 
 vi.mock('@/service/api', () => ({
@@ -21,19 +22,21 @@ vi.mock('@/service/api', () => ({
 }))
 
 const i18n = createI18n({ legacy: false, locale: 'zh-CN', messages: { 'zh-CN': zhCN } })
+const router = createRouter({
+  history: createMemoryHistory(),
+  routes: [{ path: '/', component: { render: () => null } }],
+})
 
 let wrapper: VueWrapper
 const mountEditor = async () => {
   wrapper = mount(TheEditor, {
     global: {
-      plugins: [i18n],
+      plugins: [i18n, router],
       directives: { tooltip: {} },
       stubs: {
         TheMdEditor: { template: '<textarea data-test="text-editor" />' },
         TheEditorButtons: true,
         TheEditorPreview: true,
-        TheMediaEditor: { template: '<div data-test="media-editor" />' },
-        TheExtensionEditor: { template: '<div data-test="extension-editor" />' },
       },
     },
   })
@@ -52,31 +55,31 @@ describe('Always-visible editor tools', () => {
     expect(wrapper.find('[data-test="text-editor"]').exists()).toBe(true)
   })
 
-  it('opens music directly, preserves the text editor and toggles the panel closed', async () => {
+  it('renders the music input on the first update and toggles the panel closed', async () => {
     await mountEditor()
     const music = wrapper.find(`button[aria-label="${zhCN.editor.addMusic}"]`)
     await music.trigger('click')
-    await flushPromises()
 
     expect(useEditorStore().currentMode).toBe(Mode.EXTEN)
     expect(useEditorStore().extensionToAdd.extension_type).toBe(ExtensionType.MUSIC)
     expect(wrapper.find('[data-test="text-editor"]').exists()).toBe(true)
-    expect(wrapper.find('[data-test="extension-editor"]').exists()).toBe(true)
+    expect(wrapper.find(`input[placeholder="${zhCN.editor.musicUrlPlaceholder}"]`).exists()).toBe(
+      true,
+    )
 
     await music.trigger('click')
     expect(useEditorStore().currentMode).toBe(Mode.ECH0)
-    expect(wrapper.find('[data-test="extension-editor"]').exists()).toBe(false)
+    expect(wrapper.find('.editor-shell__panel').exists()).toBe(false)
   })
 
-  it('opens audio attachments directly while the text editor stays visible', async () => {
+  it('renders the audio file picker on the first update', async () => {
     await mountEditor()
     await wrapper.find(`button[aria-label="${zhCN.editor.mediaTypeAudio}"]`).trigger('click')
-    await flushPromises()
 
     expect(useEditorStore().currentMode).toBe(Mode.Media)
     expect(useEditorStore().effectiveCategory).toBe(FILE_CATEGORY.AUDIO)
     expect(wrapper.find('[data-test="text-editor"]').exists()).toBe(true)
-    expect(wrapper.find('[data-test="media-editor"]').exists()).toBe(true)
+    expect(wrapper.find('input[type="file"][accept="audio/*"]').exists()).toBe(true)
   })
 
   it('retains the way back from tag management', async () => {

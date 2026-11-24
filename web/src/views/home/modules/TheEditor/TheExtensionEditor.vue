@@ -118,7 +118,9 @@
         {{ t('editor.locationHint') }}
       </p>
 
-      <LocationPicker class="mb-2" :lat-lng="pickerLatLng" @change="handleMapChange" />
+      <div class="mb-2 min-h-72">
+        <LocationPicker :lat-lng="pickerLatLng" @change="handleMapChange" />
+      </div>
 
       <div class="flex flex-wrap items-center gap-2 mb-2">
         <BaseButton
@@ -168,18 +170,21 @@
 <script setup lang="ts">
 import BaseInput from '@/components/common/BaseInput.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
-import LocationPicker from '@/components/advanced/extension/shared/LocationPicker.vue'
 import { useReverseGeocoding } from '@/components/advanced/extension/shared/useReverseGeocoding'
 import { ExtensionType, MusicProvider } from '@/enums/enums'
 import { parseMusicURL, extractAndCleanMusicURL } from '@/utils/other'
 import { parseTweetUrl } from '@/utils/tweet'
 import { useEditorStore, useSettingStore } from '@/stores'
 import { storeToRefs } from 'pinia'
-import { computed, ref, watch } from 'vue'
+import { computed, defineAsyncComponent, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { fetchGetWebsiteTitle } from '@/service/api'
 import { theToast } from '@/utils/toast'
 import { useI18n } from 'vue-i18n'
+
+const LocationPicker = defineAsyncComponent(
+  () => import('@/components/advanced/extension/shared/LocationPicker.vue'),
+)
 
 const editorStore = useEditorStore()
 const router = useRouter()

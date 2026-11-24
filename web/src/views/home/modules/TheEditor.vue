@@ -20,6 +20,8 @@
 <script setup lang="ts">
 import TheEditorPreview from './TheEditor/TheEditorPreview.vue'
 import TheEditorButtons from './TheEditor/TheEditorButtons.vue'
+import TheExtensionEditor from './TheEditor/TheExtensionEditor.vue'
+import TheMediaEditor from './TheEditor/TheMediaEditor.vue'
 import TheModePanel from './TheEditor/TheModePanel.vue'
 
 import { theToast } from '@/utils/toast'
@@ -30,8 +32,6 @@ import { Mode } from '@/enums/enums'
 import { useI18n } from 'vue-i18n'
 
 const TheMdEditor = defineAsyncComponent(() => import('@/components/advanced/md/TheMdEditor.vue'))
-const TheMediaEditor = defineAsyncComponent(() => import('./TheEditor/TheMediaEditor.vue'))
-const TheExtensionEditor = defineAsyncComponent(() => import('./TheEditor/TheExtensionEditor.vue'))
 const TheTagsManager = defineAsyncComponent(() => import('./TheEditor/TheTagsManager.vue'))
 
 const editorStore = useEditorStore()
