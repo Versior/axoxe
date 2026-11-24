@@ -23,33 +23,15 @@
     </div>
   </ExtensionCardShell>
 
-  <div
-    v-else-if="
-      musicInfo && musicInfo.server !== MusicProvider.APPLE && !settingsLoading && !metingAPI
-    "
-    class="extension-card-invalid"
-  >
-    <Music class="invalid-icon" />
-    <div class="invalid-copy">
-      <p class="invalid-title">{{ t('extensionCard.musicSourceMissing') }}</p>
-      <p class="invalid-subtitle">{{ t('extensionCard.musicSourceMissingHint') }}</p>
-    </div>
-  </div>
-
   <ExtensionCardShell
-    v-else-if="
-      musicInfo &&
-      musicInfo.server !== MusicProvider.APPLE &&
-      !loadFailed &&
-      (settingsLoading || metingAPI)
-    "
+    v-else-if="musicInfo && musicInfo.server !== MusicProvider.APPLE && !loadFailed"
     size="wide"
     padding="compact"
     :header-label="t('extensionCard.music')"
   >
     <template #header-icon><Music /></template>
     <div class="music-player-wrap">
-      <ExtensionCardSkeleton v-if="isLoading || !track" :min-height="76" />
+      <ExtensionCardSkeleton v-if="!track" :min-height="76" />
       <section
         v-else
         class="music-player"
@@ -148,7 +130,6 @@
             isPlaybackActive ? t('extensionCard.musicPause') : t('extensionCard.musicPlay')
           "
           :title="isPlaybackActive ? t('extensionCard.musicPause') : t('extensionCard.musicPlay')"
-          :disabled="audioFailed"
           @click="togglePlayback"
         >
           <TheLoadingIndicator
@@ -174,7 +155,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import Music from '@/components/icons/music.vue'
@@ -184,12 +165,8 @@ import TheLoadingIndicator from '@/components/common/TheLoadingIndicator.vue'
 import { ExtensionType, MusicProvider } from '@/enums/enums'
 import { useSettingStore } from '@/stores'
 import { parseMusicURL } from '@/utils/other'
-import {
-  normalizeMetingTrack,
-  parseLyrics,
-  type LyricLine,
-  type MusicTrack,
-} from '@/utils/musicPlayer'
+import { loadMetingTrack } from '@/utils/meting'
+import { parseLyrics, type LyricLine, type MusicTrack } from '@/utils/musicPlayer'
 import ExtensionCardShell from '../shared/ExtensionCardShell.vue'
 import ExtensionCardSkeleton from '../shared/ExtensionCardSkeleton.vue'
 
@@ -220,17 +197,17 @@ const track = ref<MusicTrack | null>(null)
 const lyrics = ref<LyricLine[]>([])
 const currentTime = ref(0)
 const duration = ref(0)
-const isLoading = ref(false)
 const isAudioLoading = ref(false)
 const isPlaying = ref(false)
 const isHovered = ref(false)
 const showTrackInfo = ref(true)
 const loadFailed = ref(false)
-const audioFailed = ref(false)
 const isAppleReady = ref(false)
 let requestController: AbortController | null = null
 let lyricController: AbortController | null = null
 let trackInfoTimer: ReturnType<typeof setTimeout> | null = null
+let currentEndpoint = ''
+const failedEndpoints = new Set<string>()
 
 const musicURL = computed(() => {
   if (props.echo.extension?.type !== ExtensionType.MUSIC) return ''
@@ -239,13 +216,7 @@ const musicURL = computed(() => {
 
 const musicInfo = computed(() => parseMusicURL(musicURL.value))
 
-// No built-in resolver: music cards only play when the operator configured one.
 const metingAPI = computed(() => SystemSetting.value?.meting_api?.trim() ?? '')
-
-const musicSourceKey = computed(() => {
-  const info = musicInfo.value
-  return `${info?.server ?? ''}|${info?.type ?? ''}|${info?.id ?? ''}|${metingAPI.value}`
-})
 
 const currentLyric = computed(() => {
   for (let index = lyrics.value.length - 1; index >= 0; index -= 1) {
@@ -272,73 +243,41 @@ const progressPercent = computed(() =>
   duration.value > 0 ? Math.min(100, (currentTime.value / duration.value) * 100) : 0,
 )
 
-function buildMetingURL() {
-  const info = musicInfo.value
-  if (!info || info.server === MusicProvider.APPLE) return ''
-
-  const params: Record<string, string> = {
-    server: info.server,
-    type: info.type,
-    id: info.id,
-    auth: '',
-    r: String(Math.random()),
-  }
-  const base = metingAPI.value.trim()
-
-  if (/:(server|type|id|auth|r)\b/.test(base)) {
-    return Object.entries(params).reduce(
-      (url, [key, value]) => url.replaceAll(`:${key}`, encodeURIComponent(value)),
-      base,
-    )
-  }
-
-  const separator = base.includes('?') ? '&' : '?'
-  return `${base}${separator}${new URLSearchParams(params).toString()}`
-}
-
 async function loadTrack() {
   requestController?.abort()
+  requestController = null
   lyricController?.abort()
   pause()
   track.value = null
+  currentEndpoint = ''
   lyrics.value = []
   currentTime.value = 0
   duration.value = 0
   loadFailed.value = false
-  audioFailed.value = false
   isAppleReady.value = false
 
   const info = musicInfo.value
-  if (!info || info.server === MusicProvider.APPLE) return
-  if (!metingAPI.value) return
+  if (!info || info.server === MusicProvider.APPLE || settingsLoading.value) return
 
   const controller = new AbortController()
   requestController = controller
-  isLoading.value = true
   try {
-    const response = await fetch(buildMetingURL(), {
-      headers: { Accept: 'application/json' },
-      signal: controller.signal,
-    })
-    if (!response.ok) throw new Error(`Meting API returned ${response.status}`)
-
-    const payload = await response.json()
+    const resolved = await loadMetingTrack(
+      info,
+      metingAPI.value,
+      controller.signal,
+      failedEndpoints,
+    )
     if (requestController !== controller) return
 
-    const resolvedTrack = normalizeMetingTrack(payload)
-    if (!resolvedTrack) throw new Error('Meting API returned no playable track')
-    track.value = resolvedTrack
-    await nextTick()
-    applyVolume()
+    currentEndpoint = resolved.endpoint
+    track.value = resolved.track
     revealTrackInfo()
-    void loadLyrics(resolvedTrack.lrc)
-  } catch (error) {
-    if (!isAbortError(error)) loadFailed.value = true
+    void loadLyrics(resolved.track.lrc)
+  } catch {
+    if (requestController === controller) loadFailed.value = true
   } finally {
-    if (requestController === controller) {
-      requestController = null
-      isLoading.value = false
-    }
+    if (requestController === controller) requestController = null
   }
 }
 
@@ -374,18 +313,20 @@ function applyVolume() {
 
 async function play() {
   const audio = audioRef.value
-  if (!audio || !track.value || audioFailed.value) return
+  const activeTrack = track.value
+  if (!audio || !activeTrack) return
 
   window.dispatchEvent(new CustomEvent(PLAYER_EVENT, { detail: playerToken }))
   isAudioLoading.value = true
   try {
     await audio.play()
   } catch (error) {
+    if (track.value !== activeTrack) return
     isAudioLoading.value = false
     if (!(
       error instanceof DOMException && ['AbortError', 'NotAllowedError'].includes(error.name)
     )) {
-      audioFailed.value = true
+      handleAudioError()
     }
   }
 }
@@ -418,8 +359,9 @@ function handleEnded() {
 }
 
 function handleAudioError() {
-  pause()
-  audioFailed.value = true
+  if (!currentEndpoint) return
+  failedEndpoints.add(currentEndpoint)
+  void loadTrack()
 }
 
 function handleLoadedMetadata() {
@@ -538,7 +480,14 @@ function handleOtherPlayer(event: Event) {
   if ((event as CustomEvent<object>).detail !== playerToken) pause()
 }
 
-watch(musicSourceKey, loadTrack, { immediate: true })
+watch(
+  [musicInfo, metingAPI, settingsLoading],
+  () => {
+    failedEndpoints.clear()
+    void loadTrack()
+  },
+  { immediate: true },
+)
 watch(isPlaying, updateMediaPlaybackState)
 
 onMounted(() => {
@@ -791,7 +740,7 @@ onBeforeUnmount(() => {
     transform 0.1s ease;
 }
 
-.play-button:hover:not(:disabled) {
+.play-button:hover {
   color: var(--color-accent);
   border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border-subtle));
   background: var(--color-accent-soft);
@@ -802,13 +751,8 @@ onBeforeUnmount(() => {
   outline-offset: 2px;
 }
 
-.play-button:active:not(:disabled) {
+.play-button:active {
   transform: scale(0.94);
-}
-
-.play-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.45;
 }
 
 .play-button :deep(svg) {

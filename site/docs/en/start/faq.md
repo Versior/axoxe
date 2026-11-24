@@ -79,7 +79,7 @@ Fill in the endpoint, credentials, bucket, and so on in storage settings; `endpo
 
 ### What is MetingAPI?
 
-An API used by **music cards** to resolve direct streaming links. There is no built-in resolver: while it is empty, music cards for providers other than Apple Music show that no source is available and the editor blocks publishing such links; Apple Music links use Apple's embed and are unaffected. In production, prefer an endpoint you control.
+An API used by **music cards** to resolve streaming links. AXOXE uses public endpoints when the setting is empty; you can also enter a trusted endpoint. The player follows the duration of the audio returned, and some sources only provide a preview. Apple Music links use Apple's official embed.
 
 ---
 

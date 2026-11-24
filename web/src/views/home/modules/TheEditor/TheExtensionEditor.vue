@@ -10,16 +10,6 @@
       <p class="text-[var(--color-text-muted)] text-sm mb-1">
         {{ t('editor.musicVipHint') }}
       </p>
-      <p v-if="musicSourceMissing" class="text-[var(--color-danger)] text-sm mb-1">
-        {{ t('editor.musicSourceMissing') }}
-        <button
-          type="button"
-          class="font-semibold underline-offset-2 hover:underline cursor-pointer"
-          @click="goToSystemSetting"
-        >
-          {{ t('editor.musicSourceGoToSettings') }}
-        </button>
-      </p>
       <BaseInput
         v-model="editorStore.extensionToAdd.extension"
         class="rounded-lg h-auto w-full"
@@ -171,13 +161,11 @@
 import BaseInput from '@/components/common/BaseInput.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
 import { useReverseGeocoding } from '@/components/advanced/extension/shared/useReverseGeocoding'
-import { ExtensionType, MusicProvider } from '@/enums/enums'
+import { ExtensionType } from '@/enums/enums'
 import { parseMusicURL, extractAndCleanMusicURL } from '@/utils/other'
 import { parseTweetUrl } from '@/utils/tweet'
-import { useEditorStore, useSettingStore } from '@/stores'
-import { storeToRefs } from 'pinia'
+import { useEditorStore } from '@/stores'
 import { computed, defineAsyncComponent, ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
 import { fetchGetWebsiteTitle } from '@/service/api'
 import { theToast } from '@/utils/toast'
 import { useI18n } from 'vue-i18n'
@@ -187,27 +175,8 @@ const LocationPicker = defineAsyncComponent(
 )
 
 const editorStore = useEditorStore()
-const router = useRouter()
-const { SystemSetting, loading: settingsLoading } = storeToRefs(useSettingStore())
 const isFetchingWebsiteTitle = ref(false)
 const { t } = useI18n()
-
-const metingAPI = computed(() => (SystemSetting.value?.meting_api ?? '').trim())
-
-// Apple links render through an embed; every other provider needs the
-// operator's Meting endpoint, so an unconfigured instance blocks them.
-const musicSourceMissing = computed(() => {
-  if (editorStore.extensionToAdd.extension_type !== ExtensionType.MUSIC) return false
-  if (settingsLoading.value || metingAPI.value) return false
-  // Stay quiet until the field holds a link that actually needs a resolver;
-  // empty or unparsable input is reported by the parse-result line instead.
-  const provider = parseMusicURL(editorStore.extensionToAdd.extension)
-  return provider !== null && provider.server !== MusicProvider.APPLE
-})
-
-function goToSystemSetting() {
-  router.push('/panel/setting')
-}
 
 const parsedTweet = computed(() => parseTweetUrl(editorStore.tweetToAdd.url))
 

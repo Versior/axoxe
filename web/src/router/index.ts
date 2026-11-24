@@ -221,7 +221,7 @@ const router = createRouter({
       component: () => import('../views/privacy/PrivacyView.vue'),
       meta: {
         title: 'Privacy Policy',
-        description: 'Privacy policy for this Ech0 instance.',
+        description: 'Privacy policy for this AXOXE instance.',
       },
     },
     {

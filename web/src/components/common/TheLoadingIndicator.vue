@@ -31,10 +31,7 @@ withDefaults(
   },
 )
 
-// The startup loader (index.html) hops the letters of the wordmark, one glyph
-// at a time. This is that same motion shrunk down to fit a button or a list
-// row — the letters must stay the letters, never become dots.
-const letters = ['E', 'c', 'h', '0']
+const letters = [...'AXOXE']
 </script>
 
 <style scoped>
